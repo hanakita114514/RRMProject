@@ -7,8 +7,11 @@
 #include "HomingBullet.h"
 #include "Lazer.h"
 #include "Block.h"
+#include "GameTime.h"
 
 const float GRAVITY = 0.75f;
+const float jump_power = 20;
+const float fall_coefficient = 0.45;
 
 Player::Player(int padType) : _input(padType), _hp(100), _pp(3)
 {
@@ -36,9 +39,11 @@ Player::Player(int padType) : _input(padType), _hp(100), _pp(3)
 
 	_ps = PlayerState::neutral;
 
-	_state = &Player::Neutral;
+	_state = &Player::NeutralState;
 	_isdir = &Player::DirRight;
 
+	_grazePoint.pos.x = _rc.w / 2;
+	_grazePoint.pos.y = _rc.h / 2;
 	_grazePoint.radius = 11;
 }
 
@@ -56,21 +61,22 @@ Player::Init()
 void
 Player::Move()
 {
+	const float& timeScale = GameTime::Instance().GetTimeScale();
+
 	if (_input.Left())
 	{
 		//_vel.x = std::fmaxf(-10.0f, _vel.x - 1);
-		_vel.x = -_speed;
+		_vel.x = -_speed * timeScale;
 		_dir.x = -1;
 		_isdir = &Player::DirLeft;
 	}
 	if (_input.Right())
 	{
 		//_vel.x = std::fminf(10.0f, _vel.x + 1);
-		_vel.x = _speed;
+		_vel.x = _speed * timeScale;
 		_dir.x = 1;
 		_isdir = &Player::DirRight;
 	}
-
 }
 
 
@@ -80,7 +86,7 @@ Player::Jump()
 	//’nãƒWƒƒƒ“ƒv
 	if (_input.Jump() && _hitGround)
 	{
-		_vel.y = -20;
+		_vel.y = -jump_power * GameTime::Instance().GetTimeScale();
 		_isJump = true;
 		_hitGround = false;
 	}
@@ -94,7 +100,7 @@ Player::Jump()
 	{
 		if (_isJump)
 		{
-			_vel.y *= 0.45f;
+			_vel.y *= fall_coefficient;
 		}
 		if (!_hitGround)
 		{
@@ -104,7 +110,7 @@ Player::Jump()
 
 	if (_secondJump && _input.Jump() && _isAirJump)
 	{
-		_vel.y = -20;
+		_vel.y = -jump_power * GameTime::Instance().GetTimeScale();
 		_isJump = true;
 		_secondJump = false;
 	}
@@ -112,24 +118,24 @@ Player::Jump()
 }
 
 void
-Player::Attack()
+Player::AttackState()
 {
 	_ps = PlayerState::attack;
 
 }
 
 void
-Player::Neutral()
+Player::NeutralState()
 {
 	_ps = PlayerState::neutral;
 }
 
-void Player::Avoidance()
+void Player::AvoidanceState()
 {
 	_ps = PlayerState::avoidance;
 }
 
-void Player::Shoot()
+void Player::ShootState()
 {
 	Vector2 end = Vector2(1280, 720);
 	_ps = PlayerState::shoot;
@@ -141,16 +147,9 @@ void Player::Shoot()
 void
 Player::AliveUpdate()
 {
-	_vel.x = 0;
-
-
-	_grazePoint.pos.x = _rc.pos.x + _rc.w / 2;
-	_grazePoint.pos.y = _rc.pos.y + _rc.h / 2;
 
 	Move();
 	Jump();
-
-
 	(this->*_isdir)();
 	
 	if (_input.Attack())
@@ -160,16 +159,16 @@ Player::AliveUpdate()
 
 	if (_input.Avoidance())
 	{
-
+		_sd.SlowMotion(60.0f);
 	}
 
 	if (_input.Shoot() || DxLib::CheckHitKey(KEY_INPUT_Z))
 	{
-		_state = &Player::Shoot;
+		_state = &Player::ShootState;
 	}
 	else
 	{
-		_state = &Player::Neutral;
+		_state = &Player::NeutralState;
 	}
 
 	(this->*_state)();
@@ -186,10 +185,11 @@ Player::AliveUpdate()
 	}
 	else
 	{
-		_vel.y += GRAVITY;
+		_vel.y += GRAVITY * GameTime::Instance().GetTimeScale() * GameTime::Instance().GetTimeScale();
 	}
 
 	_rc.pos += _vel;
+	_vel.x = 0;
 }
 
 void 
@@ -202,6 +202,7 @@ void
 Player::Update()
 {
 	_input.Update();
+	_sd.Update();
 
 	(this->*_update)();
 
@@ -215,23 +216,30 @@ Player::Draw()
 	{
 	case Player::PlayerState::none:
 		break;
+
 	case Player::PlayerState::neutral:
 		DxLib::DrawGraph(_rc.pos.x, _rc.pos.y, _handleMap[PlayerState::neutral], true);
 		break;
+
 	case Player::PlayerState::walk:
 		break;
+
 	case Player::PlayerState::attack:
+		break;
+
 	case Player::PlayerState::shoot:
 		DxLib::DrawGraph(_rc.pos.x, _rc.pos.y, _handleMap[PlayerState::attack], true);
 		break;
+
 	case Player::PlayerState::avoidance:
 		DxLib::DrawGraph(_rc.pos.x, _rc.pos.y, _handleMap[PlayerState::avoidance], true);
+		break;
 
 	default:
 		break;
 	}
 
-	DxLib::DrawCircle(_grazePoint.pos.x, _grazePoint.pos.y, _grazePoint.radius, 0xff0000);
+	DxLib::DrawLine(_rc.Left() + (_rc.w / 2), _rc.Top(), _rc.Left() + (_rc.w / 2), _rc.Bottom(), 0xff0000, false);
 }
 
 ObjectType 
@@ -244,13 +252,15 @@ void
 Player::DirRight()
 {
 	_shootPos = _rc.pos;
-	_shootPos.x = _rc.Right();
+	_shootPos.x += _rc.w;
+	_shootPos.y += _rc.h / 2;
 }
 
 void
 Player::DirLeft()
 {
 	_shootPos = _rc.pos;
+	_shootPos.y += _rc.h / 2;
 }
 
 void Player::Hit(Enemy* other)
@@ -260,16 +270,15 @@ void Player::Hit(Enemy* other)
 
 void Player::Hit(Block* other)
 {
-	if (_vel.x != 0 && _hitGround)
+	if (_vel.x != 0)
 	{
 		_vel.x < 0 ? _rc.SetLeft(other->GetRect().Right()) : _rc.SetRight(other->GetRect().Left());
 	}
 	if(_vel.y != 0)
 	{
 		_vel.y < 0 ? _rc.SetTop(other->GetRect().Bottom()) : _rc.SetBottom(other->GetRect().Top());
-		if (_vel.y > 0) _hitGround = true;
-		else _vel.y = 0;
 	}
+	_hitGround = true;
 }
 
 void Player::Hit(Bullet* other)

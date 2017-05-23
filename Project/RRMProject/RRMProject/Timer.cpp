@@ -30,10 +30,10 @@ Timer::Reset()
 	Start();
 }
 
-Time
+Times
 Timer::GetTimes()
 {
-	Time ret = {};
+	Times ret = {};
 	auto end = std::chrono::system_clock::now();
 	auto dur = end - _start;
 	ret.mimutes = std::chrono::duration_cast<std::chrono::minutes>(dur).count();
@@ -43,10 +43,10 @@ Timer::GetTimes()
 	return ret;
 }
 
-Time
+Times
 Timer::GetTime()
 {
-	Time ret = {};
+	Times ret = {};
 
 	auto end = std::chrono::system_clock::now();
 	auto dur = end - _start;

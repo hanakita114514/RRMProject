@@ -2,7 +2,7 @@
 
 #include <chrono>
 
-struct Time
+struct Times
 {
 	long long int mimutes;
 	long long int seconds;
@@ -25,9 +25,9 @@ public:
 
 	void Reset();				//タイマーをリセットする
 
-	Time  GetTimes();			//計測時間を取得する(各単位)
+	Times  GetTimes();			//計測時間を取得する(各単位)
 
-	Time GetTime();				//計測時間(分、秒、ミリ秒分け)
+	Times GetTime();				//計測時間(分、秒、ミリ秒分け)
 
 	void Draw();				//計測時間を表示
 };

@@ -7,6 +7,8 @@
 #include "PowerPoint.h"
 #include "Circle.h"
 
+#include "SlowDown.h"
+
 #include <map>
 
 class Player : public RectObj
@@ -32,7 +34,10 @@ private:
 	DInput _input;			//インプット
 	Digestion _dig;			//消化
 
+	SlowDown _sd;
+
 	PlayerState _ps;
+
 	Vector2 _dir;			//向き（1…右向き、-1…左向き)
 	Vector2 _shootPos;		//弾の発射位置
 	Circle _grazePoint;		//弾との当たり判定用の位置
@@ -48,16 +53,16 @@ private:
 	void Move();
 
 	void (Player::*_update)();
-	void(Player::*_isdir)();
+	void (Player::*_isdir)();
 
 	void AliveUpdate();
 	void DyingUpdate();
 
 	void (Player::*_state)();
-	void Attack();
-	void Avoidance();
-	void Neutral();
-	void Shoot();
+	void AttackState();
+	void AvoidanceState();
+	void NeutralState();
+	void ShootState();
 
 	void DirRight();
 	void DirLeft();
