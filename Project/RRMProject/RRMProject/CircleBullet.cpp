@@ -1,6 +1,6 @@
 #include "CircleBullet.h"
 #include "DxLib.h"
-
+#include "GameTime.h"
 
 CircleBullet::CircleBullet(int handle)
 {
@@ -47,5 +47,5 @@ CircleBullet::Draw()
 void
 CircleBullet::Move()
 {
-	_circle.pos += _vel;
+	_circle.pos += _vel * GameTime::Instance().GetTimeScale();
 }

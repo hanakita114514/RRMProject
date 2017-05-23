@@ -3,6 +3,7 @@
 #include "BulletFactory.h"
 #include "BulletManeger.h"
 #include "GameMain.h"
+#include "GameTime.h"
 
 const float RAD = 3.14 / 2;
 
@@ -44,7 +45,7 @@ void Lazer::Update()
 	{
 		_isAlive = false;
 	}
-	_circle.pos += _vel;
+	_circle.pos += _vel * GameTime::Instance().GetTimeScale();
 }
 
 

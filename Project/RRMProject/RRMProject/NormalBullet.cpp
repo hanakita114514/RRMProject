@@ -1,5 +1,6 @@
 #include "NormalBullet.h"
 #include "DxLib.h"
+#include "GameTime.h"
 
 const float BULLET_SPEED = 5;
 
@@ -37,7 +38,8 @@ void NormalBullet::Update()
 		_isAlive = false;
 	}
 
-	_circle.pos = _circle.pos + _vel;
+	_circle.pos.x += _vel.x * GameTime::Instance().GetTimeScale();
+	_circle.pos.y += _vel.y * GameTime::Instance().GetTimeScale();
 }
 
 void NormalBullet::Draw()

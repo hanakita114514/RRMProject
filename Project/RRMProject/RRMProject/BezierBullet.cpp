@@ -1,5 +1,6 @@
 #include "BezierBullet.h"
 #include "DxLib.h"
+#include "GameTime.h"
 
 const float BULLET_SPEED = 5;
 
@@ -72,8 +73,8 @@ void BezierBullet::BezierCurve()
 	Vector2 normal = Normalize(_nextPos,_circle.pos);
 
 	//単位ベクトルに弾のスピードをかける
-	normal.x *= BULLET_SPEED;
-	normal.y *= BULLET_SPEED;
+	normal.x *= BULLET_SPEED * GameTime::Instance().GetTimeScale();
+	normal.y *= BULLET_SPEED * GameTime::Instance().GetTimeScale();
 
 	//求めた結果を移動量に代入
 	_vel = normal;

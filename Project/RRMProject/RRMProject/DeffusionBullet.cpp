@@ -2,6 +2,7 @@
 #include <DxLib.h>
 #include <math.h>
 #include <time.h>
+#include "GameTime.h"
 
 const int BULLET_SPEED = 5;
 
@@ -55,7 +56,7 @@ DeffusionBullet::Draw()
 void
 DeffusionBullet::Move()
 {
-	_circle.pos += _vel;
+	_circle.pos += _vel * GameTime::Instance().GetTimeScale();
 }
 
 void

@@ -1,6 +1,7 @@
 #include "HomingBullet.h"
 #include <math.h>
 #include <DxLib.h>
+#include "GameTime.h"
 
 HomingBullet::HomingBullet(int handle,Vector2 vec)
 {
@@ -68,8 +69,8 @@ void HomingBullet::Move()
 		_vel = Vector2(vec.x / normal, vec.y / normal);
 	}
 
-	_circle.pos.x = _circle.pos.x + (_vel.x);
-	_circle.pos.y = _circle.pos.y + (_vel.y);
+	_circle.pos.x = (_circle.pos.x + (_vel.x)) * GameTime::Instance().GetTimeScale();
+	_circle.pos.y = (_circle.pos.y + (_vel.y)) * GameTime::Instance().GetTimeScale();
 }
 
 void HomingBullet::LifeDecree()

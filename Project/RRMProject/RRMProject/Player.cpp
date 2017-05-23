@@ -61,19 +61,17 @@ Player::Init()
 void
 Player::Move()
 {
-	const float& timeScale = GameTime::Instance().GetTimeScale();
-
 	if (_input.Left())
 	{
 		//_vel.x = std::fmaxf(-10.0f, _vel.x - 1);
-		_vel.x = -_speed * timeScale;
+		_vel.x = -_speed;
 		_dir.x = -1;
 		_isdir = &Player::DirLeft;
 	}
 	if (_input.Right())
 	{
 		//_vel.x = std::fminf(10.0f, _vel.x + 1);
-		_vel.x = _speed * timeScale;
+		_vel.x = _speed;
 		_dir.x = 1;
 		_isdir = &Player::DirRight;
 	}
@@ -140,7 +138,7 @@ void Player::ShootState()
 	Vector2 end = Vector2(1280, 720);
 	_ps = PlayerState::shoot;
 		BulletManeger* bm = GameMain::Instance().GetBulletMng();
-		Bullet* bullet = bm->GetFactory()->GetBullet(BulletType::normal, _dir, ObjectType::player, _shootPos);
+		Bullet* bullet = bm->GetFactory()->GetBullet(BulletType::sinBullet, _dir, ObjectType::player, _shootPos);
 		bullet->SetPos(_shootPos);
 }
 
@@ -160,6 +158,11 @@ Player::AliveUpdate()
 	if (_input.Avoidance())
 	{
 		_sd.SlowMotion(60.0f);
+	}
+
+	if (_input.Parry())
+	{
+		_sd.TheWorld(60.0f);
 	}
 
 	if (_input.Shoot() || DxLib::CheckHitKey(KEY_INPUT_Z))
@@ -185,10 +188,10 @@ Player::AliveUpdate()
 	}
 	else
 	{
-		_vel.y += GRAVITY * GameTime::Instance().GetTimeScale() * GameTime::Instance().GetTimeScale();
+		_vel.y += GRAVITY * GameTime::Instance().GetTimeScale();
 	}
 
-	_rc.pos += _vel;
+	_rc.pos += _vel * GameTime::Instance().GetTimeScale();
 	_vel.x = 0;
 }
 

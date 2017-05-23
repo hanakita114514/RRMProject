@@ -1,6 +1,7 @@
 #include "SinBullet.h"
 #include <math.h>
 #include <DxLib.h>
+#include "GameTime.h"
 
 const float RAD = 3.14 / 2;				//ƒ‰ƒWƒAƒ“
 const float ANGLE = 30;				//”­ŽËŠp
@@ -53,7 +54,9 @@ SinBullet::Draw()
 void
 SinBullet::Move()
 {
-	_circle.pos = _circle.pos + _vel;
+	_circle.pos.x += _vel.x * GameTime::Instance().GetTimeScale();
+	_circle.pos.y += _vel.y * GameTime::Instance().GetTimeScale();
+
 	if (_circle.pos.x < 0 || _circle.pos.x > 1280)
 	{
 		_isAlive = false;
