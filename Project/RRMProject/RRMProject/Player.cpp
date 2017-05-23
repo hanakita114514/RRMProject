@@ -108,7 +108,7 @@ Player::Jump()
 
 	if (_secondJump && _input.Jump() && _isAirJump)
 	{
-		_vel.y = -jump_power * GameTime::Instance().GetTimeScale();
+		_vel.y = -jump_power;
 		_isJump = true;
 		_secondJump = false;
 	}
@@ -188,7 +188,7 @@ Player::AliveUpdate()
 	}
 	else
 	{
-		_vel.y += GRAVITY * GameTime::Instance().GetTimeScale();
+		_vel.y += GRAVITY * GameTime::Instance().GetTimeScale() * GameTime::Instance().GetTimeScale();
 	}
 
 	_rc.pos += _vel * GameTime::Instance().GetTimeScale();
