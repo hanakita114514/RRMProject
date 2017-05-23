@@ -16,7 +16,7 @@ CircleBullet::~CircleBullet()
 void
 CircleBullet::Initialize(Vector2 vec, ObjectType type)
 {
-	_life = 10;
+	_life = 100.0f;
 	_vel = vec * 5;
 	_objType = type;
 	_lifeCnt = 0;
@@ -26,11 +26,8 @@ CircleBullet::Initialize(Vector2 vec, ObjectType type)
 void
 CircleBullet::Update()
 {
-	_lifeCnt++;
-	if (_lifeCnt % 10 == 0)
-	{
-		--_life;
-	}
+
+	_life -= 1 * GameTime::Instance().GetTimeScale();
 	if (_life == 0)
 	{
 		_isAlive = false;

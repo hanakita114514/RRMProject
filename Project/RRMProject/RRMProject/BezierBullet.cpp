@@ -2,7 +2,9 @@
 #include "DxLib.h"
 #include "GameTime.h"
 
-const float BULLET_SPEED = 5;
+const float BULLET_SPEED = 5.0f;
+
+const float REDUCE_LIFE = 1.0f;
 
 BezierBullet::BezierBullet(int handle,Vector2 entry)
 {
@@ -17,7 +19,7 @@ BezierBullet::~BezierBullet()
 
 void BezierBullet::Initialize(Vector2 vec, ObjectType type)
 {
-	_life = 10;
+	_life = 100.0f;
 	_objType = type;
 	_isAlive = true;
 	_t = 0;
@@ -34,10 +36,8 @@ void BezierBullet::Initialize(Vector2 vec, ObjectType type)
 void BezierBullet::Update()
 {
 	_freamCnt++;
-	if (_freamCnt % 10 == 0)
-	{
-		_life--;
-	}
+
+	_life -= REDUCE_LIFE * GameTime::Instance().GetTimeScale();
 
 	if (_life <= 0)
 	{

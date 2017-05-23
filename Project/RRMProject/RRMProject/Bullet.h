@@ -30,7 +30,7 @@ protected:
 	Vector2 _vel;	//弾の速度
 	bool _isAlive;	//生きているか？
 	ObjectType _objType;	//敵、プレイヤーの区別のタイプ
-	int _life;				//弾の寿命
+	float _life;				//弾の寿命
 	int _lifeCnt;			//寿命を減らす際のカウント
 
 

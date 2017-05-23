@@ -64,14 +64,14 @@ Player::Move()
 	if (_input.Left())
 	{
 		//_vel.x = std::fmaxf(-10.0f, _vel.x - 1);
-		_vel.x = -_speed;
+		_vel.x = -_speed * GameTime::Instance().GetTimeScale();
 		_dir.x = -1;
 		_isdir = &Player::DirLeft;
 	}
 	if (_input.Right())
 	{
 		//_vel.x = std::fminf(10.0f, _vel.x + 1);
-		_vel.x = _speed;
+		_vel.x = _speed * GameTime::Instance().GetTimeScale();
 		_dir.x = 1;
 		_isdir = &Player::DirRight;
 	}
@@ -191,7 +191,13 @@ Player::AliveUpdate()
 		_vel.y += GRAVITY * GameTime::Instance().GetTimeScale() * GameTime::Instance().GetTimeScale();
 	}
 
-	_rc.pos += _vel * GameTime::Instance().GetTimeScale();
+	// Ž~‚Ü‚Á‚Ä‚é‚Æ‚«‚Í“®‚©‚³‚È‚¢
+	if (GameTime::Instance().GetTimeScale() != 0)
+	{
+		_rc.pos.y += _vel.y;
+	}
+
+	_rc.pos.x += _vel.x;
 	_vel.x = 0;
 }
 
@@ -280,6 +286,7 @@ void Player::Hit(Block* other)
 	if(_vel.y != 0)
 	{
 		_vel.y < 0 ? _rc.SetTop(other->GetRect().Bottom()) : _rc.SetBottom(other->GetRect().Top());
+		_vel.y = 0;
 	}
 	_hitGround = true;
 }

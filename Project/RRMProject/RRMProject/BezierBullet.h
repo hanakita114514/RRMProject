@@ -8,7 +8,6 @@ public:
 	~BezierBullet();
 
 private:
-	int _life;
 	int _freamCnt;
 	float _t;		//’e‚ð”­ŽË‚µ‚Ä‚©‚ç‚ÌŒo‰ßŽžŠÔ(0 < _t < 1)
 
