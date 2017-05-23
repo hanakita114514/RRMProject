@@ -1,0 +1,4 @@
+﻿  File.cpp
+c:\users\1501343\desktop\新しいフォルダー\rrm\project\rrmproject\rrmproject\vector2.h(65): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+c:\users\1501343\desktop\新しいフォルダー\rrm\project\rrmproject\rrmproject\file.cpp(79): warning C4018: '<': signed と unsigned の数値を比較しようとしました。
+LINK : fatal error LNK1168: ファイル C:\Users\1501343\Desktop\新しいフォルダー\RRM\project\RRMProject\x64\Debug\RRMProject.exe を開いて書き込むことができません。
