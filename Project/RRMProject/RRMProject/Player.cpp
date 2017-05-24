@@ -317,14 +317,12 @@ Player::DirRight()
 {
 	_shootPos = _rc.pos;
 	_shootPos.x += _rc.w;
-	_shootPos.y += _rc.h / 2;
 }
 
 void
 Player::DirLeft()
 {
 	_shootPos = _rc.pos;
-	_shootPos.y += _rc.h / 2;
 }
 
 void Player::Hit(Enemy* other)

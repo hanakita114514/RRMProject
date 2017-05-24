@@ -1,5 +1,5 @@
 #include "Enemy.h"
-
+#include "Block.h"
 
 
 Enemy::Enemy()
@@ -21,4 +21,3 @@ Enemy::GetObjType()
 {
 	return ObjectType::enemy;
 }
-

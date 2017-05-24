@@ -27,5 +27,4 @@ void Block::Initialize(Vector2 pos, int handle,Vector2 size)
 void Block::Draw()
 {
 	DxLib::DrawGraph(_rc.pos.x, _rc.pos.y, _handle, true);
-	DxLib::DrawBox(_rc.Left(), _rc.Top(), _rc.Right() + 1, _rc.Bottom() + 1, 0xff0000, false);
 }

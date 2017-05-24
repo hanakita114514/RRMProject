@@ -6,8 +6,8 @@ class HomingBullet : public Bullet
 {
 private:
 
-	Position* _pPos;
-	Position* _ePos;
+	Position* _targetPos;
+	Position* _ownPos;
 	float _center;
 	int _homCnt;
 public:
@@ -21,6 +21,6 @@ public:
 	void Move();
 	void LifeDecree();
 
-	void SetAngle(Vector2* pPos, Vector2* ePos);
+	void SetAngle(Vector2* target, Vector2* own);
 };
 

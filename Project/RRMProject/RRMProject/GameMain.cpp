@@ -121,12 +121,13 @@ void GameMain::GameLoop()
 		//XV-----------------------
 		Fade::Instance().Update();
 
+		ColProcess(&p); //“–‚½‚è”»’è
+
 		p.Update();
 		_map->Update();
 		_enemy->Update();
 		_bullet->Update();
 
-		ColProcess(&p); //“–‚½‚è”»’è
 
 		//•`‰æ-----------------------
 		Fade::Instance().Draw();
@@ -140,11 +141,6 @@ void GameMain::GameLoop()
 		if (CheckHitKey(KEY_INPUT_ESCAPE))
 		{
 			break;
-		}
-		for (auto a : _colBlock)
-		{
-			DxLib::DrawBox(a->GetRect().Left(), a->GetRect().Top(),
-				a->GetRect().Right() + 1, a->GetRect().Bottom() + 1, 0xff0000, false);
 		}
 
 	}
@@ -165,18 +161,21 @@ void
 GameMain::PlayerColBlock(Player *p)
 {
 	bool hitFlug = false;
-
-	for (auto block : _colBlock)
+	std::vector<Block> blockList = _map->GetList();
+	for (auto block : blockList)
 	{
 		Rect r = {};
-		r = block->GetRect();
-		hitFlug = _col->LineCross(p->GetRect(), p->GetVel(), r);
+		r = block.GetRect();
+		hitFlug = _col->IsHit(p->GetRect(), r);
 		if (hitFlug == true)
 		{
-			p->Hit(block);
+			p->Hit(&block);
 			break;
 		}
-	
+	}
+	if (hitFlug == false)
+	{
+		p->SetHitGround(false);
 	}
 }
 
@@ -186,22 +185,26 @@ void GameMain::EnemyColBlock()
 	fac->GetEnemyList();
 
 	MapRendar* map = _map->GetMap();
-	bool hitFlug;
+	bool hitFlug = false;
 
 	for (auto enemy : fac->GetEnemyList())
 	{
-		enemy->SetHitGround(false);
-		for (auto block : _colBlock)
+		for (auto block : _map->GetList())
 		{
 			Rect r = {};
-			r = block->GetRect();
-			hitFlug = _col->LineCross(enemy->GetRect(), enemy->GetVel(), r);
+			r = block.GetRect();
+			hitFlug = _col->IsHit(enemy->GetRect(), r);
 			if (hitFlug == true)
 			{
-				enemy->Hit(block);
+				enemy->Hit(&block);
 				break;
 			}
 		}
+		if (hitFlug == false)
+		{
+			enemy->SetHitGround(false);
+		}
+
 	}
 }
 
@@ -231,7 +234,7 @@ GameMain::BulletColPlayer(Player* p)
 	BulletFactory* fac = _bullet->GetFactory();
 	for (auto b : fac->Getlist())
 	{
-		hitFlug = _col->IsHit(p->GetGraze(), b->GetCircle());
+		hitFlug = _col->IsHit(p->GetRect(), b->GetCircle());
 		if (hitFlug == true && (p->GetObjType() != b->GetObjType()))
 		{
 			b->Hit(p);
@@ -249,12 +252,12 @@ GameMain::BulletColBlock()
 
 	for (auto bullet : fac->Getlist())
 	{
-		for (auto block : _colBlock)
+		for (auto block : _map->GetList())
 		{
-			hitFlug = _col->IsHit(block->GetRect(), bullet->GetCircle());
-			if (hitFlug == true && (block->GetObjType() != bullet->GetObjType()))
+			hitFlug = _col->IsHit(block.GetRect(), bullet->GetCircle());
+			if (hitFlug == true && (block.GetObjType() != bullet->GetObjType()))
 			{
-				(bullet)->Hit(block);
+				(bullet)->Hit(&block);
 				break;
 			}
 		}

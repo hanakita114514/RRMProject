@@ -10,7 +10,6 @@
 #include "SlowDown.h"
 
 #include <map>
-
 class Player : public RectObj
 {
 private:

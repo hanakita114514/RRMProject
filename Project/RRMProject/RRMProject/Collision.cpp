@@ -27,11 +27,9 @@ bool Collision::IsHit(Rect &a, Rect &b)
 	int x = a.w / 2 + b.w / 2;
 	int y = a.h / 2 + b.h / 2;
 
-	if (x >= absX && y >= absY)
+	if(x >= absX && y >= absY)
 	{
 		hitFlug = true;
-		sink.x = (float)(int(a.w - absX));
-		sink.y = (float)(int(a.h - absY));
 	}
 
 	return hitFlug;
@@ -45,8 +43,8 @@ Collision::IsHit(Rect &r, Circle &c)
 	float y = abs(r.pos.y - c.pos.y);
 
 	float dist = sqrt(x * x + y * y);
-
-	if (dist < r.h + c.radius && dist < r.w + c.radius)
+	
+	if (dist < r.h + c.radius && (r.pos.x < c.pos.x && c.pos.x < r.Right()))
 	{
 		hitFlug = true;
 	}
@@ -146,7 +144,7 @@ Collision::LineCross(Rect r1, Vector2 vec1, Rect r2)
 		else if (vec1.x > 0) _move = right;
 		else _move = none;
 
-		Vector2 p1[2], p2[2], p3, p4;
+		Vector2 p1[3], p2[3], p3, p4;
 		float ta, tb, tc, td;
 
 		switch (_move)
@@ -160,6 +158,11 @@ Collision::LineCross(Rect r1, Vector2 vec1, Rect r2)
 
 			++i;
 
+			p1[i] = Vector2(r1.Left() + r1.w / 2 , r1.Top());
+			p2[i] = p1[i];
+			p2[i].y -= vec1.y;
+
+			++i;
 			p1[i] = Vector2(r1.Right(), r1.Top());
 			p2[i] = p1[i];
 			p2[i].y -= vec1.y;
@@ -171,6 +174,12 @@ Collision::LineCross(Rect r1, Vector2 vec1, Rect r2)
 		{
 			int i = 0;
 			p1[i] = Vector2(r1.Right(), r1.Top());
+			p2[i] = p1[i];
+			p2[i].x += vec1.x;
+
+			++i;
+
+			p1[i] = Vector2(r1.Left() + r1.w / 2, r1.Top());
 			p2[i] = p1[i];
 			p2[i].x += vec1.x;
 
@@ -193,6 +202,12 @@ Collision::LineCross(Rect r1, Vector2 vec1, Rect r2)
 
 			++i;
 
+			p1[i] = Vector2(r1.Left() + r1.w / 2, r1.Top());
+			p2[i] = p1[i];
+			p2[i].y += vec1.y;
+
+			++i;
+
 			p1[i] = Vector2(r1.Right(), r1.Bottom());
 			p2[i] = p1[i];
 			p2[i].y += vec1.y;
@@ -204,6 +219,12 @@ Collision::LineCross(Rect r1, Vector2 vec1, Rect r2)
 		{
 			int i = 0;
 			p1[i] = Vector2(r1.Left(), r1.Top());
+			p2[i] = p1[i];
+			p2[i].x -= vec1.x;
+
+			++i;
+
+			p1[i] = Vector2(r1.Left() + r1.w / 2, r1.Top());
 			p2[i] = p1[i];
 			p2[i].x -= vec1.x;
 
@@ -221,7 +242,7 @@ Collision::LineCross(Rect r1, Vector2 vec1, Rect r2)
 		}
 
 
-		for (int i = 0; i < 2; i++)
+		for (int i = 0; i < 3; i++)
 		{
 			ta = (p3.x - p4.x) * (p1[i].y - p3.y) + (p3.y - p4.y) * (p3.x - p1[i].x);
 			tb = (p3.x - p4.x) * (p2[i].y - p3.y) + (p3.y - p4.y) * (p3.x - p2[i].x);

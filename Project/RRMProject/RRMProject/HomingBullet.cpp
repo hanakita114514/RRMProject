@@ -48,12 +48,12 @@ HomingBullet::Draw()
 }
 
 void 
-HomingBullet::SetAngle(Vector2* pPos, Vector2* ePos)
+HomingBullet::SetAngle(Vector2* target, Vector2* own)
 {
-	_pPos = pPos;
-	_ePos = ePos;
+	_targetPos = target;
+	_ownPos = own;
 
-	Vector2 vec = *pPos - *ePos;
+	Vector2 vec = *_targetPos - *_ownPos;
 	
 	float normal = sqrt(vec.x * vec.x + vec.y * vec.y);
 
@@ -64,7 +64,7 @@ void HomingBullet::Move()
 {
 	if (_homCnt % 180 == 0)
 	{
-		Vector2 vec = *_pPos - _circle.pos;
+		Vector2 vec = *_targetPos - _circle.pos;
 		float normal = sqrt(vec.x * vec.x + vec.y * vec.y);
 
 		_vel = Vector2(vec.x / normal, vec.y / normal);

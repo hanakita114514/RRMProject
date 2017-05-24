@@ -195,4 +195,5 @@ void Egg::Hit(Block* other)
 {
 	_rc.SetBottom(other->GetRect().Top());
 	_hitGround = true;
+	_vel.y = 0;
 }
