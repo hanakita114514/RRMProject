@@ -36,7 +36,7 @@
     <ClCompile Include="Egg.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyFactory.cpp" />
-    <ClCompile Include="EnemyManeger.cpp" />
+    <ClCompile Include="EnemyManager.cpp" />
     <ClCompile Include="Fade.cpp" />
     <ClCompile Include="File.cpp" />
     <ClCompile Include="Food.cpp" />
@@ -90,7 +90,7 @@
     <ClInclude Include="Egg.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyFactory.h" />
-    <ClInclude Include="EnemyManeger.h" />
+    <ClInclude Include="EnemyManager.h" />
     <ClInclude Include="Fade.h" />
     <ClInclude Include="File.h" />
     <ClInclude Include="Food.h" />

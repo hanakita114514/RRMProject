@@ -5,7 +5,7 @@
 class MapRendar;
 class BackgroundRendar;
 class EnemyFactory;
-class EnemyManeger;
+class EnemyManager;
 class Enemy;
 
 class MapManeger
@@ -14,7 +14,7 @@ private:
 	MapRendar* _map;
 	BackgroundRendar* _bg;
 	EnemyFactory* _fac;
-	EnemyManeger* _enemy;
+	EnemyManager* _enemy;
 	Enemy* newEnemy;
 
 	bool _mapErr;				//マップ読み込みエラー用フラグ

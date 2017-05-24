@@ -2,7 +2,7 @@
 #include "BackgroundRendar.h"
 #include "MapRendar.h"
 #include "EnemyFactory.h"
-#include "EnemyManeger.h"
+#include "EnemyManager.h"
 #include "GameMain.h"
 #include "Enemy.h"
 #include "Collision.h"
@@ -31,7 +31,7 @@ bool MapManeger::Initialize()
 		return false;
 	}
 
-	EnemyManeger* e = GameMain::Instance().GetEnemy();
+	EnemyManager* e = GameMain::Instance().GetEnemy();
 	_fac = e->GetEnemyFac();
 
 	Enemy* enemy = nullptr;

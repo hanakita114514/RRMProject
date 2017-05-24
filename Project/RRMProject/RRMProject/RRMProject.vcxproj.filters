@@ -162,9 +162,6 @@
     <ClCompile Include="File.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="EnemyManeger.cpp">
-      <Filter>ソース ファイル\Object\Enemy</Filter>
-    </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>ソース ファイル\Object\Player</Filter>
     </ClCompile>
@@ -209,6 +206,9 @@
     </ClCompile>
     <ClCompile Include="Block.cpp">
       <Filter>ソース ファイル\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyManager.cpp">
+      <Filter>ソース ファイル\Object\Enemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -323,9 +323,6 @@
     <ClInclude Include="SinBullet.h">
       <Filter>ソース ファイル\Object\Bullet</Filter>
     </ClInclude>
-    <ClInclude Include="EnemyManeger.h">
-      <Filter>ソース ファイル\Object\Enemy</Filter>
-    </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>ソース ファイル\Object\Player</Filter>
     </ClInclude>
@@ -370,6 +367,9 @@
     </ClInclude>
     <ClInclude Include="Block.h">
       <Filter>ソース ファイル\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyManager.h">
+      <Filter>ソース ファイル\Object\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

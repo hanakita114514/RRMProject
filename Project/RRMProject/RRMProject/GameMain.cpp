@@ -7,7 +7,7 @@
 #include "Player.h"
 #include "BulletManeger.h"
 #include "MapManeger.h"
-#include "EnemyManeger.h"
+#include "EnemyManager.h"
 #include "Collision.h"
 #include "MapRendar.h"
 #include "EnemyFactory.h"
@@ -34,7 +34,7 @@ bool GameMain::Init()
 
 	Fade::Instance().Init();
 	_scene = new OfficialScene();
-	_enemy = new EnemyManeger();
+	_enemy = new EnemyManager();
 	_map = new MapManeger();
 	_map->Initialize();
 	_bullet = new BulletManeger();
