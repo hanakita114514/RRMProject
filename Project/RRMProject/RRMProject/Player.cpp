@@ -136,6 +136,12 @@ void Player::AvoidanceUpdate()
 
 	_ps = PlayerState::avoidance;
 
+	//”­“®‚µ‚½uŠÔ‚Í“®‚©‚È‚¢
+	if (_avoidTime >= 12.0f)
+	{
+		return;
+	}
+
 	if (_avoidTime <= 0)
 	{
 		_update = &Player::AliveUpdate;
@@ -149,8 +155,8 @@ void Player::AvoidanceUpdate()
 
 	Vector2 v = Normalize(_vel);
 
-	_rc.pos.x += v.x * 15.0f * GameTime::Instance().GetTimeScale();
-	_rc.pos.y += v.y * 15.0f * GameTime::Instance().GetTimeScale();
+	_rc.pos.x += v.x * 20.0f * GameTime::Instance().GetTimeScale();
+	_rc.pos.y += v.y * 20.0f * GameTime::Instance().GetTimeScale();
 
 	//‰¼‚Ì’n–Ê‚ðì‚é
 	if (_hitGround == true)

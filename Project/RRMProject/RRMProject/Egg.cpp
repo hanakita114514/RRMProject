@@ -90,7 +90,7 @@ void Egg::Move()
 
 void Egg::Shot()
 {
-		Shot(BulletType::deffusion,4);
+		Shot(BulletType::circleBullet,4);
 		_state = &Egg::Wait;
 }
 
