@@ -149,8 +149,8 @@ void Player::AvoidanceUpdate()
 
 	Vector2 v = Normalize(_vel);
 
-	_rc.pos.x += v.x * 15.0f;
-	_rc.pos.y += v.y * 15.0f;
+	_rc.pos.x += v.x * 15.0f * GameTime::Instance().GetTimeScale();
+	_rc.pos.y += v.y * 15.0f * GameTime::Instance().GetTimeScale();
 
 	//仮の地面を作る
 	if (_hitGround == true)
@@ -206,6 +206,7 @@ Player::AliveUpdate()
 		_sd.TheWorld(60.0f);
 	}
 
+	//ショット
 	if (_input.Shoot() || DxLib::CheckHitKey(KEY_INPUT_Z))
 	{
 		_state = &Player::ShootState;
@@ -291,6 +292,12 @@ Player::Draw()
 	}
 
 	DxLib::DrawLine(_rc.Left() + (_rc.w / 2), _rc.Top(), _rc.Left() + (_rc.w / 2), _rc.Bottom(), 0xff0000, false);
+
+#ifdef DEBUG
+	_rc.DrawBox();
+
+#endif // DEBUG
+
 }
 
 ObjectType 

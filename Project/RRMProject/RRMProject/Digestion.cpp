@@ -3,6 +3,12 @@
 //食べ物を持てる上限数
 const int FOOD_LIMIT = 3;
 
+//効果のテーブルを作成
+const int foodTable[9][9] =
+{
+
+};
+
 Digestion::Digestion()
 {
 }
