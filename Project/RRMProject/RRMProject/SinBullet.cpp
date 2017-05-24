@@ -3,9 +3,10 @@
 #include <DxLib.h>
 #include "GameTime.h"
 
-const float RAD = 3.14 / 2;				//ÉâÉWÉAÉì
-const float ANGLE = 30;				//î≠éÀäp
+const float RAD = 3.14f / 2.0f;				//ÉâÉWÉAÉì
+const float ANGLE = 30.0f;				//î≠éÀäp
 const int AMPLITUDE = 5;			//êUÇÍïù
+const float REDUCE_LIFE = 1.0f;
 
 SinBullet::SinBullet(int handle)
 {
@@ -26,6 +27,7 @@ SinBullet::Initialize(Vector2 vec,ObjectType type)
 	_isAlive = true;
 	_vel = vec;
 	_vel.x *= 6.5;
+	_life = 100.0f;
 	_freamCnt = 0;
 	_id = BulletType::sinBullet;
 	_objType = type;
@@ -37,10 +39,8 @@ SinBullet::Update()
 	_freamCnt++;
 
 	_vel.y = sin((RAD /ANGLE * _freamCnt) - 1) * AMPLITUDE;
-	if (_isAlive == false)
-	{
-		int i = 0;
-	}
+
+	_life -= REDUCE_LIFE * GameTime::Instance().GetTimeScale();
 
 	Move();
 }

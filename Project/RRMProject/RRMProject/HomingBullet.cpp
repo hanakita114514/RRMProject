@@ -3,14 +3,16 @@
 #include <DxLib.h>
 #include "GameTime.h"
 
+
+const float REDUCE_LIFE = 1.0f;
+
 HomingBullet::HomingBullet(int handle,Vector2 vec)
 {
 	_handle = handle;
 	_id = BulletType::homing;
-	_life = 10;
+	_life = 300.0f;
 	_vel = vec;
 	_vel.x *= 5;
-	_lifeCnt = 0;
 	_homCnt = 0;
 }
 
@@ -23,7 +25,7 @@ HomingBullet::~HomingBullet()
 void
 HomingBullet::Initialize(Vector2 vec,ObjectType type)
 {
-	_life = 10;
+	_life = 300.0f;
 	_objType = type;
 	_isAlive = true;
 	_vel = vec;
@@ -33,7 +35,6 @@ HomingBullet::Initialize(Vector2 vec,ObjectType type)
 void
 HomingBullet::Update()
 {
-	_lifeCnt++;
 	_homCnt++;
 
 	LifeDecree();
@@ -75,12 +76,10 @@ void HomingBullet::Move()
 
 void HomingBullet::LifeDecree()
 {
-	if (_lifeCnt % 300 == 0)
+	_life -= REDUCE_LIFE * GameTime::Instance().GetTimeScale();
+
+	if (_life == 0)
 	{
-		_life--;
-		if (_life == 0)
-		{
-			_isAlive = false;
-		}
+		_isAlive = false;
 	}
 }

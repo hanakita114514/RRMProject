@@ -4,7 +4,8 @@
 #include <time.h>
 #include "GameTime.h"
 
-const int BULLET_SPEED = 5;
+const int BULLET_SPEED = 5.0f;
+const float REDUCE_LIFE = 1.0f;
 
 DeffusionBullet::DeffusionBullet(int handle)
 {
@@ -23,8 +24,7 @@ DeffusionBullet::Initialize(Vector2 vec, ObjectType type)
 	_vec = vec;
 	_objType = type;
 	_isAlive = true;
-	_freamCnt = 0;
-	_life = 10;
+	_life = 100.0f;
 
 	_vel = _vec * BULLET_SPEED;
 
@@ -34,15 +34,12 @@ DeffusionBullet::Initialize(Vector2 vec, ObjectType type)
 void
 DeffusionBullet::Update()
 {
-	_freamCnt++;
 
-	if (_freamCnt % 10 == 0)
+	_life -= REDUCE_LIFE * GameTime::Instance().GetTimeScale();
+
+	if (_life <= 0)
 	{
-		_life--;
-		if (_life <= 0)
-		{
-			_isAlive = false;
-		}
+		_isAlive = false;
 	}
 	Move();
 }

@@ -2,6 +2,8 @@
 #include "DxLib.h"
 #include "GameTime.h"
 
+const float REDUCE_LIFE = 1.0f;
+
 CircleBullet::CircleBullet(int handle)
 {
 	_handle = handle;
@@ -19,15 +21,13 @@ CircleBullet::Initialize(Vector2 vec, ObjectType type)
 	_life = 100.0f;
 	_vel = vec * 5;
 	_objType = type;
-	_lifeCnt = 0;
 	_isAlive = true;
 }
 
 void
 CircleBullet::Update()
 {
-
-	_life -= 1 * GameTime::Instance().GetTimeScale();
+	_life -= REDUCE_LIFE * GameTime::Instance().GetTimeScale();
 	if (_life == 0)
 	{
 		_isAlive = false;

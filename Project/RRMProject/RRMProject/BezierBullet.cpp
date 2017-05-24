@@ -23,7 +23,6 @@ void BezierBullet::Initialize(Vector2 vec, ObjectType type)
 	_objType = type;
 	_isAlive = true;
 	_t = 0;
-	_freamCnt = 0;
 	_vec = vec;
 	_nextCtl = Vector2(980, 640);
 	_nextCtl.x *= vec.x;
@@ -35,7 +34,6 @@ void BezierBullet::Initialize(Vector2 vec, ObjectType type)
 
 void BezierBullet::Update()
 {
-	_freamCnt++;
 
 	_life -= REDUCE_LIFE * GameTime::Instance().GetTimeScale();
 

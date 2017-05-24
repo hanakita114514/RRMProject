@@ -2,7 +2,8 @@
 #include "DxLib.h"
 #include "GameTime.h"
 
-const float BULLET_SPEED = 5;
+const float BULLET_SPEED = 5.0f;
+const float REDUCE_LIFE = 1.0f;
 
 NormalBullet::NormalBullet(int handle)
 {
@@ -16,7 +17,7 @@ NormalBullet::~NormalBullet()
 
 void NormalBullet::Initialize(Vector2 vec,ObjectType type)
 {
-	_life = 10;
+	_life = 100.0f;
 	_objType = type;
 	_isAlive = true;
 	_vel = vec;
@@ -27,11 +28,9 @@ void NormalBullet::Initialize(Vector2 vec,ObjectType type)
 void NormalBullet::Update()
 {
 	//CtlPointSet(_etyPoint, _endPoint, _vel);
-	_freamCnt++;
-	if (_freamCnt % 10 == 0)
-	{
-		_life--;
-	}
+
+	_life -= REDUCE_LIFE * GameTime::Instance().GetTimeScale();
+
 
 	if (_life == 0 || _circle.pos.x < 0)
 	{

@@ -120,7 +120,6 @@ void GameMain::GameLoop()
 		//XV-----------------------
 		Fade::Instance().Update();
 
-
 		p.Update();
 		_map->Update();
 		_enemy->Update();

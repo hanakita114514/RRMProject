@@ -5,7 +5,8 @@
 #include "GameMain.h"
 #include "GameTime.h"
 
-const float RAD = 3.14 / 2;
+const float RAD = 3.14f / 2.0f;
+const float REDUCE_LIFE = 1.0f;
 
 Lazer::Lazer()
 {
@@ -24,7 +25,7 @@ void Lazer::Initialize(Vector2 vec, ObjectType type)
 	_vel = Vector2(5.0, 0);
 	_vel.x = _vel.x *vec.x;
 	_vec = vec;
-	_life = 5;
+	_life = 150.0f;
 	_objType = type;
 }
 
@@ -35,11 +36,8 @@ void Lazer::Initialize()
 
 void Lazer::Update()
 {
-	_frameCnt++;
-	if (_frameCnt % 30 == 0)
-	{
-		--_life;
-	}
+
+	_life -= REDUCE_LIFE * GameTime::Instance().GetTimeScale();
 
 	if (_life == 0)
 	{
