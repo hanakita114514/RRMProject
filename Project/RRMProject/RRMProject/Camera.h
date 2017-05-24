@@ -1,31 +1,30 @@
 #pragma once
 
 #include "Vector2.h"
+#include "Rect.h"
 
 //‰æ–ÊˆÚ“®A—h‚ç‚µ‚È‚Ç‚ğs‚¤B
 class Camera
 {
 private:
-	Camera();
-	Camera(const Camera&);
-	Camera& operator = (const Camera&);
-
 	Vector2 _offset;
+	Vector2 _quakeOffset;
+	int _quakeFrame;
+
+	Rect _rc;
+	Rect _mapRc;
+
+	const Position& _targetPos;
+
 public:
+	Camera(const Position& targetPos);
 	~Camera();
 
-	static Camera& Instance()
-	{
-		static Camera instance;
-		return instance;
-	}
-	
 	void Init();
 	void Update();
-	void Quake();
+	void Quake(const Vector2& power);
 
-
-	Vector2& GetOffset();
+	const Vector2& GetOffset();
 
 };
 
