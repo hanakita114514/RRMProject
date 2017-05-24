@@ -28,6 +28,7 @@ void
 CircleBullet::Update()
 {
 	_life -= REDUCE_LIFE * GameTime::Instance().GetTimeScale();
+
 	if (_life == 0)
 	{
 		_isAlive = false;

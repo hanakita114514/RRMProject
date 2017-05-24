@@ -11,7 +11,7 @@
 
 const float GRAVITY = 0.75f;
 const float jump_power = 20;
-const float fall_coefficient = 0.45;
+const float fall_coefficient = 0.45f;
 
 Player::Player(int padType) : _input(padType), _hp(100), _pp(3)
 {
@@ -45,6 +45,8 @@ Player::Player(int padType) : _input(padType), _hp(100), _pp(3)
 	_grazePoint.pos.x = _rc.w / 2;
 	_grazePoint.pos.y = _rc.h / 2;
 	_grazePoint.radius = 11;
+
+	_avoidTime = 15.0f;
 }
 
 
@@ -108,7 +110,7 @@ Player::Jump()
 
 	if (_secondJump && _input.Jump() && _isAirJump)
 	{
-		_vel.y = -jump_power;
+		_vel.y = -jump_power * GameTime::Instance().GetTimeScale();
 		_isJump = true;
 		_secondJump = false;
 	}
@@ -128,9 +130,37 @@ Player::NeutralState()
 	_ps = PlayerState::neutral;
 }
 
-void Player::AvoidanceState()
+void Player::AvoidanceUpdate()
 {
+	_avoidTime -= 1.0f * GameTime::Instance().GetTimeScale();
+
 	_ps = PlayerState::avoidance;
+
+	if (_avoidTime <= 0)
+	{
+		_update = &Player::AliveUpdate;
+	}
+
+	//‚»‚Ìê‰ñ”ð
+	if (_vel.x == 0 && _vel.y == 0)
+	{
+		return;
+	}
+
+	Vector2 v = Normalize(_vel);
+
+	_rc.pos.x += v.x * 15.0f;
+	_rc.pos.y += v.y * 15.0f;
+
+	//‰¼‚Ì’n–Ê‚ðì‚é
+	if (_hitGround == true)
+	{
+		_vel.y = 0;
+
+		_isAirJump = false;
+		_isJump = false;
+		_secondJump = true;
+	}
 }
 
 void Player::ShootState()
@@ -155,11 +185,22 @@ Player::AliveUpdate()
 
 	}
 
+	//‰ñ”ð
 	if (_input.Avoidance())
 	{
-		_sd.SlowMotion(60.0f);
+		if (_pp.GetPowerPoint() > 0)
+		{
+			_pp.Use();
+			_vel = _input.Dir();
+			_update = &Player::AvoidanceUpdate;
+			_avoidTime = 15.0f;
+			return;
+		}
+
+		//_sd.SlowMotion(60.0f);
 	}
 
+	//ƒpƒŠƒB
 	if (_input.Parry())
 	{
 		_sd.TheWorld(60.0f);
@@ -212,6 +253,7 @@ Player::Update()
 {
 	_input.Update();
 	_sd.Update();
+	_pp.Update();
 
 	(this->*_update)();
 
@@ -294,4 +336,10 @@ void Player::Hit(Block* other)
 void Player::Hit(Bullet* other)
 {
 
+}
+
+void 
+Player::SlowMotion()
+{
+	_sd.SlowMotion(60.0f);
 }

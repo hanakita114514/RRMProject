@@ -58,6 +58,12 @@ Vector2 operator / (Vector2 v1, T t)
 }
 
 inline
+Vector2 Normalize(Vector2 v)
+{
+	double normal = sqrt(v.x * v.x + v.y * v.y);
+	return Vector2(v.x / normal, v.y / normal);
+}
+inline
 Vector2 Normalize(Vector2 v1, Vector2 v2)
 {
 	Vector2 vec = v1 - v2;

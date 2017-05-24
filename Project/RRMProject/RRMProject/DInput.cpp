@@ -244,3 +244,12 @@ DInput::Start()
 
 	return false;
 }
+
+Vector2&
+DInput::Dir()
+{
+	Vector2 v;
+	v.x = _pad.X / 1000.0f;
+	v.y = _pad.Y / 1000.0f;
+	return v;
+}

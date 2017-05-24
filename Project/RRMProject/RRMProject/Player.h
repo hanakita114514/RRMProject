@@ -42,6 +42,8 @@ private:
 	Vector2 _shootPos;		//’e‚Ì”­ŽËˆÊ’u
 	Circle _grazePoint;		//’e‚Æ‚Ì“–‚½‚è”»’è—p‚ÌˆÊ’u
 
+	float _avoidTime;		//‰ñ”ðŽžŠÔ
+
 	bool _isJump;
 	bool _hitGround;
 	bool _secondJump;
@@ -56,11 +58,11 @@ private:
 	void (Player::*_isdir)();
 
 	void AliveUpdate();
+	void AvoidanceUpdate();
 	void DyingUpdate();
 
 	void (Player::*_state)();
 	void AttackState();
-	void AvoidanceState();
 	void NeutralState();
 	void ShootState();
 
@@ -81,6 +83,8 @@ public:
 	Vector2 GetVel() { return _vel; }
 
 	Circle GetGraze() { return _grazePoint; }
+
+	void SlowMotion();
 
 	virtual void Hit(Enemy* other);
 	virtual void Hit(Block* other);

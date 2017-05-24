@@ -1,6 +1,7 @@
 #pragma once
 
 #include <DxLib.h>
+#include "Vector2.h"
 
 const int HISTORY_NUM = 64;
 
@@ -66,5 +67,7 @@ public:
 
 	bool Start();			//スタートボタン
 	bool Select();			//セレクトボタン
+
+	Vector2& Dir();			//向きを返す
 };
 
