@@ -121,13 +121,15 @@ void GameMain::GameLoop()
 		//XV-----------------------
 		Fade::Instance().Update();
 
-		ColProcess(&p); //“–‚½‚è”»’è
 
 		p.Update();
 		_map->Update();
 		_enemy->Update();
 		_bullet->Update();
 
+		ColProcess(&p); //“–‚½‚è”»’è
+
+		p.GetVel();
 
 		//•`‰æ-----------------------
 		Fade::Instance().Draw();
@@ -166,7 +168,7 @@ GameMain::PlayerColBlock(Player *p)
 	{
 		Rect r = {};
 		r = block.GetRect();
-		hitFlug = _col->IsHit(p->GetRect(), r);
+		hitFlug = _col->IsHit(p->GetRect(),p->GetVel(), r);
 		if (hitFlug == true)
 		{
 			p->Hit(&block);
@@ -193,7 +195,7 @@ void GameMain::EnemyColBlock()
 		{
 			Rect r = {};
 			r = block.GetRect();
-			hitFlug = _col->IsHit(enemy->GetRect(), r);
+			hitFlug = _col->IsHit(enemy->GetRect(),enemy->GetVel(), r);
 			if (hitFlug == true)
 			{
 				enemy->Hit(&block);
@@ -217,7 +219,7 @@ void GameMain::PlayerColEnemy(Player* p)
 
 	for (auto a : fac->GetEnemyList())
 	{
-			hitFlug = _col->IsHit(p->GetRect(), a->GetRect());
+			hitFlug = _col->IsHit(p->GetRect(),p->GetVel(), a->GetRect());
 			if (hitFlug == true)
 			{
 				_col->PushBack(p->GetRect(), *a);

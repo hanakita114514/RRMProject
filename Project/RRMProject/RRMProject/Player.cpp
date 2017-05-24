@@ -338,10 +338,17 @@ void Player::Hit(Block* other)
 	}
 	if(_vel.y != 0)
 	{
-		_vel.y < 0 ? _rc.SetTop(other->GetRect().Bottom()) : _rc.SetBottom(other->GetRect().Top());
-		_vel.y = 0;
+		if (_vel.y > 0)
+		{
+			_rc.SetBottom(other->GetRect().Top());
+			_hitGround = true;
+			_vel.y = 0;
+		}
+		else
+		{
+			_vel.y = 0;
+		}
 	}
-	_hitGround = true;
 }
 
 void Player::Hit(Bullet* other)

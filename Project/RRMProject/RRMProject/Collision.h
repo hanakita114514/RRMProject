@@ -26,7 +26,7 @@ public:
 	Collision();
 	~Collision();
 
-	bool IsHit(Rect &a, Rect &b);		//矩形同士のあたり判定
+	bool IsHit(Rect &a, Vector2 velA,Rect &b);		//矩形同士のあたり判定
 	bool IsHit(Rect &r, Circle &c);			//矩形と円
 	bool IsHit(Circle &c1, Circle &c2);
 	bool LineCross(Rect r1, Vector2 vec1, Rect r2);	//線分交差(矩形と矩形)

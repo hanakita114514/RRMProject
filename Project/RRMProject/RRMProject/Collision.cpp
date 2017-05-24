@@ -17,17 +17,27 @@ Collision::~Collision()
 }
 
 
-bool Collision::IsHit(Rect &a, Rect &b)
+bool Collision::IsHit(Rect &a, Vector2 velA, Rect &b)
 {
 	bool hitFlug = false;
 
 	float absX = abs(a.pos.x - b.pos.x);
 	float absY = abs(a.pos.y - b.pos.y);
 
-	int x = a.w / 2 + b.w / 2;
-	int y = a.h / 2 + b.h / 2;
+	int x = 0;
+	int y = 0;
+	if (velA.y > 0)
+	{
+		x = a.w;
+		y = a.h;
+	}
+	else if (velA.y < 0)
+	{
+		x = a.w;
+		y = b.h;
+	}
 
-	if(x >= absX && y >= absY)
+	if( y >= absY &&(b.Left() < a.Right() && a.Left()< b.Right()))
 	{
 		hitFlug = true;
 	}
