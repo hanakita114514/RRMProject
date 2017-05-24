@@ -5,8 +5,8 @@
 #include "Fade.h"
 #include "DInput.h"
 #include "Player.h"
-#include "BulletManeger.h"
-#include "MapManeger.h"
+#include "BulletManager.h"
+#include "MapManager.h"
 #include "EnemyManager.h"
 #include "Collision.h"
 #include "MapRendar.h"
@@ -35,9 +35,9 @@ bool GameMain::Init()
 	Fade::Instance().Init();
 	_scene = new OfficialScene();
 	_enemy = new EnemyManager();
-	_map = new MapManeger();
+	_map = new MapManager();
 	_map->Initialize();
-	_bullet = new BulletManeger();
+	_bullet = new BulletManager();
 	_col = new Collision();
 	CreateColBox();
 

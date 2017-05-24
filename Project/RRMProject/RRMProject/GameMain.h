@@ -2,8 +2,8 @@
 #include <vector>
 
 class Scene;
-class BulletManeger;
-class MapManeger;
+class BulletManager;
+class MapManager;
 class EnemyManager;
 class Player;
 class Collision;
@@ -19,8 +19,8 @@ private:
 
 	Scene* _scene;
 	Player* p1;
-	BulletManeger* _bullet;
-	MapManeger* _map;
+	BulletManager* _bullet;
+	MapManager* _map;
 	EnemyManager* _enemy;
 	Collision* _col;
 
@@ -52,8 +52,8 @@ public:
 	void Terminate();
 
 	void ChangeScene(Scene* scene);
-	BulletManeger* GetBulletMng()		{return _bullet;}
-	MapManeger* GetMap()				{ return _map; }
+	BulletManager* GetBulletMng()		{return _bullet;}
+	MapManager* GetMap()				{ return _map; }
 	EnemyManager* GetEnemy() { return _enemy; }
 
 };

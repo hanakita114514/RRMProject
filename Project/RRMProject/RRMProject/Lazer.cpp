@@ -1,7 +1,7 @@
 #include "Lazer.h"
 #include <DxLib.h>
 #include "BulletFactory.h"
-#include "BulletManeger.h"
+#include "BulletManager.h"
 #include "GameMain.h"
 #include "GameTime.h"
 

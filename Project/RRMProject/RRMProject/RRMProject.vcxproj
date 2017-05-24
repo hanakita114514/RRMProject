@@ -24,7 +24,7 @@
     <ClCompile Include="Block.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="BulletFactory.cpp" />
-    <ClCompile Include="BulletManeger.cpp" />
+    <ClCompile Include="BulletManager.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CircleBullet.cpp" />
     <ClCompile Include="CircleObj.cpp" />
@@ -48,7 +48,7 @@
     <ClCompile Include="HitPoint.cpp" />
     <ClCompile Include="HomingBullet.cpp" />
     <ClCompile Include="Lazer.cpp" />
-    <ClCompile Include="MapManeger.cpp" />
+    <ClCompile Include="MapManager.cpp" />
     <ClCompile Include="MapRendar.cpp" />
     <ClCompile Include="Meat.cpp" />
     <ClCompile Include="Mushroom.cpp" />
@@ -76,7 +76,7 @@
     <ClInclude Include="Block.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="BulletFactory.h" />
-    <ClInclude Include="BulletManeger.h" />
+    <ClInclude Include="BulletManager.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Circle.h" />
     <ClInclude Include="CircleBullet.h" />
@@ -102,7 +102,7 @@
     <ClInclude Include="HitPoint.h" />
     <ClInclude Include="HomingBullet.h" />
     <ClInclude Include="Lazer.h" />
-    <ClInclude Include="MapManeger.h" />
+    <ClInclude Include="MapManager.h" />
     <ClInclude Include="MapRendar.h" />
     <ClInclude Include="Meat.h" />
     <ClInclude Include="Mushroom.h" />

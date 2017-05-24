@@ -1,7 +1,7 @@
 #include "Egg.h"
 #include <DxLib.h>
 #include "GameMain.h"
-#include "MapManeger.h"
+#include "MapManager.h"
 #include <math.h>
 
 const float GRAVITY = 0.75f;
