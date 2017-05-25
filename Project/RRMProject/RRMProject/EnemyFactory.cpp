@@ -1,6 +1,7 @@
 #include "EnemyFactory.h"
 #include "Egg.h"
 #include "Mushroom.h"
+#include <DxLib.h>
 
 EnemyFactory::EnemyFactory()
 {

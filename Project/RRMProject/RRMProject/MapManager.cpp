@@ -7,6 +7,7 @@
 #include "Enemy.h"
 #include "Collision.h"
 #include "Player.h"
+#include "EnemyManager.h"
 
 MapManager::MapManager()
 {
@@ -31,8 +32,8 @@ bool MapManager::Initialize()
 		return false;
 	}
 
-	EnemyManager* e = GameMain::Instance().GetEnemy();
-	_fac = e->GetEnemyFac();
+	
+	_fac = EnemyManager::Instance().GetEnemyFac();
 
 	Enemy* enemy = nullptr;
 
@@ -47,11 +48,10 @@ void MapManager::Finalize()
 
 void MapManager::Update()
 {
-	_enemy = GameMain::Instance().GetEnemy();
 	if (createFlug != true)
 	{
 		newEnemy = _fac->Create(EnemyType::egg);
-		_enemy->Push(newEnemy);
+		EnemyManager::Instance().Push(newEnemy);
 		createFlug = true;
 	}
 

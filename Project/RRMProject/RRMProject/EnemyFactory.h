@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Enemy.h"
-
+#include <vector>
 
 class EnemyFactory
 {

@@ -2,7 +2,6 @@
 
 #include "Vector2.h"
 #include "RectObj.h"
-#include "BulletManager.h"
 
 enum class EnemyType
 {
@@ -18,7 +17,6 @@ class Enemy	: public RectObj
 {
 protected:
 	Vector2 _vel;			//‘¬“x
-	BulletManager* _bMng;
 	bool _hitGround;
 	Vector2 _dir;
 

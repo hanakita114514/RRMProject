@@ -9,9 +9,18 @@ class EnemyManager
 private:
 	std::vector<Enemy*> _enemyList;
 	EnemyFactory* _fac;
-public:
 	EnemyManager();
+	EnemyManager(const EnemyManager&);
+	EnemyManager& operator = (const EnemyManager&);
+
+public:
 	~EnemyManager();
+
+	static EnemyManager& Instance()
+	{
+		static EnemyManager instance;
+		return instance;
+	}
 
 	void Update();						//XV
 	void Draw();						//•`‰æ

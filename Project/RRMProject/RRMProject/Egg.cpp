@@ -44,7 +44,6 @@ void Egg::Initialize()
 
 void Egg::Update()
 {
-	_bMng = GameMain::Instance().GetBulletMng();
 	_circle.center = _rc.Center();
 		
 	_freamCnt++;
@@ -117,7 +116,7 @@ void Egg::Wait()
 void Egg::Shot(BulletType type, int count)	//UŒ‚
 {
 	Bullet* bullet = nullptr;
-	BulletFactory* fac = _bMng->GetFactory();
+	BulletFactory* fac = BulletManager::Instance().GetFactory();
 	int cnt = count;
 
 	switch (type)

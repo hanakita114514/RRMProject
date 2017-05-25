@@ -5,7 +5,6 @@
 class MapRendar;
 class BackgroundRendar;
 class EnemyFactory;
-class EnemyManager;
 class Enemy;
 
 class MapManager
@@ -14,16 +13,26 @@ private:
 	MapRendar* _map;
 	BackgroundRendar* _bg;
 	EnemyFactory* _fac;
-	EnemyManager* _enemy;
 	Enemy* newEnemy;
 
 	bool _mapErr;				//マップ読み込みエラー用フラグ
 	bool _bgErr;				//背景読み込みエラー用フラグ
 	bool createFlug;			//デバッグ用敵生成フラグ
 	std::vector<Block> _list;
-public:
+
 	MapManager();
+	MapManager(const MapManager&);
+	MapManager& operator = (const MapManager&);
+
+
+public:
 	~MapManager();
+
+	static MapManager& Instance()
+	{
+		static MapManager instance;
+		return instance;
+	}
 
 	bool Initialize();
 	void Draw();

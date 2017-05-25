@@ -1,5 +1,8 @@
 #pragma once
 #include "Enemy.h"
+#include "Circle.h"
+#include "BulletManager.h"
+
 const int IMAGE_NUM = 3;
 const float ANIM_SPEED = 0.5;
 

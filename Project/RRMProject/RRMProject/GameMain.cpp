@@ -11,6 +11,7 @@
 #include "Collision.h"
 #include "MapRendar.h"
 #include "EnemyFactory.h"
+#include "GameScene.h"
 
 
 GameMain::GameMain()
@@ -34,12 +35,6 @@ bool GameMain::Init()
 
 	Fade::Instance().Init();
 	_scene = new OfficialScene();
-	_enemy = new EnemyManager();
-	_map = new MapManager();
-	_map->Initialize();
-	_bullet = new BulletManager();
-	_col = new Collision();
-	CreateColBox();
 
 	return true;
 }
@@ -104,39 +99,18 @@ void GameMain::GameLoop()
 
 	DInput _dinput(DX_INPUT_PAD1);
 
-	Player p(0);
-
 	while (ProcessMessage() == 0 && loopOk)
 	{
 		DxLib::ClearDrawScreen();
 
-		//Fade::Instance().Update();
-		//loopOk = _scene->Update();
-		//Fade::Instance().Draw();
-
-		_dinput.Update();
-
-		InputTest(_dinput);
 
 		//XV-----------------------
 		Fade::Instance().Update();
 
-
-		p.Update();
-		_map->Update();
-		_enemy->Update();
-		_bullet->Update();
-
-		ColProcess(&p); //“–‚½‚è”»’è
-
-		p.GetVel();
+		loopOk = _scene->Update();
 
 		//•`‰æ-----------------------
 		Fade::Instance().Draw();
-		_map->Draw();
-		p.Draw();
-		_enemy->Draw();
-		_bullet->Draw();
 
 		DxLib::ScreenFlip();
 
@@ -157,182 +131,4 @@ void GameMain::ChangeScene(Scene* scene)
 {
 	delete _scene;
 	_scene = scene;
-}
-
-void
-GameMain::PlayerColBlock(Player *p)
-{
-	bool hitFlug = false;
-	std::vector<Block> blockList = _map->GetList();
-	for (auto block : blockList)
-	{
-		Rect r = {};
-		r = block.GetRect();
-		hitFlug = _col->IsHit(p->GetRect(),p->GetVel(), r);
-		if (hitFlug == true)
-		{
-			p->Hit(&block);
-			break;
-		}
-	}
-	if (hitFlug == false)
-	{
-		p->SetHitGround(false);
-	}
-}
-
-void GameMain::EnemyColBlock()
-{
-	EnemyFactory* fac = _enemy->GetEnemyFac();
-	fac->GetEnemyList();
-
-	MapRendar* map = _map->GetMap();
-	bool hitFlug = false;
-
-	for (auto enemy : fac->GetEnemyList())
-	{
-		for (auto block : _map->GetList())
-		{
-			Rect r = {};
-			r = block.GetRect();
-			hitFlug = _col->IsHit(enemy->GetRect(),enemy->GetVel(), r);
-			if (hitFlug == true)
-			{
-				enemy->Hit(&block);
-				break;
-			}
-		}
-		if (hitFlug == false)
-		{
-			enemy->SetHitGround(false);
-		}
-
-	}
-}
-
-void GameMain::PlayerColEnemy(Player* p)
-{
-	EnemyFactory* fac = _enemy->GetEnemyFac();
-	fac->GetEnemyList();
-
-	bool hitFlug;
-
-	for (auto a : fac->GetEnemyList())
-	{
-			hitFlug = _col->IsHit(p->GetRect(),p->GetVel(), a->GetRect());
-			if (hitFlug == true)
-			{
-				_col->PushBack(p->GetRect(), *a);
-				break;
-			}
-	}
-}
-
-void
-GameMain::BulletColPlayer(Player* p)
-{
-	bool hitFlug = false;
-
-	BulletFactory* fac = _bullet->GetFactory();
-	for (auto b : fac->Getlist())
-	{
-		hitFlug = _col->IsHit(p->GetRect(), b->GetCircle());
-		if (hitFlug == true && (p->GetObjType() != b->GetObjType()))
-		{
-			b->Hit(p);
-			break;
-		}
-
-	}
-}
-
-void
-GameMain::BulletColBlock()
-{
-	BulletFactory* fac = _bullet->GetFactory();
-	bool hitFlug = false;
-
-	for (auto bullet : fac->Getlist())
-	{
-		for (auto block : _map->GetList())
-		{
-			hitFlug = _col->IsHit(block.GetRect(), bullet->GetCircle());
-			if (hitFlug == true && (block.GetObjType() != bullet->GetObjType()))
-			{
-				(bullet)->Hit(&block);
-				break;
-			}
-		}
-	}
-}
-
-void
-GameMain::CreateColBox()
-{
-	Rect wr = {};
-
-	MapRendar* map = _map->GetMap();
-	std::vector<Block> b = map->GetBlockList();
-	std::vector<Block>::iterator itr = b.begin();
-	Rect r = {};
-	r = itr->GetRect();
-
-	for (itr; itr != b.end();)
-	{
-		if (itr == b.end() - 1)
-		{
-			Block* block = new Block();
-			r.w += itr->GetRect().w;
-			block->SetPos(r);
-			_colBlock.push_back(block);
-			break;
-		}
-		else if ((itr + 1)->GetRect().pos.x - itr->GetRect().pos.x == itr->GetRect().w)
-		{
-			r.w += itr->GetRect().w;
-			++itr;
-		}
-		else
-		{
-			Block* block = new Block();
-			block->SetPos(r);
-			_colBlock.push_back(block);
-			++itr;
-			r = itr->GetRect();
-		}
-	}
-	int i = 0;
-}
-
-void
-GameMain::BulletColEnemy()
-{
-	BulletFactory* fac = _bullet->GetFactory();
-	bool hitFlug = false;
-
-	EnemyFactory* enemies = _enemy->GetEnemyFac();
-
-	for (auto bullet : fac->Getlist())
-	{
-		for (auto enemy : enemies->GetEnemyList())
-		{
-			hitFlug = _col->IsHit(enemy->GetRect(), bullet->GetCircle());
-			if (hitFlug == true && (enemy->GetObjType() != bullet->GetObjType()))
-			{
-				(bullet)->Hit(enemy);
-				break;
-			}
-		}
-	}
-
-}
-
-void 
-GameMain::ColProcess(Player* p)
-{
-	PlayerColBlock(p);
-	EnemyColBlock();
-	BulletColBlock();
-	BulletColPlayer(p);
-	BulletColEnemy();
 }

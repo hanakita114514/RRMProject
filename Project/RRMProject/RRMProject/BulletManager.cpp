@@ -4,19 +4,17 @@
 
 BulletManager::BulletManager()
 {
-	_fac = new BulletFactory();
 }
 
 
 BulletManager::~BulletManager()
 {
-	free(_fac);
 }
 
 void BulletManager::Update()
 {
 		//====================================================================
-		for (auto b : _fac->Getlist())
+		for (auto b : _fac.Getlist())
 		{
 			if (b->IsAlive())
 			{
@@ -28,7 +26,7 @@ void BulletManager::Update()
 
 void BulletManager::Draw()
 {
-	for (auto b : _fac->Getlist())
+	for (auto b : _fac.Getlist())
 	{
 		if (b->IsAlive())
 		{
