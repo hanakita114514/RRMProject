@@ -121,9 +121,8 @@ GameScene::BulletColPlayer()
 {
 	bool hitFlug = false;
 
-	BulletFactory* fac = BulletManager::Instance().GetFactory();
 
-	for (auto b : fac->Getlist())
+	for (auto b : BulletManager::Instance().GetBulletList())
 	{
 		hitFlug = _col->IsHit(_player.GetRect(), b->GetCircle());
 		if (hitFlug == true && (_player.GetObjType() != b->GetObjType()))
@@ -138,10 +137,9 @@ GameScene::BulletColPlayer()
 void
 GameScene::BulletColBlock()
 {
-	BulletFactory* fac = BulletManager::Instance(). GetFactory();
 	bool hitFlug = false;
 
-	for (auto bullet : fac->Getlist())
+	for (auto bullet : BulletManager::Instance().GetBulletList())
 	{
 		for (auto block : MapManager::Instance().GetList())
 		{
@@ -196,12 +194,11 @@ GameScene::CreateColBox()
 void
 GameScene::BulletColEnemy()
 {
-	BulletFactory* fac = BulletManager::Instance().GetFactory();
 	bool hitFlug = false;
 
 	EnemyFactory* enemies = EnemyManager::Instance().GetEnemyFac();
 
-	for (auto bullet : fac->Getlist())
+	for (auto bullet : BulletManager::Instance().GetBulletList())
 	{
 		for (auto enemy : enemies->GetEnemyList())
 		{

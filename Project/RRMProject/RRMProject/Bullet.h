@@ -44,6 +44,9 @@ public:
 	virtual void Draw() = 0;						//描画
 	ObjectType GetObjType();
 
+	//弾を使用したキャラのポインタを返す
+	Object* GetOwner();
+
 	inline void Destory() { _isAlive = false; }
 
 	void Hit(Player* otheer);

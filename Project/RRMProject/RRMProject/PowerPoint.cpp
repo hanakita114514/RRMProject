@@ -16,7 +16,7 @@ PowerPoint::~PowerPoint()
 void 
 PowerPoint::Update()
 {
-	if (_time.GetTime().seconds == RECOVERY_TIME)
+	if (_time.GetTime().seconds >= RECOVERY_TIME)
 	{
 		_time.Reset();
 

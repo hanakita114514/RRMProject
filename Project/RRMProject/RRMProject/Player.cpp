@@ -173,7 +173,7 @@ void Player::ShootState()
 {
 	Vector2 end = Vector2(1280, 720);
 	_ps = PlayerState::shoot;
-		Bullet* bullet = BulletManager::Instance().GetFactory()->GetBullet(BulletType::sinBullet, _dir, ObjectType::player, _shootPos);
+		Bullet* bullet = BulletManager::Instance().Create(BulletType::sinBullet, _dir, ObjectType::player, _shootPos, this);
 		bullet->SetPos(_shootPos);
 }
 

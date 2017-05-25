@@ -116,31 +116,31 @@ void Egg::Wait()
 void Egg::Shot(BulletType type, int count)	//UŒ‚
 {
 	Bullet* bullet = nullptr;
-	BulletFactory* fac = BulletManager::Instance().GetFactory();
+	BulletManager& bm = BulletManager::Instance();
 	int cnt = count;
 
 	switch (type)
 	{
 	case BulletType::normal:
 	{
-		bullet = fac->GetBullet(type, _dir, ObjectType::enemy);
+		bullet = bm.Create(type, _dir, ObjectType::enemy, _rc.pos, this);
 		bullet->SetPos(_rc.pos);
 	}
 	case BulletType::homing:
 	{
-		bullet = fac->GetBullet(type, _dir, ObjectType::enemy);
+		bullet = bm.Create(type, _dir, ObjectType::enemy, _rc.pos, this);
 		bullet->SetPos(_rc.pos);
 		break;
 	}
 	case BulletType::sinBullet:
 	{
-		bullet = fac->GetBullet(type,_dir, ObjectType::enemy);
+		bullet = bm.Create(type, _dir, ObjectType::enemy, _rc.pos, this);
 		bullet->SetPos(_rc.pos);
 		break;
 	}
 	case BulletType::deffusion:
 	{
-			bullet = fac->GetBullet(type, _dir, ObjectType::enemy);
+			bullet = bm.Create(type, _dir, ObjectType::enemy, _rc.pos, this);
 			bullet->SetPos(_rc.pos);
 			if (cnt != 0)
 			{
@@ -154,7 +154,7 @@ void Egg::Shot(BulletType type, int count)	//UŒ‚
 	}
 	case BulletType::bezier:
 	{
-		bullet = fac->GetBullet(type, _dir, ObjectType::enemy, _rc.pos);
+		bullet = bm.Create(type, _dir, ObjectType::enemy, _rc.pos, this);
 		bullet->SetPos(_rc.pos);
 		break;
 	}
@@ -166,7 +166,7 @@ void Egg::Shot(BulletType type, int count)	//UŒ‚
 		}
 		--cnt;
 		ShotAngleCalc(_shootPos[cnt]);
-		bullet = fac->GetBullet(type, _shootVec, ObjectType::enemy);
+		bullet = bm.Create(type, _shootVec, ObjectType::enemy, _rc.pos, this);
 		bullet->SetPos(_shootPos[cnt]);
 		if (cnt != 0)
 		{

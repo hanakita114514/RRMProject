@@ -20,19 +20,8 @@ BulletFactory::~BulletFactory()
 }
 
 Bullet*
-BulletFactory::GetBullet(const BulletType& bulletID, Vector2 vec,ObjectType type,Vector2 entry)
+BulletFactory::Create(const BulletType& bulletID, Vector2 vec,ObjectType type,Vector2 entry)
 {
-	//使える弾の検索
-	for (auto b : _bulletList)
-	{
-		if (b->GetID() == bulletID && !b->IsAlive())
-		{
-			b->Initialize(vec, type);
-			return b;
-		}
-	}
-
-	//使える弾がない場合、新しい弾を生成
 	Bullet* newBullet = nullptr;
 
 	switch (bulletID)
@@ -83,22 +72,5 @@ BulletFactory::GetBullet(const BulletType& bulletID, Vector2 vec,ObjectType type
 		break;
 	}
 
-	if (newBullet)
-	{
-		_bulletList.push_back(newBullet);
-	}
-
 	return newBullet;
-}
-
-void
-BulletFactory::Delete()
-{
-	std::vector<Bullet*>::iterator itr;
-	itr = _bulletList.begin();
-
-	for (itr ; itr != _bulletList.end(); itr++)
-	{
-		itr = _bulletList.erase(itr);
-	}
 }
