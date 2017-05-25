@@ -14,18 +14,35 @@ EnemyManager::~EnemyManager()
 
 void EnemyManager::Update()
 {
-	_enemyList = _fac->GetEnemyList();
-	for (Enemy* a : _enemyList)
+	std::vector<Enemy*>& enemyList = _fac->GetEnemyList();
+	for (auto e : enemyList)
 	{
-		a->Update();
+		e->Update();
+	}
+
+	//削除ループ
+	//不要なもの削除ループ
+	std::vector<Enemy*>::iterator it = enemyList.begin();
+	for (; it != enemyList.end();)
+	{
+		if ((*it)->IsDead())
+		{
+			delete(*it);
+			it = enemyList.erase(it);
+		}
+		else
+		{
+			it++;
+		}
 	}
 }
 
 void EnemyManager::Draw()
 {
-	for (Enemy* a : _enemyList)
+	std::vector<Enemy*>& enemyList = _fac->GetEnemyList();
+	for (auto e : enemyList)
 	{
-		a->Draw();
+		e->Draw();
 	}
 }
 

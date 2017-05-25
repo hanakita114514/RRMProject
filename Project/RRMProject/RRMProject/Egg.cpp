@@ -31,10 +31,13 @@ Egg::Egg(int* handle)
 	Circle c = {};
 	_circle = c;
 	_circle.radius = _rc.w / 2;
+
+	_isAlive = true;
 }
 
 Egg::~Egg()
 {
+	BulletManager::Instance().Delete(this);
 }
 
 void Egg::Initialize()
@@ -195,4 +198,13 @@ void Egg::Hit(Block* other)
 	_rc.SetBottom(other->GetRect().Top());
 	_hitGround = true;
 	_vel.y = 0;
+}
+
+void
+Egg::Hit(Bullet* other)
+{
+	if (other->GetObjType() == ObjectType::player)
+	{
+		_isAlive = false;
+	}
 }

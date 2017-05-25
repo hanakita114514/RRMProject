@@ -19,6 +19,7 @@ protected:
 	Vector2 _vel;			//速度
 	bool _hitGround;
 	Vector2 _dir;
+	bool _isAlive;
 
 private:
 
@@ -31,9 +32,12 @@ public:
 	virtual void Update() = 0;				//更新
 	virtual void Draw() = 0;				//描画
 	virtual void Anim() = 0;				//アニメーション
+
 	ObjectType GetObjType();
 	Vector2 GetVel() { return _vel; }
 
 	void SetHitGround(bool isHit) { _hitGround = isHit; }
+
+	bool IsDead() { return !_isAlive; }
 };
 

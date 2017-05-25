@@ -43,6 +43,7 @@ BulletManager::Create(const BulletType& bulletID, Vector2 vec, ObjectType type, 
 	{
 		if (b->GetID() == bulletID && !b->IsAlive())
 		{
+			b->SetOwner(owner);
 			b->Initialize(vec, type);
 			return b;
 		}
@@ -50,6 +51,7 @@ BulletManager::Create(const BulletType& bulletID, Vector2 vec, ObjectType type, 
 
 	//Žg‚¦‚é’e‚ª‚È‚¢ê‡V‚½‚É¶¬
 	Bullet* newBullet = _fac.Create(bulletID, vec, type, entry);
+	newBullet->SetOwner(owner);
 	_bulletList.push_back(newBullet);
 
 	return newBullet;
@@ -76,11 +78,15 @@ BulletManager::Delete(Object* owner)
 
 	for (itr; itr != _bulletList.end(); itr++)
 	{
-		itr = _bulletList.erase(itr);
+		if ((*itr)->GetOwner() == owner)
+		{
+			delete(*itr);
+			itr = _bulletList.erase(itr);
+		}
 	}
 }
 
-std::vector<Bullet*> 
+std::vector<Bullet*>&
 BulletManager::GetBulletList()
 {
 	return _bulletList;

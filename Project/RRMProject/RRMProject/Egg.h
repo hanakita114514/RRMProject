@@ -52,6 +52,7 @@ public:
 
 	virtual void Hit(Player* other);
 	virtual void Hit(Block* other);
+	void Hit(Bullet* other);
 
 };
 

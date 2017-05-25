@@ -14,6 +14,6 @@ public:
 	~EnemyFactory();
 
 	Enemy* Create(const EnemyType& et);
-	std::vector<Enemy*> GetEnemyList() { return _enemyList; }
+	std::vector<Enemy*>& GetEnemyList() { return _enemyList; }
 };
 

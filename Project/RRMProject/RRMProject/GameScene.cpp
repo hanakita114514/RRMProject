@@ -206,6 +206,7 @@ GameScene::BulletColEnemy()
 			if (hitFlug == true && (enemy->GetObjType() != bullet->GetObjType()))
 			{
 				(bullet)->Hit(enemy);
+				enemy->Hit(bullet);
 				break;
 			}
 		}

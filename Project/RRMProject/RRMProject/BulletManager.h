@@ -39,6 +39,6 @@ public:
 	//w’è‚µ‚½ƒLƒƒƒ‰‚Ì’e‚ğÁ–Å‚³‚¹‚é
 	void Delete(Object* owner);
 
-	std::vector<Bullet*> GetBulletList();
+	std::vector<Bullet*>& GetBulletList();
 };
 

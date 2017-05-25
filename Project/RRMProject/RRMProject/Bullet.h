@@ -32,6 +32,7 @@ protected:
 	ObjectType _objType;	//敵、プレイヤーの区別のタイプ
 	float _life;				//弾の寿命
 
+	Object* _owner;
 
 public:
 	Bullet();
@@ -46,6 +47,7 @@ public:
 
 	//弾を使用したキャラのポインタを返す
 	Object* GetOwner();
+	void SetOwner(Object* obj);
 
 	inline void Destory() { _isAlive = false; }
 

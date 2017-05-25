@@ -48,3 +48,15 @@ void Bullet::Hit(Block* other)
 {
 	Destory();
 }
+
+Object*
+Bullet::GetOwner()
+{
+	return _owner;
+}
+
+void 
+Bullet::SetOwner(Object* obj)
+{
+	_owner = obj;
+}
