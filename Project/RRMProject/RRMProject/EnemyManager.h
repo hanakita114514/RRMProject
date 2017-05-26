@@ -1,17 +1,17 @@
 #pragma once
 #include "Enemy.h"
 #include <vector>
-
-class EnemyFactory;
+#include "EnemyFactory.h"
 
 class EnemyManager
 {
 private:
-	std::vector<Enemy*> _enemyList;
-	EnemyFactory* _fac;
 	EnemyManager();
 	EnemyManager(const EnemyManager&);
 	EnemyManager& operator = (const EnemyManager&);
+
+	EnemyFactory _fac;
+	std::vector<Enemy*> _enemyList;
 
 public:
 	~EnemyManager();
@@ -24,9 +24,12 @@ public:
 
 	void Update();						//çXêV
 	void Draw();						//ï`âÊ
+
 	void Push(Enemy* enemy);
+	void Create(const EnemyType& et);
 	void Delete();
 
-	EnemyFactory* GetEnemyFac() { return _fac; }
+	std::vector<Enemy*>& GetEnemyList() { return _enemyList; }
+
 };
 

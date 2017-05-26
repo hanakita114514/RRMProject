@@ -37,6 +37,5 @@ EnemyFactory::Create(const EnemyType& et)
 		break;
 	}
 
-	_enemyList.push_back(enemy);
 	return enemy;
 }

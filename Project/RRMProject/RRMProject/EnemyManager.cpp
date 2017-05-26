@@ -1,34 +1,31 @@
 #include "EnemyManager.h"
 #include "EnemyFactory.h"
 
-EnemyManager::EnemyManager() : _fac(new EnemyFactory())
+EnemyManager::EnemyManager()
 {
-
 }
 
 
 EnemyManager::~EnemyManager()
 {
-	delete _fac;
 }
 
 void EnemyManager::Update()
 {
-	std::vector<Enemy*>& enemyList = _fac->GetEnemyList();
-	for (auto e : enemyList)
+	for (auto e : _enemyList)
 	{
 		e->Update();
 	}
 
 	//削除ループ
 	//不要なもの削除ループ
-	std::vector<Enemy*>::iterator it = enemyList.begin();
-	for (; it != enemyList.end();)
+	std::vector<Enemy*>::iterator it = _enemyList.begin();
+	for (; it != _enemyList.end();)
 	{
 		if ((*it)->IsDead())
 		{
 			delete(*it);
-			it = enemyList.erase(it);
+			it = _enemyList.erase(it);
 		}
 		else
 		{
@@ -39,8 +36,7 @@ void EnemyManager::Update()
 
 void EnemyManager::Draw()
 {
-	std::vector<Enemy*>& enemyList = _fac->GetEnemyList();
-	for (auto e : enemyList)
+	for (auto e : _enemyList)
 	{
 		e->Draw();
 	}
@@ -50,6 +46,14 @@ void
 EnemyManager::Push(Enemy* enemy)
 {
 	_enemyList.push_back(enemy);
+}
+
+void 
+EnemyManager::Create(const EnemyType& et)
+{
+	Enemy* newEnemy = _fac.Create(et);
+	_enemyList.push_back(newEnemy);
+
 }
 
 void

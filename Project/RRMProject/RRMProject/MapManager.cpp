@@ -32,10 +32,7 @@ bool MapManager::Initialize()
 		return false;
 	}
 
-	
-	_fac = EnemyManager::Instance().GetEnemyFac();
 
-	Enemy* enemy = nullptr;
 
 	return true;
 }
@@ -48,10 +45,9 @@ void MapManager::Finalize()
 
 void MapManager::Update()
 {
-	if (createFlug != true)
+	if (!createFlug)
 	{
-		newEnemy = _fac->Create(EnemyType::egg);
-		EnemyManager::Instance().Push(newEnemy);
+		EnemyManager::Instance().Create(EnemyType::egg);
 		createFlug = true;
 	}
 

@@ -50,8 +50,8 @@ public:
 
 	void ShotAngleCalc(Vector2 shootPos);
 
-	virtual void Hit(Player* other);
-	virtual void Hit(Block* other);
+	void Hit(Player* other);
+	void Hit(Block* other);
 	void Hit(Bullet* other);
 
 };

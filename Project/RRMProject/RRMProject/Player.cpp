@@ -251,7 +251,7 @@ Player::AliveUpdate()
 void 
 Player::DyingUpdate()
 {
-
+	int a = 0;
 }
 
 void
@@ -326,7 +326,7 @@ Player::DirLeft()
 
 void Player::Hit(Enemy* other)
 {
-
+	_update = &Player::DyingUpdate;
 }
 
 void Player::Hit(Block* other)

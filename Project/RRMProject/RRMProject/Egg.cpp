@@ -13,6 +13,7 @@ Egg::Egg(int* handle)
 	{
 		_img[i] = handle[i];
 	}
+
 	_animCnt = 0;
 	_shotCnt = 0;
 
@@ -191,8 +192,8 @@ void Egg::ShotAngleCalc(Vector2 shootPos)
 
 void Egg::Hit(Player* other)
 {
-
 }
+
 void Egg::Hit(Block* other)
 {
 	_rc.SetBottom(other->GetRect().Top());

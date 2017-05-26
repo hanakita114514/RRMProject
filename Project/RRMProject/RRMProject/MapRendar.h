@@ -68,6 +68,6 @@ public:
 	bool MapLoad();
 	void MapDraw();
 
-	std::vector<Block> GetBlockList() { return _blockList; }
+	std::vector<Block>& GetBlockList() { return _blockList; }
 };
 
