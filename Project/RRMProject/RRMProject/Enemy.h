@@ -39,5 +39,11 @@ public:
 	void SetHitGround(bool isHit) { _hitGround = isHit; }
 
 	bool IsDead() { return !_isAlive; }
+
+	virtual void Hit(Block &other);
+	virtual void Hit(Player& other);
+	virtual void Hit(Bullet& other);
+
+	bool IsHit() { return _hitGround; }
 };
 

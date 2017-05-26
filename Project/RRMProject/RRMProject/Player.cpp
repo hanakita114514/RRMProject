@@ -329,23 +329,28 @@ void Player::Hit(Enemy* other)
 	_update = &Player::DyingUpdate;
 }
 
-void Player::Hit(Block* other)
+void Player::Hit(Block& other)
 {
-	if (_vel.x != 0)
+/*	if (_vel.x != 0)
 	{
-		_vel.x < 0 ? _rc.SetLeft(other->GetRect().Right()) : _rc.SetRight(other->GetRect().Left());
+		_dir.x < 0 ? _rc.SetLeft(other.GetRect().Right()) : _rc.SetRight(other.GetRect().Left());
 	}
+	else*/ 
 	if(_vel.y != 0)
 	{
 		if (_vel.y > 0)
 		{
-			_rc.SetBottom(other->GetRect().Top());
+			_rc.SetBottom(other.GetRect().Top());
 			_hitGround = true;
 			_vel.y = 0;
 		}
-		else
+		else 
 		{
-			_vel.y = 0;
+			if (!_hitGround)
+			{
+				_rc.SetTop(other.GetRect().Bottom());
+				_vel.y = 0;
+			}
 		}
 	}
 }

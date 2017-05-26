@@ -80,13 +80,17 @@ public:
 
 	ObjectType GetObjType();
 	Vector2 GetVel() { return _vel; }
+	Vector2 GetDir() { return _dir; }
 
 	Circle GetGraze() { return _grazePoint; }
 
 	void SlowMotion();
 
 	virtual void Hit(Enemy* other);
-	virtual void Hit(Block* other);
+	virtual void Hit(Block& other);
 	virtual void Hit(Bullet* other);
+
+
+	bool IsHit() { return _hitGround; }
 };
 

@@ -50,8 +50,8 @@ void MapManeger::Update()
 	_enemy = GameMain::Instance().GetEnemy();
 	if (createFlug != true)
 	{
-		newEnemy = _fac->Create(EnemyType::egg);
-		_enemy->Push(newEnemy);
+	//	newEnemy = _fac->Create(EnemyType::egg);
+	//	_enemy->Push(newEnemy);
 		createFlug = true;
 	}
 

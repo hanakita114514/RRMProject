@@ -30,7 +30,7 @@ public:
 
 	virtual void Hit(Player* other);
 	virtual void Hit(Enemy* other);
-	virtual void Hit(Block* other);
+	virtual void Hit(Block& other);
 	virtual void Hit(Bullet* other);
 };
 
