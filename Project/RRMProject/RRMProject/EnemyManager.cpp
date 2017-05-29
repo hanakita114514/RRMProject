@@ -8,11 +8,12 @@ EnemyManager::EnemyManager()
 
 EnemyManager::~EnemyManager()
 {
+	Delete();
 }
 
 void EnemyManager::Update()
 {
-	for (auto e : _enemyList)
+	for (auto& e : _enemyList)
 	{
 		e->Update();
 	}
@@ -36,7 +37,7 @@ void EnemyManager::Update()
 
 void EnemyManager::Draw()
 {
-	for (auto e : _enemyList)
+	for (auto& e : _enemyList)
 	{
 		e->Draw();
 	}
@@ -61,8 +62,9 @@ EnemyManager::Delete()
 {
 	std::vector<Enemy*>::iterator itr;
 	itr = _enemyList.begin();
-	for (itr; itr != _enemyList.end(); ++itr)
+	for (itr; itr != _enemyList.end();)
 	{
+		delete (*itr);
 		itr = _enemyList.erase(itr);
 	}
 }

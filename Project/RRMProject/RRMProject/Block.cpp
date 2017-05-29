@@ -24,7 +24,11 @@ void Block::Initialize(Vector2 pos, int handle,Vector2 size)
 	_objType = ObjectType::common;
 }
 
-void Block::Draw()
+void Block::Draw(const Vector2& offset)
 {
-	DxLib::DrawGraph(_rc.pos.x, _rc.pos.y, _handle, true);
+	Vector2 drawPos;
+	drawPos.x = _rc.pos.x + offset.x;
+	drawPos.y = _rc.pos.y + offset.y;
+
+	DxLib::DrawGraph(drawPos.x, drawPos.y, _handle, true);
 }

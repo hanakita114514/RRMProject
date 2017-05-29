@@ -1,7 +1,14 @@
-﻿  BulletManager.cpp
+﻿  Player.cpp
 c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\vector2.h(64): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
 c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\vector2.h(71): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
 c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\gamemain.h(7): warning C4099: 'Rect': タイプ名は最初 'struct' として使われていましたが 'class' として使われています。
   c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\rect.h(6): note: 'Rect' の宣言を確認してください
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\homingbullet.h(4): warning C4305: '初期化中': 'double' から 'float' へ切り詰めます。
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\player.cpp(209): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\player.cpp(283): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\player.cpp(293): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\player.cpp(297): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\player.cpp(304): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\player.cpp(374): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
   RRMProject.vcxproj -> C:\Users\1501343\Desktop\卒業制作\trunk\Project\RRMProject\x64\Debug\RRMProject.exe
   RRMProject.vcxproj -> C:\Users\1501343\Desktop\卒業制作\trunk\Project\RRMProject\x64\Debug\RRMProject.pdb (Full PDB)

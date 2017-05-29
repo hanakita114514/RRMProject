@@ -19,7 +19,10 @@ MapManager::MapManager()
 
 MapManager::~MapManager()
 {
+	delete _map;
+	delete _bg;
 
+	Delete();
 }
 
 bool MapManager::Initialize()
@@ -31,8 +34,6 @@ bool MapManager::Initialize()
 	{
 		return false;
 	}
-
-
 
 	return true;
 }
@@ -54,8 +55,20 @@ void MapManager::Update()
 	_list = _map->GetBlockList();
 }
 
-void MapManager::Draw()
+void MapManager::Draw(const Vector2& offset)
 {
 	_bg->Draw();
-	_map->MapDraw();
+	_map->MapDraw(offset);
+}
+
+void 
+MapManager::Delete()
+{
+	auto itr = _list.begin();
+
+	for (; itr != _list.end();)
+	{
+		delete (*itr);
+		itr = _list.erase(itr);
+	}
 }

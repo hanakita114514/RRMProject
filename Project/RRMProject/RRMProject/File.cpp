@@ -17,7 +17,7 @@ File::File(const char* filePath)
 
 File::~File()
 {
-
+	Finalize();
 }
 
 bool File::Initialize()

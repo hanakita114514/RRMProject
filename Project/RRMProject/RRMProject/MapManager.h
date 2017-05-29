@@ -18,7 +18,7 @@ private:
 	bool _mapErr;				//マップ読み込みエラー用フラグ
 	bool _bgErr;				//背景読み込みエラー用フラグ
 	bool createFlug;			//デバッグ用敵生成フラグ
-	std::vector<Block> _list;
+	std::vector<Block*> _list;
 
 	MapManager();
 	MapManager(const MapManager&);
@@ -35,12 +35,13 @@ public:
 	}
 
 	bool Initialize();
-	void Draw();
 	void Update();
+	void Draw(const Vector2& offset);
+	void Delete();
 	void Finalize();
 
 	EnemyFactory* GetEnemyFact() { return _fac; }
-	std::vector<Block>& GetList() { return _list; }
+	std::vector<Block*>& GetList() { return _list; }
 	MapRendar* GetMap() { return _map; }
 };
 

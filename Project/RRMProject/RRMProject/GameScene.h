@@ -2,6 +2,7 @@
 
 #include "Scene.h"
 #include "Player.h"
+#include "Camera.h"
 
 class Collision;
 
@@ -11,6 +12,8 @@ private:
 	Player _player;
 	Collision* _col;
 	std::vector<Block*> _colBlock;
+	
+	Camera _camera;
 
 
 	void EnemyColBlock();

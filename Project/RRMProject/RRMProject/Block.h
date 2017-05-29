@@ -1,5 +1,6 @@
 #pragma once
 #include "RectObj.h"
+
 class Block : public RectObj
 {
 	enum class BlockType
@@ -12,10 +13,10 @@ protected:
 	ObjectType _objType;
 public:
 	Block();
-	~Block();
+	virtual ~Block();
 
-	void Initialize(Vector2 pos, int handle,Vector2 size);
+	virtual void Initialize(Vector2 pos, int handle,Vector2 size);
 
-	void Draw();
+	virtual void Draw(const Vector2& offset);
 };
 

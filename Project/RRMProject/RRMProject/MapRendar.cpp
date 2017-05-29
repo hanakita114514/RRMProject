@@ -35,15 +35,16 @@ bool MapRendar::MapLoad()
 
 	 BlockInit();
 
+	 delete file;
+
 	return true;
 }
 
-void MapRendar::MapDraw()
+void MapRendar::MapDraw(const Vector2& offset)
 {
-	vector<Block>::iterator itr = _blockList.begin();
-	for (itr; itr != _blockList.end(); itr++)
+	for (auto b : _blockList)
 	{
-		itr->Draw();
+		b->Draw(offset);
 	}
 }
 
@@ -76,7 +77,7 @@ void MapRendar::BlockInit()
 					b->Initialize(Vector2(x * MAP_CHIP_SIZE_X, y * MAP_CHIP_SIZE_Y),
 											_mapImage[_mapList[y][x]],
 											Vector2(MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y));
-					_blockList.push_back(*b);
+					_blockList.push_back(b);
 				}
 			}
 		}

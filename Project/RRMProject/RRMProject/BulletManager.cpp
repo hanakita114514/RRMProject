@@ -9,19 +9,20 @@ BulletManager::BulletManager()
 
 BulletManager::~BulletManager()
 {
+	Delete();
 }
 
 void BulletManager::Update()
 {
-		//====================================================================
-		for (auto b : _bulletList)
+	//====================================================================
+	for (auto b : _bulletList)
+	{
+		if (b->IsAlive())
 		{
-			if (b->IsAlive())
-			{
-				b->Update();
-			}
+			b->Update();
 		}
-		//=====================================================================
+	}
+	//=====================================================================
 }
 
 void BulletManager::Draw()
@@ -64,8 +65,9 @@ BulletManager::Delete()
 	std::vector<Bullet*>::iterator itr;
 	itr = _bulletList.begin();
 
-	for (itr; itr != _bulletList.end(); ++itr)
+	for (itr; itr != _bulletList.end();)
 	{
+		delete (*itr);
 		itr = _bulletList.erase(itr);
 	}
 }

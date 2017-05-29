@@ -13,7 +13,7 @@ const float GRAVITY = 0.75f;
 const float jump_power = 20;
 const float fall_coefficient = 0.45f;
 
-Player::Player(int padType) : _input(padType), _hp(100), _pp(3)
+Player::Player(int padType, Camera& camera) : _input(padType), _hp(100), _pp(3), _camera(camera)
 {
 	_update = &Player::AliveUpdate;
 
@@ -121,7 +121,6 @@ void
 Player::AttackState()
 {
 	_ps = PlayerState::attack;
-
 }
 
 void
@@ -207,14 +206,23 @@ Player::AliveUpdate()
 	//パリィ
 	if (_input.Parry())
 	{
-		_sd.TheWorld(60.0f);
+		//_sd.TheWorld(30.0f);
+		_camera.Quake(Vector2(0, 7));
 	}
 
 	//ショット
-	if (_input.Shoot() || DxLib::CheckHitKey(KEY_INPUT_Z))
+	if (_input.Shoot())
 	{
 		_state = &Player::ShootState;
 	}
+
+#ifdef DEBUG
+	if (CheckHitKey(KEY_INPUT_Z)
+	{
+		_state = &Player::ShootState;
+	}
+#endif // DEBUG
+
 	else
 	{
 		_state = &Player::NeutralState;
@@ -262,6 +270,9 @@ Player::Update()
 void
 Player::Draw()
 {
+	Position drawPos;
+	drawPos.x = _rc.pos.x + _camera.GetOffset().x;
+	drawPos.y = _rc.pos.y + _camera.GetOffset().y;
 
 	switch (_ps)
 	{
@@ -269,7 +280,7 @@ Player::Draw()
 		break;
 
 	case Player::PlayerState::neutral:
-		DxLib::DrawGraph(_rc.pos.x, _rc.pos.y, _handleMap[PlayerState::neutral], true);
+		DxLib::DrawGraph(drawPos.x, drawPos.y, _handleMap[PlayerState::neutral], true);
 		break;
 
 	case Player::PlayerState::walk:
@@ -279,11 +290,11 @@ Player::Draw()
 		break;
 
 	case Player::PlayerState::shoot:
-		DxLib::DrawGraph(_rc.pos.x, _rc.pos.y, _handleMap[PlayerState::attack], true);
+		DxLib::DrawGraph(drawPos.x, drawPos.y, _handleMap[PlayerState::attack], true);
 		break;
 
 	case Player::PlayerState::avoidance:
-		DxLib::DrawGraph(_rc.pos.x, _rc.pos.y, _handleMap[PlayerState::avoidance], true);
+		DxLib::DrawGraph(drawPos.x, drawPos.y, _handleMap[PlayerState::avoidance], true);
 		break;
 
 	default:

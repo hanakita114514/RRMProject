@@ -9,6 +9,7 @@
 
 #include "SlowDown.h"
 #include "MultihitProtect.h"
+#include "Camera.h"
 
 
 #include <map>
@@ -44,6 +45,8 @@ private:
 
 	MultihitProtect _mhp;	//多段ヒットを防ぐ
 
+	Camera& _camera;
+
 
 	float _avoidTime;		//回避時間
 
@@ -75,7 +78,7 @@ private:
 	void HitGround();
 
 public:
-	Player(int padType);	//使うパッド番号を指定
+	Player(int padType, Camera& camera);	//使うパッド番号を指定
 	~Player();
 
 	void Init();

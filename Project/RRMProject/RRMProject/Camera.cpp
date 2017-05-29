@@ -53,6 +53,7 @@ Camera::Update()
 	if (_quakeFrame > 0)
 	{
 		_quakeOffset.x = -_quakeOffset.x * 0.9f;
+		_quakeOffset.y = -_quakeOffset.y * 0.9f;
 		--_quakeFrame;
 	}
 	else
@@ -64,7 +65,7 @@ Camera::Update()
 void 
 Camera::Quake(const Vector2& power)
 {
-	_quakeFrame = 0;
+	_quakeFrame = 60;
 	_quakeOffset = power;
 }
 

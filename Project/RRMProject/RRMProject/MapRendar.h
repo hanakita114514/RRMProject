@@ -55,7 +55,7 @@ private:
 	const char* _filePath;
 
 	std::vector<std::vector<unsigned int>> _mapList;
-	std::vector<Block> _blockList;
+	std::vector<Block*> _blockList;
 
 	void NomalizeArray();			//”z—ñ‚Ì—v‘f‚Ì³‹K‰»
 	void BlockInit();
@@ -66,8 +66,8 @@ public:
 	~MapRendar();
 
 	bool MapLoad();
-	void MapDraw();
+	void MapDraw(const Vector2& offset);
 
-	std::vector<Block>& GetBlockList() { return _blockList; }
+	std::vector<Block*>& GetBlockList() { return _blockList; }
 };
 
