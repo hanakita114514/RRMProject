@@ -36,7 +36,7 @@ public:
 
 	void Initialize();			//‰Šú‰»
 	void Update();				//XV
-	void Draw();				//•`‰æ
+	void Draw(const Vector2& offset);				//•`‰æ
 	void Anim();
 	void Move();
 

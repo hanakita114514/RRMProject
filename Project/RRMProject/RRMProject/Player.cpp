@@ -136,7 +136,7 @@ void Player::AvoidanceUpdate()
 	_ps = PlayerState::avoidance;
 
 	//”­“®‚µ‚½uŠÔ‚Í“®‚©‚È‚¢
-	if (_avoidTime >= 12.0f)
+	if (_avoidTime >= 10.0f)
 	{
 		return;
 	}

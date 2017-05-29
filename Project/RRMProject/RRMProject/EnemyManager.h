@@ -23,7 +23,7 @@ public:
 	}
 
 	void Update();						//XV
-	void Draw();						//•`‰æ
+	void Draw(const Vector2& offset);	//•`‰æ
 
 	void Push(Enemy* enemy);
 	void Create(const EnemyType& et);

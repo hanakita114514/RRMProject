@@ -77,9 +77,13 @@ void Egg::Update()
 	Move();
 }
 
-void Egg::Draw()
+void Egg::Draw(const Vector2& offset)
 {
-	DxLib::DrawGraph(_rc.pos.x,_rc.pos.y, _img[0], true);
+	Vector2 drawPos;
+	drawPos.x = _rc.pos.x + offset.x;
+	drawPos.y = _rc.pos.y + offset.y;
+
+	DxLib::DrawGraph(drawPos.x, drawPos.y, _img[0], true);
 }
 
 void Egg::Anim()

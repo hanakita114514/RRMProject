@@ -30,7 +30,7 @@ EnemyFactory::Create(const EnemyType& et)
 		break;
 	case EnemyType::mushroom:
 	{
-		enemy = new Mushroom();
+		//enemy = new Mushroom();
 	}
 		break;
 	default:

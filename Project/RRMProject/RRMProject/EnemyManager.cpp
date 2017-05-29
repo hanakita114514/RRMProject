@@ -35,11 +35,11 @@ void EnemyManager::Update()
 	}
 }
 
-void EnemyManager::Draw()
+void EnemyManager::Draw(const Vector2& offset)
 {
 	for (auto& e : _enemyList)
 	{
-		e->Draw();
+		e->Draw(offset);
 	}
 }
 

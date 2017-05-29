@@ -25,7 +25,7 @@ void Mushroom::Update()
 
 }
 
-void Mushroom::Draw()
+void Mushroom::Draw(const Vector2& offset)
 {
 	DxLib::DrawGraph(_rc.pos.x, _rc.pos.y, _handle, true);
 }

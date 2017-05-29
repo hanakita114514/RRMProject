@@ -34,7 +34,7 @@ public:
 	virtual void Initialize();
 
 	virtual void Update() = 0;				//更新
-	virtual void Draw() = 0;				//描画
+	virtual void Draw(const Vector2& offset) = 0;				//描画
 	virtual void Anim() = 0;				//アニメーション
 
 	ObjectType GetObjType();
