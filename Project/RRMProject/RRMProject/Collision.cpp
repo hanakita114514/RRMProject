@@ -20,7 +20,7 @@ bool Collision::IsHit(Rect &a, Vector2 velA, Rect &b)
 {
 	bool hitFlag = false;
 
-	float absX = abs(a.pos.x - b.pos.x);
+	/*float absX = abs(a.pos.x - b.pos.x);
 	float absY = abs(a.pos.y - b.pos.y);
 
 	int x = 0;
@@ -37,6 +37,14 @@ bool Collision::IsHit(Rect &a, Vector2 velA, Rect &b)
 	}
 
 	if( y >= absY &&(b.Left() < a.Right() && a.Left()< b.Right()))
+	{
+		hitFlag = true;
+	}*/
+
+	if ((a.Right() > b.Left()) &&
+		(a.Left() < b.Right()) &&
+		(a.Bottom() > b.Top()) &&
+		(a.Top() < b.Bottom()))
 	{
 		hitFlag = true;
 	}
@@ -192,7 +200,7 @@ Collision::LineCross(Rect r1, Vector2 vec1, Rect r2,bool hitGround)
 			td = (p1[i].x - p2[i].x) * (p4.y - p1[i].y) + (p1[i].y - p2[i].y) * (p1[i].x - p4.x);
 			if (_move == up || _move == down)
 			{
-				if ((tc * td < 0 && ta * tb < 0) && (r1.Right() >= r2.Left() && r1.Left() <= r2.Right()))
+				if ((tc * td < 0 && ta * tb < 0))
 				{
 					return true;
 					break;
@@ -200,7 +208,7 @@ Collision::LineCross(Rect r1, Vector2 vec1, Rect r2,bool hitGround)
 			}
 			else
 			{
-				if ((tc * td < 0 && ta * tb < 0) && (r1.Bottom() >= r2.Top() && r1.Top() <= r2.Bottom()))
+				if ((tc * td < 0 && ta * tb < 0))
 				{
 					return true;
 					break;
@@ -215,34 +223,4 @@ Collision::LineCross(Rect r1, Vector2 vec1, Rect r2,bool hitGround)
 
 		return false;
 }
-
-//void 
-//Collision::PushBack(Rect &ra, Rect &rb,Vector2 vecA)
-//{
-//	Rect r = ra;
-//	Vector2 vel = vecA;
-//	if (sink.y < sink.x)
-//	{
-//		if (vel.y > 0)
-//		{
-//			r.SetBottom(rb.Top());
-//		}
-//		else if (vel.y < 0)
-//		{
-//			r.SetTop(rb.Bottom());
-//		}
-//	}
-//	else
-//	{
-//		if (vel.x > 0)
-//		{
-//			r.SetRight(rb.Left());
-//		}
-//		else if (vel.x < 0)
-//		{
-//			r.SetLeft(rb.Right());
-//		}
-//	}
-//	ra = r;
-//}
 
