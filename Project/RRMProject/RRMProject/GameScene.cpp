@@ -53,22 +53,15 @@ bool GameScene::Update()
 void
 GameScene::PlayerColBlock()
 {
-	bool hitFlug = false;
-	std::vector<Block*>& blockList = MapManager::Instance().GetList();
-	for (auto& block : blockList)
+	_player.SetHitGround(false);
+	for (auto& block : MapManager::Instance().GetList())
 	{
 		Rect r = {};
 		r = block->GetRect();
-		hitFlug = _col->IsHit(_player.GetRect(), _player.GetVel(), r);
-		if (hitFlug == true)
+		if (_col->IsHit(_player.GetRect(), _player.GetVel(), r))
 		{
 			_player.Hit(block);
-			break;
 		}
-	}
-	if (hitFlug == false)
-	{
-		_player.SetHitGround(false);
 	}
 }
 

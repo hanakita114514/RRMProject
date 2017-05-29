@@ -339,25 +339,46 @@ void Player::Hit(Enemy* other)
 
 void Player::Hit(Block* other)
 {
-/*	if (_vel.x != 0)
+	float lenX = fabs(_rc.pos.x - other->GetRect().pos.x);
+	float lenY = fabs(_rc.pos.y - other->GetRect().pos.y);
+
+	if (lenX < lenY) // YŽ²‚É‰Ÿ‚µ–ß‚·
 	{
-		_dir.x < 0 ? _rc.SetLeft(other.GetRect().Right()) : _rc.SetRight(other.GetRect().Left());
-	}
-	else*/ 
-	if(_vel.y != 0)
-	{
-		if (_vel.y > 0)
+		if (_vel.y > 0)		//—Ž‰º‚µ‚Ä‚¢‚éê‡
 		{
-			_rc.SetBottom(other->GetRect().Top());
-			_hitGround = true;
-			_vel.y = 0;
+			if (_rc.pos.y < other->GetRect().pos.y && !_hitGround)
+			{
+				_rc.SetBottom(other->GetRect().Top());
+				_hitGround = true;
+				_vel.y = 0;
+			}
 		}
-		else 
+		else				//”ò‚ñ‚Å‚¢‚éê‡
 		{
-			if (!_hitGround)
+			if (_rc.pos.y > other->GetRect().pos.y)
 			{
 				_rc.SetTop(other->GetRect().Bottom());
 				_vel.y = 0;
+			}
+		}
+	}
+
+	if (lenY < lenX)	//XŽ²‚É‰Ÿ‚µ–ß‚·
+	{
+		if (_vel.x > 0)
+		{
+			if (_rc.pos.x < other->GetRect().pos.x)
+			{
+				_rc.SetRight(other->GetRect().Left());
+				_vel.x = 0;
+			}
+		}
+		else
+		{
+			if (_rc.pos.x > other->GetRect().pos.x)
+			{
+				_rc.SetLeft(other->GetRect().Right());
+				_vel.x = 0;
 			}
 		}
 	}
