@@ -1,4 +1,63 @@
-﻿  MapManager.cpp
+﻿  TitleScene.cpp
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\vector2.h(64): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\vector2.h(71): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\rect.h(6): warning C4099: 'Rect': タイプ名は最初 'class' として使われていましたが 'struct' として使われています。
+  c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\rect.h(5): note: 'Rect' の宣言を確認してください
+  Scene.cpp
+  ResultScene.cpp
+  OfficialScene.cpp
+  MenuScene.cpp
+  main.cpp
+  XInput.cpp
+  Timer.cpp
+  SoundManager.cpp
+  SlowDown.cpp
+  SinBullet.cpp
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\vector2.h(64): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\vector2.h(71): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\sinbullet.cpp(51): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+  RectObj.cpp
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\vector2.h(64): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\vector2.h(71): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+  Rect.cpp
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\vector2.h(64): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\vector2.h(71): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\rect.cpp(7): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+  PowerPoint.cpp
+  Player.cpp
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\vector2.h(64): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\vector2.h(71): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\gamemain.h(7): warning C4099: 'Rect': タイプ名は最初 'struct' として使われていましたが 'class' として使われています。
+  c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\rect.h(6): note: 'Rect' の宣言を確認してください
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\homingbullet.h(4): warning C4305: '初期化中': 'double' から 'float' へ切り詰めます。
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\player.cpp(211): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\player.cpp(278): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\player.cpp(288): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\player.cpp(292): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\player.cpp(299): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\player.cpp(366): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+  Object.cpp
+  NormalBullet.cpp
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\vector2.h(64): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\vector2.h(71): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\normalbullet.cpp(46): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+  Mushroom.cpp
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\vector2.h(64): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\vector2.h(71): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\mushroom.cpp(30): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+  MultihitProtect.cpp
+  Meat.cpp
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\vector2.h(64): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\vector2.h(71): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\meat.cpp(30): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+  コードを生成中...
+  コンパイル中...
+  MapRendar.cpp
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\vector2.h(64): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\vector2.h(71): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\maprendar.cpp(76): warning C4244: '引数': 'unsigned int' から 'float' への変換です。データが失われる可能性があります。
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\maprendar.cpp(78): warning C4244: '引数': 'const int' から 'float' への変換です。データが失われる可能性があります。
+  MapManager.cpp
 c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\vector2.h(64): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
 c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\vector2.h(71): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
 c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\gamemain.h(7): warning C4099: 'Rect': タイプ名は最初 'struct' として使われていましたが 'class' として使われています。
@@ -7,5 +66,132 @@ c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\collis
   c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\gamemain.h(7): note: 'Rect' の宣言を確認してください
 c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\circle.h(6): warning C4099: 'Circle': タイプ名は最初 'class' として使われていましたが 'struct' として使われています。
   c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\circle.h(5): note: 'Circle' の宣言を確認してください
-  RRMProject.vcxproj -> C:\Users\1501343\Desktop\卒業制作\trunk\Project\RRMProject\x64\Debug\RRMProject.exe
-  RRMProject.vcxproj -> C:\Users\1501343\Desktop\卒業制作\trunk\Project\RRMProject\x64\Debug\RRMProject.pdb (Full PDB)
+  Lazer.cpp
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\vector2.h(64): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\vector2.h(71): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\gamemain.h(7): warning C4099: 'Rect': タイプ名は最初 'struct' として使われていましたが 'class' として使われています。
+  c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\rect.h(6): note: 'Rect' の宣言を確認してください
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\lazer.cpp(52): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+  HomingBullet.cpp
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\vector2.h(64): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\vector2.h(71): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\homingbullet.h(4): warning C4305: '初期化中': 'double' から 'float' へ切り詰めます。
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\homingbullet.cpp(47): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+  HitPoint.cpp
+  Hamburger.cpp
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\vector2.h(64): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\vector2.h(71): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\hamburger.cpp(29): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+  GameTime.cpp
+  GameScene.cpp
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\vector2.h(64): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\vector2.h(71): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\collision.h(3): warning C4099: 'Rect': タイプ名は最初 'struct' として使われていましたが 'class' として使われています。
+  c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\rect.h(6): note: 'Rect' の宣言を確認してください
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\collision.h(4): warning C4099: 'Circle': タイプ名は最初 'struct' として使われていましたが 'class' として使われています。
+  c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\circle.h(6): note: 'Circle' の宣言を確認してください
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\gamescene.cpp(61): error C2664: 'void Player::Hit(Bullet *)': 引数 1 を 'Block *' から 'Enemy *' へ変換できません。
+  c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\gamescene.cpp(61): note: 指示された型は関連がありません。変換には reinterpret_cast、C スタイル キャストまたは関数スタイルのキャストが必要です。
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\gamescene.cpp(86): error C2664: 'void Enemy::Hit(Bullet &)': 引数 1 を 'Block *' から 'Block &' へ変換できません。
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\gamescene.cpp(108): error C2039: 'PushBack': 'Collision' のメンバーではありません。
+  c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\collision.h(19): note: 'Collision' の宣言を確認してください
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\gamescene.cpp(110): error C2664: 'void Enemy::Hit(Bullet &)': 引数 1 を 'Player *' から 'Block &' へ変換できません。
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\gamescene.cpp(206): error C2664: 'void Enemy::Hit(Bullet &)': 引数 1 を 'Bullet *' から 'Block &' へ変換できません。
+  GameoverScene.cpp
+  GameMain.cpp
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\vector2.h(64): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\vector2.h(71): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\rect.h(6): warning C4099: 'Rect': タイプ名は最初 'class' として使われていましたが 'struct' として使われています。
+  c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\rect.h(5): note: 'Rect' の宣言を確認してください
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\collision.h(3): warning C4099: 'Rect': タイプ名は最初 'struct' として使われていましたが 'class' として使われています。
+  c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\rect.h(6): note: 'Rect' の宣言を確認してください
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\collision.h(4): warning C4099: 'Circle': タイプ名は最初 'struct' として使われていましたが 'class' として使われています。
+  c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\circle.h(6): note: 'Circle' の宣言を確認してください
+  Food.cpp
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\vector2.h(64): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\vector2.h(71): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+  File.cpp
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\vector2.h(64): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\vector2.h(71): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\file.cpp(78): warning C4018: '<': signed と unsigned の数値を比較しようとしました。
+  Fade.cpp
+  EnemyManager.cpp
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\vector2.h(64): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\vector2.h(71): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+  EnemyFactory.cpp
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\vector2.h(64): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\vector2.h(71): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+  Enemy.cpp
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\vector2.h(64): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\vector2.h(71): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+  Egg.cpp
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\vector2.h(64): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\vector2.h(71): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\gamemain.h(7): warning C4099: 'Rect': タイプ名は最初 'struct' として使われていましたが 'class' として使われています。
+  c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\rect.h(6): note: 'Rect' の宣言を確認してください
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\egg.cpp(8): warning C4305: '初期化中': 'double' から 'float' へ切り詰めます。
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\egg.cpp(82): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+  DInput.cpp
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\vector2.h(64): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\vector2.h(71): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+  Digestion.cpp
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\vector2.h(64): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\vector2.h(71): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+  DeffusionBullet.cpp
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\vector2.h(64): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\vector2.h(71): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\deffusionbullet.cpp(7): warning C4244: '初期化中': 'float' から 'int' への変換です。データが失われる可能性があります。
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\deffusionbullet.cpp(50): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\deffusionbullet.cpp(66): warning C4244: '=': 'int' から 'float' への変換です。データが失われる可能性があります。
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\deffusionbullet.cpp(68): warning C4244: '=': 'int' から 'float' への変換です。データが失われる可能性があります。
+  コードを生成中...
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\digestion.cpp(37): warning C4700: 初期化されていないローカル変数 'ret' が使用されます
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\dinput.cpp(254): warning C4172: ローカル変数またはテンポラリのアドレスを返します: v
+  コンパイル中...
+  Collision.cpp
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\vector2.h(64): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\vector2.h(71): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\rect.h(6): warning C4099: 'Rect': タイプ名は最初 'class' として使われていましたが 'struct' として使われています。
+  c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\rect.h(5): note: 'Rect' の宣言を確認してください
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\circle.h(6): warning C4099: 'Circle': タイプ名は最初 'class' として使われていましたが 'struct' として使われています。
+  c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\circle.h(5): note: 'Circle' の宣言を確認してください
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\collision.cpp(30): warning C4244: '=': 'float' から 'int' への変換です。データが失われる可能性があります。
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\collision.cpp(31): warning C4244: '=': 'float' から 'int' への変換です。データが失われる可能性があります。
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\collision.cpp(35): warning C4244: '=': 'float' から 'int' への変換です。データが失われる可能性があります。
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\collision.cpp(36): warning C4244: '=': 'float' から 'int' への変換です。データが失われる可能性があります。
+  ClearScene.cpp
+  CircleObj.cpp
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\vector2.h(64): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\vector2.h(71): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+  CircleBullet.cpp
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\vector2.h(64): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\vector2.h(71): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\circlebullet.cpp(42): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+  Camera.cpp
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\vector2.h(64): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\vector2.h(71): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+  BulletManager.cpp
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\vector2.h(64): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\vector2.h(71): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\gamemain.h(7): warning C4099: 'Rect': タイプ名は最初 'struct' として使われていましたが 'class' として使われています。
+  c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\rect.h(6): note: 'Rect' の宣言を確認してください
+  BulletFactory.cpp
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\vector2.h(64): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\vector2.h(71): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\homingbullet.h(4): warning C4305: '初期化中': 'double' から 'float' へ切り詰めます。
+  Bullet.cpp
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\vector2.h(64): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\vector2.h(71): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+  Block.cpp
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\vector2.h(64): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\vector2.h(71): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\block.cpp(29): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+  BezierBullet.cpp
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\vector2.h(64): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\vector2.h(71): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\bezierbullet.cpp(52): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\bezierbullet.cpp(57): warning C4305: '+=': 'double' から 'float' へ切り詰めます。
+  BackgroundRendar.cpp
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\vector2.h(64): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+c:\users\1501343\desktop\卒業制作\trunk\project\rrmproject\rrmproject\vector2.h(71): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+  コードを生成中...
