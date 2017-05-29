@@ -11,6 +11,8 @@ const unsigned int PAD_LEFT_UP = 31500;
 
 const unsigned int PAD_MASK = 0x80;
 
+const unsigned int rep_interval = 15;
+
 DInput::DInput(int padType)
 {
 	_padType = padType;
@@ -103,6 +105,21 @@ DInput::IsRelease(const KeyType& keyType)
 bool 
 DInput::IsRepeat(const KeyType& keyType)
 {
+	if (IsPress(keyType))
+	{
+		_repFrame[keyType]++;
+	}
+	else
+	{
+		_repFrame[keyType] = 0;
+	}
+
+	if (_repFrame[keyType] > rep_interval)
+	{
+		_repFrame[keyType] = 0;
+		return true;
+	}
+
 	return false;
 }
 
@@ -152,6 +169,10 @@ bool
 DInput::Shoot()
 {
 	if (IsTriger(KeyType::keyA))
+	{
+		return true;
+	}
+	if (IsRepeat(KeyType::keyA))
 	{
 		return true;
 	}

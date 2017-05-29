@@ -158,7 +158,6 @@ void Player::AvoidanceUpdate()
 	_rc.pos.x += v.x * 20.0f * GameTime::Instance().GetTimeScale();
 	_rc.pos.y += v.y * 20.0f * GameTime::Instance().GetTimeScale();
 
-	//‰¼‚Ì’n–Ê‚ðì‚é
 	if (_hitGround == true)
 	{
 		_vel.y = 0;
@@ -221,22 +220,11 @@ Player::AliveUpdate()
 		_state = &Player::NeutralState;
 	}
 
+	HitGround();
+
 	(this->*_state)();
 
 
-	//‰¼‚Ì’n–Ê‚ðì‚é
-	if (_hitGround == true)
-	{
-		_vel.y = 0;
-
-		_isAirJump = false;
-		_isJump = false;
-		_secondJump = true;
-	}
-	else
-	{
-		_vel.y += GRAVITY * GameTime::Instance().GetTimeScale() * GameTime::Instance().GetTimeScale();
-	}
 
 	// Ž~‚Ü‚Á‚Ä‚é‚Æ‚«‚Í“®‚©‚³‚È‚¢
 	if (GameTime::Instance().GetTimeScale() != 0)
@@ -246,6 +234,12 @@ Player::AliveUpdate()
 
 	_rc.pos.x += _vel.x;
 	_vel.x = 0;
+}
+
+void 
+Player::DamageUpdate()
+{
+
 }
 
 void 
@@ -326,10 +320,13 @@ Player::DirLeft()
 
 void Player::Hit(Enemy* other)
 {
-	_update = &Player::DyingUpdate;
+	//if(!_mhp.IsAlreadyHit((Object*)other))
+	//{
+	//	_mhp.Hit((Object*)other);
+	//}
 }
 
-void Player::Hit(Block& other)
+void Player::Hit(Block* other)
 {
 /*	if (_vel.x != 0)
 	{
@@ -340,7 +337,7 @@ void Player::Hit(Block& other)
 	{
 		if (_vel.y > 0)
 		{
-			_rc.SetBottom(other.GetRect().Top());
+			_rc.SetBottom(other->GetRect().Top());
 			_hitGround = true;
 			_vel.y = 0;
 		}
@@ -348,7 +345,7 @@ void Player::Hit(Block& other)
 		{
 			if (!_hitGround)
 			{
-				_rc.SetTop(other.GetRect().Bottom());
+				_rc.SetTop(other->GetRect().Bottom());
 				_vel.y = 0;
 			}
 		}
@@ -364,4 +361,21 @@ void
 Player::SlowMotion()
 {
 	_sd.SlowMotion(60.0f);
+}
+
+void
+Player::HitGround()
+{
+	if (_hitGround == true)
+	{
+		_vel.y = 0;
+
+		_isAirJump = false;
+		_isJump = false;
+		_secondJump = true;
+	}
+	else
+	{
+		_vel.y += GRAVITY * GameTime::Instance().GetTimeScale() * GameTime::Instance().GetTimeScale();
+	}
 }

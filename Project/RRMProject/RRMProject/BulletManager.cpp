@@ -64,7 +64,7 @@ BulletManager::Delete()
 	std::vector<Bullet*>::iterator itr;
 	itr = _bulletList.begin();
 
-	for (itr; itr != _bulletList.end(); itr++)
+	for (itr; itr != _bulletList.end(); ++itr)
 	{
 		itr = _bulletList.erase(itr);
 	}
@@ -76,12 +76,16 @@ BulletManager::Delete(Object* owner)
 	std::vector<Bullet*>::iterator itr;
 	itr = _bulletList.begin();
 
-	for (itr; itr != _bulletList.end(); itr++)
+	for (; itr != _bulletList.end();)
 	{
 		if ((*itr)->GetOwner() == owner)
 		{
 			delete(*itr);
 			itr = _bulletList.erase(itr);
+		}
+		else
+		{
+			++itr;
 		}
 	}
 }

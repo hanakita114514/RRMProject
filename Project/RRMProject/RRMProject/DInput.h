@@ -2,6 +2,7 @@
 
 #include <DxLib.h>
 #include "Vector2.h"
+#include <map>
 
 const int HISTORY_NUM = 64;
 
@@ -29,6 +30,7 @@ private:
 	int _padType;
 	unsigned char GetKey(const unsigned char* pad, const KeyType& key);
 
+	std::map<KeyType, int> _repFrame;
 
 public:
 	DInput(int padType);	//パッドの番号を1～4で指定

@@ -40,7 +40,7 @@ public:
 	void Finalize();
 
 	EnemyFactory* GetEnemyFact() { return _fac; }
-	std::vector<Block> GetList() { return _list; }
+	std::vector<Block>& GetList() { return _list; }
 	MapRendar* GetMap() { return _map; }
 };
 

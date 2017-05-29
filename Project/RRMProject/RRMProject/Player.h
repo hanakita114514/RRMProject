@@ -8,6 +8,8 @@
 #include "Circle.h"
 
 #include "SlowDown.h"
+#include "MultihitProtect.h"
+
 
 #include <map>
 class Player : public RectObj
@@ -32,14 +34,16 @@ private:
 	Vector2 _vel;			//速度
 	DInput _input;			//インプット
 	Digestion _dig;			//消化
+	SlowDown _sd;			//遅くする
 
-	SlowDown _sd;
-
-	PlayerState _ps;
+	PlayerState _ps;		//プレイヤーの状態
 
 	Vector2 _dir;			//向き（1…右向き、-1…左向き)
 	Vector2 _shootPos;		//弾の発射位置
 	Circle _grazePoint;		//弾との当たり判定用の位置
+
+	MultihitProtect _mhp;	//多段ヒットを防ぐ
+
 
 	float _avoidTime;		//回避時間
 
@@ -54,10 +58,9 @@ private:
 	void Move();
 
 	void (Player::*_update)();
-	void (Player::*_isdir)();
-
 	void AliveUpdate();
 	void AvoidanceUpdate();
+	void DamageUpdate();
 	void DyingUpdate();
 
 	void (Player::*_state)();
@@ -65,8 +68,11 @@ private:
 	void NeutralState();
 	void ShootState();
 
+	void (Player::*_isdir)();
 	void DirRight();
 	void DirLeft();
+
+	void HitGround();
 
 public:
 	Player(int padType);	//使うパッド番号を指定
@@ -86,11 +92,11 @@ public:
 
 	void SlowMotion();
 
-	virtual void Hit(Enemy* other);
-	virtual void Hit(Block& other);
-	virtual void Hit(Bullet* other);
+	void Hit(Enemy* other);
+	void Hit(Block* other);
+	void Hit(Bullet* other);
 
 
-	bool IsHit() { return _hitGround; }
+	bool IsHitGround() { return _hitGround; }
 };
 

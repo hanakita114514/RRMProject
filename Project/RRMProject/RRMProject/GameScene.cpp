@@ -102,15 +102,15 @@ void GameScene::PlayerColEnemy()
 
 	for (auto& e : EnemyManager::Instance().GetEnemyList())
 	{
-			hitFlug = _col->IsHit(_player.GetRect(),_player.GetVel(), e->GetRect());
-			if (hitFlug == true)
-			{
-				_col->PushBack(_player.GetRect(), *e);
-				_player.Hit(e);
-				e->Hit(&_player);
+		hitFlug = _col->IsHit(_player.GetRect(),_player.GetVel(), e->GetRect());
+		if (hitFlug == true)
+		{
+			//_col->PushBack(_player.GetRect(), *e);
+			_player.Hit(e);
+			e->Hit(&_player);
 
-				break;
-			}
+			break;
+		}
 	}
 }
 
@@ -157,7 +157,7 @@ GameScene::CreateColBox()
 	Rect wr = {};
 
 	MapRendar* map = MapManager::Instance().GetMap();
-	std::vector<Block> b = map->GetBlockList();
+	std::vector<Block>& b = map->GetBlockList();
 	std::vector<Block>::iterator itr = b.begin();
 	Rect r = {};
 	r = itr->GetRect();

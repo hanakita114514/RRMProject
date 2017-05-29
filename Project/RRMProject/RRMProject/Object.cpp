@@ -21,7 +21,7 @@ void Object::Hit(Enemy* other)
 {
 
 }
-void Object::Hit(Block& other)
+void Object::Hit(Block* other)
 {
 
 }

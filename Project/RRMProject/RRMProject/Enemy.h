@@ -2,6 +2,8 @@
 
 #include "Vector2.h"
 #include "RectObj.h"
+#include "MultihitProtect.h"
+
 
 enum class EnemyType
 {
@@ -20,6 +22,8 @@ protected:
 	bool _hitGround;
 	Vector2 _dir;
 	bool _isAlive;
+
+	MultihitProtect _mhp;	//‘½’iƒqƒbƒg‚ð–h‚®
 
 private:
 
@@ -40,9 +44,9 @@ public:
 
 	bool IsDead() { return !_isAlive; }
 
-	virtual void Hit(Block &other);
-	virtual void Hit(Player& other);
-	virtual void Hit(Bullet& other);
+	virtual void Hit(Block* other);
+	virtual void Hit(Player* other);
+	virtual void Hit(Bullet* other);
 
 	bool IsHit() { return _hitGround; }
 };
