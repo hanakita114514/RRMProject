@@ -37,7 +37,7 @@ HomingBullet::Update()
 {
 	_homCnt++;
 
-	LifeDecree();
+	LifeDecrease();
 	Move();
 }
 
@@ -45,19 +45,6 @@ void
 HomingBullet::Draw()
 {
 	DrawGraph(_circle.pos.x, _circle.pos.y, _handle, true);
-}
-
-void 
-HomingBullet::SetAngle(Vector2* target, Vector2* own)
-{
-	_targetPos = target;
-	_ownPos = own;
-
-	Vector2 vec = *_targetPos - *_ownPos;
-	
-	float normal = sqrt(vec.x * vec.x + vec.y * vec.y);
-
-	_vel = Vector2(vec.x / normal, vec.y / normal);
 }
 
 void HomingBullet::Move()
@@ -74,7 +61,7 @@ void HomingBullet::Move()
 	_circle.pos.y = (_circle.pos.y + (_vel.y)) * GameTime::Instance().GetTimeScale();
 }
 
-void HomingBullet::LifeDecree()
+void HomingBullet::LifeDecrease()
 {
 	_life -= REDUCE_LIFE * GameTime::Instance().GetTimeScale();
 

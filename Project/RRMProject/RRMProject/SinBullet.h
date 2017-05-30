@@ -15,6 +15,6 @@ public:
 	void Draw();					//•`‰æ
 
 	void Move();					//ˆÚ“®
-	void LifeDecree();				//ƒ‰ƒCƒt‚ÌŒ¸ŽZ
+	void LifeDecrease();				//ƒ‰ƒCƒt‚ÌŒ¸ŽZ
 };
 

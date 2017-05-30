@@ -18,7 +18,7 @@ public:
 	void SetPos(Vector2 pos) 
 	{
 		_circle.pos.x = pos.x;
-		_circle.pos.y = pos.y + _circle.radius;
+		_circle.pos.y = pos.y;
 	}
 };
 

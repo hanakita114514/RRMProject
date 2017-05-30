@@ -61,7 +61,7 @@ Collision::IsHit(Rect &r, Circle &c)
 
 	float dist = sqrt(x * x + y * y);
 	
-	if (dist < r.h + c.radius && (r.pos.x < c.pos.x && c.pos.x < r.Right()))
+	if (dist < r.h + c.radius )
 	{
 		hitFlag = true;
 	}

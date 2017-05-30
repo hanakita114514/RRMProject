@@ -19,8 +19,6 @@ public:
 	void Draw();
 
 	void Move();
-	void LifeDecree();
-
-	void SetAngle(Vector2* target, Vector2* own);
+	void LifeDecrease();
 };
 

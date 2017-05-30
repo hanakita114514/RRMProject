@@ -365,7 +365,8 @@ void Player::Hit(Block* other)
 
 	if (lenY < lenX)	//XŽ²‚É‰Ÿ‚µ–ß‚·
 	{
-		if (_vel.x > 0)
+		int i = 0;
+		if (_dir.x == 1)		//‰EˆÚ“®
 		{
 			if (_rc.pos.x < other->GetRect().pos.x)
 			{
@@ -373,8 +374,9 @@ void Player::Hit(Block* other)
 				_vel.x = 0;
 			}
 		}
-		else
+		else				//¶ˆÚ“®
 		{
+			int i = 0;
 			if (_rc.pos.x > other->GetRect().pos.x)
 			{
 				_rc.SetLeft(other->GetRect().Right());

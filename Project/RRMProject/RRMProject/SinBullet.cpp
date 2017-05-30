@@ -40,7 +40,7 @@ SinBullet::Update()
 
 	_vel.y = sin((RAD /ANGLE * _freamCnt) - 1) * AMPLITUDE;
 
-	_life -= REDUCE_LIFE * GameTime::Instance().GetTimeScale();
+	LifeDecrease();
 
 	Move();
 }
@@ -64,9 +64,14 @@ SinBullet::Move()
 }
 
 void 
-SinBullet::LifeDecree()
+SinBullet::LifeDecrease()
 {
+	_life -= REDUCE_LIFE * GameTime::Instance().GetTimeScale();
 
+	if (_life == 0)
+	{
+		_isAlive = true;
+	}
 }
 
 
