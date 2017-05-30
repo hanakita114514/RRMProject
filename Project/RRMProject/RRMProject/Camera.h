@@ -25,6 +25,8 @@ public:
 	void Quake(const Vector2& power);
 
 	const Vector2& GetOffset();
+	//ƒ}ƒbƒv‚Ì‘å‚«‚³‚ð•Ô‚·
+	const Rect& GetMapSize();
 
 };
 

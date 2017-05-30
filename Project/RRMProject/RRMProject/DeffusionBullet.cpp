@@ -45,7 +45,7 @@ DeffusionBullet::Update()
 }
 
 void
-DeffusionBullet::Draw()
+DeffusionBullet::Draw(const Vector2& offset)
 {
 	DxLib::DrawGraph(_circle.pos.x, _circle.pos.y, _handle, true);
 }

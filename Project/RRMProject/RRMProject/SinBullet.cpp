@@ -46,7 +46,7 @@ SinBullet::Update()
 }
 
 void
-SinBullet::Draw()
+SinBullet::Draw(const Vector2& offset)
 {
 	DxLib::DrawGraph(_circle.pos.x, _circle.pos.y, _handle, true);
 }

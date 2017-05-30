@@ -42,7 +42,7 @@ HomingBullet::Update()
 }
 
 void
-HomingBullet::Draw()
+HomingBullet::Draw(const Vector2& offset)
 {
 	DrawGraph(_circle.pos.x, _circle.pos.y, _handle, true);
 }

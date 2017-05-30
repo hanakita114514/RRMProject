@@ -242,6 +242,25 @@ Player::AliveUpdate()
 	}
 
 	_rc.pos.x += _vel.x;
+
+	//ˆÚ“®§ŒÀ
+	if (_camera.GetMapSize().w <= _rc.pos.x)
+	{
+		_rc.pos.x = _camera.GetMapSize().w;
+	}
+	if (_rc.pos.x <= 0)
+	{
+		_rc.pos.x = 0;
+	}
+
+	if (_camera.GetMapSize().h <= _rc.pos.y)
+	{
+		_rc.pos.y = _camera.GetMapSize().h;
+	}
+	if (_rc.pos.y <= 0 - 64)
+	{
+		_rc.pos.y = 0 - 64;
+	}
 }
 
 void 
@@ -271,8 +290,8 @@ void
 Player::Draw()
 {
 	Position drawPos;
-	drawPos.x = _rc.pos.x + _camera.GetOffset().x;
-	drawPos.y = _rc.pos.y + _camera.GetOffset().y;
+	drawPos.x = _rc.pos.x - _camera.GetOffset().x;
+	drawPos.y = _rc.pos.y - _camera.GetOffset().y;
 
 	switch (_ps)
 	{

@@ -41,7 +41,7 @@ void NormalBullet::Update()
 	_circle.pos.y += _vel.y * GameTime::Instance().GetTimeScale();
 }
 
-void NormalBullet::Draw()
+void NormalBullet::Draw(const Vector2& offset)
 {
 	DxLib::DrawGraph(_circle.pos.x, _circle.pos.y, _handle, true);
 }

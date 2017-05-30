@@ -15,6 +15,7 @@ public:
 	~RectObj();
 
 	void SetPos(Rect pos) { _rc = pos; }
-	Rect GetRect() { return _rc; }
+	Position& GetPosition() { return _rc.pos; }
+	Rect& GetRect() { return _rc; }
 };
 

@@ -27,8 +27,8 @@ void Block::Initialize(Vector2 pos, int handle,Vector2 size)
 void Block::Draw(const Vector2& offset)
 {
 	Vector2 drawPos;
-	drawPos.x = _rc.pos.x + offset.x;
-	drawPos.y = _rc.pos.y + offset.y;
+	drawPos.x = _rc.pos.x - offset.x;
+	drawPos.y = _rc.pos.y - offset.y;
 
 	DxLib::DrawGraph(drawPos.x, drawPos.y, _handle, true);
 }

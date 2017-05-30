@@ -27,8 +27,8 @@ Camera::Init()
 	//ƒ}ƒbƒv‚Ì‘å‚«‚³‚ð“n‚·
 	_mapRc.pos.x = 0;
 	_mapRc.pos.y = 0;
-	_mapRc.w = WINDOW_WIDTH * 2;
-	_mapRc.h = WINDOW_HEIGHT * 2;
+	_mapRc.w = WINDOW_WIDTH;
+	_mapRc.h = WINDOW_HEIGHT;
 }
 
 void
@@ -73,4 +73,10 @@ const Vector2&
 Camera::GetOffset()
 {
 	return _offset;
+}
+
+const Rect& 
+Camera::GetMapSize()
+{
+	return _mapRc;
 }

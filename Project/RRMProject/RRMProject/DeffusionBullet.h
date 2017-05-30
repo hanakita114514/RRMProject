@@ -15,7 +15,7 @@ public:
 
 	void Initialize(Vector2 vec, ObjectType type);
 	void Update();
-	void Draw();
+	void Draw(const Vector2& offset);
 
 	void Move();
 

@@ -47,7 +47,7 @@ void Lazer::Update()
 }
 
 
-void Lazer::Draw()
+void Lazer::Draw(const Vector2& offset)
 {
 	DrawRotaGraph(_circle.pos.x, _circle.pos.y, 1,RAD, _handle[0], true);
 }

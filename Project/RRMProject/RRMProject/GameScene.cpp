@@ -43,7 +43,7 @@ bool GameScene::Update()
 	MapManager::Instance().Draw(_camera.GetOffset());
 	_player.Draw();
 	EnemyManager::Instance().Draw(_camera.GetOffset());
-	BulletManager::Instance().Draw();
+	BulletManager::Instance().Draw(_camera.GetOffset());
 
 	DxLib::DrawFormatString(0, 0, 0xffffffff, "GameScene");
 

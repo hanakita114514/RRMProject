@@ -80,8 +80,8 @@ void Egg::Update()
 void Egg::Draw(const Vector2& offset)
 {
 	Vector2 drawPos;
-	drawPos.x = _rc.pos.x + offset.x;
-	drawPos.y = _rc.pos.y + offset.y;
+	drawPos.x = _rc.pos.x - offset.x;
+	drawPos.y = _rc.pos.y - offset.y;
 
 	DxLib::DrawGraph(drawPos.x, drawPos.y, _img[0], true);
 }

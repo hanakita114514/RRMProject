@@ -13,7 +13,8 @@ public:
 	CircleObj();
 	~CircleObj();
 
-	Circle GetCircle() { return _circle; }
+	Circle& GetCircle() { return _circle; }
+	Position& GetPosition() { return _circle.pos; }
 	
 	void SetPos(Vector2 pos) 
 	{

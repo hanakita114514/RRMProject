@@ -42,7 +42,7 @@ public:
 	bool IsAlive();						//生きているか？
 	virtual void Initialize(Vector2 vec, ObjectType type);				//初期化
 	virtual void Update() = 0;						//更新
-	virtual void Draw() = 0;						//描画
+	virtual void Draw(const Vector2& offset) = 0;						//描画
 	ObjectType GetObjType();
 
 	//弾を使用したキャラのポインタを返す

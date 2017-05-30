@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Vector2.h"
+
 class Player;
 class Enemy;
 class Block;
@@ -29,6 +31,7 @@ public:
 	virtual ~Object();
 
 	virtual ObjectType GetObjType();
+	virtual Position& GetPosition() { return Position(0, 0); }
 
 	virtual void Hit(Player* other);
 	virtual void Hit(Enemy* other);

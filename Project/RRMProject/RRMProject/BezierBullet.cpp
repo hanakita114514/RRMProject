@@ -47,7 +47,7 @@ void BezierBullet::Update()
 	_circle.pos = _circle.pos - _vel * _vec.x;
 }
 
-void BezierBullet::Draw()
+void BezierBullet::Draw(const Vector2& offset)
 {
 	DxLib::DrawGraph(_circle.pos.x, _circle.pos.y, _handle, true);
 }

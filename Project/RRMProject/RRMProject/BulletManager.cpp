@@ -25,13 +25,13 @@ void BulletManager::Update()
 	//=====================================================================
 }
 
-void BulletManager::Draw()
+void BulletManager::Draw(const Vector2& offset)
 {
 	for (auto b : _bulletList)
 	{
 		if (b->IsAlive())
 		{
-			b->Draw();
+			b->Draw(offset);
 		}
 	}
 }

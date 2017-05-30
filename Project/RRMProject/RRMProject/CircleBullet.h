@@ -10,7 +10,7 @@ public:
 	~CircleBullet();
 
 	void Update();
-	void Draw();
+	void Draw(const Vector2& offset);
 	void Initialize(Vector2 vec, ObjectType type);
 
 	void Move();
