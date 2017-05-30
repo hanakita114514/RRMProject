@@ -21,8 +21,8 @@ private:
 	void PlayerColEnemy();
 	void BulletColPlayer();
 	void BulletColBlock();
-	void CreateColBox();
 	void BulletColEnemy();
+
 	void ColProcess();
 
 public:

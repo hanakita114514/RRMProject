@@ -58,7 +58,7 @@ GameScene::PlayerColBlock()
 	{
 		Rect r = {};
 		r = block->GetRect();
-		if (_col->IsHit(_player.GetRect(), _player.GetVel(), r))
+		if (_col->IsHit(_player.GetRect(), r))
 		{
 			_player.Hit(block);
 		}
@@ -77,7 +77,7 @@ GameScene::EnemyColBlock()
 		{
 			Rect r = {};
 			r = block->GetRect();
-			hitFlug = _col->IsHit(enemy->GetRect(),enemy->GetVel(), r);
+			hitFlug = _col->IsHit(enemy->GetRect(), r);
 			if (hitFlug == true)
 			{
 				enemy->Hit(block);
@@ -94,15 +94,13 @@ GameScene::EnemyColBlock()
 
 void GameScene::PlayerColEnemy()
 {
-
 	bool hitFlug;
 
 	for (auto& e : EnemyManager::Instance().GetEnemyList())
 	{
-		hitFlug = _col->IsHit(_player.GetRect(),_player.GetVel(), e->GetRect());
+		hitFlug = _col->LineCross(_player.GetRect(),_player.GetVel(), e->GetRect(),e->GetVel());
 		if (hitFlug == true)
 		{
-			//_col->PushBack(_player.GetRect(), *e);
 			_player.Hit(e);
 			e->Hit(&_player);
 
@@ -148,44 +146,6 @@ GameScene::BulletColBlock()
 	}
 }
 
-//void
-//GameScene::CreateColBox()
-//{
-//	Rect wr = {};
-//
-//	MapRendar* map = MapManager::Instance().GetMap();
-//	std::vector<Block*>& b = map->GetBlockList();
-//	std::vector<Block*>::iterator itr = b.begin();
-//	Rect r = {};
-//	r = (*itr)->GetRect();
-//
-//	for (itr; itr != b.end();)
-//	{
-//		if (itr == b.end() - 1)
-//		{
-//			Block* block = new Block();
-//			r.w += (*itr)->GetRect().w;
-//			block->SetPos(r);
-//			_colBlock.push_back(block);
-//			break;
-//		}
-//		else if ((itr + 1)->GetRect().pos.x - itr->GetRect().pos.x == itr->GetRect().w)
-//		{
-//			r.w += itr->GetRect().w;
-//			++itr;
-//		}
-//		else
-//		{
-//			Block* block = new Block();
-//			block->SetPos(r);
-//			_colBlock.push_back(block);
-//			++itr;
-//			r = itr->GetRect();
-//		}
-//	}
-//	int i = 0;
-//}
-
 void
 GameScene::BulletColEnemy()
 {
@@ -207,6 +167,7 @@ GameScene::BulletColEnemy()
 	}
 
 }
+
 
 void 
 GameScene::ColProcess()

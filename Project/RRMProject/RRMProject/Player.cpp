@@ -178,6 +178,7 @@ void Player::ShootState()
 void
 Player::AliveUpdate()
 {
+	_vel.x = 0;
 
 	Move();
 	Jump();
@@ -241,7 +242,6 @@ Player::AliveUpdate()
 	}
 
 	_rc.pos.x += _vel.x;
-	_vel.x = 0;
 }
 
 void 

@@ -54,6 +54,8 @@ public:
 	void Hit(Player* otheer);
 	void Hit(Enemy* other);
 	void Hit(Block* other);
+
+	Vector2 GetVel() { return _vel; }
 };
 
 

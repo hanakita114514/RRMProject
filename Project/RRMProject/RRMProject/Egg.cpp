@@ -73,7 +73,7 @@ void Egg::Update()
 
 	(this->*_state)();
 
-	//Jump();
+	Jump();
 	Move();
 }
 
@@ -105,7 +105,7 @@ void Egg::Jump()
 {
 	if ((_junpCnt % 60 == 0 && _junpCnt != 0) && _hitGround)
 	{
-		_vel.y = -10;
+		_vel.y = -25;
 		_hitGround = false;
 		_junpCnt++;
 	}

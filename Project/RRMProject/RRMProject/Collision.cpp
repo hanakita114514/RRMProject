@@ -16,30 +16,9 @@ Collision::~Collision()
 }
 
 
-bool Collision::IsHit(Rect &a, Vector2 velA, Rect &b)
+bool Collision::IsHit(Rect &a, Rect &b)
 {
 	bool hitFlag = false;
-
-	/*float absX = abs(a.pos.x - b.pos.x);
-	float absY = abs(a.pos.y - b.pos.y);
-
-	int x = 0;
-	int y = 0;
-	if (velA.y > 0)
-	{
-		x = a.w;
-		y = a.h;
-	}
-	else if (velA.y < 0)
-	{
-		x = a.w;
-		y = b.h;
-	}
-
-	if( y >= absY &&(b.Left() < a.Right() && a.Left()< b.Right()))
-	{
-		hitFlag = true;
-	}*/
 
 	if ((a.Right() > b.Left()) &&
 		(a.Left() < b.Right()) &&
@@ -224,3 +203,47 @@ Collision::LineCross(Rect r1, Vector2 vec1, Rect r2,bool hitGround)
 		return false;
 }
 
+bool
+Collision::LineCross(Rect rA, Vector2 vecA, Rect rB, Vector2 vecB)
+{
+	Vector2 startPointA, endPointA;		//ベクトルAの始点と終点
+	Vector2 startPointB, endPointB;		//ベクトルBの始点と終点
+
+	//ベクトルAが左向きか？
+	if (vecA.x < 0)
+	{
+		startPointA = rA.pos;
+	}
+	else
+	{
+		startPointA = rA.pos;
+		startPointA.x = rA.Right();
+	}
+
+	//ベクトルBが左向きか？
+	if (vecB.x < 0)
+	{
+		startPointB = rB.pos;
+	}
+	else
+	{
+		startPointB = rB.pos;
+		startPointB.x = rB.Right();
+	}
+
+	//終点を設定----------------------------------
+	endPointA = startPointA + vecA;
+	endPointB = startPointB + vecB;
+	//--------------------------------------------
+
+	//交差判定------------------------------------
+	if ((cross(endPointA - startPointA, startPointB - startPointA) *
+		cross(endPointA - startPointA, endPointB - startPointA) < 0) &&
+		cross(endPointB - startPointB, startPointA - startPointB) *
+		cross(endPointB - startPointB, endPointA - startPointB) < 0)
+	{
+		return true;
+	}
+	
+	return false;
+}
