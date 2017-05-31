@@ -25,6 +25,7 @@ private:
 protected:
 	int _handle;		//画像ハンドル
 
+	bool _deleteFlag;	//オンになったら消す
 
 public:
 	Object();
@@ -33,9 +34,15 @@ public:
 	virtual ObjectType GetObjType();
 	virtual Position& GetPosition() { return Position(0, 0); }
 
+	//消すフラグが立っているか？
+	bool IsDelete() { return _deleteFlag; }
+
 	virtual void Hit(Player* other);
 	virtual void Hit(Enemy* other);
 	virtual void Hit(Block* other);
 	virtual void Hit(Bullet* other);
+
+	//弱体化
+	virtual void Weakening();
 };
 

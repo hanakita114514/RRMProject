@@ -2,7 +2,7 @@
 
 
 
-Object::Object()
+Object::Object() : _deleteFlag(false)
 {
 }
 
@@ -31,6 +31,12 @@ void Object::Hit(Player* other)
 }
 
 void Object::Hit(Bullet* other)
+{
+
+}
+
+void
+Object::Weakening()
 {
 
 }

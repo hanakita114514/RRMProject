@@ -11,10 +11,10 @@ private:
 	Vector2 _quakeOffset;
 	int _quakeFrame;
 
-	Rect _rc;
-	Rect _mapRc;
+	Rect _rc;		//カメラの範囲
+	Rect _mapRc;	//マップの大きさ
 
-	const Position& _targetPos;
+	const Position& _targetPos;	//カメラが追うキャラの位置
 
 public:
 	Camera(const Position& targetPos);
@@ -24,6 +24,7 @@ public:
 	void Update();
 	void Quake(const Vector2& power);
 
+	//キャラの描画位置をずらす大きさを返す 結果を引く
 	const Vector2& GetOffset();
 	//マップの大きさを返す
 	const Rect& GetMapSize();

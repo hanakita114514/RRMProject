@@ -1,15 +1,16 @@
 #pragma once
 #include "Bullet.h"
+#include <memory>
 
 const float PI = 3.14;
 class HomingBullet : public Bullet
 {
 private:
-
-	Position* _targetPos;
-	Position* _ownPos;
+	Object* _target;
 	float _center;
 	int _homCnt;
+
+	bool TargetSearch();
 public:
 	HomingBullet(int handle,Vector2 vec);
 	~HomingBullet(); 
