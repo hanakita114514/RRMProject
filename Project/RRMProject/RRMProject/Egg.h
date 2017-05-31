@@ -54,5 +54,8 @@ public:
 	void Hit(Block* other);
 	void Hit(Bullet* other);
 
+	//Žã‘Ì‰»
+	void Weakening();
+
 };
 

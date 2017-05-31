@@ -40,6 +40,7 @@ HomingBullet::TargetSearch()
 	{
 		if (EnemyManager::Instance().GetEnemyList().size() == 0)
 		{
+			_target = nullptr;
 			return false;
 		}
 		Enemy* nearEnemy = EnemyManager::Instance().GetEnemyList()[0];
@@ -75,6 +76,7 @@ HomingBullet::TargetSearch()
 		return true;
 	}
 
+	_target = nullptr;
 	return false;
 }
 
@@ -90,7 +92,9 @@ HomingBullet::Update()
 void
 HomingBullet::Draw(const Vector2& offset)
 {
-	DrawGraph(_circle.pos.x, _circle.pos.y, _handle, true);
+	//DrawGraph(_circle.pos.x, _circle.pos.y, _handle, true);
+	_circle.DrawGraph(_handle);
+	_circle.DrawCircle();
 }
 
 void HomingBullet::Move()

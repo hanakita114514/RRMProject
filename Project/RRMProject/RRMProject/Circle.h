@@ -20,4 +20,7 @@ struct Circle
 	{
 
 	}
+
+	void DrawCircle();
+	void DrawGraph(int handle);
 };

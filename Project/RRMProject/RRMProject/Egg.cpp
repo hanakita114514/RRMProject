@@ -213,3 +213,9 @@ Egg::Hit(Bullet* other)
 		_isAlive = false;
 	}
 }
+
+void 
+Egg::Weakening()
+{
+
+}

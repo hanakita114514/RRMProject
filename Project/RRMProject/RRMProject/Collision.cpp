@@ -34,6 +34,7 @@ bool Collision::IsHit(Rect &a, Rect &b)
 bool
 Collision::IsHit(Rect &r, Circle &c)
 {
+	//Œã‚Å’¼‚·
 	bool hitFlag = false;
 	float x = abs(r.pos.x - c.pos.x);
 	float y = abs(r.pos.y - c.pos.y);

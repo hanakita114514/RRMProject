@@ -26,6 +26,7 @@
     <ClCompile Include="BulletFactory.cpp" />
     <ClCompile Include="BulletManager.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Circle.cpp" />
     <ClCompile Include="CircleBullet.cpp" />
     <ClCompile Include="CircleObj.cpp" />
     <ClCompile Include="ClearScene.cpp" />
@@ -33,6 +34,9 @@
     <ClCompile Include="DeffusionBullet.cpp" />
     <ClCompile Include="Digestion.cpp" />
     <ClCompile Include="DInput.cpp" />
+    <ClCompile Include="Effect.cpp" />
+    <ClCompile Include="EffectFactory.cpp" />
+    <ClCompile Include="EffectManager.cpp" />
     <ClCompile Include="Egg.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyFactory.cpp" />
@@ -47,6 +51,7 @@
     <ClCompile Include="Hamburger.cpp" />
     <ClCompile Include="HitPoint.cpp" />
     <ClCompile Include="HomingBullet.cpp" />
+    <ClCompile Include="HPBar.cpp" />
     <ClCompile Include="Lazer.cpp" />
     <ClCompile Include="MapManager.cpp" />
     <ClCompile Include="MapRendar.cpp" />
@@ -63,6 +68,9 @@
     <ClCompile Include="SlowDown.cpp" />
     <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="Timer.cpp" />
+    <ClCompile Include="UI.cpp" />
+    <ClCompile Include="UIFactory.cpp" />
+    <ClCompile Include="UpEffect.cpp" />
     <ClCompile Include="XInput.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MenuScene.cpp" />
@@ -88,6 +96,9 @@
     <ClInclude Include="DeffusionBullet.h" />
     <ClInclude Include="Digestion.h" />
     <ClInclude Include="DInput.h" />
+    <ClInclude Include="Effect.h" />
+    <ClInclude Include="EffectFactory.h" />
+    <ClInclude Include="EffectManager.h" />
     <ClInclude Include="Egg.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyFactory.h" />
@@ -102,6 +113,7 @@
     <ClInclude Include="Hamburger.h" />
     <ClInclude Include="HitPoint.h" />
     <ClInclude Include="HomingBullet.h" />
+    <ClInclude Include="HPBar.h" />
     <ClInclude Include="Lazer.h" />
     <ClInclude Include="MapManager.h" />
     <ClInclude Include="MapRendar.h" />
@@ -118,6 +130,9 @@
     <ClInclude Include="SlowDown.h" />
     <ClInclude Include="SoundManager.h" />
     <ClInclude Include="Timer.h" />
+    <ClInclude Include="UI.h" />
+    <ClInclude Include="UIFactory.h" />
+    <ClInclude Include="UpEffect.h" />
     <ClInclude Include="Vector2.h" />
     <ClInclude Include="Vector3.h" />
     <ClInclude Include="XInput.h" />

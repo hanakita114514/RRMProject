@@ -24,7 +24,6 @@ private:
 
 protected:
 	int _handle;		//‰æ‘œƒnƒ“ƒhƒ‹
-
 	bool _deleteFlag;	//ƒIƒ“‚É‚È‚Á‚½‚çÁ‚·
 
 public:

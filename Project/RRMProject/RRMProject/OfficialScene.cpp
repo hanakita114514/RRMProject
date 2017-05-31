@@ -5,10 +5,11 @@
 #include "common.h"
 #include "Fade.h"
 
-OfficialScene::OfficialScene()
-{
-	_testHandle = LoadGraph("Resource/img/mori.jpg");
 
+
+OfficialScene::OfficialScene() : _hp(100)
+{
+	_em.Create(EffectType::up, Position(400, 100));
 }
 
 
@@ -20,10 +21,16 @@ bool OfficialScene::Update()
 {
 	//----------çXêV----------------------------------------------------------------------------
 
+	_hp.Damage(1);
+
 	//----------ï`âÊ----------------------------------------------------------------------------
 	DrawFormatString(100, 100, 0xffffffff, "Official Scene");
 
-	DxLib::DrawExtendGraph(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, _testHandle, false);
+	_em.Update();
+	_em.Draw(Vector2(0, 0));
+
+
+	_hpbar.Draw(Position(300,100), _hp);
 
 
 	if (CheckHitKey(KEY_INPUT_RETURN) && Fade::Instance().IsWait())

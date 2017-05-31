@@ -49,4 +49,5 @@ struct Rect
 	Position Center() { return Position(pos.x + w / 2, pos.y + h / 2); }
 
 	void DrawBox();
+	void DrawGraph(int handle);
 };

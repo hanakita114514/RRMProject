@@ -34,7 +34,7 @@ bool GameMain::Init()
 	DxLib::SetDrawScreen(DX_SCREEN_BACK);
 
 	Fade::Instance().Init();
-	_scene = new GameScene();
+	_scene = new OfficialScene();
 
 	return true;
 }

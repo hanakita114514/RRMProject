@@ -2,7 +2,7 @@
 #include "Block.h"
 
 
-Enemy::Enemy()
+Enemy::Enemy() : _hp(50.0f)
 {
 }
 

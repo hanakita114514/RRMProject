@@ -2,8 +2,8 @@
 class HitPoint
 {
 private:
-	int _hp;
-	int _maxHp;
+	float _hp;
+	float _maxHp;
 
 public:
 	HitPoint(int hp);	//HP‚ğİ’è
@@ -21,7 +21,7 @@ public:
 	//HP‚ªÅ‘å‚©H
 	bool IsHpMax();
 
-	int GetHitPoint();
-	int GetMaxHP();
+	float GetHitPoint();
+	float GetMaxHP();
 };
 

@@ -31,6 +31,7 @@ private:
 
 private:
 	HitPoint _hp;			//体力
+
 	PowerPoint _pp;			//パワーポイント
 	Vector2 _vel;			//速度
 	DInput _input;			//インプット
@@ -46,6 +47,7 @@ private:
 	MultihitProtect _mhp;	//多段ヒットを防ぐ
 
 	Camera& _camera;
+
 
 
 	float _avoidTime;		//回避時間

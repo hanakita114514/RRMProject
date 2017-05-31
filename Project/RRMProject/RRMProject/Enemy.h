@@ -3,6 +3,7 @@
 #include "Vector2.h"
 #include "RectObj.h"
 #include "MultihitProtect.h"
+#include "HitPoint.h"
 
 
 enum class EnemyType
@@ -23,6 +24,7 @@ protected:
 	Vector2 _dir;
 	bool _isAlive;
 
+	HitPoint _hp;
 	MultihitProtect _mhp;	//‘½’iƒqƒbƒg‚ð–h‚®
 
 private:

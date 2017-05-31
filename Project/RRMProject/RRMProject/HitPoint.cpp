@@ -57,13 +57,13 @@ HitPoint::IsHpMax()
 	return false;
 }
 
-int
+float
 HitPoint::GetHitPoint()
 {
 	return _hp;
 }
 
-int
+float
 HitPoint::GetMaxHP()
 {
 	return _maxHp;
