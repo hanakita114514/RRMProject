@@ -30,7 +30,7 @@ public:
 
 	bool LineCross(Rect r1, Vector2 vec1, Rect r2,bool hitGround);	//線分交差(矩形と矩形)
 
-	bool LineCross(Rect rA,Vector2 vecA, Rect rB,Vector2 vecB); //線分交差（ベクトル同士）
+	bool LineCross(Vector2 posA,Vector2 vecA, Vector2 posB,Vector2 vecB); //線分交差（ベクトル同士）
 
 
 };

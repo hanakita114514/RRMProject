@@ -114,7 +114,7 @@ void Egg::Jump()
 void Egg::Wait()
 {
 
-	if ((_shotCnt % 10 == 0 && _shotCnt != 0))
+	if ((_shotCnt % 5 == 0 && _shotCnt != 0))
 	{
 		_state = &Egg::Shot;
 	}

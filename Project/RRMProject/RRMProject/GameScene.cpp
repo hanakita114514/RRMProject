@@ -69,7 +69,7 @@ void
 GameScene::EnemyColBlock()
 {
 	MapRendar* map = MapManager::Instance().GetMap();
-	bool hitFlug = false;
+	bool hitFlag = false;
 
 	for (auto& enemy : EnemyManager::Instance().GetEnemyList())
 	{
@@ -77,14 +77,14 @@ GameScene::EnemyColBlock()
 		{
 			Rect r = {};
 			r = block->GetRect();
-			hitFlug = _col->IsHit(enemy->GetRect(), r);
-			if (hitFlug == true)
+			hitFlag = _col->IsHit(enemy->GetRect(), r);
+			if (hitFlag == true)
 			{
 				enemy->Hit(block);
 				break;
 			}
 		}
-		if (hitFlug == false)
+		if (hitFlag == false)
 		{
 			enemy->SetHitGround(false);
 		}
@@ -94,12 +94,12 @@ GameScene::EnemyColBlock()
 
 void GameScene::PlayerColEnemy()
 {
-	bool hitFlug;
+	bool hitFlag;
 
 	for (auto& e : EnemyManager::Instance().GetEnemyList())
 	{
-		hitFlug = _col->LineCross(_player.GetRect(),_player.GetVel(), e->GetRect(),e->GetVel());
-		if (hitFlug == true)
+		hitFlag = _col->IsHit(_player.GetRect(), e->GetRect());
+		if (hitFlag == true)
 		{
 			_player.Hit(e);
 			e->Hit(&_player);
@@ -112,13 +112,18 @@ void GameScene::PlayerColEnemy()
 void
 GameScene::BulletColPlayer()
 {
-	bool hitFlug = false;
-
+	bool lineHit = false;
+	bool hitFlag = false;
 
 	for (auto& b : BulletManager::Instance().GetBulletList())
 	{
-		hitFlug = _col->IsHit(_player.GetRect(), b->GetCircle());
-		if (hitFlug == true && (_player.GetObjType() != b->GetObjType()))
+		if (!b->IsAlive())
+		{
+			continue;
+		}
+		//hitFlag = _col->IsHit(_player.GetRect(), b->GetCircle());
+		lineHit = _col->LineCross(_player.GetPosition(), _player.GetVel(), b->GetPosition(), b->GetVel());
+		if ((hitFlag || lineHit) && (_player.GetObjType() != b->GetObjType()))
 		{
 			b->Hit(&_player);
 			break;
@@ -130,14 +135,14 @@ GameScene::BulletColPlayer()
 void
 GameScene::BulletColBlock()
 {
-	bool hitFlug = false;
+	bool hitFlag = false;
 
 	for (auto& bullet : BulletManager::Instance().GetBulletList())
 	{
 		for (auto& block : MapManager::Instance().GetList())
 		{
-			hitFlug = _col->IsHit(block->GetRect(), bullet->GetCircle());
-			if (hitFlug == true && (block->GetObjType() != bullet->GetObjType()))
+			hitFlag = _col->IsHit(block->GetRect(), bullet->GetCircle());
+			if (hitFlag == true && (block->GetObjType() != bullet->GetObjType()))
 			{
 				(bullet)->Hit(block);
 				break;
@@ -149,15 +154,15 @@ GameScene::BulletColBlock()
 void
 GameScene::BulletColEnemy()
 {
-	bool hitFlug = false;
+	bool hitFlag = false;
 
 
 	for (auto& bullet : BulletManager::Instance().GetBulletList())
 	{
 		for (auto& enemy : EnemyManager::Instance().GetEnemyList())
 		{
-			hitFlug = _col->IsHit(enemy->GetRect(), bullet->GetCircle());
-			if (hitFlug == true && (enemy->GetObjType() != bullet->GetObjType()))
+			hitFlag = _col->IsHit(enemy->GetRect(), bullet->GetCircle());
+			if (hitFlag == true && (enemy->GetObjType() != bullet->GetObjType()))
 			{
 				(bullet)->Hit(enemy);
 				enemy->Hit(bullet);

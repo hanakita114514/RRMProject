@@ -5,8 +5,8 @@
 
 const int LIFE_DEF = 20;
 //弾の画像サイズは24*24
-//弾自体のサイズは22*22にしてあります
-const float BULLET_RADIUS = 22 / 2;		//半径
+//弾自体のサイズは24*24にしてあります
+const float BULLET_RADIUS = 24 / 2;		//半径
 
 enum class BulletType
 {

@@ -14,7 +14,11 @@ Collision::Collision()
 Collision::~Collision()
 {
 }
+//円が矩形に当たっているかどうか
+bool CircleColToRect(Rect &a, Circle &c); 
 
+//2点間の距離を求める
+float DistanceCalcuration(Vector2 &v1, Vector2 &v2);
 
 bool Collision::IsHit(Rect &a, Rect &b)
 {
@@ -36,15 +40,37 @@ Collision::IsHit(Rect &r, Circle &c)
 {
 	//後で直す
 	bool hitFlag = false;
-	float x = abs(r.pos.x - c.pos.x);
-	float y = abs(r.pos.y - c.pos.y);
 
-	float dist = sqrt(x * x + y * y);
-	
-	if (dist < r.h + c.radius )
+	Rect horizonRect, verticalRect; //縦長の長方形と横長の長方形
+	horizonRect = r;
+	horizonRect.pos.x -= c.radius;
+	horizonRect.w = r.w + c.radius * 2;		//幅を設定
+
+	verticalRect = r;
+	verticalRect.pos.y -= c.radius;
+	verticalRect.h = r.h + c.radius * 2;	//高さを設定
+
+	Vector2 leftUp, rightUp, leftDown, rightDown;
+
+	//矩形の各頂点を設定する---------------------------------
+	leftUp = Vector2(r.Left(), r.Top());
+	rightUp = Vector2(r.Right(), r.Top());
+	leftDown = Vector2(r.Left(), r.Bottom());
+	rightDown = Vector2(r.Right(), r.Bottom());
+	//-------------------------------------------------------
+
+	//衝突判定-------------------------------------------------------------------
+	if (CircleColToRect(horizonRect, c) || CircleColToRect(verticalRect, c))
 	{
-		hitFlag = true;
+		if ((DistanceCalcuration(leftUp, c.pos) < (c.radius * c.radius)) &&
+			(DistanceCalcuration(rightUp, c.pos) < (c.radius * c.radius)) &&
+			(DistanceCalcuration(leftDown, c.pos) < (c.radius * c.radius)) &&
+			(DistanceCalcuration(rightDown, c.pos) < (c.radius * c.radius)))
+		{
+			hitFlag = true;
+		}
 	}
+	//---------------------------------------------------------------------------
 
 	return hitFlag;
 }
@@ -205,46 +231,103 @@ Collision::LineCross(Rect r1, Vector2 vec1, Rect r2,bool hitGround)
 }
 
 bool
-Collision::LineCross(Rect rA, Vector2 vecA, Rect rB, Vector2 vecB)
+Collision::LineCross(Vector2 posA, Vector2 vecA, Vector2 posB, Vector2 vecB)
 {
 	Vector2 startPointA, endPointA;		//ベクトルAの始点と終点
 	Vector2 startPointB, endPointB;		//ベクトルBの始点と終点
 
-	//ベクトルAが左向きか？
-	if (vecA.x < 0)
+	////ベクトルAが左向きか？
+	//if (vecA.x < 0)
+	//{
+	//	startPointA = rA.pos;
+	//}
+	//else
+	//{
+	//	startPointA = rA.pos;
+	//	startPointA.x = rA.Right();
+	//}
+
+	////ベクトルBが左向きか？
+	//if (vecB.x < 0)
+	//{
+	//	startPointB = rB.pos;
+	//}
+	//else
+	//{
+	//	startPointB = rB.pos;
+	//	startPointB.x = rB.Right();
+	//}
+
+	////終点を設定----------------------------------
+	//endPointA = startPointA + vecA;
+	//endPointB = startPointB + vecB;
+	////--------------------------------------------
+
+	////交差判定------------------------------------
+	//if ((cross(endPointA - startPointA, startPointB - startPointA) *
+	//	cross(endPointA - startPointA, endPointB - startPointA) < 0) &&
+	//	cross(endPointB - startPointB, startPointA - startPointB) *
+	//	cross(endPointB - startPointB, endPointA - startPointB) < 0)
+	//{
+	//	return true;
+	//}
+	//
+	//return false;
+
+	//startPointA = posA;
+	//startPointB = posB;
+	//endPointA = startPointA + vecA;
+	//endPointB = startPointB + vecB;
+
+	//if ((cross(endPointA - startPointA, startPointB - startPointA) *
+	//	cross(endPointA - startPointA, endPointB - startPointA) < 0) &&
+	//	cross(endPointB - startPointB, startPointA - startPointB) *
+	//	cross(endPointB - startPointB, endPointA - startPointB) < 0)
+	//{
+	//	return true;
+	//}
+
+	float crsVaVb = cross(vecA, vecB);
+	if (crsVaVb == 0)
 	{
-		startPointA = rA.pos;
-	}
-	else
-	{
-		startPointA = rA.pos;
-		startPointA.x = rA.Right();
+		return false;
 	}
 
-	//ベクトルBが左向きか？
-	if (vecB.x < 0)
+	Vector2 v = posB - posA;
+	float t1 = cross(v, vecA);
+	float t2 = cross(v, vecB);
+
+	float t3 = t1 / crsVaVb;
+	float t4 = t2 / crsVaVb;
+
+	if (t3 < 0 || t3 > 1 || t4 < 0 || t4 > 1)
 	{
-		startPointB = rB.pos;
-	}
-	else
-	{
-		startPointB = rB.pos;
-		startPointB.x = rB.Right();
+		return false;
 	}
 
-	//終点を設定----------------------------------
-	endPointA = startPointA + vecA;
-	endPointB = startPointB + vecB;
-	//--------------------------------------------
+	return true;
+}
 
-	//交差判定------------------------------------
-	if ((cross(endPointA - startPointA, startPointB - startPointA) *
-		cross(endPointA - startPointA, endPointB - startPointA) < 0) &&
-		cross(endPointB - startPointB, startPointA - startPointB) *
-		cross(endPointB - startPointB, endPointA - startPointB) < 0)
+bool CircleColToRect(Rect &a, Circle &c)
+{
+	if ((a.Left() < c.pos.x && a.Top() < c.pos.y) &&
+		(a.Left() < c.pos.x && a.Bottom() > c.pos.y) &&
+		(a.Right() > c.pos.x && a.Top() < c.pos.y) &&
+		(a.Right() > c.pos.x && a.Bottom() > c.pos.y))
 	{
 		return true;
 	}
 	
 	return false;
+}
+
+float DistanceCalcuration(Vector2 &v1, Vector2 &v2)
+{
+	float distance = 0;
+	float x, y;
+
+	x = abs(v1.x - v2.x);
+	y = abs(v1.y - v2.y);
+
+	return distance = sqrt(x * x + y * y);
 }
