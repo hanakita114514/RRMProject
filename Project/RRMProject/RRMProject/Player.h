@@ -48,7 +48,7 @@ private:
 
 	Camera& _camera;
 
-
+	int _nosedive;
 
 	float _avoidTime;		//‰ñ”ğŠÔ
 

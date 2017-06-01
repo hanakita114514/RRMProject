@@ -166,6 +166,17 @@ DInput::Down()
 }
 
 bool 
+DInput::Nosedive()
+{
+	if (_pad.Y - _history[0].Y > 300)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+bool 
 DInput::Shoot()
 {
 	if (IsTriger(KeyType::keyA))

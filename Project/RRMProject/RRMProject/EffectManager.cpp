@@ -27,7 +27,7 @@ EffectManager::Update()
 		{
 			delete (*itr);
 			*itr = nullptr;
-			_effectList.erase(itr);
+			itr = _effectList.erase(itr);
 		}
 		else
 		{

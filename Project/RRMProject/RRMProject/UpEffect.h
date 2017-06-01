@@ -7,7 +7,7 @@ private:
 	void AnimUV();
 
 public:
-	UpEffect(int handle);
+	UpEffect(int handle, const Position& pos);
 	~UpEffect();
 
 	void Update();

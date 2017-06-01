@@ -7,8 +7,8 @@ class Effect
 protected:
 	int _handle;
 	float _frame;
-
 	Position _pos;		//åªç›à íu
+	Vector2 _uv;
 
 	bool _deleteFlag;	//ÉIÉìÇ…Ç»Ç¡ÇΩÇÁè¡Ç∑
 public:

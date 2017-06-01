@@ -34,6 +34,7 @@ Player::Player(int padType, Camera& camera) : _input(padType), _hp(100), _pp(3),
 	_isAirJump = false;
 	_isJump = false;
 	_secondJump = true;
+	_nosedive = 1;
 
 	_speed = 6.0f;
 
@@ -77,6 +78,10 @@ Player::Move()
 		_dir.x = 1;
 		_isdir = &Player::DirRight;
 	}
+	if (_input.Nosedive())
+	{
+		_nosedive = 4;
+	}
 }
 
 
@@ -89,6 +94,7 @@ Player::Jump()
 		_vel.y = -jump_power * GameTime::Instance().GetTimeScale();
 		_isJump = true;
 		_hitGround = false;
+		_nosedive = 1;
 	}
 
 	if (_vel.y > 0)
@@ -113,6 +119,7 @@ Player::Jump()
 		_vel.y = -jump_power * GameTime::Instance().GetTimeScale();
 		_isJump = true;
 		_secondJump = false;
+		_nosedive = 1;
 	}
 
 }
@@ -426,9 +433,10 @@ Player::HitGround()
 		_isAirJump = false;
 		_isJump = false;
 		_secondJump = true;
+		_nosedive = 1;
 	}
 	else
 	{
-		_vel.y += GRAVITY * GameTime::Instance().GetTimeScale() * GameTime::Instance().GetTimeScale();
+		_vel.y += GRAVITY * GameTime::Instance().GetTimeScale() * GameTime::Instance().GetTimeScale() * _nosedive;
 	}
 }

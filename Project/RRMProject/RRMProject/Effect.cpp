@@ -2,7 +2,7 @@
 
 
 
-Effect::Effect()
+Effect::Effect() : _deleteFlag(false)
 {
 }
 

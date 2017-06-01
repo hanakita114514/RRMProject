@@ -55,6 +55,9 @@ public:
 	bool Up();
 	bool Down();
 
+	//‹}~‰º
+	bool Nosedive();
+
 	//UŒ‚
 	bool Shoot();		//‰“‹——£UŒ‚
 	bool Attack();		//’ÊíUŒ‚

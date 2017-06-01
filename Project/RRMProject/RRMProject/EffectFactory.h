@@ -13,6 +13,7 @@ enum class EffectType : unsigned int
 	//‚±‚±‚É’Ç‰Á
 	up,
 	down,
+	flash,
 
 };
 

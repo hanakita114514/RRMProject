@@ -34,6 +34,7 @@
     <ClCompile Include="DeffusionBullet.cpp" />
     <ClCompile Include="Digestion.cpp" />
     <ClCompile Include="DInput.cpp" />
+    <ClCompile Include="DownEffect.cpp" />
     <ClCompile Include="Effect.cpp" />
     <ClCompile Include="EffectFactory.cpp" />
     <ClCompile Include="EffectManager.cpp" />
@@ -48,6 +49,7 @@
     <ClCompile Include="GameoverScene.cpp" />
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="GameTime.cpp" />
+    <ClCompile Include="GeneralEffect.cpp" />
     <ClCompile Include="Hamburger.cpp" />
     <ClCompile Include="HitPoint.cpp" />
     <ClCompile Include="HomingBullet.cpp" />
@@ -96,6 +98,7 @@
     <ClInclude Include="DeffusionBullet.h" />
     <ClInclude Include="Digestion.h" />
     <ClInclude Include="DInput.h" />
+    <ClInclude Include="DownEffect.h" />
     <ClInclude Include="Effect.h" />
     <ClInclude Include="EffectFactory.h" />
     <ClInclude Include="EffectManager.h" />
@@ -110,6 +113,7 @@
     <ClInclude Include="GameoverScene.h" />
     <ClInclude Include="GameScene.h" />
     <ClInclude Include="GameTime.h" />
+    <ClInclude Include="GeneralEffect.h" />
     <ClInclude Include="Hamburger.h" />
     <ClInclude Include="HitPoint.h" />
     <ClInclude Include="HomingBullet.h" />

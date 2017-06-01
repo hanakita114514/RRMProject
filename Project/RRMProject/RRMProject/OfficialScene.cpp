@@ -10,6 +10,8 @@
 OfficialScene::OfficialScene() : _hp(100)
 {
 	_em.Create(EffectType::up, Position(400, 100));
+	_em.Create(EffectType::down, Position(100, 200));
+	_em.Create(EffectType::flash, Position(500, 300));
 }
 
 
@@ -26,7 +28,7 @@ bool OfficialScene::Update()
 	//----------•`‰æ----------------------------------------------------------------------------
 	DrawFormatString(100, 100, 0xffffffff, "Official Scene");
 
-	_em.Update();
+ 	_em.Update();
 	_em.Draw(Vector2(0, 0));
 
 
