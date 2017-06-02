@@ -8,6 +8,7 @@
 #include "Lazer.h"
 #include "Block.h"
 #include "GameTime.h"
+#include "Enemy.h"
 
 const float GRAVITY = 0.75f;
 const float jump_power = 20;
@@ -218,7 +219,7 @@ Player::AliveUpdate()
 	//ƒpƒŠƒB
 	if (_input.Parry())
 	{
-		//_sd.TheWorld(30.0f);
+		_sd.TheWorld(30.0f);
 		_camera.Quake(Vector2(0, 7));
 	}
 
@@ -372,6 +373,55 @@ void Player::Hit(Enemy* other)
 	//{
 	//	_mhp.Hit((Object*)other);
 	//}
+
+	float lenX = fabs(_rc.pos.x - other->GetRect().pos.x);
+	float lenY = fabs(_rc.pos.y - other->GetRect().pos.y);
+
+	if (_ps != PlayerState::avoidance) // ‰ñ”ğ’†‚Å‚Í‚È‚©‚Á‚½‚çˆ—‚ğ‚·‚é
+	{
+		if (lenX < lenY) // Y²‚É‰Ÿ‚µ–ß‚·
+		{
+			if (_vel.y > 0)		//—‰º‚µ‚Ä‚¢‚éê‡
+			{
+				if (_rc.pos.y < other->GetRect().pos.y && !_hitGround)
+				{
+					_rc.SetBottom(other->GetRect().Top());
+					_hitGround = true;
+					_vel.y = 0;
+				}
+			}
+			else				//”ò‚ñ‚Å‚¢‚éê‡
+			{
+				if (_rc.pos.y > other->GetRect().pos.y)
+				{
+					_rc.SetTop(other->GetRect().Bottom());
+					_vel.y = 0;
+				}
+			}
+		}
+
+		if (lenY < lenX)	//X²‚É‰Ÿ‚µ–ß‚·
+		{
+			int i = 0;
+			if (_dir.x == 1)		//‰EˆÚ“®
+			{
+				if (_rc.pos.x < other->GetRect().pos.x)
+				{
+					_rc.SetRight(other->GetRect().Left());
+					_vel.x = 0;
+				}
+			}
+			else				//¶ˆÚ“®
+			{
+				int i = 0;
+				if (_rc.pos.x > other->GetRect().pos.x)
+				{
+					_rc.SetLeft(other->GetRect().Right());
+					_vel.x = 0;
+				}
+			}
+		}
+	}
 }
 
 void Player::Hit(Block* other)

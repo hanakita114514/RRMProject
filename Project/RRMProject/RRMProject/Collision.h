@@ -28,10 +28,11 @@ public:
 	bool IsHit(Rect &r, Circle &c);			//矩形と円
 	bool IsHit(Circle &c1, Circle &c2);
 
-	bool LineCross(Rect r1, Vector2 vec1, Rect r2,bool hitGround);	//線分交差(矩形と矩形)
+	//bool LineCross(Rect r1, Vector2 vec1, Rect r2,bool hitGround);	//線分交差(矩形と矩形)
 
-	bool LineCross(Vector2 posA,Vector2 vecA, Vector2 posB,Vector2 vecB); //線分交差（ベクトル同士）
+	bool LineCross(Rect character,Vector2 characterVec, Vector2 posB,Vector2 vecB); //円と矩形の線分交差（ベクトル同士）
 
+	bool LineCross(Rect characterA, Vector2 vecA, Rect characterB, Vector2 vecB);   //矩形と矩形の線分交差（ベクトル）
 
 };
 

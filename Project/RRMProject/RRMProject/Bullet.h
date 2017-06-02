@@ -33,6 +33,14 @@ protected:
 	float _life;				//’e‚ÌŽõ–½
 
 	Object* _owner;
+protected:
+	enum class BulletState
+	{
+		move,
+		stop
+	};
+
+	BulletState _bs;
 
 public:
 	Bullet();
@@ -56,6 +64,9 @@ public:
 	void Hit(Block* other);
 
 	Vector2 GetVel() { return _vel; }
+
+	void Stop() { _bs = BulletState::stop; }
+	void Shot() { _bs = BulletState::move; }
 };
 
 

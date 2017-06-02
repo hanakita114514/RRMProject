@@ -49,14 +49,9 @@ void Egg::Initialize()
 void Egg::Update()
 {
 	_circle.center = _rc.Center();
-		
-	_freamCnt++;
 
-	for (int i = 0; i < ShootDir::MAX; i++)
-	{
-		_shootPos[i].x = _circle.center.x - (_circle.radius * 2) * cos(RAD * (_freamCnt + i * 90)) / 2;
-		_shootPos[i].y = _circle.center.y - (_circle.radius * 2) * sin(RAD * (_freamCnt + i * 90)) / 2;
-	}
+	_freamCnt++;
+	_shotPos = Vector2(_rc.Left(), _rc.Top());
 
 	if (_hitGround == true)
 	{
@@ -70,11 +65,22 @@ void Egg::Update()
 		_vel.y += GRAVITY;
 	}
 
+	if (CheckHitKey(KEY_INPUT_LEFT))
+	{
+		_vel.x = -2;
+	}
+	else if (CheckHitKey(KEY_INPUT_RIGHT))
+	{
+		_vel.x = 2;
+	}
+
 
 	(this->*_state)();
 
-	Jump();
+	//Jump();
 	Move();
+
+	_vel.x = 0;
 }
 
 void Egg::Draw(const Vector2& offset)
@@ -97,15 +103,15 @@ void Egg::Move()
 
 void Egg::Shot()
 {
-		Shot(BulletType::circleBullet,4);
+		Shot(BulletType::circleBullet,1);
 		_state = &Egg::Wait;
 }
 
 void Egg::Jump()
 {
-	if ((_junpCnt % 60 == 0 && _junpCnt != 0) && _hitGround)
+	if ((_junpCnt % 30 == 0 && _junpCnt != 0) && _hitGround)
 	{
-		_vel.y = -25;
+		_vel.y = -10;
 		_hitGround = false;
 		_junpCnt++;
 	}
@@ -113,12 +119,10 @@ void Egg::Jump()
 
 void Egg::Wait()
 {
-
-	if ((_shotCnt % 5 == 0 && _shotCnt != 0))
+	if (_hitGround)
 	{
 		_state = &Egg::Shot;
 	}
-
 }
 
 void Egg::Shot(BulletType type, int count)	//çUåÇ
@@ -168,17 +172,21 @@ void Egg::Shot(BulletType type, int count)	//çUåÇ
 	}
 	case BulletType::circleBullet:
 	{
-		if (cnt < ShootDir::UP)
-		{
-			break;
-		}
+		_shotPos.x = _circle.center.x - (_circle.radius * 2) * cos(RAD * (cnt * 90) + _freamCnt) / 2;
+		_shotPos.y = _circle.center.y - (_circle.radius * 2) * sin(RAD * (cnt * 90) + _freamCnt) / 2;
 		--cnt;
-		ShotAngleCalc(_shootPos[cnt]);
+
+		ShotAngleCalc(_shotPos);
 		bullet = bm.Create(type, _shootVec, ObjectType::enemy, _rc.pos, this);
-		bullet->SetPos(_shootPos[cnt]);
+		bullet->SetPos(_shotPos);
+
 		if (cnt != 0)
 		{
 			Shot(type, cnt);
+		}
+		else
+		{
+			break;
 		}
 	}
 	default:

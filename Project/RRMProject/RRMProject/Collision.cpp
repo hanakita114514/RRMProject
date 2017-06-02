@@ -91,201 +91,340 @@ Collision::IsHit(Circle &c1, Circle &c2)
 	return hitFlag;
 }
 
-bool 
-Collision::LineCross(Rect r1, Vector2 vec1, Rect r2,bool hitGround)
+//bool 
+//Collision::LineCross(Rect r1, Vector2 vec1, Rect r2,bool hitGround)
+//{
+//		if (vec1.y < 0)			 { _move = up; }
+//		else if (vec1.y > 0 && !hitGround)	 { _move = down; }
+//		else if (vec1.x < 0)	 { _move = left; }
+//		else if (vec1.x > 0)	 { _move = right; }
+//		else					 { _move = none; }
+//
+//		Vector2 p1[3], p2[3], p3, p4,freamVel;
+//		float ta, tb, tc, td;
+//
+//		switch (_move)
+//		{
+//		case up:
+//		{
+//			int i = 0;
+//			p1[i] = Vector2(r1.Left(), r1.Top());
+//			p2[i] = p1[i];
+//			p2[i].y += vec1.y;
+//
+//			++i;
+//
+//			p1[i] = Vector2(r1.Left() + r1.w / 2 , r1.Top());
+//			p2[i] = p1[i];
+//			p2[i].y += vec1.y;
+//
+//			++i;
+//			p1[i] = Vector2(r1.Right(), r1.Top());
+//			p2[i] = p1[i];
+//			p2[i].y += vec1.y;
+//			p3 = Vector2(r2.Left(), r2.Bottom());
+//			p4 = Vector2(r2.Right(), r2.Bottom());
+//		}
+//		break;
+//		case right:
+//		{
+//			int i = 0;
+//			p1[i] = Vector2(r1.Right(), r1.Top());
+//			p2[i] = p1[i];
+//			p2[i].x += vec1.x;
+//
+//			++i;
+//
+//			p1[i] = Vector2(r1.Right(), r1.Top() + r1.h / 2);
+//			p2[i] = p1[i];
+//			p2[i].x += vec1.x;
+//
+//			++i;
+//
+//			p1[i] = Vector2(r1.Right(), r1.Bottom());
+//			p2[i] = p1[i];
+//			p2[i].x += vec1.x;
+//
+//			p3 = Vector2(r2.Left(), r2.Top() - r2.h / 2);
+//			p4 = Vector2(r2.Left(), r2.Bottom() + r2.h / 2);
+//		}
+//		break;
+//		case down:
+//		{
+//
+//			int i = 0;
+//			p1[i] = Vector2(r1.Left(), r1.Bottom());
+//			p2[i] = p1[i];
+//			p2[i].y += vec1.y;
+//
+//			++i;
+//
+//			p1[i] = Vector2(r1.Left() + r1.w / 2, r1.Bottom());
+//			p2[i] = p1[i];
+//			p2[i].y += vec1.y;
+//
+//			++i;
+//
+//			p1[i] = Vector2(r1.Right(), r1.Bottom());
+//			p2[i] = p1[i];
+//			p2[i].y += vec1.y;
+//			p3 = Vector2(r2.Left(), r2.Top());
+//			p4 = Vector2(r2.Right(), r2.Top());
+//		}
+//		break;
+//		case left:
+//		{
+//			int i = 0;
+//			p1[i] = Vector2(r1.Left(), r1.Top());
+//			p2[i] = p1[i];
+//			p2[i].x += vec1.x;
+//
+//			++i;
+//
+//			p1[i] = Vector2(r1.Left(), r1.Top() + r1.h / 2);
+//			p2[i] = p1[i];
+//			p2[i].x += vec1.x;
+//
+//			++i;
+//			p1[i] = Vector2(r1.Left(), r1.Bottom());
+//			p2[i] = p1[i];
+//			p2[i].x += vec1.x;
+//
+//			p3 = Vector2(r2.Right() , r2.Top() - r2.h / 2);
+//			p4 = Vector2(r2.Right(), r2.Bottom() + r2.h / 2);
+//		}
+//		break;
+//		default:
+//			break;
+//		}
+//
+//		for (int i = 0; i < 3; i++)
+//		{
+//			ta = (p3.x - p4.x) * (p1[i].y - p3.y) + (p3.y - p4.y) * (p3.x - p1[i].x);
+//			tb = (p3.x - p4.x) * (p2[i].y - p3.y) + (p3.y - p4.y) * (p3.x - p2[i].x);
+//			tc = (p1[i].x - p2[i].x) * (p3.y - p1[i].y) + (p1[i].y - p2[i].y) * (p1[i].x - p3.x);
+//			td = (p1[i].x - p2[i].x) * (p4.y - p1[i].y) + (p1[i].y - p2[i].y) * (p1[i].x - p4.x);
+//			if (_move == up || _move == down)
+//			{
+//				if ((tc * td < 0 && ta * tb < 0))
+//				{
+//					return true;
+//					break;
+//				}
+//			}
+//			else
+//			{
+//				if ((tc * td < 0 && ta * tb < 0))
+//				{
+//					return true;
+//					break;
+//				}
+//			}
+//		}
+//
+//		if (r1.Bottom() == r2.Top() && (r1.Left() < r2.Right() && r1.Right() > r2.Left()))
+//		{
+//			return true;
+//		}
+//
+//		return false;
+//}
+
+bool
+Collision::LineCross(Rect character, Vector2 characterVec, Vector2 posB, Vector2 vecB)
 {
-		if (vec1.y < 0)			 { _move = up; }
-		else if (vec1.y > 0 && !hitGround)	 { _move = down; }
-		else if (vec1.x < 0)	 { _move = left; }
-		else if (vec1.x > 0)	 { _move = right; }
-		else					 { _move = none; }
-
-		Vector2 p1[3], p2[3], p3, p4,freamVel;
-		float ta, tb, tc, td;
-
-		switch (_move)
+	Vector2 characterPos;
+	if (characterVec.y < 0)
+	{
+		if (characterVec.x > 0)
 		{
-		case up:
+			characterPos.x = character.Right();
+			characterPos.y = character.Top();
+		}
+		else if (characterVec.x < 0)
 		{
-			int i = 0;
-			p1[i] = Vector2(r1.Left(), r1.Top());
-			p2[i] = p1[i];
-			p2[i].y += vec1.y;
-
-			++i;
-
-			p1[i] = Vector2(r1.Left() + r1.w / 2 , r1.Top());
-			p2[i] = p1[i];
-			p2[i].y += vec1.y;
-
-			++i;
-			p1[i] = Vector2(r1.Right(), r1.Top());
-			p2[i] = p1[i];
-			p2[i].y += vec1.y;
-			p3 = Vector2(r2.Left(), r2.Bottom());
-			p4 = Vector2(r2.Right(), r2.Bottom());
+			characterPos = character.pos;
+			characterPos.y = character.Top();
 		}
-		break;
-		case right:
+		else
 		{
-			int i = 0;
-			p1[i] = Vector2(r1.Right(), r1.Top());
-			p2[i] = p1[i];
-			p2[i].x += vec1.x;
-
-			++i;
-
-			p1[i] = Vector2(r1.Right(), r1.Top() + r1.h / 2);
-			p2[i] = p1[i];
-			p2[i].x += vec1.x;
-
-			++i;
-
-			p1[i] = Vector2(r1.Right(), r1.Bottom());
-			p2[i] = p1[i];
-			p2[i].x += vec1.x;
-
-			p3 = Vector2(r2.Left(), r2.Top() - r2.h / 2);
-			p4 = Vector2(r2.Left(), r2.Bottom() + r2.h / 2);
+			characterPos.x = character.pos.x + character.w / 2;
+			characterPos.y = character.Top();
 		}
-		break;
-		case down:
+	}
+	else if (characterVec.y > 0)
+	{
+		if (characterVec.x > 0)
 		{
-
-			int i = 0;
-			p1[i] = Vector2(r1.Left(), r1.Bottom());
-			p2[i] = p1[i];
-			p2[i].y += vec1.y;
-
-			++i;
-
-			p1[i] = Vector2(r1.Left() + r1.w / 2, r1.Bottom());
-			p2[i] = p1[i];
-			p2[i].y += vec1.y;
-
-			++i;
-
-			p1[i] = Vector2(r1.Right(), r1.Bottom());
-			p2[i] = p1[i];
-			p2[i].y += vec1.y;
-			p3 = Vector2(r2.Left(), r2.Top());
-			p4 = Vector2(r2.Right(), r2.Top());
+			characterPos.x = character.Right();
+			characterPos.y = character.Bottom();
 		}
-		break;
-		case left:
+		else if (characterVec.x < 0)
 		{
-			int i = 0;
-			p1[i] = Vector2(r1.Left(), r1.Top());
-			p2[i] = p1[i];
-			p2[i].x += vec1.x;
-
-			++i;
-
-			p1[i] = Vector2(r1.Left(), r1.Top() + r1.h / 2);
-			p2[i] = p1[i];
-			p2[i].x += vec1.x;
-
-			++i;
-			p1[i] = Vector2(r1.Left(), r1.Bottom());
-			p2[i] = p1[i];
-			p2[i].x += vec1.x;
-
-			p3 = Vector2(r2.Right() , r2.Top() - r2.h / 2);
-			p4 = Vector2(r2.Right(), r2.Bottom() + r2.h / 2);
+			characterPos = character.pos;
+			characterPos.y = character.Bottom();
 		}
-		break;
-		default:
-			break;
-		}
-
-		for (int i = 0; i < 3; i++)
+		else
 		{
-			ta = (p3.x - p4.x) * (p1[i].y - p3.y) + (p3.y - p4.y) * (p3.x - p1[i].x);
-			tb = (p3.x - p4.x) * (p2[i].y - p3.y) + (p3.y - p4.y) * (p3.x - p2[i].x);
-			tc = (p1[i].x - p2[i].x) * (p3.y - p1[i].y) + (p1[i].y - p2[i].y) * (p1[i].x - p3.x);
-			td = (p1[i].x - p2[i].x) * (p4.y - p1[i].y) + (p1[i].y - p2[i].y) * (p1[i].x - p4.x);
-			if (_move == up || _move == down)
-			{
-				if ((tc * td < 0 && ta * tb < 0))
-				{
-					return true;
-					break;
-				}
-			}
-			else
-			{
-				if ((tc * td < 0 && ta * tb < 0))
-				{
-					return true;
-					break;
-				}
-			}
+			characterPos.x = character.pos.x + character.w / 2;
+			characterPos.y = character.Bottom();
 		}
-
-		if (r1.Bottom() == r2.Top() && (r1.Left() < r2.Right() && r1.Right() > r2.Left()))
+	}
+	else
+	{
+		if (characterVec.x > 0)
 		{
-			return true;
+			characterPos.x = character.Right();
+			characterPos.y = character.Top() + character.h / 2;
 		}
+		else if (characterVec.x < 0)
+		{
+			characterPos = character.pos;
+			characterPos.y = character.Top() + character.h / 2;
+		}
+		else
+		{
+			return false;
+		}
+	}
 
+	float crsVaVb = cross(characterVec, vecB);
+	if (crsVaVb == 0)
+	{
 		return false;
+	}
+
+	Vector2 v = posB - characterPos;
+	float t1 = cross(v, characterVec);
+	float t2 = cross(v, vecB);
+
+	float t3 = t1 / crsVaVb;
+	float t4 = t2 / crsVaVb;
+
+	if (t3 < 0 || t3 > 1 || t4 < 0 || t4 > 1)
+	{
+		return false;
+	}
+
+	return true;
 }
 
 bool
-Collision::LineCross(Vector2 posA, Vector2 vecA, Vector2 posB, Vector2 vecB)
+Collision::LineCross(Rect characterA, Vector2 vecA, Rect characterB, Vector2 vecB)
 {
-	Vector2 startPointA, endPointA;		//ベクトルAの始点と終点
-	Vector2 startPointB, endPointB;		//ベクトルBの始点と終点
+	Vector2 characterPosA,characterPosB;
 
-	////ベクトルAが左向きか？
-	//if (vecA.x < 0)
-	//{
-	//	startPointA = rA.pos;
-	//}
-	//else
-	//{
-	//	startPointA = rA.pos;
-	//	startPointA.x = rA.Right();
-	//}
+	//キャラクターAが動いているか判断--------------------------------------------
+	if (vecA.y < 0)		//上向きに動いている場合
+	{
+		if (vecA.x > 0)				//右
+		{
+			characterPosA.x = characterA.Right();
+			characterPosA.y = characterA.Top();
+		}
+		else if (vecA.x < 0)		//左
+		{
+			characterPosA = characterA.pos;
+			characterPosA.y = characterA.Top();
+		}
+		else						//左右に動いていない
+		{
+			characterPosA.x = characterA.pos.x + characterA.w / 2;
+			characterPosA.y = characterA.Top();
+		}
+	}
+	else if (vecA.y > 0)//下向きに動いている場合
+	{
+		if (vecA.x > 0)				//右
+		{
+			characterPosA.x = characterA.Right();
+			characterPosA.y = characterA.Bottom();
+		}
+		else if (vecA.x < 0)		//左
+		{
+			characterPosA = characterA.pos;
+			characterPosA.y = characterA.Bottom();
+		}
+		else						//左右に動いていない
+		{
+			characterPosA.x = characterA.pos.x + characterA.w / 2;
+			characterPosA.y = characterA.Bottom();
+		}
+	}
+	else			//上下に動いていない場合
+	{
+		if (vecA.x > 0)				//右
+		{
+			characterPosA.x = characterA.Right();
+			characterPosA.y = characterA.Top() + characterA.h / 2;
+		}
+		else if (vecA.x < 0)		//左
+		{
+			characterPosA = characterA.pos;
+			characterPosA.y = characterA.Top() + characterA.h / 2;
+		}
+		else						//移動していない
+		{
+			return false;			//移動していないならベクトルは交差しない
+		}
+	}
+	//---------------------------------------------------------------------------
 
-	////ベクトルBが左向きか？
-	//if (vecB.x < 0)
-	//{
-	//	startPointB = rB.pos;
-	//}
-	//else
-	//{
-	//	startPointB = rB.pos;
-	//	startPointB.x = rB.Right();
-	//}
-
-	////終点を設定----------------------------------
-	//endPointA = startPointA + vecA;
-	//endPointB = startPointB + vecB;
-	////--------------------------------------------
-
-	////交差判定------------------------------------
-	//if ((cross(endPointA - startPointA, startPointB - startPointA) *
-	//	cross(endPointA - startPointA, endPointB - startPointA) < 0) &&
-	//	cross(endPointB - startPointB, startPointA - startPointB) *
-	//	cross(endPointB - startPointB, endPointA - startPointB) < 0)
-	//{
-	//	return true;
-	//}
-	//
-	//return false;
-
-	//startPointA = posA;
-	//startPointB = posB;
-	//endPointA = startPointA + vecA;
-	//endPointB = startPointB + vecB;
-
-	//if ((cross(endPointA - startPointA, startPointB - startPointA) *
-	//	cross(endPointA - startPointA, endPointB - startPointA) < 0) &&
-	//	cross(endPointB - startPointB, startPointA - startPointB) *
-	//	cross(endPointB - startPointB, endPointA - startPointB) < 0)
-	//{
-	//	return true;
-	//}
+	//キャラクターBが動いているか判断--------------------------------------------
+	if (vecB.y < 0)		//上向きに動いている場合
+	{
+		if (vecB.x > 0)				//右
+		{
+			characterPosB.x = characterB.Right();
+			characterPosB.y = characterB.Top();
+		}
+		else if (vecB.x < 0)		//左
+		{
+			characterPosB = characterB.pos;
+			characterPosB.y = characterB.Top();
+		}
+		else						//左右に動いていない
+		{
+			characterPosB.x = characterB.pos.x + characterB.w / 2;
+			characterPosB.y = characterB.Top();
+		}
+	}
+	else if (vecB.y > 0)//下向きに動いている場合
+	{
+		if (vecB.x > 0)				//右
+		{
+			characterPosB.x = characterB.Right();
+			characterPosB.y = characterB.Bottom();
+		}
+		else if (vecB.x < 0)		//左
+		{
+			characterPosB = characterB.pos;
+			characterPosB.y = characterB.Bottom();
+		}
+		else						//左右に動いていない
+		{
+			characterPosB.x = characterB.pos.x + characterB.w / 2;
+			characterPosB.y = characterB.Bottom();
+		}
+	}
+	else			//上下に動いていない場合
+	{
+		if (vecB.x > 0)				//右
+		{
+			characterPosB.x = characterB.Right();
+			characterPosB.y = characterB.Top() + characterB.h / 2;
+		}
+		else if (vecB.x < 0)		//左
+		{
+			characterPosB = characterB.pos;
+			characterPosB.y = characterB.Top() + characterB.h / 2;
+		}
+		else						//移動していない
+		{
+			return false;			//移動していないならベクトルは交差しない
+		}
+	}
+	//---------------------------------------------------------------------------
 
 	float crsVaVb = cross(vecA, vecB);
 	if (crsVaVb == 0)
@@ -293,7 +432,7 @@ Collision::LineCross(Vector2 posA, Vector2 vecA, Vector2 posB, Vector2 vecB)
 		return false;
 	}
 
-	Vector2 v = posB - posA;
+	Vector2 v = characterPosB - characterPosA;
 	float t1 = cross(v, vecA);
 	float t2 = cross(v, vecB);
 

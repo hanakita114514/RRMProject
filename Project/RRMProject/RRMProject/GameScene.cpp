@@ -96,15 +96,16 @@ GameScene::EnemyColBlock()
 
 void GameScene::PlayerColEnemy()
 {
-	bool hitFlag;
-
+	bool hitFlag = false;
+	bool segmentHit = false;
 	for (auto& e : EnemyManager::Instance().GetEnemyList())
 	{
-		hitFlag = _col->IsHit(_player.GetRect(), e->GetRect());
-		if (hitFlag == true)
+		segmentHit = _col->LineCross(_player.GetRect(),_player.GetVel(), e->GetRect(),e->GetVel());
+		//hitFlag = _col->IsHit(_player.GetRect(), e->GetRect());
+		if (segmentHit || hitFlag)
 		{
 			_player.Hit(e);
-			e->Hit(&_player);
+			//e->Hit(&_player);
 
 			break;
 		}
@@ -123,8 +124,8 @@ GameScene::BulletColPlayer()
 		{
 			continue;
 		}
-		//hitFlag = _col->IsHit(_player.GetRect(), b->GetCircle());
-		lineHit = _col->LineCross(_player.GetPosition(), _player.GetVel(), b->GetPosition(), b->GetVel());
+		hitFlag = _col->IsHit(_player.GetRect(), b->GetCircle());
+		lineHit = _col->LineCross(_player.GetRect(), _player.GetVel(), b->GetPosition(), b->GetVel());
 		if ((hitFlag || lineHit) && (_player.GetObjType() != b->GetObjType()))
 		{
 			b->Hit(&_player);
@@ -182,7 +183,7 @@ GameScene::ColProcess()
 	PlayerColBlock();
 	EnemyColBlock();
 	PlayerColEnemy();
-	BulletColBlock();
-	BulletColPlayer();
-	BulletColEnemy();
+	//BulletColBlock();
+	//BulletColPlayer();
+	//BulletColEnemy();
 }

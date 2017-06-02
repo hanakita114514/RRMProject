@@ -4,7 +4,7 @@
 #include "GameTime.h"
 
 const float RAD = 3.14f / 2.0f;				//ƒ‰ƒWƒAƒ“
-const float ANGLE = 30.0f;				//”­ËŠp
+const float ANGLE = 30.0;				//”­ËŠp
 const int AMPLITUDE = 5;			//U‚ê•
 const float REDUCE_LIFE = 1.0f;
 

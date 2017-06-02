@@ -24,6 +24,7 @@ private:
 	int suffix;
 	int _junpCnt;
 	Vector2 _shootPos[ShootDir::MAX];
+	Vector2 _shotPos;
 	Circle _circle;
 	Vector2 _shootVec;
 	bool ret;
