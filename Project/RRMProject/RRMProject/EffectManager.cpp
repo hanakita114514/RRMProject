@@ -46,9 +46,9 @@ EffectManager::Draw(const Vector2& offset)
 }
 
 void 
-EffectManager::Create(EffectType et, const Position& pos)
+EffectManager::Create(EffectType et, const Position& pos, const Vector2& size, float speed)
 {
-	_effectList.push_back(_effectFactory.Create(et, pos));
+	_effectList.push_back(_effectFactory.Create(et, pos, size, speed));
 }
 
 void

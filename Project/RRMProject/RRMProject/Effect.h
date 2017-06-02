@@ -9,7 +9,8 @@ protected:
 	float _frame;
 	Position _pos;		//現在位置
 	Vector2 _uv;
-
+	//画像サイズ
+	Vector2 _size;
 	bool _deleteFlag;	//オンになったら消す
 public:
 	Effect();

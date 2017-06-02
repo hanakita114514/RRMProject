@@ -72,6 +72,7 @@
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="UI.cpp" />
     <ClCompile Include="UIFactory.cpp" />
+    <ClCompile Include="UIManager.cpp" />
     <ClCompile Include="UpEffect.cpp" />
     <ClCompile Include="XInput.cpp" />
     <ClCompile Include="main.cpp" />
@@ -136,6 +137,7 @@
     <ClInclude Include="Timer.h" />
     <ClInclude Include="UI.h" />
     <ClInclude Include="UIFactory.h" />
+    <ClInclude Include="UIManager.h" />
     <ClInclude Include="UpEffect.h" />
     <ClInclude Include="Vector2.h" />
     <ClInclude Include="Vector3.h" />

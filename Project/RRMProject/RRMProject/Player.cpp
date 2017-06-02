@@ -13,7 +13,8 @@ const float GRAVITY = 0.75f;
 const float jump_power = 20;
 const float fall_coefficient = 0.45f;
 
-Player::Player(int padType, Camera& camera) : _input(padType), _hp(100), _pp(3), _camera(camera)
+Player::Player(int padType, Camera& camera, EffectManager& effectManager) 
+	: _input(padType), _hp(100), _pp(3), _camera(camera), _effectManager(effectManager)
 {
 	_update = &Player::AliveUpdate;
 
@@ -80,7 +81,7 @@ Player::Move()
 	}
 	if (_input.Nosedive())
 	{
-		_nosedive = 4;
+		_nosedive = 3;
 	}
 }
 
@@ -139,6 +140,8 @@ Player::NeutralState()
 void Player::AvoidanceUpdate()
 {
 	_avoidTime -= 1.0f * GameTime::Instance().GetTimeScale();
+
+	_nosedive = 1;
 
 	_ps = PlayerState::avoidance;
 
@@ -205,6 +208,7 @@ Player::AliveUpdate()
 			_vel = _input.Dir();
 			_update = &Player::AvoidanceUpdate;
 			_avoidTime = 15.0f;
+			_nosedive = 1;
 			return;
 		}
 
@@ -224,6 +228,13 @@ Player::AliveUpdate()
 		_state = &Player::ShootState;
 	}
 
+	//è¡âª
+	if (_input.Digestion())
+	{
+		_dig.Digest();
+	}
+
+
 #ifdef DEBUG
 	if (CheckHitKey(KEY_INPUT_Z)
 	{
@@ -242,7 +253,7 @@ Player::AliveUpdate()
 
 
 
-	// é~Ç‹Ç¡ÇƒÇÈÇ∆Ç´ÇÕìÆÇ©Ç≥Ç»Ç¢
+	// éûä‘Ç™é~Ç‹Ç¡ÇƒÇÈÇ∆Ç´ÇÕìÆÇ©Ç≥Ç»Ç¢
 	if (GameTime::Instance().GetTimeScale() != 0)
 	{
 		_rc.pos.y += _vel.y;
@@ -264,9 +275,9 @@ Player::AliveUpdate()
 	{
 		_rc.pos.y = _camera.GetMapSize().h;
 	}
-	if (_rc.pos.y <= 0 - 64)
+	if (_rc.pos.y <= 0 - 128)
 	{
-		_rc.pos.y = 0 - 64;
+		_rc.pos.y = 0 - 128;
 	}
 }
 

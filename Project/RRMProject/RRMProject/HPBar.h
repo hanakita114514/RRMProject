@@ -2,18 +2,22 @@
 
 #include "Vector2.h"
 #include "HitPoint.h"
+#include "UI.h"
 
-class HPBar
+class HPBar : public UI
 {
 private:
 	int _barHandle;
 	int _gaugeHandle;
 
+	const Position& _ownPos;
+	HitPoint& _hp;
+
 	Position _barPos;
 public:
-	HPBar();
+	HPBar(const Position& ownPos, HitPoint& hp);
 	~HPBar();
 
-	void Draw(Position ownPos, HitPoint hp);
+	void Draw();
 };
 

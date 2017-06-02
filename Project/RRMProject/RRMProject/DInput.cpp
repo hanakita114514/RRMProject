@@ -170,7 +170,10 @@ DInput::Nosedive()
 {
 	if (_pad.Y - _history[0].Y > 300)
 	{
-		return true;
+		if (_pad.Y > 600)
+		{
+			return true;
+		}
 	}
 
 	return false;

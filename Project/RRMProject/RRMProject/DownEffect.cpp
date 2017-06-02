@@ -26,8 +26,9 @@ const Vector2 animUV[ROW_NUM][COLUMN_NUM] =
 	{ Vector2(EFFECT_SIZE_W * 0, EFFECT_SIZE_H * 5), Vector2(EFFECT_SIZE_W * 1, EFFECT_SIZE_H * 5), Vector2(EFFECT_SIZE_W * 2, EFFECT_SIZE_H * 5), Vector2(EFFECT_SIZE_W * 3, EFFECT_SIZE_H * 5), Vector2(EFFECT_SIZE_W * 4, EFFECT_SIZE_H * 5), },
 };
 
-DownEffect::DownEffect(int handle, const Vector2& pos)
+DownEffect::DownEffect(int handle, const Vector2& pos, const Vector2& size)
 {
+	_size = size;
 	_frame = 0.f;
 	_handle = handle;
 	_pos = pos;
@@ -38,27 +39,37 @@ DownEffect::~DownEffect()
 {
 }
 
-void
+int
 DownEffect::AnimUV()
 {
-	int frame = (int)_frame;
-	_uv = animUV[(frame % EFFECT_NUM) / COLUMN_NUM][frame % COLUMN_NUM];
+	int animFrame = (int)_frame;
+	_uv = animUV[(animFrame % EFFECT_NUM) / COLUMN_NUM][animFrame % COLUMN_NUM];
+	return animFrame;
 }
 
 void
 DownEffect::Update()
 {
-	AnimUV();
+	int animFrame;
+	animFrame = AnimUV();
 	_frame += 1 * GameTime::Instance().GetTimeScale();
+
+	if (animFrame >= EFFECT_NUM)
+	{
+		_deleteFlag = true;
+	}
 }
 
 void
 DownEffect::Draw(const Vector2& offset)
 {
 	Position drawPos;
-	drawPos.x = _pos.x - offset.x;
-	drawPos.y = _pos.y - offset.y;
+	drawPos.x = _pos.x - offset.x - (EFFECT_SIZE_W / 2) * _size.x;
+	drawPos.y = _pos.y - offset.y - (EFFECT_SIZE_H / 2) * _size.y;
+	
+	//DxLib::DrawRectGraph(drawPos.x, drawPos.y, _uv.x, _uv.y,
+	//	EFFECT_SIZE_W, EFFECT_SIZE_H, _handle, true, false);
 
-	DxLib::DrawRectGraph(drawPos.x, drawPos.y, _uv.x, _uv.y,
-		EFFECT_SIZE_W, EFFECT_SIZE_H, _handle, true, false);
+	DxLib::DrawRectExtendGraphF(drawPos.x, drawPos.y, drawPos.x + EFFECT_SIZE_W * _size.x, drawPos.y + EFFECT_SIZE_H * _size.y,
+		_uv.x, _uv.y, EFFECT_SIZE_W, EFFECT_SIZE_H, _handle, true);
 }

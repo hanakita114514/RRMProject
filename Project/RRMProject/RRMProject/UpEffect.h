@@ -4,10 +4,10 @@
 class UpEffect : public Effect
 {
 private:
-	void AnimUV();
+	int AnimUV();
 
 public:
-	UpEffect(int handle, const Position& pos);
+	UpEffect(int handle, const Position& pos, const Vector2& size);
 	~UpEffect();
 
 	void Update();

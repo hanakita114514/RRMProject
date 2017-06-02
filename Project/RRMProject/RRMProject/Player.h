@@ -10,6 +10,7 @@
 #include "SlowDown.h"
 #include "MultihitProtect.h"
 #include "Camera.h"
+#include "EffectManager.h"
 
 
 #include <map>
@@ -79,8 +80,10 @@ private:
 
 	void HitGround();
 
+	EffectManager& _effectManager;
+
 public:
-	Player(int padType, Camera& camera);	//使うパッド番号を指定
+	Player(int padType, Camera& camera, EffectManager& effectManager);	//使うパッド番号を指定
 	~Player();
 
 	void Init();
@@ -90,8 +93,8 @@ public:
 	void SetHitGround(bool isHit) { _hitGround = isHit; }
 
 	ObjectType GetObjType();
-	Vector2 GetVel() { return _vel; }
-	Vector2 GetDir() { return _dir; }
+	Vector2& GetVel() { return _vel; }
+	Vector2& GetDir() { return _dir; }
 
 	Circle GetGraze() { return _grazePoint; }
 

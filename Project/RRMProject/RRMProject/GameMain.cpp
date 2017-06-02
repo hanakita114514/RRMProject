@@ -12,6 +12,7 @@
 #include "MapRendar.h"
 #include "EnemyFactory.h"
 #include "GameScene.h"
+#include "MenuScene.h"
 
 
 GameMain::GameMain()

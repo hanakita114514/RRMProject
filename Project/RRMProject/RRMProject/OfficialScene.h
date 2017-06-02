@@ -10,7 +10,6 @@ class OfficialScene : public Scene
 {
 private:
 	//ƒeƒXƒg
-	HPBar _hpbar;
 	HitPoint _hp;
 	EffectManager _em;
 

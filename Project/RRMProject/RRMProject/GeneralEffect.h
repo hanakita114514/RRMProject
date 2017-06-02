@@ -1,5 +1,6 @@
 #pragma once
 #include "Effect.h"
+#include <vector>
 
 class GeneralEffect : public Effect
 {
@@ -15,15 +16,25 @@ private:
 	const int EFFECT_SIZE_W;
 	const int EFFECT_SIZE_H;
 
+	std::vector<Vector2> _animUV;
+
+	//再生スピード 1 / speedの速さ
+	float _speed;
+
 private:
-	void AnimUV();
+	//アニメーションUV値を入れる
+	//戻り値 アニメーションフレーム数が返る
+	int AnimUV();
 
 public:
+	//rowDivNum 行分割数 columnDivNum 列分割数
+	//speed  1 / speed の速さで再生する
 	GeneralEffect(int handle, const Position& pos, 
-		int imageSizeX, int imageSizeY, int rowDivNum, int columnDivNum);
+		int imageSizeX, int imageSizeY, int rowDivNum, int columnDivNum, float speed, const Vector2& size);
 	~GeneralEffect();
 
 	void Update();
+	//中央描画
 	void Draw(const Vector2& offset);
 };
 

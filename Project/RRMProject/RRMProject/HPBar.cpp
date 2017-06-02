@@ -5,7 +5,8 @@
 const float HPBAR_MAX = 28.0f;
 const float INIT_BAR_POS = 2.0f;
 
-HPBar::HPBar()
+HPBar::HPBar(const Position& ownPos, HitPoint& hp) : 
+	_ownPos(ownPos), _hp(hp)
 {
 	_barHandle = DxLib::LoadGraph("Resource/img/UI/bar.png");
 	_gaugeHandle = DxLib::LoadGraph("Resource/img/UI/gauge.png");
@@ -19,13 +20,13 @@ HPBar::~HPBar()
 }
 
 void
-HPBar::Draw(Position ownPos, HitPoint hp)
+HPBar::Draw()
 {
 	//DxLib::DrawExtendGraph(12, 10, 40, 16, _gaugeHandle, true);
 	//DxLib::DrawGraph(10, 10, _barHandle, true);
-	_barPos = Vector2(ownPos.x, ownPos.y - 5);
+	_barPos = Vector2(_ownPos.x, _ownPos.y - 5);
 
-	float offsetX = HPBAR_MAX * ( hp.GetHitPoint() / hp.GetMaxHP());
+	float offsetX = HPBAR_MAX * ( _hp.GetHitPoint() / _hp.GetMaxHP());
 	if (offsetX < 0.f)
 	{
 		offsetX = 0.f;

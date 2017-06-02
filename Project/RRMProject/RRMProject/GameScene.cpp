@@ -9,7 +9,7 @@
 #include "MapRendar.h"
 #include "Fade.h"
 
-GameScene::GameScene() : _player(0,_camera), _camera(_player.GetRect().pos)
+GameScene::GameScene() : _player(0,_camera,_effectManager), _camera(_player.GetRect().pos)
 {
 	_col = new Collision();
 	EnemyManager::Instance();
@@ -34,6 +34,7 @@ bool GameScene::Update()
 	MapManager::Instance().Update();
 	EnemyManager::Instance().Update();
 	BulletManager::Instance().Update();
+	_effectManager.Update();
 	_camera.Update();
 
 	//“–‚½‚è”»’è
@@ -44,6 +45,7 @@ bool GameScene::Update()
 	_player.Draw();
 	EnemyManager::Instance().Draw(_camera.GetOffset());
 	BulletManager::Instance().Draw(_camera.GetOffset());
+	_effectManager.Draw(_camera.GetOffset());
 
 	DxLib::DrawFormatString(0, 0, 0xffffffff, "GameScene");
 
