@@ -1,8 +1,0 @@
-﻿  Bullet.cpp
-     ライブラリ C:\Users\1501343\Documents\1501343\RRMProject\Debug\RRMProject.lib とオブジェクト C:\Users\1501343\Documents\1501343\RRMProject\Debug\RRMProject.exp を作成中
-Bullet.obj : error LNK2001: 外部シンボル ""public: virtual void __thiscall Bullet::Update(void)" (?Update@Bullet@@UAEXXZ)" は未解決です。
-Bullet.obj : error LNK2001: 外部シンボル ""public: virtual void __thiscall Bullet::Draw(void)" (?Draw@Bullet@@UAEXXZ)" は未解決です。
-BulletFactory.obj : error LNK2019: 未解決の外部シンボル "public: bool __thiscall Bullet::IsAlive(void)" (?IsAlive@Bullet@@QAE_NXZ) が関数 "public: class Bullet * __thiscall BulletFactory::GetBullet(int)" (?GetBullet@BulletFactory@@QAEPAVBullet@@H@Z) で参照されました。
-Enemy.obj : error LNK2001: 外部シンボル ""public: virtual void __thiscall Enemy::Update(void)" (?Update@Enemy@@UAEXXZ)" は未解決です。
-Enemy.obj : error LNK2001: 外部シンボル ""public: virtual void __thiscall Enemy::Draw(void)" (?Draw@Enemy@@UAEXXZ)" は未解決です。
-C:\Users\1501343\Documents\1501343\RRMProject\Debug\RRMProject.exe : fatal error LNK1120: 5 件の未解決の外部参照
