@@ -246,6 +246,9 @@
     <ClCompile Include="Timer.cpp">
       <Filter>ソース ファイル\Time</Filter>
     </ClCompile>
+    <ClCompile Include="GraphicLoad.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common.h">
@@ -439,6 +442,9 @@
     </ClInclude>
     <ClInclude Include="Timer.h">
       <Filter>ソース ファイル\Time</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphicLoad.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
