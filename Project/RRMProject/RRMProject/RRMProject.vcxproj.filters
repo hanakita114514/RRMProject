@@ -111,9 +111,6 @@
     <ClCompile Include="Enemy.cpp">
       <Filter>ソース ファイル\Object\Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="Timer.cpp">
-      <Filter>ソース ファイル\UI</Filter>
-    </ClCompile>
     <ClCompile Include="XInput.cpp">
       <Filter>ソース ファイル\Input</Filter>
     </ClCompile>
@@ -246,6 +243,9 @@
     <ClCompile Include="UIManager.cpp">
       <Filter>ソース ファイル\UI</Filter>
     </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>ソース ファイル\Time</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common.h">
@@ -310,9 +310,6 @@
     </ClInclude>
     <ClInclude Include="Enemy.h">
       <Filter>ソース ファイル\Object\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="Timer.h">
-      <Filter>ソース ファイル\UI</Filter>
     </ClInclude>
     <ClInclude Include="XInput.h">
       <Filter>ソース ファイル\Input</Filter>
@@ -439,6 +436,9 @@
     </ClInclude>
     <ClInclude Include="UIManager.h">
       <Filter>ソース ファイル\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>ソース ファイル\Time</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

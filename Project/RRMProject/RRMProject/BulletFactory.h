@@ -6,9 +6,8 @@
 
 class BulletFactory
 {
-protected:
-	int _handle;
 private:
+	int _handle;
 
 public:
 	BulletFactory();

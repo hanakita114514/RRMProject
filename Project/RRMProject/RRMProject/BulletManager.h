@@ -1,8 +1,6 @@
 #pragma once
-#include "BulletFactory.h"
-#include <vector>
-#include "BulletFactory.h"
 
+#include "BulletFactory.h"
 #include <vector>
 
 

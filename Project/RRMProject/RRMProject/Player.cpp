@@ -189,6 +189,7 @@ void Player::ShootState()
 void
 Player::AliveUpdate()
 {
+	_state = &Player::NeutralState;
 	_vel.x = 0;
 
 	Move();
@@ -242,11 +243,6 @@ Player::AliveUpdate()
 		_state = &Player::ShootState;
 	}
 #endif // DEBUG
-
-	else
-	{
-		_state = &Player::NeutralState;
-	}
 
 	HitGround();
 
