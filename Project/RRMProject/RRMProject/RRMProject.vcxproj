@@ -50,6 +50,7 @@
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="GameTime.cpp" />
     <ClCompile Include="GeneralEffect.cpp" />
+    <ClCompile Include="GraphicLoad.cpp" />
     <ClCompile Include="Hamburger.cpp" />
     <ClCompile Include="HitPoint.cpp" />
     <ClCompile Include="HomingBullet.cpp" />
@@ -115,6 +116,7 @@
     <ClInclude Include="GameScene.h" />
     <ClInclude Include="GameTime.h" />
     <ClInclude Include="GeneralEffect.h" />
+    <ClInclude Include="GraphicLoad.h" />
     <ClInclude Include="Hamburger.h" />
     <ClInclude Include="HitPoint.h" />
     <ClInclude Include="HomingBullet.h" />
