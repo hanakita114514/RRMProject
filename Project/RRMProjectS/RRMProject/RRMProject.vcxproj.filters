@@ -1,0 +1,456 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="ソース ファイル">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="ヘッダー ファイル">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="リソース ファイル">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="ソース ファイル\Main">
+      <UniqueIdentifier>{7164b786-e4b4-4193-9f6d-bb1a00779c10}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Scene">
+      <UniqueIdentifier>{0378ace4-ba1e-460a-b2ee-9b77126ee085}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Input">
+      <UniqueIdentifier>{1ff6ea13-6d45-4e6d-ab23-22da539fcc01}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Camera">
+      <UniqueIdentifier>{f9e2b80b-4eaa-44f3-b700-ff38e59b6f5a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Geometry">
+      <UniqueIdentifier>{3220d0be-272a-443c-a7ad-070dc48efa14}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object">
+      <UniqueIdentifier>{aa879764-5431-4bf5-8490-bc0a86bb47e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object\Enemy">
+      <UniqueIdentifier>{c65cb3a1-f94e-4f64-8ec2-eef4a366c372}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object\Bullet">
+      <UniqueIdentifier>{8ceb5d41-50ed-4871-b683-b4e1441badd3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Effect">
+      <UniqueIdentifier>{12f77833-0ab3-4245-bc1c-7c173cec95b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Food">
+      <UniqueIdentifier>{00b7fda0-7e95-4cdd-a9cd-aa00c5bbb576}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object\Player">
+      <UniqueIdentifier>{cb5a57f5-a50a-47cd-bcc7-6c526114b92c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Map">
+      <UniqueIdentifier>{f263ec46-4253-4ed4-a16c-4d4c0eced357}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\UI">
+      <UniqueIdentifier>{23f3cec0-dd09-4ff9-8ee6-1d4dc65277e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Time">
+      <UniqueIdentifier>{e13b2284-b197-4e88-bda9-ff2a00b21e68}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Sound">
+      <UniqueIdentifier>{1cc95ccb-5749-49cf-b292-873a6941ecf4}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="GameMain.cpp">
+      <Filter>ソース ファイル\Main</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>ソース ファイル\Main</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleScene.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="OfficialScene.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuScene.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="GameScene.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="ResultScene.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="ClearScene.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="GameoverScene.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>ソース ファイル\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletFactory.cpp">
+      <Filter>ソース ファイル\Object\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>ソース ファイル\Object\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="CircleObj.cpp">
+      <Filter>ソース ファイル\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object.cpp">
+      <Filter>ソース ファイル\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="RectObj.cpp">
+      <Filter>ソース ファイル\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>ソース ファイル\Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="XInput.cpp">
+      <Filter>ソース ファイル\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyFactory.cpp">
+      <Filter>ソース ファイル\Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Fade.cpp">
+      <Filter>ソース ファイル\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Food.cpp">
+      <Filter>ソース ファイル\Food</Filter>
+    </ClCompile>
+    <ClCompile Include="Digestion.cpp">
+      <Filter>ソース ファイル\Object\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="DInput.cpp">
+      <Filter>ソース ファイル\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="HitPoint.cpp">
+      <Filter>ソース ファイル\Object\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Rect.cpp">
+      <Filter>ソース ファイル\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="BackgroundRendar.cpp">
+      <Filter>ソース ファイル\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="MapRendar.cpp">
+      <Filter>ソース ファイル\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="HomingBullet.cpp">
+      <Filter>ソース ファイル\Object\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="SinBullet.cpp">
+      <Filter>ソース ファイル\Object\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="NormalBullet.cpp">
+      <Filter>ソース ファイル\Object\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="File.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>ソース ファイル\Object\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Egg.cpp">
+      <Filter>ソース ファイル\Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Mushroom.cpp">
+      <Filter>ソース ファイル\Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Meat.cpp">
+      <Filter>ソース ファイル\Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Hamburger.cpp">
+      <Filter>ソース ファイル\Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="BezierBullet.cpp">
+      <Filter>ソース ファイル\Object\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Lazer.cpp">
+      <Filter>ソース ファイル\Object\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="DeffusionBullet.cpp">
+      <Filter>ソース ファイル\Object\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="CircleBullet.cpp">
+      <Filter>ソース ファイル\Object\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="GameTime.cpp">
+      <Filter>ソース ファイル\Time</Filter>
+    </ClCompile>
+    <ClCompile Include="SlowDown.cpp">
+      <Filter>ソース ファイル\Time</Filter>
+    </ClCompile>
+    <ClCompile Include="Collision.cpp">
+      <Filter>ソース ファイル\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="PowerPoint.cpp">
+      <Filter>ソース ファイル\Object\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundManager.cpp">
+      <Filter>ソース ファイル\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="Block.cpp">
+      <Filter>ソース ファイル\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyManager.cpp">
+      <Filter>ソース ファイル\Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletManager.cpp">
+      <Filter>ソース ファイル\Object\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="MapManager.cpp">
+      <Filter>ソース ファイル\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="UI.cpp">
+      <Filter>ソース ファイル\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="MultihitProtect.cpp">
+      <Filter>ソース ファイル\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Circle.cpp">
+      <Filter>ソース ファイル\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="UIFactory.cpp">
+      <Filter>ソース ファイル\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="HPBar.cpp">
+      <Filter>ソース ファイル\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Effect.cpp">
+      <Filter>ソース ファイル\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="UpEffect.cpp">
+      <Filter>ソース ファイル\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="EffectFactory.cpp">
+      <Filter>ソース ファイル\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="EffectManager.cpp">
+      <Filter>ソース ファイル\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="DownEffect.cpp">
+      <Filter>ソース ファイル\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneralEffect.cpp">
+      <Filter>ソース ファイル\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="UIManager.cpp">
+      <Filter>ソース ファイル\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>ソース ファイル\Time</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphicLoad.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Spell.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="common.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GameMain.h">
+      <Filter>ソース ファイル\Main</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleScene.h">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="OfficialScene.h">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuScene.h">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene.h">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="ResultScene.h">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="ClearScene.h">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="GameoverScene.h">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>ソース ファイル\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector3.h">
+      <Filter>ソース ファイル\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector2.h">
+      <Filter>ソース ファイル\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletFactory.h">
+      <Filter>ソース ファイル\Object\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>ソース ファイル\Object\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="RectObj.h">
+      <Filter>ソース ファイル\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>ソース ファイル\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="CircleObj.h">
+      <Filter>ソース ファイル\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Circle.h">
+      <Filter>ソース ファイル\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Rect.h">
+      <Filter>ソース ファイル\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>ソース ファイル\Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="XInput.h">
+      <Filter>ソース ファイル\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyFactory.h">
+      <Filter>ソース ファイル\Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Fade.h">
+      <Filter>ソース ファイル\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Food.h">
+      <Filter>ソース ファイル\Food</Filter>
+    </ClInclude>
+    <ClInclude Include="Digestion.h">
+      <Filter>ソース ファイル\Object\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="DInput.h">
+      <Filter>ソース ファイル\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="HitPoint.h">
+      <Filter>ソース ファイル\Object\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="BackgroundRendar.h">
+      <Filter>ソース ファイル\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="MapRendar.h">
+      <Filter>ソース ファイル\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="HomingBullet.h">
+      <Filter>ソース ファイル\Object\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="NormalBullet.h">
+      <Filter>ソース ファイル\Object\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="File.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="SinBullet.h">
+      <Filter>ソース ファイル\Object\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>ソース ファイル\Object\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Egg.h">
+      <Filter>ソース ファイル\Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Mushroom.h">
+      <Filter>ソース ファイル\Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Hamburger.h">
+      <Filter>ソース ファイル\Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Meat.h">
+      <Filter>ソース ファイル\Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="BezierBullet.h">
+      <Filter>ソース ファイル\Object\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="Lazer.h">
+      <Filter>ソース ファイル\Object\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="DeffusionBullet.h">
+      <Filter>ソース ファイル\Object\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="CircleBullet.h">
+      <Filter>ソース ファイル\Object\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="GameTime.h">
+      <Filter>ソース ファイル\Time</Filter>
+    </ClInclude>
+    <ClInclude Include="SlowDown.h">
+      <Filter>ソース ファイル\Time</Filter>
+    </ClInclude>
+    <ClInclude Include="Collision.h">
+      <Filter>ソース ファイル\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="PowerPoint.h">
+      <Filter>ソース ファイル\Object\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundManager.h">
+      <Filter>ソース ファイル\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="Block.h">
+      <Filter>ソース ファイル\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyManager.h">
+      <Filter>ソース ファイル\Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletManager.h">
+      <Filter>ソース ファイル\Object\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="MapManager.h">
+      <Filter>ソース ファイル\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="UI.h">
+      <Filter>ソース ファイル\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="MultihitProtect.h">
+      <Filter>ソース ファイル\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="UIFactory.h">
+      <Filter>ソース ファイル\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="HPBar.h">
+      <Filter>ソース ファイル\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect.h">
+      <Filter>ソース ファイル\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="EffectFactory.h">
+      <Filter>ソース ファイル\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="UpEffect.h">
+      <Filter>ソース ファイル\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="EffectManager.h">
+      <Filter>ソース ファイル\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="DownEffect.h">
+      <Filter>ソース ファイル\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneralEffect.h">
+      <Filter>ソース ファイル\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="UIManager.h">
+      <Filter>ソース ファイル\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>ソース ファイル\Time</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphicLoad.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Spell.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
