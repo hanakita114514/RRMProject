@@ -25,8 +25,7 @@ public:
 	void Update();						//XV
 	void Draw(const Vector2& offset);	//•`‰æ
 
-	void Push(Enemy* enemy);
-	void Create(const EnemyType& et);
+	void Create(const EnemyType& et, const Position& pos);
 	void Delete();
 
 	std::vector<Enemy*>& GetEnemyList() { return _enemyList; }

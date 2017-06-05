@@ -12,6 +12,6 @@ public:
 	EnemyFactory();
 	~EnemyFactory();
 
-	Enemy* Create(const EnemyType& et);
+	Enemy* Create(const EnemyType& et, const Position& pos);
 };
 

@@ -31,6 +31,7 @@ protected:
 	bool _isAlive;	//生きているか？
 	ObjectType _objType;	//敵、プレイヤーの区別のタイプ
 	float _life;				//弾の寿命
+	float _pow;					//攻撃力
 
 	Object* _owner;
 protected:
@@ -51,6 +52,7 @@ public:
 	virtual void Initialize(Vector2 vec, ObjectType type);				//初期化
 	virtual void Update() = 0;						//更新
 	virtual void Draw(const Vector2& offset) = 0;						//描画
+	virtual void Finalize();
 	ObjectType GetObjType();
 
 	//弾を使用したキャラのポインタを返す
@@ -64,6 +66,7 @@ public:
 	void Hit(Block* other);
 
 	Vector2 GetVel() { return _vel; }
+	float GetPower() { return _pow; }
 
 	void Stop() { _bs = BulletState::stop; }
 	void Shot() { _bs = BulletState::move; }

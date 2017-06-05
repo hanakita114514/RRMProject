@@ -45,10 +45,11 @@ EffectManager::Draw(const Vector2& offset)
 	}
 }
 
-void 
-EffectManager::Create(EffectType et, const Position& pos, const Vector2& size, float speed)
+Effect* 
+EffectManager::Create(EffectType et, const Position& pos, const Vector2& size, float speed, bool isLoop)
 {
-	_effectList.push_back(_effectFactory.Create(et, pos, size, speed));
+	_effectList.push_back(_effectFactory.Create(et, pos, size, speed, isLoop));
+	return _effectList.back();
 }
 
 void

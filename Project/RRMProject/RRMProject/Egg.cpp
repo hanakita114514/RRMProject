@@ -3,11 +3,12 @@
 #include "GameMain.h"
 #include "MapManager.h"
 #include <math.h>
+#include "EffectManager.h"
 
 const float GRAVITY = 0.75f;
 const float RAD = 3.141592 / 180;
 
-Egg::Egg(int* handle)
+Egg::Egg(int* handle, const Position& pos)
 {
 	for (int i = 0; i < 3; i++)
 	{
@@ -18,13 +19,14 @@ Egg::Egg(int* handle)
 	_shotCnt = 0;
 
 	_state = &Egg::Wait;
+	_update = &Egg::AliveUpdate;
 	_freamCnt = 0;
 
 	Rect r = {};
 	_rc = r;
 	_rc.w = 64;
 	_rc.h = 64;
-	_rc.pos = Vector2(640, 0);
+	_rc.pos = pos;
 	_junpCnt = 0;
 	_vel = Vector2(0, 0);
 	_dir = Vector2(-1, 0);
@@ -46,7 +48,8 @@ void Egg::Initialize()
 
 }
 
-void Egg::Update()
+void 
+Egg::AliveUpdate()
 {
 	_circle.center = _rc.Center();
 
@@ -81,15 +84,37 @@ void Egg::Update()
 	Move();
 
 	_vel.x = 0;
+
+	if (_hp.GetHitPoint() <= 0)
+	{
+		_update = &Egg::DyingUpdate;
+		EffectManager::Instance().Create(EffectType::erasure, _rc.Center(), Vector2(1.5f, 1.5f), 1.3f, true);
+		_isAlive = false;
+	}
+}
+
+void 
+Egg::DyingUpdate()
+{
+
+}
+
+void Egg::Update()
+{
+	(this->*_update)();
 }
 
 void Egg::Draw(const Vector2& offset)
 {
-	Vector2 drawPos;
-	drawPos.x = _rc.pos.x - offset.x;
-	drawPos.y = _rc.pos.y - offset.y;
+	if (_update == &Egg::AliveUpdate)
+	{
+		Vector2 drawPos;
+		drawPos.x = _rc.pos.x - offset.x;
+		drawPos.y = _rc.pos.y - offset.y;
 
-	DxLib::DrawGraph(drawPos.x, drawPos.y, _img[0], true);
+		_hpbar.Draw(Position(drawPos.x + 16, drawPos.y - 16), _hp);
+		DxLib::DrawGraph(drawPos.x, drawPos.y, _img[0], true);
+	}
 }
 
 void Egg::Anim()
@@ -218,7 +243,7 @@ Egg::Hit(Bullet* other)
 {
 	if (other->GetObjType() == ObjectType::player)
 	{
-		_isAlive = false;
+		_hp.Damage(other->GetPower());
 	}
 }
 

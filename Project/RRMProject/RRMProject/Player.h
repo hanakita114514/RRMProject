@@ -10,10 +10,9 @@
 #include "SlowDown.h"
 #include "MultihitProtect.h"
 #include "Camera.h"
-#include "EffectManager.h"
-
 
 #include <map>
+
 class Player : public RectObj
 {
 private:
@@ -80,10 +79,8 @@ private:
 
 	void HitGround();
 
-	EffectManager& _effectManager;
-
 public:
-	Player(int padType, Camera& camera, EffectManager& effectManager);	//使うパッド番号を指定
+	Player(int padType, Camera& camera);	//使うパッド番号を指定
 	~Player();
 
 	void Init();

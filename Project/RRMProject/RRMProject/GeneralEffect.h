@@ -21,6 +21,10 @@ private:
 	//再生スピード 1 / speedの速さ
 	float _speed;
 
+	void (GeneralEffect::*_update)();
+	void NormalUpdate();
+	void LoopUpdate();
+
 private:
 	//アニメーションUV値を入れる
 	//戻り値 アニメーションフレーム数が返る
@@ -30,7 +34,8 @@ public:
 	//rowDivNum 行分割数 columnDivNum 列分割数
 	//speed  1 / speed の速さで再生する
 	GeneralEffect(int handle, const Position& pos, 
-		int imageSizeX, int imageSizeY, int rowDivNum, int columnDivNum, float speed, const Vector2& size);
+		int imageSizeX, int imageSizeY, int rowDivNum, 
+		int columnDivNum, float speed, const Vector2& size, bool isLoop);
 	~GeneralEffect();
 
 	void Update();

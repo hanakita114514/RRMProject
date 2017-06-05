@@ -45,16 +45,10 @@ void EnemyManager::Draw(const Vector2& offset)
 	}
 }
 
-void
-EnemyManager::Push(Enemy* enemy)
-{
-	_enemyList.push_back(enemy);
-}
-
 void 
-EnemyManager::Create(const EnemyType& et)
+EnemyManager::Create(const EnemyType& et, const Position& pos)
 {
-	Enemy* newEnemy = _fac.Create(et);
+	Enemy* newEnemy = _fac.Create(et, pos);
 	_enemyList.push_back(newEnemy);
 
 }

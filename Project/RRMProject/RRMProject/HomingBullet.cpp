@@ -47,7 +47,7 @@ HomingBullet::TargetSearch()
 
 		for (auto& e : EnemyManager::Instance().GetEnemyList())
 		{
-			if (e->IsDelete())
+			if (e->IsDead())
 			{
 				continue;
 			}
@@ -113,8 +113,8 @@ void HomingBullet::Move()
 		}
 	}
 
-	_circle.pos.x = (_circle.pos.x + (_vel.x)) * GameTime::Instance().GetTimeScale();
-	_circle.pos.y = (_circle.pos.y + (_vel.y)) * GameTime::Instance().GetTimeScale();
+	_circle.pos.x += _vel.x * GameTime::Instance().GetTimeScale();
+	_circle.pos.y += _vel.y * GameTime::Instance().GetTimeScale();
 }
 
 void HomingBullet::LifeDecrease()

@@ -4,7 +4,8 @@
 #include <vector>
 
 GeneralEffect::GeneralEffect(int handle, const Position& pos,
-	int imageSizeX, int imageSizeY, int rowDivNum, int columnDivNum, float speed, const Vector2& size) :
+	int imageSizeX, int imageSizeY, int rowDivNum, int columnDivNum, 
+	float speed, const Vector2& size, bool isLoop) :
 	IMAGE_SIZE_H(imageSizeY), IMAGE_SIZE_W(imageSizeX), ROW_NUM(rowDivNum), COLUMN_NUM(columnDivNum),
 	EFFECT_NUM(ROW_NUM * COLUMN_NUM), EFFECT_SIZE_H(IMAGE_SIZE_H / ROW_NUM), EFFECT_SIZE_W(IMAGE_SIZE_W / COLUMN_NUM)
 {
@@ -19,6 +20,15 @@ GeneralEffect::GeneralEffect(int handle, const Position& pos,
 	for (int i = 0; i < _animUV.size(); i++)
 	{
 		_animUV[i] = Vector2(EFFECT_SIZE_W * (i % COLUMN_NUM), EFFECT_SIZE_H * (i / COLUMN_NUM));
+	}
+
+	if (isLoop)
+	{
+		_update = &GeneralEffect::LoopUpdate;
+	}
+	else
+	{
+		_update = &GeneralEffect::NormalUpdate;
 	}
 }
 
@@ -38,7 +48,7 @@ GeneralEffect::AnimUV()
 }
 
 void 
-GeneralEffect::Update()
+GeneralEffect::NormalUpdate()
 {
 	int animFrame;
 	animFrame = AnimUV();
@@ -47,6 +57,21 @@ GeneralEffect::Update()
 	{
 		_deleteFlag = true;
 	}
+}
+
+void 
+GeneralEffect::LoopUpdate()
+{
+	int animFrame;
+	animFrame = AnimUV();
+	_frame += 1 * GameTime::Instance().GetTimeScale();
+
+}
+
+void 
+GeneralEffect::Update()
+{
+	(this->*_update)();
 }
 
 void 

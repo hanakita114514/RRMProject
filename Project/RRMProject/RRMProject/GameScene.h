@@ -3,7 +3,6 @@
 #include "Scene.h"
 #include "Player.h"
 #include "Camera.h"
-#include "EffectManager.h"
 
 class Collision;
 
@@ -13,7 +12,6 @@ private:
 	Player _player;
 	Collision* _col;
 	std::vector<Block*> _colBlock;
-	EffectManager _effectManager;
 	
 	Camera _camera;
 

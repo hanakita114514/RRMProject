@@ -15,6 +15,10 @@ MapManager::MapManager()
 	_map = new MapRendar("Resource/data/map2.fmf");
 	_bg = new BackgroundRendar("Resource/img/BackGround/mori.jpg");
 	createFlug = false;
+
+	EnemyManager::Instance().Create(EnemyType::egg, Position(500, 0));
+	EnemyManager::Instance().Create(EnemyType::egg, Position(300,0));
+
 }
 
 MapManager::~MapManager()
@@ -46,11 +50,6 @@ void MapManager::Finalize()
 
 void MapManager::Update()
 {
-	if (!createFlug)
-	{
-		EnemyManager::Instance().Create(EnemyType::egg);
-		createFlug = true;
-	}
 
 	_list = _map->GetBlockList();
 }

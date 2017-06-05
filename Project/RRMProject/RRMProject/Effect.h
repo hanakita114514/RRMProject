@@ -18,6 +18,7 @@ public:
 
 	virtual void Update() = 0;
 	virtual void Draw(const Vector2& offset) = 0;
+	void Destroy() { _deleteFlag = true; }
 
 	bool IsDelete() { return _deleteFlag; }
 };

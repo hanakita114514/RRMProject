@@ -2,6 +2,7 @@
 #include "Enemy.h"
 #include "Circle.h"
 #include "BulletManager.h"
+#include "HPBar.h"
 
 const int IMAGE_NUM = 3;
 const float ANIM_SPEED = 0.5;
@@ -30,9 +31,17 @@ private:
 	bool ret;
 	int _freamCnt;
 
+	HPBar _hpbar;
+
 	void Jump();
+
+	void (Egg::*_update)();
+
+	void AliveUpdate();
+	void DyingUpdate();
+
 public:
-	Egg(int* handle);
+	Egg(int* handle, const Position& pos);
 	~Egg();
 
 	void Initialize();			//èâä˙âª

@@ -35,6 +35,6 @@ public:
 	EffectFactory();
 	~EffectFactory();
 
-	Effect* Create(EffectType et, const Position& pos, const Vector2& size, float speed);
+	Effect* Create(EffectType et, const Position& pos, const Vector2& size, float speed, bool isLoop);
 };
 

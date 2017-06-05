@@ -17,7 +17,7 @@ EnemyFactory::~EnemyFactory()
 }
 
 Enemy*
-EnemyFactory::Create(const EnemyType& et)
+EnemyFactory::Create(const EnemyType& et, const Position& pos)
 {
 
 	Enemy* enemy = nullptr;
@@ -25,7 +25,7 @@ EnemyFactory::Create(const EnemyType& et)
 	{
 	case EnemyType::egg:
 	{
-		enemy = new Egg(_eggImg);
+		enemy = new Egg(_eggImg, pos);
 	}
 		break;
 	case EnemyType::mushroom:

@@ -14,8 +14,8 @@ const float GRAVITY = 0.75f;
 const float jump_power = 20;
 const float fall_coefficient = 0.45f;
 
-Player::Player(int padType, Camera& camera, EffectManager& effectManager) 
-	: _input(padType), _hp(100), _pp(3), _camera(camera), _effectManager(effectManager)
+Player::Player(int padType, Camera& camera) 
+	: _input(padType), _hp(100), _pp(3), _camera(camera)
 {
 	_update = &Player::AliveUpdate;
 

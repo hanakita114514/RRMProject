@@ -26,7 +26,7 @@ EffectFactory::~EffectFactory()
 }
 
 Effect*
-EffectFactory::Create(EffectType et, const Position& pos, const Vector2& size, float speed)
+EffectFactory::Create(EffectType et, const Position& pos, const Vector2& size, float speed, bool isLoop)
 {
 	switch (et)
 	{
@@ -41,32 +41,32 @@ EffectFactory::Create(EffectType et, const Position& pos, const Vector2& size, f
 		break;
 	case EffectType::flash:
 		//•Û—¯
-		return new GeneralEffect(_effectImg[EffectType::flash], pos, 1280, 1536, 6, 5, speed, size);
+		return new GeneralEffect(_effectImg[EffectType::flash], pos, 1280, 1536, 6, 5, speed, size, isLoop);
 		//return nullptr;
 		break;
 	case EffectType::explosion:
-		return new GeneralEffect(_effectImg[EffectType::explosion], pos, 1280, 1536, 6, 5, speed, size);
+		return new GeneralEffect(_effectImg[EffectType::explosion], pos, 1280, 1536, 6, 5, speed, size, isLoop);
 		break;
 	case EffectType::erasure:
-		return new GeneralEffect(_effectImg[EffectType::erasure], pos, 1280, 1536, 6, 5, speed, size);
+		return new GeneralEffect(_effectImg[EffectType::erasure], pos, 1280, 1536, 6, 5, speed, size, isLoop);
 		break;
 	case EffectType::bullet_summons:
-		return new GeneralEffect(_effectImg[EffectType::bullet_summons], pos, 1280, 1536, 6, 5, speed, size);
+		return new GeneralEffect(_effectImg[EffectType::bullet_summons], pos, 1280, 1536, 6, 5, speed, size, isLoop);
 		break;
 	case EffectType::enemy_summons:
-		return new GeneralEffect(_effectImg[EffectType::enemy_summons], pos, 1280, 1536, 6, 5, speed, size);
+		return new GeneralEffect(_effectImg[EffectType::enemy_summons], pos, 1280, 1536, 6, 5, speed, size, isLoop);
 		break;
 	case EffectType::hit1:
-		return new GeneralEffect(_effectImg[EffectType::hit1], pos, 1280, 1536, 6, 5, 1.0f, size);
+		return new GeneralEffect(_effectImg[EffectType::hit1], pos, 1280, 1536, 6, 5, 1.0f, size, isLoop);
 		break;
 	case EffectType::slash:
-		return new GeneralEffect(_effectImg[EffectType::slash], pos, 768, 512, 2, 3, 1.0f, size);
+		return new GeneralEffect(_effectImg[EffectType::slash], pos, 768, 512, 2, 3, 1.0f, size, isLoop);
 		break;
 	case EffectType::star:
-		return new GeneralEffect(_effectImg[EffectType::star], pos, 1280, 1536, 6, 5, 1.0f, size);
+		return new GeneralEffect(_effectImg[EffectType::star], pos, 1280, 1536, 6, 5, 1.0f, size, isLoop);
 		break;
 	case EffectType::hit2:
-		return new GeneralEffect(_effectImg[EffectType::hit2], pos, 1280, 1536, 6, 5, 1.0f, size);
+		return new GeneralEffect(_effectImg[EffectType::hit2], pos, 1280, 1536, 6, 5, 1.0f, size, isLoop);
 		break;
 	default:
 		return nullptr;

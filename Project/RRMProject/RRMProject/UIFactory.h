@@ -14,7 +14,5 @@ public:
 	~UIFactory();
 
 	UI* Create();
-
-	HPBar* CreateHPBar(const Position& ownPos, HitPoint& hp);
 };
 
