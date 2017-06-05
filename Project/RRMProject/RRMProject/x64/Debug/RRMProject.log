@@ -1,7 +1,0 @@
-﻿  EffectManager.cpp
-c:\users\1501344\desktop\新しいフォルダー (2)\trunk\project\rrmproject\rrmproject\vector2.h(64): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
-c:\users\1501344\desktop\新しいフォルダー (2)\trunk\project\rrmproject\rrmproject\vector2.h(71): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
-c:\users\1501344\desktop\新しいフォルダー (2)\trunk\project\rrmproject\rrmproject\effectmanager.cpp(48): error C2511: 'void EffectManager::Create(EffectType,const Position &)': オーバーロードされたメンバー関数が 'EffectManager' にありません。
-  c:\users\1501344\desktop\新しいフォルダー (2)\trunk\project\rrmproject\rrmproject\effectmanager.h(10): note: 'EffectManager' の宣言を確認してください
-c:\users\1501344\desktop\新しいフォルダー (2)\trunk\project\rrmproject\rrmproject\effectmanager.cpp(49): error C2228: '.push_back' の左側はクラス、構造体、共用体でなければなりません
-c:\users\1501344\desktop\新しいフォルダー (2)\trunk\project\rrmproject\rrmproject\effectmanager.cpp(49): error C2228: '.Create' の左側はクラス、構造体、共用体でなければなりません
