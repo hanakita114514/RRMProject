@@ -49,6 +49,39 @@ DeviceDx11::Init(WindowControl& wc)
 		pFeatureLevel,
 		&_context);
 
+	//カリングの設定
+	D3D11_RASTERIZER_DESC raster_desc = {};
+	raster_desc.FillMode = D3D11_FILL_SOLID;	//塗りつぶし
+	raster_desc.CullMode = D3D11_CULL_NONE;		//カリングをしない
+
+	result = _device->CreateRasterizerState(&raster_desc, &_cullingOffState);
+
+	raster_desc.FillMode = D3D11_FILL_SOLID;	//塗りつぶし
+	raster_desc.CullMode = D3D11_CULL_BACK;		//カリングをしない
+
+	result = _device->CreateRasterizerState(&raster_desc, &_cullingOnState);
+
+	_context->RSSetState(_cullingOnState);
+
+	//アルファブレンディングの設定
+	ID3D11BlendState* blendstate = nullptr;
+	D3D11_BLEND_DESC blenddesc = {};
+	blenddesc.AlphaToCoverageEnable = true;
+	//blenddesc.AlphaToCoverageEnable = false;
+	blenddesc.IndependentBlendEnable = false;
+	D3D11_RENDER_TARGET_BLEND_DESC& blrtdesc = blenddesc.RenderTarget[0];
+	blrtdesc.BlendEnable = true;
+	blrtdesc.SrcBlend = D3D11_BLEND_SRC_ALPHA;
+	blrtdesc.DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
+	blrtdesc.BlendOp = D3D11_BLEND_OP_ADD;
+	blrtdesc.SrcBlendAlpha = D3D11_BLEND_ONE;
+	blrtdesc.DestBlendAlpha = D3D11_BLEND_ZERO;
+	blrtdesc.BlendOpAlpha = D3D11_BLEND_OP_ADD;
+	blrtdesc.RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+	float blendFactor[] = { D3D11_BLEND_ZERO, D3D11_BLEND_ZERO, D3D11_BLEND_ZERO, D3D11_BLEND_ZERO };
+	result = _device->CreateBlendState(&blenddesc, &blendstate);
+	_context->OMSetBlendState(blendstate, blendFactor, 0xffffffff);
+
 	return result;
 }
 

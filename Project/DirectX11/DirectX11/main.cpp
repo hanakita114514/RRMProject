@@ -53,6 +53,7 @@ HRESULT InitDirect3D(WindowControl& wc)
 	pBack->Release();
 
 	//デプスステンシルビュー(DSV)を作成
+	//Zバッファ
 	D3D11_TEXTURE2D_DESC descDepth;
 	descDepth.Width = wc.WindowWidth();
 	descDepth.Height = wc.WindowHeight();
@@ -81,6 +82,7 @@ HRESULT InitDirect3D(WindowControl& wc)
 
 	//レンダーターゲットビューとデプスステンシルビューをセット
 	dev.Context()->OMSetRenderTargets(1, &_rtv, _dsv);
+
 
 	return result;
 
@@ -512,7 +514,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nC
 
 	float angle = 0;
 
-	float color[4] = { 1.0f, 0.0f, 0.0f, 1.0f }; //RGBA
+	float color[4] = { 0.2f, 0.2f, 0.0f, 1.0f }; //RGBA
 
 	DInput input;
 	input.Init();
@@ -610,12 +612,10 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nC
 
 		gg.Instance().DrawCircle(200, 300, 50, GetColor(255, 0, 0), false);
 
-		//graphic.DrawRectExtendGraph(100, 100, 500, 500, 0, 0, 600, 600, handle, true, false);
+
+		graphic.DrawRectExtendGraph(0, 0, 500, 500, 0, 0, 600, 600, handle, true, false);
 
 		graphic.DrawGraph(0, 0, effectHandle);
-
-
-
 
 		//graphic.DrawExtendGraph(0, 0, 1500, 700, handle);
 
