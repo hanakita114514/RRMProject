@@ -18,6 +18,8 @@
 
 #include "GeometryGraph.h"
 
+#include <Shlwapi.h>
+
 //レンダラー
 ID3D11RenderTargetView* _rtv;
 
@@ -189,6 +191,135 @@ unsigned int GetColor(unsigned char red, unsigned char green, unsigned char blue
 	color = red << 24 | green << 16 | blue << 8;
 	color |= 0x000000ff;
 	return color;
+}
+
+void CreateFont()
+{
+	DeviceDx11& dev = DeviceDx11::Instance();
+
+	//フォントを使えるようにする
+	DESIGNVECTOR design;
+	HRESULT result = AddFontResourceEx(
+		"apjfont/APJapanesefont.ttf",
+		FR_PRIVATE,
+		&design
+	);
+
+	//フォントの生成
+	LOGFONT lf = {
+		300,0,0,0,0,0,0,0,
+		SHIFTJIS_CHARSET,
+		OUT_TT_ONLY_PRECIS,
+		CLIP_DEFAULT_PRECIS,
+		PROOF_QUALITY,
+		FIXED_PITCH | FF_MODERN,
+		TEXT("あんずもじ湛")
+	};
+
+	char* fontChar = "あいうえお";
+
+	HFONT hFont = CreateFontIndirect(&lf);
+	HDC hdc = GetDC(nullptr);
+	HFONT oldFont = (HFONT)SelectObject(hdc, hFont);
+	UINT code = (UINT)fontChar;
+
+	//フォントビットマップ取得
+	TEXTMETRIC TM;
+	GetTextMetrics(hdc, &TM);
+	GLYPHMETRICS GM;
+	CONST MAT2 Mat = { { 0,1 },{ 0,0 },{ 0,0 },{ 0,1 } };
+	DWORD size = GetGlyphOutline(
+		hdc,
+		code,
+		GGO_GRAY4_BITMAP,
+		&GM,
+		0,
+		nullptr,
+		&Mat);
+	BYTE* ptr = new BYTE[size];
+	GetGlyphOutline(
+		hdc,
+		code,
+		GGO_GRAY4_BITMAP,
+		&GM,
+		size,
+		ptr,
+		&Mat);
+
+	SelectObject(hdc, oldFont);
+	DeleteObject(hFont);
+	ReleaseDC(nullptr, hdc);
+
+	//CPU書き込みができるテクスチャを作成
+	D3D11_TEXTURE2D_DESC desc;
+	memset(&desc, 0, sizeof(desc));
+	desc.Width = GM.gmCellIncX;
+	desc.Height = TM.tmHeight;
+	desc.MipLevels = 1;
+	desc.ArraySize = 1;
+	//RGBA(255,255,255,255)タイプ
+	desc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+	desc.SampleDesc.Count = 1;
+	desc.Usage = D3D11_USAGE_DYNAMIC;
+	desc.BindFlags = D3D11_BIND_SHADER_RESOURCE;
+	desc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+
+	ID3D11Texture2D* tex2D;
+	result = dev.Device()->CreateTexture2D(&desc, 0, &tex2D);
+
+	//フォント情報をテクスチャに書き込む部分
+	D3D11_MAPPED_SUBRESOURCE hMappedResource;
+	result = dev.Context()->Map(
+		tex2D,
+		0,
+		D3D11_MAP_WRITE_DISCARD,
+		0,
+		&hMappedResource);
+
+	D3D11_TEXTURE2D_DESC texDesc;
+	tex2D->GetDesc(&texDesc);
+
+	D3D11_SHADER_RESOURCE_VIEW_DESC srvDesc = {};
+	srvDesc.Format = texDesc.Format;
+	srvDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
+	srvDesc.Texture2D.MostDetailedMip = 0;
+	srvDesc.Texture2D.MipLevels = texDesc.MipLevels;
+
+	ID3D11ShaderResourceView* fontSRV;
+
+	result = dev.Device()->CreateShaderResourceView(tex2D, &srvDesc, &fontSRV);
+
+
+
+	BYTE* pBits = (BYTE*)hMappedResource.pData;
+	int iOfs_x = GM.gmptGlyphOrigin.x;
+	int iofs_y = TM.tmAscent - GM.gmptGlyphOrigin.y;
+	int iBmp_w = GM.gmBlackBoxX
+		+ (4 - (GM.gmBlackBoxX % 4));
+	int iBmp_h = GM.gmBlackBoxY;
+	int level = 17;
+	int x, y;
+	DWORD Alpha, Color;
+	memset(pBits, 0, hMappedResource.RowPitch * TM.tmHeight);
+
+	for (y = iofs_y; y < iofs_y + iBmp_h; y++)
+	{
+		for (x = iOfs_x; x < iOfs_x + iBmp_w; x++)
+		{
+			Alpha =
+				(255 * ptr[x - iOfs_x + iBmp_w * (y - iofs_y)])
+				/ (level - 1);
+			Color = 0x00ffffff | (Alpha << 24);
+
+			memcpy(
+				(BYTE*)pBits
+				+ hMappedResource.RowPitch * y + 4 * x,
+				&Color,
+				sizeof(DWORD));
+		}
+	}
+
+	dev.Context()->Unmap(tex2D, 0);
 }
 
 int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nCmdShow)
@@ -381,9 +512,10 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nC
 
 	float angle = 0;
 
-	float color[4] = { 0.0f, 0.0f, 0.0f, 1.0f }; //RGBA
+	float color[4] = { 1.0f, 0.0f, 0.0f, 1.0f }; //RGBA
 
 	DInput input;
+	input.Init();
 	DIJOYSTATE js;
 
 	int frame = 0;
@@ -411,6 +543,8 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nC
 	unsigned int red = GetColor(255, 0, 0);
 	unsigned int green = GetColor(0, 255, 0);
 	unsigned int blue = GetColor(0, 0, 255);
+
+	int effectHandle = graphic.LoadGraph("Down.png");
 
 	while (true)
 	{
@@ -458,7 +592,8 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nC
 		//graphic.DrawGraph(0, 0, rectHandle);
 		//graphic.DrawRectGraph(0, 0, 0 + ((frame % 60) / 10) * 32, 0, 32, 32, rectHandle, false, false);
 		++frame;
-		graphic.DrawExtendGraph(0, 0, 1000 , 700, handle);
+		//graphic.DrawExtendGraph(0, 0, 1000 , 700, handle);
+
 
 		//赤
 		gg.Instance().DrawBox(50, 50, 100, 100, GetColor(255,0,0), true);
@@ -469,7 +604,21 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nC
 		//白
 		gg.Instance().DrawBox(200, 50, 250, 100, GetColor(255, 255, 255), true);
 
-		graphic.DrawExtendGraph(600, 0, 1500, 700, handle);
+		gg.Instance().DrawLine(0, 100, 200, 100, GetColor(255, 0, 0));
+
+		gg.Instance().DrawPoint(50, 200, GetColor(255, 255, 0));
+
+		gg.Instance().DrawCircle(200, 300, 50, GetColor(255, 0, 0), false);
+
+		//graphic.DrawRectExtendGraph(100, 100, 500, 500, 0, 0, 600, 600, handle, true, false);
+
+		graphic.DrawGraph(0, 0, effectHandle);
+
+
+
+
+		//graphic.DrawExtendGraph(0, 0, 1500, 700, handle);
+
 
 
 		dev.SwapChain()->Present(1, 0);
