@@ -18,6 +18,7 @@ MapManager::MapManager()
 
 	EnemyManager::Instance().Create(EnemyType::egg, Position(500, 0));
 	EnemyManager::Instance().Create(EnemyType::egg, Position(300,0));
+	EnemyManager::Instance().Create(EnemyType::egg, Position(1214, 0));
 
 }
 

@@ -29,7 +29,6 @@ HomingBullet::Initialize(Vector2 vec,ObjectType type)
 	_objType = type;
 	_isAlive = true;
 	_vel = vec;
-
 }
 
 bool 
@@ -44,25 +43,42 @@ HomingBullet::TargetSearch()
 			return false;
 		}
 		Enemy* nearEnemy = EnemyManager::Instance().GetEnemyList()[0];
+		bool nearFlag = false;
 
 		for (auto& e : EnemyManager::Instance().GetEnemyList())
 		{
 			if (e->IsDead())
 			{
+				if (e == nearEnemy)
+				{
+					//nearEnemy = EnemyManager::Instance().GetEnemyList().back();
+					nearFlag = true;
+				}
 				continue;
 			}
+			if (nearFlag)
+			{
+				nearEnemy = e;
+				nearFlag = false;
+			}
+
 			Position prevPos;
-			prevPos.x = abs(nearEnemy->GetPosition().x - _owner->GetPosition().x);
-			prevPos.y = abs(nearEnemy->GetPosition().y - _owner->GetPosition().y);
+			prevPos.x = abs(nearEnemy->GetPosition().x - this->GetPosition().x);
+			prevPos.y = abs(nearEnemy->GetPosition().y - this->GetPosition().y);
 
 			Position newPos;
-			newPos.x = abs(e->GetPosition().x - _owner->GetPosition().x);
-			newPos.y = abs(e->GetPosition().y - _owner->GetPosition().y);
+			newPos.x = abs(e->GetPosition().x - this->GetPosition().x);
+			newPos.y = abs(e->GetPosition().y - this->GetPosition().y);
 
-			if (newPos.x + newPos.y > prevPos.x + prevPos.y)
+			if (newPos.x + newPos.y < prevPos.x + prevPos.y)
 			{
 				nearEnemy = e;
 			}
+		}
+
+		if (nearFlag)
+		{
+			return false;
 		}
 
 		_target = nearEnemy;
@@ -99,7 +115,7 @@ HomingBullet::Draw(const Vector2& offset)
 
 void HomingBullet::Move()
 {
-	if (_homCnt % 30 == 0)
+	if (_homCnt % 15 == 0)
 	{
 		if (TargetSearch())
 		{

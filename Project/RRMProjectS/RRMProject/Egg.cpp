@@ -146,9 +146,11 @@ void Egg::Wait()
 {
 	if (_hitGround)
 	{
-		_state = &Egg::Shot;
-		_spell.CircleShot(Vector2(-1, 0), _rc.pos, this);
+		//_state = &Egg::Shot;
+		_spell.Comet(Vector2(-1, 0), _rc.pos, this);
 	}
+
+	int i = 0;
 }
 
 void Egg::Shot(BulletType type, int count)	//çUåÇ

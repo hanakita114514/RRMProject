@@ -6,6 +6,7 @@ class SinBullet : public Bullet
 private:
 
 	int _freamCnt;
+	bool _returnFlag;
 public:
 	SinBullet(int handle);
 	~SinBullet();
@@ -16,5 +17,7 @@ public:
 
 	void Move();					//ˆÚ“®
 	void LifeDecrease();				//ƒ‰ƒCƒt‚ÌŒ¸ŽZ
+
+	void Return(bool flag) { _returnFlag = flag; }
 };
 

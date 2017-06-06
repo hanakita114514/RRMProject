@@ -3,9 +3,9 @@
 #include <DxLib.h>
 #include "GameTime.h"
 
-const float RAD = 3.14f / 2.0f;				//ÉâÉWÉAÉì
-const float ANGLE = 30.0;				//î≠éÀäp
-const int AMPLITUDE = 5;			//êUÇÍïù
+const float RAD = 3.14f / 180;				//ÉâÉWÉAÉì
+const float ANGLE = 1;				//î≠éÀäp
+const int AMPLITUDE = 1;			//êUÇÍïù
 const float REDUCE_LIFE = 1.0f;
 
 SinBullet::SinBullet(int handle)
@@ -26,11 +26,12 @@ SinBullet::Initialize(Vector2 vec,ObjectType type)
 {
 	_isAlive = true;
 	_vel = vec;
-	_vel.x *= 6.5;
+	_vel.x *= 5;
 	_life = 100.0f;
 	_freamCnt = 0;
 	_id = BulletType::sinBullet;
 	_objType = type;
+	_returnFlag = false;
 }
 
 void 
@@ -38,7 +39,7 @@ SinBullet::Update()
 {
 	_freamCnt++;
 
-	_vel.y = sin((RAD /ANGLE * _freamCnt) - 1) * AMPLITUDE;
+	_vel.y = sin((RAD /ANGLE * _freamCnt)) * AMPLITUDE;
 
 	LifeDecrease();
 
@@ -54,6 +55,12 @@ SinBullet::Draw(const Vector2& offset)
 void
 SinBullet::Move()
 {
+	if (_returnFlag)
+	{
+		_vel.y *= -1;
+
+	}
+
 	_circle.pos.x += _vel.x * GameTime::Instance().GetTimeScale();
 	_circle.pos.y += _vel.y * GameTime::Instance().GetTimeScale();
 
@@ -68,9 +75,9 @@ SinBullet::LifeDecrease()
 {
 	_life -= REDUCE_LIFE * GameTime::Instance().GetTimeScale();
 
-	if (_life == 0)
+	if (_life < 0)
 	{
-		_isAlive = true;
+		_isAlive = false;
 	}
 }
 

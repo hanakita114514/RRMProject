@@ -37,8 +37,11 @@ void NormalBullet::Update()
 		_isAlive = false;
 	}
 
-	_circle.pos.x += _vel.x * GameTime::Instance().GetTimeScale();
-	_circle.pos.y += _vel.y * GameTime::Instance().GetTimeScale();
+	if (_bs != BulletState::stop)
+	{
+		_circle.pos.x += _vel.x * GameTime::Instance().GetTimeScale();
+		_circle.pos.y += _vel.y * GameTime::Instance().GetTimeScale();
+	}
 }
 
 void NormalBullet::Draw(const Vector2& offset)

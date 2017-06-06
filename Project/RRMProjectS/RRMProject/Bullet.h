@@ -69,7 +69,7 @@ public:
 	float GetPower() { return _pow; }
 
 	void Stop() { _bs = BulletState::stop; }
-	void Shot() { _bs = BulletState::move; }
+	void Move() { _bs = BulletState::move; }
 };
 
 

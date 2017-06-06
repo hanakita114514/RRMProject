@@ -21,20 +21,20 @@ void EnemyManager::Update()
 	//削除ループ
 	//不要なもの削除ループ
 	//SheardPointerの実装の為一時コメント化
-	//std::vector<Enemy*>::iterator it = _enemyList.begin();
-	//for (; it != _enemyList.end();)
-	//{
-	//	if ((*it)->IsDead())
-	//	{
-	//		delete(*it);
-	//		*it = nullptr;
-	//		it = _enemyList.erase(it);
-	//	}
-	//	else
-	//	{
-	//		it++;
-	//	}
-	//}
+	std::vector<Enemy*>::iterator it = _enemyList.begin();
+	for (; it != _enemyList.end();)
+	{
+		if ((*it)->IsDead())
+		{
+			delete(*it);
+			*it = nullptr;
+			it = _enemyList.erase(it);
+		}
+		else
+		{
+			it++;
+		}
+	}
 }
 
 void EnemyManager::Draw(const Vector2& offset)
