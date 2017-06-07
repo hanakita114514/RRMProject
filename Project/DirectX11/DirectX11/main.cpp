@@ -19,12 +19,7 @@
 #include "GeometryGraph.h"
 
 #include <Shlwapi.h>
-
-//レンダラー
-ID3D11RenderTargetView* _rtv;
-
-ID3D11Texture2D* _depthTexture2D;	//深度用テクスチャ
-ID3D11DepthStencilView* _dsv;	//深度ビュー
+#include "Renderer.h"
 
 struct MatrixForShader
 {
@@ -41,48 +36,7 @@ HRESULT InitDirect3D(WindowControl& wc)
 
 	DeviceDx11& dev = DeviceDx11::Instance();
 
-
-	//バックバッファのレンダーターゲットビュー(RTV)を作成
-	ID3D11Texture2D* pBack;
-	//バックバッファのサーフェイスをシェーダリソース(テクスチャ)として抜き出す
-	result = dev.SwapChain()->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&pBack);
-
-	//そのテクスチャをレンダーターゲットとするようなレンダーターゲットビューを作成
-	result = dev.Device()->CreateRenderTargetView(pBack, nullptr, &_rtv);
-
-	pBack->Release();
-
-	//デプスステンシルビュー(DSV)を作成
-	//Zバッファ
-	D3D11_TEXTURE2D_DESC descDepth;
-	descDepth.Width = wc.WindowWidth();
-	descDepth.Height = wc.WindowHeight();
-	descDepth.MipLevels = 1;
-	descDepth.ArraySize = 1;
-	descDepth.Format = DXGI_FORMAT_D32_FLOAT;
-	descDepth.SampleDesc.Count = 1;
-	descDepth.SampleDesc.Quality = 0;
-	descDepth.Usage = D3D11_USAGE_DEFAULT;
-	descDepth.BindFlags = D3D11_BIND_DEPTH_STENCIL;
-	descDepth.CPUAccessFlags = 0;
-	descDepth.MiscFlags = 0;
-
-	result = dev.Device()->CreateTexture2D(&descDepth, nullptr, &_depthTexture2D);
-	result = dev.Device()->CreateDepthStencilView(_depthTexture2D, nullptr, &_dsv);
-
-	//ビューポートの設定
-	D3D11_VIEWPORT vp;
-	vp.Width = wc.WindowWidth();
-	vp.Height = wc.WindowHeight();
-	vp.MinDepth = 0.0f;
-	vp.MaxDepth = 1.0f;
-	vp.TopLeftX = 0;
-	vp.TopLeftY = 0;
-	dev.Context()->RSSetViewports(1, &vp);
-
-	//レンダーターゲットビューとデプスステンシルビューをセット
-	dev.Context()->OMSetRenderTargets(1, &_rtv, _dsv);
-
+	Renderer::Instance().Init();
 
 	return result;
 
@@ -101,65 +55,65 @@ HRESULT ResetDirect3D(WindowControl& wc)
 		return hr;
 	}
 
-	ID3D11RenderTargetView* rtv = nullptr;
-	dev.Context()->OMSetRenderTargets(1, &rtv, nullptr);
-	_rtv->Release();
-	_dsv->Release();
+	//ID3D11RenderTargetView* rtv = nullptr;
+	//dev.Context()->OMSetRenderTargets(1, &rtv, nullptr);
+	//_rtv->Release();
+	//_dsv->Release();
 
-	hr = dev.SwapChain()->ResizeBuffers(2,
-		0,
-		0,
-		DXGI_FORMAT_R8G8B8A8_UNORM,
-		0);
+	//hr = dev.SwapChain()->ResizeBuffers(2,
+	//	0,
+	//	0,
+	//	DXGI_FORMAT_R8G8B8A8_UNORM,
+	//	0);
 
-	if (FAILED(hr))
-	{
-		return hr;
-	}
+	//if (FAILED(hr))
+	//{
+	//	return hr;
+	//}
 
-	ID3D11Texture2D* tex = nullptr;
-	D3D11_TEXTURE2D_DESC tex2ddesc =
-	{
-		wc.WindowHeight(), wc.WindowWidth(), 1, 1,	//width , height, mip, array
-		DXGI_FORMAT_D24_UNORM_S8_UINT,
-		{1, 0},
-		D3D11_USAGE_DEFAULT,
-		D3D11_BIND_DEPTH_STENCIL,
-		0,	//CPU flags
-		0	//misc flags
-	};
+	//ID3D11Texture2D* tex = nullptr;
+	//D3D11_TEXTURE2D_DESC tex2ddesc =
+	//{
+	//	wc.WindowHeight(), wc.WindowWidth(), 1, 1,	//width , height, mip, array
+	//	DXGI_FORMAT_D24_UNORM_S8_UINT,
+	//	{1, 0},
+	//	D3D11_USAGE_DEFAULT,
+	//	D3D11_BIND_DEPTH_STENCIL,
+	//	0,	//CPU flags
+	//	0	//misc flags
+	//};
 
-	hr = dev.Device()->CreateTexture2D(&tex2ddesc, nullptr, &tex);
+	//hr = dev.Device()->CreateTexture2D(&tex2ddesc, nullptr, &tex);
 
-	if (FAILED(hr))
-	{
-		return hr;
-	}
+	//if (FAILED(hr))
+	//{
+	//	return hr;
+	//}
 
-	D3D11_DEPTH_STENCIL_VIEW_DESC vdesc =
-	{
-		DXGI_FORMAT_D24_UNORM_S8_UINT,
-		D3D11_DSV_DIMENSION_TEXTURE2D
-	};
+	//D3D11_DEPTH_STENCIL_VIEW_DESC vdesc =
+	//{
+	//	DXGI_FORMAT_D24_UNORM_S8_UINT,
+	//	D3D11_DSV_DIMENSION_TEXTURE2D
+	//};
 
-	dev.Device()->CreateDepthStencilView(
-		tex,
-		&vdesc,
-		&_dsv
-	);
+	//dev.Device()->CreateDepthStencilView(
+	//	tex,
+	//	&vdesc,
+	//	&_dsv
+	//);
 
-	tex->Release();
+	//tex->Release();
 
-	dev.Context()->OMSetRenderTargets(1,
-		&_rtv,
-		_dsv);
+	//dev.Context()->OMSetRenderTargets(1,
+	//	&_rtv,
+	//	_dsv);
 
-	D3D11_VIEWPORT viewport =
-	{
-		0, 0, wc.WindowWidth(), wc.WindowHeight(), 0.0f, 1.0f
-	};
+	//D3D11_VIEWPORT viewport =
+	//{
+	//	0, 0, wc.WindowWidth(), wc.WindowHeight(), 0.0f, 1.0f
+	//};
 
-	dev.Context()->RSSetViewports(1, &viewport);
+	//dev.Context()->RSSetViewports(1, &viewport);
 
 
 	return hr;
@@ -514,8 +468,6 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nC
 
 	float angle = 0;
 
-	float color[4] = { 0.2f, 0.2f, 0.0f, 1.0f }; //RGBA
-
 	DInput input;
 	input.Init();
 	DIJOYSTATE js;
@@ -555,9 +507,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nC
 			break;
 		}
 
-		dev.Context()->ClearRenderTargetView(_rtv, color);
-
-		dev.Context()->ClearDepthStencilView(_dsv, D3D11_CLEAR_DEPTH, 1.0f, 0);
+		Renderer::Instance().Clear();
 
 		//world = XMMatrixRotationY(angle);
 		//angle += 0.01f;
@@ -597,6 +547,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nC
 		//graphic.DrawExtendGraph(0, 0, 1000 , 700, handle);
 
 
+		Renderer::Instance().SetZBuffer(false);
 		//赤
 		gg.Instance().DrawBox(50, 50, 100, 100, GetColor(255,0,0), true);
 		//緑
@@ -610,11 +561,15 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nC
 
 		gg.Instance().DrawPoint(50, 200, GetColor(255, 255, 0));
 
-		gg.Instance().DrawCircle(200, 300, 50, GetColor(255, 0, 0), false);
+		//gg.Instance().DrawCircle(200, 300, 50, GetColor(255, 0, 0), false);
 
+		Renderer::Instance().AlphaBlend(100);
+		graphic.DrawGraph(0, 0, handle);
+		Renderer::Instance().DefaultBlend();
 
-		graphic.DrawRectExtendGraph(0, 0, 500, 500, 0, 0, 600, 600, handle, true, false);
+		//graphic.DrawRectExtendGraph(0, 0, 500, 500, 0, 0, 600, 600, handle, true, false);
 
+		
 		graphic.DrawGraph(0, 0, effectHandle);
 
 		//graphic.DrawExtendGraph(0, 0, 1500, 700, handle);

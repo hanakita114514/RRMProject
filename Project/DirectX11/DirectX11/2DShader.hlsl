@@ -53,7 +53,7 @@ float4 PicturePS(Output output) : SV_Target
 
 	if (color.a == 0)
 	{
-		discard;
+		//discard;
 	}
 
 	return float4(color.r, color.g, color.b, color.a);
