@@ -447,6 +447,60 @@ Collision::LineCross(Rect characterA, Vector2 vecA, Rect characterB, Vector2 vec
 	return true;
 }
 
+bool
+Collision::LinerInterpolation(Rect& rect, Vector2& velocityA, Circle& circle, Vector2& velocityB)
+{
+	bool moveRightA = true;		//とりあえず右向きに動いているものとする
+
+	if (velocityA.x < 0)		//左向きに動いているのなら
+	{
+		moveRightA = false;
+	}
+	else if (velocityA.x == 0)	//動いていないなら線形補間は必要ないので
+	{
+		return false;
+	}
+
+	float time = 0.1;
+	Vector2 nextPosA, nextPosB;
+	nextPosA = rect.pos;
+	nextPosB = circle.center;
+	if (velocityA.x * velocityB.x < 0)
+	{
+		while (time < 10)
+		{
+			nextPosA.x = (rect.pos.x + (rect.pos.x + velocityA.x)) * time;
+			nextPosB.x = (circle.center.x + (circle.center.x + velocityB.x)) * time;
+
+			if (moveRightA)
+			{
+				if (nextPosA.x >= nextPosB.x && CircleColToRect(rect,circle))
+				{
+					return true;
+				}
+				else
+				{
+					time++;
+					continue;
+				}
+			}
+			else
+			{
+				if (nextPosA.x <= nextPosB.x && CircleColToRect(rect, circle))
+				{
+					return true;
+				}
+				else
+				{
+					time++;
+					continue;
+				}
+			}
+		}
+	}
+	return false;
+}
+
 bool CircleColToRect(Rect &a, Circle &c)
 {
 	if ((a.Left() < c.pos.x && a.Top() < c.pos.y) &&

@@ -36,6 +36,8 @@ Egg::Egg(int* handle, const Position& pos)
 	_circle.radius = _rc.w / 2;
 
 	_isAlive = true;
+
+
 }
 
 Egg::~Egg()
@@ -144,10 +146,11 @@ void Egg::Jump()
 
 void Egg::Wait()
 {
+	
 	if (_hitGround)
 	{
-		//_state = &Egg::Shot;
-		_spell.Comet(Vector2(-1, 0), _rc.pos, this);
+		Spell* spell = _absSpell->GetSpell(SpellType::CircleShot);
+		spell->Create(Vector2(-1, 0), _rc.pos, this);
 	}
 
 	int i = 0;

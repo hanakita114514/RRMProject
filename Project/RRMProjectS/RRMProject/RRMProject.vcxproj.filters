@@ -58,6 +58,9 @@
     <Filter Include="ソース ファイル\Sound">
       <UniqueIdentifier>{1cc95ccb-5749-49cf-b292-873a6941ecf4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Spell">
+      <UniqueIdentifier>{fcd50d52-9a06-4664-bc81-a66d5c9e7547}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameMain.cpp">
@@ -250,7 +253,22 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Spell.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\Spell</Filter>
+    </ClCompile>
+    <ClCompile Include="Comet.cpp">
+      <Filter>ソース ファイル\Spell</Filter>
+    </ClCompile>
+    <ClCompile Include="TestSpell.cpp">
+      <Filter>ソース ファイル\Spell</Filter>
+    </ClCompile>
+    <ClCompile Include="CircleShot.cpp">
+      <Filter>ソース ファイル\Spell</Filter>
+    </ClCompile>
+    <ClCompile Include="AbstractSpell.cpp">
+      <Filter>ソース ファイル\Spell</Filter>
+    </ClCompile>
+    <ClCompile Include="ShootingStar.cpp">
+      <Filter>ソース ファイル\Spell</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -450,7 +468,22 @@
       <Filter>ソース ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Spell.h">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\Spell</Filter>
+    </ClInclude>
+    <ClInclude Include="Comet.h">
+      <Filter>ソース ファイル\Spell</Filter>
+    </ClInclude>
+    <ClInclude Include="TestSpell.h">
+      <Filter>ソース ファイル\Spell</Filter>
+    </ClInclude>
+    <ClInclude Include="CircleShot.h">
+      <Filter>ソース ファイル\Spell</Filter>
+    </ClInclude>
+    <ClInclude Include="AbstractSpell.h">
+      <Filter>ソース ファイル\Spell</Filter>
+    </ClInclude>
+    <ClInclude Include="ShootingStar.h">
+      <Filter>ソース ファイル\Spell</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

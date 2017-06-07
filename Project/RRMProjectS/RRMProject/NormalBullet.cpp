@@ -29,7 +29,6 @@ void NormalBullet::Update()
 {
 	//CtlPointSet(_etyPoint, _endPoint, _vel);
 
-	_life -= REDUCE_LIFE * GameTime::Instance().GetTimeScale();
 
 
 	if (_life == 0 || _circle.pos.x < 0)
@@ -39,6 +38,7 @@ void NormalBullet::Update()
 
 	if (_bs != BulletState::stop)
 	{
+		_life -= REDUCE_LIFE * GameTime::Instance().GetTimeScale();
 		_circle.pos.x += _vel.x * GameTime::Instance().GetTimeScale();
 		_circle.pos.y += _vel.y * GameTime::Instance().GetTimeScale();
 	}

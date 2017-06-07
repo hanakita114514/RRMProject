@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AbstractSpell.cpp" />
     <ClCompile Include="BackgroundRendar.cpp" />
     <ClCompile Include="BezierBullet.cpp" />
     <ClCompile Include="Block.cpp" />
@@ -29,8 +30,10 @@
     <ClCompile Include="Circle.cpp" />
     <ClCompile Include="CircleBullet.cpp" />
     <ClCompile Include="CircleObj.cpp" />
+    <ClCompile Include="CircleShot.cpp" />
     <ClCompile Include="ClearScene.cpp" />
     <ClCompile Include="Collision.cpp" />
+    <ClCompile Include="Comet.cpp" />
     <ClCompile Include="DeffusionBullet.cpp" />
     <ClCompile Include="Digestion.cpp" />
     <ClCompile Include="DInput.cpp" />
@@ -67,10 +70,12 @@
     <ClCompile Include="PowerPoint.cpp" />
     <ClCompile Include="Rect.cpp" />
     <ClCompile Include="RectObj.cpp" />
+    <ClCompile Include="ShootingStar.cpp" />
     <ClCompile Include="SinBullet.cpp" />
     <ClCompile Include="SlowDown.cpp" />
     <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="Spell.cpp" />
+    <ClCompile Include="TestSpell.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="UI.cpp" />
     <ClCompile Include="UIFactory.cpp" />
@@ -85,6 +90,7 @@
     <ClCompile Include="TitleScene.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AbstractSpell.h" />
     <ClInclude Include="BackgroundRendar.h" />
     <ClInclude Include="BezierBullet.h" />
     <ClInclude Include="Block.h" />
@@ -95,8 +101,10 @@
     <ClInclude Include="Circle.h" />
     <ClInclude Include="CircleBullet.h" />
     <ClInclude Include="CircleObj.h" />
+    <ClInclude Include="CircleShot.h" />
     <ClInclude Include="ClearScene.h" />
     <ClInclude Include="Collision.h" />
+    <ClInclude Include="Comet.h" />
     <ClInclude Include="common.h" />
     <ClInclude Include="DeffusionBullet.h" />
     <ClInclude Include="Digestion.h" />
@@ -134,10 +142,12 @@
     <ClInclude Include="PowerPoint.h" />
     <ClInclude Include="Rect.h" />
     <ClInclude Include="RectObj.h" />
+    <ClInclude Include="ShootingStar.h" />
     <ClInclude Include="SinBullet.h" />
     <ClInclude Include="SlowDown.h" />
     <ClInclude Include="SoundManager.h" />
     <ClInclude Include="Spell.h" />
+    <ClInclude Include="TestSpell.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="UI.h" />
     <ClInclude Include="UIFactory.h" />

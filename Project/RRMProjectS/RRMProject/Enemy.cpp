@@ -4,11 +4,14 @@
 
 Enemy::Enemy() : _hp(50.0f)
 {
+	_absSpell = new AbstractSpell();
+	_hitGround = false;
 }
 
 
 Enemy::~Enemy()
 {
+	delete _absSpell;
 }
 
 void Enemy::Initialize()

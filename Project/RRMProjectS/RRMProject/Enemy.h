@@ -4,7 +4,7 @@
 #include "RectObj.h"
 #include "MultihitProtect.h"
 #include "HitPoint.h"
-
+#include "AbstractSpell.h"
 
 enum class EnemyType
 {
@@ -23,6 +23,8 @@ protected:
 	bool _hitGround;
 	Vector2 _dir;
 	bool _isAlive;
+
+	AbstractSpell* _absSpell;
 
 	HitPoint _hp;
 	MultihitProtect _mhp;	//‘½’iƒqƒbƒg‚ð–h‚®

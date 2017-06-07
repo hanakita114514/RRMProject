@@ -34,5 +34,7 @@ public:
 
 	bool LineCross(Rect characterA, Vector2 vecA, Rect characterB, Vector2 vecB);   //矩形と矩形の線分交差（ベクトル）
 
+	bool LinerInterpolation(Rect& rect, Vector2& velocityA, Circle& circle, Vector2& velocityB);
+
 };
 

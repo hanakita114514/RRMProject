@@ -1,7 +1,5 @@
 ﻿  Spell.cpp
 c:\users\1501344\desktop\新しいフォルダー (2)\trunk\project\rrmprojects\rrmproject\vector2.h(64): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
 c:\users\1501344\desktop\新しいフォルダー (2)\trunk\project\rrmprojects\rrmproject\vector2.h(71): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
-c:\users\1501344\desktop\新しいフォルダー (2)\trunk\project\rrmprojects\rrmproject\spell.cpp(53): warning C4305: '初期化中': 'double' から 'float' へ切り詰めます。
-c:\users\1501344\desktop\新しいフォルダー (2)\trunk\project\rrmprojects\rrmproject\spell.cpp(88): warning C4305: '初期化中': 'double' から 'float' へ切り詰めます。
   RRMProject.vcxproj -> C:\Users\1501344\Desktop\新しいフォルダー (2)\trunk\Project\RRMProjectS\x64\Debug\RRMProject.exe
   RRMProject.vcxproj -> C:\Users\1501344\Desktop\新しいフォルダー (2)\trunk\Project\RRMProjectS\x64\Debug\RRMProject.pdb (Full PDB)

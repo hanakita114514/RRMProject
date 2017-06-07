@@ -50,6 +50,7 @@ Player::Player(int padType, Camera& camera)
 	_grazePoint.radius = 11;
 
 	_avoidTime = 15.0f;
+
 }
 
 

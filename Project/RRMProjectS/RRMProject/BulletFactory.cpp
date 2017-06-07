@@ -10,7 +10,7 @@
 
 BulletFactory::BulletFactory()
 {
-	_handle = DxLib::LoadGraph("Resource/img/Bullet/eBullet.png");
+	_handle = DxLib::LoadGraph("Resource/img/Bullet/bullet.png");
 }
 
 

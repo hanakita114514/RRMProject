@@ -120,8 +120,8 @@ void GameScene::PlayerColEnemy()
 void
 GameScene::BulletColPlayer()
 {
-	bool lineHit = false;
 	bool hitFlag = false;
+	bool segmentHit = false;
 
 	for (auto& b : BulletManager::Instance().GetBulletList())
 	{
@@ -129,12 +129,11 @@ GameScene::BulletColPlayer()
 		{
 			continue;
 		}
+
 		hitFlag = _col->IsHit(_player.GetRect(), b->GetCircle());
-		lineHit = _col->LineCross(_player.GetRect(), _player.GetVel(), b->GetPosition(), b->GetVel());
-		if ((hitFlag || lineHit) && (_player.GetObjType() != b->GetObjType()))
+		if ((hitFlag || segmentHit) && (_player.GetObjType() != b->GetObjType()))
 		{
 			b->Hit(&_player);
-			break;
 		}
 
 	}
