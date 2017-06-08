@@ -12,13 +12,7 @@
 #include "XAudio.h"
 #include "SoundManager.h"
 #include "GeometryGraph.h"
-
-//レンダラー
-ID3D11RenderTargetView* _rtv;
-
-ID3D11Texture2D* _depthTexture2D;	//深度用テクスチャ
-ID3D11DepthStencilView* _dsv;	//深度ビュー
-
+#include "Renderer.h"
 
 //インプット
 DInput dinput;
@@ -31,47 +25,7 @@ namespace RRMLib
 		HRESULT result = S_OK;
 
 		DeviceDx11& dev = DeviceDx11::Instance();
-
-
-		//バックバッファのレンダーターゲットビュー(RTV)を作成
-		ID3D11Texture2D* pBack;
-		//バックバッファのサーフェイスをシェーダリソース(テクスチャ)として抜き出す
-		result = dev.SwapChain()->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&pBack);
-
-		//そのテクスチャをレンダーターゲットとするようなレンダーターゲットビューを作成
-		result = dev.Device()->CreateRenderTargetView(pBack, nullptr, &_rtv);
-
-		pBack->Release();
-
-		//デプスステンシルビュー(DSV)を作成
-		D3D11_TEXTURE2D_DESC descDepth;
-		descDepth.Width = wc.WindowWidth();
-		descDepth.Height = wc.WindowHeight();
-		descDepth.MipLevels = 1;
-		descDepth.ArraySize = 1;
-		descDepth.Format = DXGI_FORMAT_D32_FLOAT;
-		descDepth.SampleDesc.Count = 1;
-		descDepth.SampleDesc.Quality = 0;
-		descDepth.Usage = D3D11_USAGE_DEFAULT;
-		descDepth.BindFlags = D3D11_BIND_DEPTH_STENCIL;
-		descDepth.CPUAccessFlags = 0;
-		descDepth.MiscFlags = 0;
-
-		result = dev.Device()->CreateTexture2D(&descDepth, nullptr, &_depthTexture2D);
-		result = dev.Device()->CreateDepthStencilView(_depthTexture2D, nullptr, &_dsv);
-
-		//ビューポートの設定
-		D3D11_VIEWPORT vp;
-		vp.Width = wc.WindowWidth();
-		vp.Height = wc.WindowHeight();
-		vp.MinDepth = 0.0f;
-		vp.MaxDepth = 1.0f;
-		vp.TopLeftX = 0;
-		vp.TopLeftY = 0;
-		dev.Context()->RSSetViewports(1, &vp);
-
-		//レンダーターゲットビューとデプスステンシルビューをセット
-		dev.Context()->OMSetRenderTargets(1, &_rtv, _dsv);
+		Renderer::Instance().Init();
 
 		return result;
 
@@ -146,12 +100,7 @@ namespace RRMLib
 	//画面に描画されているものを消す
 	void ClearDrawScreen()
 	{
-		DeviceDx11& dev = DeviceDx11::Instance();
-		float color[4] = { 0.0f, 0.0f, 0.0f, 1.0f }; //RGBA
-
-		dev.Context()->ClearRenderTargetView(_rtv, color);
-
-		dev.Context()->ClearDepthStencilView(_dsv, D3D11_CLEAR_DEPTH, 1.0f, 0);
+		Renderer::Instance().Clear();
 	}
 
 	//裏画面切り替え
@@ -198,6 +147,12 @@ namespace RRMLib
 		SetWindowText(WindowControl::Instance().WindowHandle(), windowName.c_str());
 	}
 
+	//背景色の変更
+	void ChangeBackColor(int red, int green, int blue)
+	{
+		Renderer::Instance().BackGroundColor(red, green, blue);
+	}
+
 	//画像の読み込み
 	int LoadGraph(std::string filePath)
 	{
@@ -209,6 +164,7 @@ namespace RRMLib
 	//画像を描画
 	void DrawGraph(int x, int y, int graphHandle)
 	{
+		Renderer::Instance().SetZBuffer(false);
 		Graphic::Instance().DrawGraph(x, y, graphHandle);
 	}
 	
@@ -216,6 +172,7 @@ namespace RRMLib
 	void DrawRectGraph(float destX, float destY, int srcX, int srcY,
 		int width, int height, int graphHandle, bool transFlag, bool trunFlag)
 	{
+		Renderer::Instance().SetZBuffer(false);
 		Graphic::Instance().DrawRectGraph(destX, destY, srcX, srcY,
 			width, height, graphHandle, transFlag, trunFlag);
 	}
@@ -223,13 +180,45 @@ namespace RRMLib
 	//画像の拡縮描画
 	void DrawExtendGraph(float lx, float ly, float rx, float ry, int handle)
 	{
+		Renderer::Instance().SetZBuffer(false);
 		Graphic::Instance().DrawExtendGraph(lx, ly, rx, ry, handle);
+	}
+
+	//画像の拡縮矩形描画
+	void DrawRectExtendGraph(float destLX, float destLY, float destRX, float destRY,
+		int srcX, int srcY, int width, int height, int graphHandle, bool transFlag, bool turnFlag)
+	{
+		Renderer::Instance().SetZBuffer(false);
+		Graphic::Instance().DrawRectExtendGraph(destLX, destLY, destRX, destRY,
+			srcX, srcY, width, height, graphHandle, transFlag, turnFlag);
 	}
 
 	//矩形描画
 	void DrawBox(float lx, float ly, float rx, float ry, unsigned int color, bool fillFlag)
 	{
+		Renderer::Instance().SetZBuffer(false);
 		GeometryGraph::Instance().DrawBox(lx, ly, rx, ry, color, fillFlag);
+	}
+	
+	//線描画
+	void DrawLine(float lx, float ly, float rx, float ry, unsigned int color)
+	{
+		Renderer::Instance().SetZBuffer(false);
+		GeometryGraph::Instance().DrawLine(lx, ly, rx, ry, color);
+	}
+
+	//点描画
+	void DrawPoint(float x, float y, unsigned int color)
+	{
+		Renderer::Instance().SetZBuffer(false);
+		GeometryGraph::Instance().DrawPoint(x, y, color);
+	}
+
+	//円描画
+	void DrawCircle(float x, float y, float r, unsigned int color, bool fillflag)
+	{
+		Renderer::Instance().SetZBuffer(false);
+		GeometryGraph::Instance().DrawCircle(x, y, r, color, fillflag);
 	}
 
 	//色情報を取得
@@ -239,6 +228,22 @@ namespace RRMLib
 		color = red << 24 | green << 16 | blue << 8;
 		color |= 0x000000ff;
 		return color;
+	}
+
+	//ブレンドモードを設定
+	void SetBlendMode(int mode, int pal)
+	{
+		switch (mode)
+		{
+		case RRM_BLENDMODE_NONE:
+			Renderer::Instance().DefaultBlend();
+			break;
+		case RRM_BLENDMODE_ALPHA:
+			Renderer::Instance().AlphaBlend(pal);
+			break;
+		default:
+			break;
+		}
 	}
 
 

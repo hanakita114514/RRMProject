@@ -66,5 +66,8 @@ public:
 	// ‰æ‘œ‚Ì•ªŠ„•`‰æ
 	void DrawRectGraph(float destX, float destY,int srcX, int srcY,
 		int width, int height, int graphHandle, bool transFlag, bool trunFlag);
+
+	void DrawRectExtendGraph(float destLX, float destLY, float destRX, float destRY, int srcX, int srcY,
+		int width, int height, int graphHandle, bool transFlag, bool trunFlag);
 };
 

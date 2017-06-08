@@ -50,10 +50,10 @@ public:
 	ID3D11DeviceContext* Context(); //
 
 	//終了処理
-	void Terminate();
+	void Terminate();					
 
-									//カリングのON/OFFを切り替える
-									//flg trueのときカリングON, falseのときカリングOFF
+	//カリングのON/OFFを切り替える
+	//flg trueのときカリングON, falseのときカリングOFF
 	void SetCullingFlg(bool flg);
 
 	HWND WindowHandle();

@@ -148,6 +148,7 @@
     <ClInclude Include="MediaControl.h" />
     <ClInclude Include="MediaPlayer.h" />
     <ClInclude Include="ReadMP3.h" />
+    <ClInclude Include="Renderer.h" />
     <ClInclude Include="RMMLib.h" />
     <ClInclude Include="SoundManager.h" />
     <ClInclude Include="Vertex.h" />
@@ -162,6 +163,7 @@
     <ClCompile Include="MediaControl.cpp" />
     <ClCompile Include="MediaPlayer.cpp" />
     <ClCompile Include="ReadMP3.cpp" />
+    <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="RRMLib.cpp" />
     <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="WindowControl.cpp" />

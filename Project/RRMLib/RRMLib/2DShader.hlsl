@@ -50,6 +50,12 @@ Output VertexShader3D(float4 pos : SV_POSITION, float2 uv : TEXCOORD)
 float4 PicturePS(Output output) : SV_Target
 {
 	float4 color = tex.Sample(sample, output.uv);
+
+	if (color.a == 0)
+	{
+		//discard;
+	}
+
 	return float4(color.r, color.g, color.b, color.a);
 }
 
