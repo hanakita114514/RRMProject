@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AbstractSpell.cpp" />
+    <ClCompile Include="Arrow.cpp" />
     <ClCompile Include="BackgroundRendar.cpp" />
     <ClCompile Include="BezierBullet.cpp" />
     <ClCompile Include="Block.cpp" />
@@ -91,6 +92,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AbstractSpell.h" />
+    <ClInclude Include="Arrow.h" />
     <ClInclude Include="BackgroundRendar.h" />
     <ClInclude Include="BezierBullet.h" />
     <ClInclude Include="Block.h" />

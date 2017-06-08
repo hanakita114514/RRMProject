@@ -270,6 +270,9 @@
     <ClCompile Include="ShootingStar.cpp">
       <Filter>ソース ファイル\Spell</Filter>
     </ClCompile>
+    <ClCompile Include="Arrow.cpp">
+      <Filter>ソース ファイル\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common.h">
@@ -484,6 +487,9 @@
     </ClInclude>
     <ClInclude Include="ShootingStar.h">
       <Filter>ソース ファイル\Spell</Filter>
+    </ClInclude>
+    <ClInclude Include="Arrow.h">
+      <Filter>ソース ファイル\UI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
