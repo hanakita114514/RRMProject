@@ -27,25 +27,18 @@ Renderer::Init()
 	WindowControl& wc = WindowControl::Instance();
 
 
-	//アルファブレンディングの設定
-	ID3D11BlendState* blendstate = nullptr;
-	D3D11_BLEND_DESC blenddesc = {};
-	blenddesc.AlphaToCoverageEnable = false;
-	//blenddesc.AlphaToCoverageEnable = true;
-	blenddesc.IndependentBlendEnable = false;
-	D3D11_RENDER_TARGET_BLEND_DESC& blrtdesc = blenddesc.RenderTarget[0];
-	blrtdesc.BlendEnable = true;
-	blrtdesc.SrcBlend = D3D11_BLEND_SRC_ALPHA;
-	blrtdesc.DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
-	blrtdesc.BlendOp = D3D11_BLEND_OP_ADD;
-	blrtdesc.SrcBlendAlpha = D3D11_BLEND_ONE;
-	blrtdesc.DestBlendAlpha = D3D11_BLEND_ZERO;
-	blrtdesc.BlendOpAlpha = D3D11_BLEND_OP_ADD;
-	blrtdesc.RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
-	float blendFactor[] = { 0.0f, 0.0f, 0.0f, 0.0f };
 
-	result = dev.Device()->CreateBlendState(&blenddesc, &blendstate);
-	dev.Context()->OMSetBlendState(blendstate, blendFactor, 0xffffffff);
+	CreateDefaultBlend();
+	CreateAddBlend();
+	CreateAlignmentBlend();
+	CreateSubtractBlend();
+	CreateMultipleBlend();
+	CreateAlphaBlend();
+
+	//ブレンドステートをセット
+	float blendFactor[] = { 0.0f, 0.0f, 0.0f, 0.0f };
+	dev.Context()->OMSetBlendState(_defaultBlend, blendFactor, 0xffffffff);
+
 
 
 	//バックバッファのレンダーターゲットビュー(RTV)を作成
@@ -113,6 +106,171 @@ Renderer::Init()
 }
 
 void 
+Renderer::CreateDefaultBlend()
+{
+	//DeviceDx11& dev = DeviceDx11::Instance();
+	//HRESULT result = S_OK;
+
+	//D3D11_RENDER_TARGET_BLEND_DESC RenderTarget;
+	////アルファブレンディングの設定
+	//ID3D11BlendState* blendstate = nullptr;
+	//D3D11_BLEND_DESC blenddesc = {};
+	//blenddesc.AlphaToCoverageEnable = false;
+	//blenddesc.IndependentBlendEnable = false;
+	//RenderTarget.BlendEnable = false;
+
+	//RenderTarget.SrcBlend = D3D11_BLEND_ONE;
+	//RenderTarget.DestBlend = D3D11_BLEND_ZERO;
+	//RenderTarget.BlendOp = D3D11_BLEND_OP_ADD;
+	//RenderTarget.SrcBlendAlpha = D3D11_BLEND_ONE;
+	//RenderTarget.DestBlendAlpha = D3D11_BLEND_ZERO;
+	//RenderTarget.BlendOpAlpha = D3D11_BLEND_OP_ADD;
+	//RenderTarget.RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+
+	//float blendFactor[] = { 0.0f, 0.0f, 0.0f, 0.0f };
+
+	//result = dev.Device()->CreateBlendState(&blenddesc, &blendstate);
+
+	DeviceDx11& dev = DeviceDx11::Instance();
+	HRESULT result = S_OK;
+	//アルファブレンディングの設定
+	D3D11_BLEND_DESC blenddesc = {};
+	blenddesc.AlphaToCoverageEnable = false;
+	//blenddesc.AlphaToCoverageEnable = true;
+	blenddesc.IndependentBlendEnable = false;
+	D3D11_RENDER_TARGET_BLEND_DESC& blrtdesc = blenddesc.RenderTarget[0];
+	blrtdesc.BlendEnable = true;
+	blrtdesc.SrcBlend = D3D11_BLEND_SRC_ALPHA;
+	blrtdesc.DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
+	blrtdesc.BlendOp = D3D11_BLEND_OP_ADD;
+	blrtdesc.SrcBlendAlpha = D3D11_BLEND_ONE;
+	blrtdesc.DestBlendAlpha = D3D11_BLEND_ZERO;
+	blrtdesc.BlendOpAlpha = D3D11_BLEND_OP_ADD;
+	blrtdesc.RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+	float blendFactor[] = { 0.0f, 0.0f, 0.0f, 0.0f };
+
+	result = dev.Device()->CreateBlendState(&blenddesc, &_defaultBlend);
+}
+void 
+Renderer::CreateAlignmentBlend()
+{
+	DeviceDx11& dev = DeviceDx11::Instance();
+	HRESULT result = S_OK;
+
+	D3D11_BLEND_DESC blenddesc = {};
+	blenddesc.AlphaToCoverageEnable = false;
+	blenddesc.IndependentBlendEnable = false;
+	D3D11_RENDER_TARGET_BLEND_DESC& renderTarget = blenddesc.RenderTarget[0];
+
+	renderTarget.BlendEnable = true;
+	renderTarget.SrcBlend = D3D11_BLEND_SRC_ALPHA;
+	renderTarget.DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
+	renderTarget.BlendOp = D3D11_BLEND_OP_ADD;
+	renderTarget.SrcBlendAlpha = D3D11_BLEND_ONE;
+	renderTarget.DestBlendAlpha = D3D11_BLEND_ZERO;
+	renderTarget.BlendOpAlpha = D3D11_BLEND_OP_ADD;
+	renderTarget.RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+
+	result = dev.Device()->CreateBlendState(&blenddesc, &_alignmentBlend);
+
+}
+void 
+Renderer::CreateAddBlend()
+{
+	DeviceDx11& dev = DeviceDx11::Instance();
+	HRESULT result = S_OK;
+
+	D3D11_BLEND_DESC blenddesc = {};
+	blenddesc.AlphaToCoverageEnable = false;
+	blenddesc.IndependentBlendEnable = false;
+
+	D3D11_RENDER_TARGET_BLEND_DESC& renderTarget = blenddesc.RenderTarget[0];
+
+	renderTarget.BlendEnable = true;
+	renderTarget.SrcBlend = D3D11_BLEND_SRC_ALPHA;
+	renderTarget.DestBlend = D3D11_BLEND_ONE;
+	renderTarget.BlendOp = D3D11_BLEND_OP_ADD;
+	renderTarget.SrcBlendAlpha = D3D11_BLEND_ONE;
+	renderTarget.DestBlendAlpha = D3D11_BLEND_ZERO;
+	renderTarget.BlendOpAlpha = D3D11_BLEND_OP_ADD;
+	renderTarget.RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+	result = dev.Device()->CreateBlendState(&blenddesc, &_addBlend);
+
+}
+
+void 
+Renderer::CreateSubtractBlend()
+{
+	DeviceDx11& dev = DeviceDx11::Instance();
+	HRESULT result = S_OK;
+
+	D3D11_BLEND_DESC blenddesc = {};
+	blenddesc.AlphaToCoverageEnable = false;
+	blenddesc.IndependentBlendEnable = false;
+
+	D3D11_RENDER_TARGET_BLEND_DESC& renderTarget = blenddesc.RenderTarget[0];
+
+	renderTarget.BlendEnable = true;
+	renderTarget.SrcBlend = D3D11_BLEND_SRC_ALPHA;
+	renderTarget.DestBlend = D3D11_BLEND_ONE;
+	renderTarget.BlendOp = D3D11_BLEND_OP_REV_SUBTRACT;
+	renderTarget.SrcBlendAlpha = D3D11_BLEND_ONE;
+	renderTarget.DestBlendAlpha = D3D11_BLEND_ZERO;
+	renderTarget.BlendOpAlpha = D3D11_BLEND_OP_ADD;
+	renderTarget.RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+
+	result = dev.Device()->CreateBlendState(&blenddesc, &_subtractBlend);
+
+}
+void 
+Renderer::CreateMultipleBlend()
+{
+	DeviceDx11& dev = DeviceDx11::Instance();
+	HRESULT result = S_OK;
+
+	D3D11_BLEND_DESC blenddesc = {};
+	blenddesc.AlphaToCoverageEnable = false;
+	blenddesc.IndependentBlendEnable = false;
+
+	D3D11_RENDER_TARGET_BLEND_DESC& renderTarget = blenddesc.RenderTarget[0];
+
+	renderTarget.BlendEnable = true;
+	renderTarget.SrcBlend = D3D11_BLEND_ZERO;
+	renderTarget.DestBlend = D3D11_BLEND_SRC_COLOR;
+	renderTarget.BlendOp = D3D11_BLEND_OP_ADD;
+	renderTarget.SrcBlendAlpha = D3D11_BLEND_ONE;
+	renderTarget.DestBlendAlpha = D3D11_BLEND_ZERO;
+	renderTarget.BlendOpAlpha = D3D11_BLEND_OP_ADD;
+	renderTarget.RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+
+	result = dev.Device()->CreateBlendState(&blenddesc, &_multipleBlend);
+}
+
+void 
+Renderer::CreateAlphaBlend()
+{
+	HRESULT result = S_OK;
+	DeviceDx11& dev = DeviceDx11::Instance();
+
+	//アルファブレンディングの設定
+	D3D11_BLEND_DESC blenddesc = {};
+	blenddesc.AlphaToCoverageEnable = false;
+	blenddesc.IndependentBlendEnable = false;
+
+	D3D11_RENDER_TARGET_BLEND_DESC& blrtdesc = blenddesc.RenderTarget[0];
+	blrtdesc.BlendEnable = true;
+	blrtdesc.SrcBlend = D3D11_BLEND_BLEND_FACTOR;
+	blrtdesc.DestBlend = D3D11_BLEND_INV_BLEND_FACTOR;
+	blrtdesc.BlendOp = D3D11_BLEND_OP_ADD;
+	blrtdesc.SrcBlendAlpha = D3D11_BLEND_ONE;
+	blrtdesc.DestBlendAlpha = D3D11_BLEND_ZERO;
+	blrtdesc.BlendOpAlpha = D3D11_BLEND_OP_ADD;
+	blrtdesc.RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+
+	result = dev.Device()->CreateBlendState(&blenddesc, &_alphaBlend);
+}
+
+void 
 Renderer::SetZBuffer(bool flag)
 {
 	DeviceDx11& dev = DeviceDx11::Instance();
@@ -150,112 +308,53 @@ Renderer::DefaultBlend()
 	HRESULT result = S_OK;
 	DeviceDx11& dev = DeviceDx11::Instance();
 
-	//D3D11_RENDER_TARGET_BLEND_DESC RenderTarget;
-	////アルファブレンディングの設定
-	//ID3D11BlendState* blendstate = nullptr;
-	//D3D11_BLEND_DESC blenddesc = {};
-	//blenddesc.AlphaToCoverageEnable = false;
-	//blenddesc.IndependentBlendEnable = false;
-	//RenderTarget.BlendEnable = false;
-
-	//RenderTarget.SrcBlend = D3D11_BLEND_ONE;
-	//RenderTarget.DestBlend = D3D11_BLEND_ZERO;
-	//RenderTarget.BlendOp = D3D11_BLEND_OP_ADD;
-	//RenderTarget.SrcBlendAlpha = D3D11_BLEND_ONE;
-	//RenderTarget.DestBlendAlpha = D3D11_BLEND_ZERO;
-	//RenderTarget.BlendOpAlpha = D3D11_BLEND_OP_ADD;
-	//RenderTarget.RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
-
-	//float blendFactor[] = { 0.0f, 0.0f, 0.0f, 0.0f };
-
-	//result = dev.Device()->CreateBlendState(&blenddesc, &blendstate);
-	//dev.Context()->OMSetBlendState(blendstate, blendFactor, 0xffffffff);
-
-	//アルファブレンディングの設定
-	ID3D11BlendState* blendstate = nullptr;
-	D3D11_BLEND_DESC blenddesc = {};
-	blenddesc.AlphaToCoverageEnable = false;
-	//blenddesc.AlphaToCoverageEnable = true;
-	blenddesc.IndependentBlendEnable = false;
-	D3D11_RENDER_TARGET_BLEND_DESC& blrtdesc = blenddesc.RenderTarget[0];
-	blrtdesc.BlendEnable = true;
-	blrtdesc.SrcBlend = D3D11_BLEND_SRC_ALPHA;
-	blrtdesc.DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
-	blrtdesc.BlendOp = D3D11_BLEND_OP_ADD;
-	blrtdesc.SrcBlendAlpha = D3D11_BLEND_ONE;
-	blrtdesc.DestBlendAlpha = D3D11_BLEND_ZERO;
-	blrtdesc.BlendOpAlpha = D3D11_BLEND_OP_ADD;
-	blrtdesc.RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
 	float blendFactor[] = { 0.0f, 0.0f, 0.0f, 0.0f };
-
-	result = dev.Device()->CreateBlendState(&blenddesc, &blendstate);
-	dev.Context()->OMSetBlendState(blendstate, blendFactor, 0xffffffff);
+	dev.Context()->OMSetBlendState(_defaultBlend, blendFactor, 0xffffffff);
 }
 
 void 
 Renderer::AlignmentBlend()
 {
-	D3D11_RENDER_TARGET_BLEND_DESC RenderTarget;
+	HRESULT result = S_OK;
+	DeviceDx11& dev = DeviceDx11::Instance();
 
-	RenderTarget.BlendEnable = true;
-	RenderTarget.SrcBlend = D3D11_BLEND_SRC_ALPHA;
-	RenderTarget.DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
-	RenderTarget.BlendOp = D3D11_BLEND_OP_ADD;
-	RenderTarget.SrcBlendAlpha = D3D11_BLEND_ONE;
-	RenderTarget.DestBlendAlpha = D3D11_BLEND_ZERO;
-	RenderTarget.BlendOpAlpha = D3D11_BLEND_OP_ADD;
-	RenderTarget.RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+	float blendFactor[] = { 0.0f, 0.0f, 0.0f, 0.0f };
+	dev.Context()->OMSetBlendState(_alignmentBlend, blendFactor, 0xffffffff);
 }
 
 void 
 Renderer::AddBlend()
 {
-	D3D11_RENDER_TARGET_BLEND_DESC RenderTarget;
+	HRESULT result = S_OK;
+	DeviceDx11& dev = DeviceDx11::Instance();
 
-	RenderTarget.BlendEnable = true;
-	RenderTarget.SrcBlend = D3D11_BLEND_SRC_ALPHA;
-	RenderTarget.DestBlend = D3D11_BLEND_ONE;
-	RenderTarget.BlendOp = D3D11_BLEND_OP_ADD;
-	RenderTarget.SrcBlendAlpha = D3D11_BLEND_ONE;
-	RenderTarget.DestBlendAlpha = D3D11_BLEND_ZERO;
-	RenderTarget.BlendOpAlpha = D3D11_BLEND_OP_ADD;
-	RenderTarget.RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+	float blendFactor[] = { 0.0f, 0.0f, 0.0f, 0.0f };
+	dev.Context()->OMSetBlendState(_addBlend, blendFactor, 0xffffffff);
 }
 
 void 
 Renderer::SubtractBlend()
 {
-	D3D11_RENDER_TARGET_BLEND_DESC RenderTarget;
+	HRESULT result = S_OK;
+	DeviceDx11& dev = DeviceDx11::Instance();
 
-	RenderTarget.BlendEnable = true;
-	RenderTarget.SrcBlend = D3D11_BLEND_SRC_ALPHA;
-	RenderTarget.DestBlend = D3D11_BLEND_ONE;
-	RenderTarget.BlendOp = D3D11_BLEND_OP_REV_SUBTRACT;
-	RenderTarget.SrcBlendAlpha = D3D11_BLEND_ONE;
-	RenderTarget.DestBlendAlpha = D3D11_BLEND_ZERO;
-	RenderTarget.BlendOpAlpha = D3D11_BLEND_OP_ADD;
-	RenderTarget.RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+	float blendFactor[] = { 0.0f, 0.0f, 0.0f, 0.0f };
+	dev.Context()->OMSetBlendState(_subtractBlend, blendFactor, 0xffffffff);
 }
 
 void
-Renderer::MultipleBlendDesc()
+Renderer::MultipleBlend()
 {
-	D3D11_RENDER_TARGET_BLEND_DESC RenderTarget;
+	HRESULT result = S_OK;
+	DeviceDx11& dev = DeviceDx11::Instance();
 
-	RenderTarget.BlendEnable = true;
-	RenderTarget.SrcBlend = D3D11_BLEND_ZERO;
-	RenderTarget.DestBlend = D3D11_BLEND_SRC_COLOR;
-	RenderTarget.BlendOp = D3D11_BLEND_OP_ADD;
-	RenderTarget.SrcBlendAlpha = D3D11_BLEND_ONE;
-	RenderTarget.DestBlendAlpha = D3D11_BLEND_ZERO;
-	RenderTarget.BlendOpAlpha = D3D11_BLEND_OP_ADD;
-	RenderTarget.RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+	float blendFactor[] = { 0.0f, 0.0f, 0.0f, 0.0f };
+	dev.Context()->OMSetBlendState(_multipleBlend, blendFactor, 0xffffffff);
 }
 
 void
 Renderer::AlphaBlend(int pal)
 {
-	HRESULT result = S_OK;
 	DeviceDx11& dev = DeviceDx11::Instance();
 
 	float alpha;
@@ -270,24 +369,6 @@ Renderer::AlphaBlend(int pal)
 		alpha = 0.0f;
 	}
 
-	//アルファブレンディングの設定
-	ID3D11BlendState* blendstate = nullptr;
-	D3D11_BLEND_DESC blenddesc = {};
-	blenddesc.AlphaToCoverageEnable = false;
-	blenddesc.IndependentBlendEnable = false;
-
-	D3D11_RENDER_TARGET_BLEND_DESC& blrtdesc = blenddesc.RenderTarget[0];
-	blrtdesc.BlendEnable = true;
-	blrtdesc.SrcBlend = D3D11_BLEND_BLEND_FACTOR;
-	blrtdesc.DestBlend = D3D11_BLEND_INV_BLEND_FACTOR;
-	blrtdesc.BlendOp = D3D11_BLEND_OP_ADD;
-	blrtdesc.SrcBlendAlpha = D3D11_BLEND_ONE;
-	blrtdesc.DestBlendAlpha = D3D11_BLEND_ZERO;
-	blrtdesc.BlendOpAlpha = D3D11_BLEND_OP_ADD;
-	blrtdesc.RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
-
 	float blendFactor[] = { alpha, alpha, alpha, alpha };
-
-	result = dev.Device()->CreateBlendState(&blenddesc, &blendstate);
-	dev.Context()->OMSetBlendState(blendstate, blendFactor, 0xffffffff);
+	dev.Context()->OMSetBlendState(_alphaBlend, blendFactor, 0xffffffff);
 }

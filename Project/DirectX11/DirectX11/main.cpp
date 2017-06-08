@@ -563,7 +563,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nC
 
 		//gg.Instance().DrawCircle(200, 300, 50, GetColor(255, 0, 0), false);
 
-		Renderer::Instance().AlphaBlend(100);
+		//Renderer::Instance().AlphaBlend(20);
 		graphic.DrawGraph(0, 0, handle);
 		Renderer::Instance().DefaultBlend();
 
