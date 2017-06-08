@@ -9,31 +9,43 @@
 #include "Player.h"
 #include "EnemyManager.h"
 
+MapData _fileName[STAGE_ID_MAX] =
+{
+	{"Resource/data/map2.fmf","Resource/img/BackGround/mori.jpg"},
+	{"",""},
+	{"",""},
+	{"",""}
+};
+
 MapManager::MapManager()
 {
 	//ファイル名を各クラスに渡しておく
-	_map = new MapRendar("Resource/data/map2.fmf");
-	_bg = new BackgroundRendar("Resource/img/BackGround/mori.jpg");
+	for (int i = 0; i < STAGE_ID_MAX; i++)
+	{
+		_map[i] = new MapRendar(_fileName[0].mapName);
+		_bg[i] = new BackgroundRendar(_fileName[0].backGroundName);
+	}
 	createFlug = false;
 
 	EnemyManager::Instance().Create(EnemyType::egg, Position(500, 0));
 	EnemyManager::Instance().Create(EnemyType::egg, Position(300,0));
 	EnemyManager::Instance().Create(EnemyType::egg, Position(1214, 0));
 
+	_stageId = 0;
 }
 
 MapManager::~MapManager()
 {
-	delete _map;
-	delete _bg;
-
 	Delete();
+
+	delete _map[_stageId];
+	delete _bg[_stageId];
 }
 
 bool MapManager::Initialize()
 {
-	_mapErr = _map->MapLoad();
-	_bgErr = _bg->Initialize();
+	_mapErr = _map[_stageId]->MapLoad();
+	_bgErr = _bg[_stageId]->Initialize();
 
 	if (_mapErr != true || _bgErr != true)	//マップもしくは背景で失敗したか？
 	{
@@ -45,20 +57,19 @@ bool MapManager::Initialize()
 
 void MapManager::Finalize()
 {
-	delete(_map);
-	delete(_bg);
+		delete[] _map;
+		delete[] _bg;
 }
 
 void MapManager::Update()
 {
-
-	_list = _map->GetBlockList();
+	_list = _map[_stageId]->GetBlockList();
 }
 
 void MapManager::Draw(const Vector2& offset)
 {
-	_bg->Draw();
-	_map->MapDraw(offset);
+	_bg[_stageId]->Draw();
+	_map[_stageId]->MapDraw(offset);
 }
 
 void 
@@ -69,6 +80,15 @@ MapManager::Delete()
 	for (; itr != _list.end();)
 	{
 		delete (*itr);
+		*itr = nullptr;
 		itr = _list.erase(itr);
 	}
+}
+
+MapRendar*
+MapManager::StageSelect(int stageId)
+{
+	_stageId = stageId;
+
+	return _map[_stageId];
 }

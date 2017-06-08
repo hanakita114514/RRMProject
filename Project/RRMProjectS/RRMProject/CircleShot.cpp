@@ -1,6 +1,8 @@
 #include "CircleShot.h"
 #include "BulletManager.h"
 
+const float RADIUS = 64;
+const int BULLET_NUM = 6;
 
 CircleShot::CircleShot()
 {
@@ -20,7 +22,6 @@ CircleShot::Create(Vector2 vec, Vector2 pos, Object *owner)
 
 	if ((int)_freamCnt % 2 == 0)
 	{
-
 		_pos = pos;
 		_vec = vec;
 		Bullet* bullet = nullptr;
@@ -30,13 +31,13 @@ CircleShot::Create(Vector2 vec, Vector2 pos, Object *owner)
 		Circle _circle = {};
 
 		_circle.center = _pos;
-		_circle.radius = 64;
+		_circle.radius = RADIUS;
 
 		Vector2 circlePos = _pos;
 		circlePos.x -= _circle.radius;
 
 
-		for (int i = 0; i < 6; i++)
+		for (int i = 0; i < BULLET_NUM; i++)
 		{
 			circlePos.x += cos((60 * i) * RAD) * _circle.radius;
 			circlePos.y += sin((60 * i) * RAD) * _circle.radius;

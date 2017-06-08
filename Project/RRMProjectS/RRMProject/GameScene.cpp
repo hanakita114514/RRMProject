@@ -71,7 +71,7 @@ GameScene::PlayerColBlock()
 void 
 GameScene::EnemyColBlock()
 {
-	MapRendar* map = MapManager::Instance().GetMap();
+	MapRendar* map = MapManager::Instance().GetMap(0);
 	bool hitFlag = false;
 
 	for (auto& enemy : EnemyManager::Instance().GetEnemyList())

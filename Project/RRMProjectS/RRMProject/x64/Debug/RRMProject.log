@@ -1,5 +1,13 @@
-﻿  Spell.cpp
+﻿  MapManager.cpp
 c:\users\1501344\desktop\新しいフォルダー (2)\trunk\project\rrmprojects\rrmproject\vector2.h(64): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
 c:\users\1501344\desktop\新しいフォルダー (2)\trunk\project\rrmprojects\rrmproject\vector2.h(71): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+c:\users\1501344\desktop\新しいフォルダー (2)\trunk\project\rrmprojects\rrmproject\gamemain.h(7): warning C4099: 'Rect': タイプ名は最初 'struct' として使われていましたが 'class' として使われています。
+  c:\users\1501344\desktop\新しいフォルダー (2)\trunk\project\rrmprojects\rrmproject\rect.h(6): note: 'Rect' の宣言を確認してください
+c:\users\1501344\desktop\新しいフォルダー (2)\trunk\project\rrmprojects\rrmproject\collision.h(3): warning C4099: 'Rect': タイプ名は最初 'struct' として使われていましたが 'class' として使われています。
+  c:\users\1501344\desktop\新しいフォルダー (2)\trunk\project\rrmprojects\rrmproject\gamemain.h(7): note: 'Rect' の宣言を確認してください
+c:\users\1501344\desktop\新しいフォルダー (2)\trunk\project\rrmprojects\rrmproject\collision.h(4): warning C4099: 'Circle': タイプ名は最初 'struct' として使われていましたが 'class' として使われています。
+  c:\users\1501344\desktop\新しいフォルダー (2)\trunk\project\rrmprojects\rrmproject\circle.h(6): note: 'Circle' の宣言を確認してください
+c:\users\1501344\desktop\新しいフォルダー (2)\trunk\project\rrmprojects\rrmproject\mapmanager.cpp(60): warning C4154: 配列の delete が定義されていません。配列は、ポインターに変換されます。
+c:\users\1501344\desktop\新しいフォルダー (2)\trunk\project\rrmprojects\rrmproject\mapmanager.cpp(61): warning C4154: 配列の delete が定義されていません。配列は、ポインターに変換されます。
   RRMProject.vcxproj -> C:\Users\1501344\Desktop\新しいフォルダー (2)\trunk\Project\RRMProjectS\x64\Debug\RRMProject.exe
   RRMProject.vcxproj -> C:\Users\1501344\Desktop\新しいフォルダー (2)\trunk\Project\RRMProjectS\x64\Debug\RRMProject.pdb (Full PDB)
