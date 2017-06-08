@@ -549,28 +549,30 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nC
 
 		Renderer::Instance().SetZBuffer(false);
 		//ê‘
-		gg.Instance().DrawBox(50, 50, 100, 100, GetColor(255,0,0), true);
+		gg.DrawBox(50, 50, 100, 100, GetColor(255,0,0), true);
 		//óŒ
-		gg.Instance().DrawBox(100, 50, 150, 100, GetColor(0, 255, 0), true);
+		gg.DrawBox(100, 50, 150, 100, GetColor(0, 255, 0), true);
 		//ê¬
-		gg.Instance().DrawBox(150, 50, 200, 100, GetColor(0, 0, 255), true);
+		gg.DrawBox(150, 50, 200, 100, GetColor(0, 0, 255), true);
 		//îí
-		gg.Instance().DrawBox(200, 50, 250, 100, GetColor(255, 255, 255), true);
+		gg.DrawBox(200, 50, 250, 100, GetColor(255, 255, 255), true);
 
-		gg.Instance().DrawLine(0, 100, 200, 100, GetColor(255, 0, 0));
+		//gg.DrawLine(0, 100, 200, 100, GetColor(255, 0, 0));
 
-		gg.Instance().DrawPoint(50, 200, GetColor(255, 255, 0));
+		gg.DrawPoint(50, 200, GetColor(255, 255, 0));
+
+		gg.DrawLine(50, 50, 100, 50, 0xffffffff);
 
 		//gg.Instance().DrawCircle(200, 300, 50, GetColor(255, 0, 0), false);
 
 		//Renderer::Instance().AlphaBlend(20);
-		graphic.DrawGraph(0, 0, handle);
-		Renderer::Instance().DefaultBlend();
+		//graphic.DrawGraph(0, 0, handle);
+		//Renderer::Instance().DefaultBlend();
 
 		//graphic.DrawRectExtendGraph(0, 0, 500, 500, 0, 0, 600, 600, handle, true, false);
 
 		
-		graphic.DrawGraph(0, 0, effectHandle);
+		//graphic.DrawGraph(0, 0, effectHandle);
 
 		//graphic.DrawExtendGraph(0, 0, 1500, 700, handle);
 

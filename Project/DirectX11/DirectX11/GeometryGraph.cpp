@@ -166,19 +166,19 @@ GeometryGraph::DrawBox(float lx, float ly, float rx, float ry, unsigned int colo
 	float fx = (lx - wc.WindowWidth() / 2) / (wc.WindowWidth() / 2);
 	float fy = ((ly - wc.WindowHeight() / 2) / (wc.WindowHeight() / 2)) * -1;
 
-	float fw = (width / 2) / (wc.WindowWidth() / 2);
-	float fh = (height / 2) / (wc.WindowHeight() / 2);
+	float fw = (width) / (wc.WindowWidth() / 2);
+	float fh = (height) / (wc.WindowHeight() / 2);
 
 	//¶ã
-	vertices[0].pos.x = fx - fw;
-	vertices[0].pos.y = fy + fh;
+	vertices[0].pos.x = fx;
+	vertices[0].pos.y = fy;
 	vertices[0].pos.z = 0;
 	vertices[0].uv.x = 0;
 	vertices[0].uv.y = 0;
 
 	//‰Eã
 	vertices[1].pos.x = fx + fw;
-	vertices[1].pos.y = fy + fh;
+	vertices[1].pos.y = fy;
 	vertices[1].pos.z = 0;
 	vertices[1].uv.x = 1;
 	vertices[1].uv.y = 0;
@@ -191,15 +191,15 @@ GeometryGraph::DrawBox(float lx, float ly, float rx, float ry, unsigned int colo
 	vertices[2].uv.y = 1;
 
 	//¶‰º
-	vertices[3].pos.x = fx - fw;
+	vertices[3].pos.x = fx;
 	vertices[3].pos.y = fy - fh;
 	vertices[3].pos.z = 0;
 	vertices[3].uv.x = 0;
 	vertices[3].uv.y = 1;
 
 	//¶ã
-	vertices[4].pos.x = fx - fw;
-	vertices[4].pos.y = fy + fh;
+	vertices[4].pos.x = fx;
+	vertices[4].pos.y = fy;
 	vertices[4].pos.z = 0;
 	vertices[4].uv.x = 0;
 	vertices[4].uv.y = 0;
@@ -276,19 +276,19 @@ GeometryGraph::DrawLine(float lx, float ly, float rx, float ry, unsigned int col
 	float fx = (lx - wc.WindowWidth() / 2) / (wc.WindowWidth() / 2);
 	float fy = ((ly - wc.WindowHeight() / 2) / (wc.WindowHeight() / 2)) * -1;
 
-	float fw = (width / 2) / (wc.WindowWidth() / 2);
-	float fh = (height / 2) / (wc.WindowHeight() / 2);
+	float fw = (width) / (wc.WindowWidth() / 2);
+	float fh = (height) / (wc.WindowHeight() / 2);
 
 	//¶ã
-	vertices[0].pos.x = fx - fw;
-	vertices[0].pos.y = fy + fh;
+	vertices[0].pos.x = fx;
+	vertices[0].pos.y = fy;
 	vertices[0].pos.z = 0;
 	vertices[0].uv.x = 0;
 	vertices[0].uv.y = 0;
 
 	//‰Eã
 	vertices[1].pos.x = fx + fw;
-	vertices[1].pos.y = fy + fh;
+	vertices[1].pos.y = fy - fh;
 	vertices[1].pos.z = 0;
 	vertices[1].uv.x = 1;
 	vertices[1].uv.y = 0;
@@ -332,7 +332,6 @@ GeometryGraph::DrawLine(float lx, float ly, float rx, float ry, unsigned int col
 	dev.Context()->VSSetShader(_vs2d, nullptr, 0);
 	dev.Context()->PSSetShader(_ps, nullptr, 0);
 	dev.Context()->IASetInputLayout(_layout);
-	//dev.Context()->PSSetShaderResources(0, 1, &texture);
 	dev.Context()->IASetVertexBuffers(0, 1, &vb, &stride, &offset);
 
 	dev.Context()->Draw(2, 0);

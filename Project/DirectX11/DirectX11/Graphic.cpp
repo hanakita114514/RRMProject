@@ -392,14 +392,14 @@ Graphic::DrawRectGraph(float destX, float destY, int srcX, int srcY,
 	vertices[2].pos.y = fy - fh;
 	vertices[2].pos.z = 0;
 	vertices[2].uv.x = srcX / t.width;;
-	vertices[2].uv.y = (height - srcY) / t.height;
+	vertices[2].uv.y = (height + srcY) / t.height;
 
 	//右下
 	vertices[3].pos.x = (fx + fw) * turn;
 	vertices[3].pos.y = fy - fh;
 	vertices[3].pos.z = 0;
 	vertices[3].uv.x = (width + srcX) / t.width;
-	vertices[3].uv.y = (height - srcY) / t.height;
+	vertices[3].uv.y = (height + srcY) / t.height;
 
 
 	//頂点バッファの作成
@@ -512,14 +512,14 @@ Graphic::DrawRectExtendGraph(float destLX, float destLY, float destRX, float des
 	vertices[2].pos.y = fy - fh;
 	vertices[2].pos.z = 0;
 	vertices[2].uv.x = srcX / t.width;;
-	vertices[2].uv.y = (height - srcY) / t.height;
+	vertices[2].uv.y = (height + srcY) / t.height;
 
 	//右下
 	vertices[3].pos.x = (fx + fw) * turn;
 	vertices[3].pos.y = fy - fh;
 	vertices[3].pos.z = 0;
 	vertices[3].uv.x = (width + srcX) / t.width;
-	vertices[3].uv.y = (height - srcY) / t.height;
+	vertices[3].uv.y = (height + srcY) / t.height;
 
 	//頂点バッファの作成
 	D3D11_BUFFER_DESC bufdesc = {};
