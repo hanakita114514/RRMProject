@@ -3,6 +3,9 @@
 #include <Windows.h>
 #include <string>
 
+#define RRM_BLENDMODE_NONE  0
+#define RRM_BLENDMODE_ALPHA  1
+
 namespace RRMLib
 {
 	//構造体
@@ -16,7 +19,9 @@ namespace RRMLib
 
 	}DJOYPAD_STATE;
 
-	//使用必須関数---------------------------------------------------------------------
+	//------------------------------------------------------------------------------------
+	//使用必須関数
+	//------------------------------------------------------------------------------------
 
 	//RRMLibの初期化
 	//使用の際最初に呼ぶ
@@ -30,15 +35,15 @@ namespace RRMLib
 	//ウィンドウのメッセージを取得
 	//成功 : 0  エラー又はウィンドウが閉じられた : -1
 	int ProcessMessage();
-	//-----------------------------------------------------------------------------------
 
-	//画面操作---------------------------------------------------------------------------
+	//-----------------------------------------------------------------------------------
+	//画面操作
+	//------------------------------------------------------------------------------------
 
 	//画面に描画されているものを消す
 	void ClearDrawScreen();
 
 	//裏画面切り替え
-
 	int ScreenFlip();
 
 	//ウィンドウサイズの変更
@@ -48,13 +53,23 @@ namespace RRMLib
 	//フルスクリーン化
 	void ChangeFullScreenMode(bool fullScreen);
 
+	//ウィンドウタイトルにテキストを表示
 	void SetMainWindowText(std::string windowName);
 
-	//描画系-----------------------------------------------------------------------------
-	
+	//背景の色を変える
+	//0 ～ 255で指定
+	void ChangeBackColor(int red, int green, int blue);
+
+	//------------------------------------------------------------------------------------
+	//ロード系
+	//------------------------------------------------------------------------------------
+
 	//画像読み込み
 	int LoadGraph(std::string filePath);
 
+	//------------------------------------------------------------------------------------
+	//描画系
+	//------------------------------------------------------------------------------------
 	//画像の描画
 	//左上から描画する
 	void DrawGraph(int x, int y, int graphHandle);
@@ -69,25 +84,43 @@ namespace RRMLib
 	// handle 画像ハンドル
 	void DrawExtendGraph(float lx, float ly, float rx, float ry, int handle);
 
+	//画像の拡縮矩形描画
+	void DrawRectExtendGraph(float destLX, float destLY, float destRX, float destRY,
+		int srcX, int srcY, int width, int height, int graphHandle, bool transFlag, bool turnFlag);
 
 	//矩形描画
 	void DrawBox(float lx, float ly, float rx, float ry, unsigned int color, bool fillFlag);
 
+	//線描画
+	void DrawLine(float lx, float ly, float rx, float ry, unsigned int color);
+
+	//点描画
+	void DrawPoint(float x, float y, unsigned int color);
+
+	//円描画
+	void DrawCircle(float x, float y, float r, unsigned int color, bool fillflag);
 
 	//色情報を取得する
 	unsigned int GetColor(unsigned char red, unsigned char green, unsigned char blue);
 
 	//------------------------------------------------------------------------------------
+	//ブレンド関数
+	//------------------------------------------------------------------------------------
 
-	//入力関係の関数----------------------------------------------------------------------
+	//RRM_BLENDMODE_で指定
+	//pal 0 ～ 255で指定
+	void SetBlendMode(int mode, int pal);
+
+	//------------------------------------------------------------------------------------
+	//入力関係の関数
+	//------------------------------------------------------------------------------------
 
 	//ジョイパッド入力
 	bool GetJoypadDirectInputState(int inputType, DJOYPAD_STATE* joystate);
 
-
-
 	//------------------------------------------------------------------------------------
-	//音楽関係の関数----------------------------------------------------------------------
+	//音楽関係の関数
+	//------------------------------------------------------------------------------------
 
 	// 音楽を読み込む
 	// 文字リテラルLでパスを指定
@@ -111,5 +144,4 @@ namespace RRMLib
 
 	//音楽のボリュームを取得する
 	long GetSoundVolume(int handle);
-
 }

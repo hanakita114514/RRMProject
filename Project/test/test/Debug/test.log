@@ -1,6 +1,6 @@
 ﻿  main.cpp
-c:\users\1501343\desktop\わい\test\test\main.cpp(44): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+c:\users\1501343\desktop\卒制\trunk\project\test\test\main.cpp(46): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(1769): note: 'sprintf' の宣言を確認してください
-c:\users\1501343\desktop\わい\test\test\main.cpp(23): warning C4101: 'dstate': ローカル変数は 1 度も使われていません。
-  test.vcxproj -> C:\Users\1501343\Desktop\わい\test\Debug\test.exe
-  test.vcxproj -> C:\Users\1501343\Desktop\わい\test\Debug\test.pdb (Full PDB)
+c:\users\1501343\desktop\卒制\trunk\project\test\test\main.cpp(23): warning C4101: 'dstate': ローカル変数は 1 度も使われていません。
+  test.vcxproj -> C:\Users\1501343\Desktop\卒制\trunk\Project\test\Debug\test.exe
+  test.vcxproj -> C:\Users\1501343\Desktop\卒制\trunk\Project\test\Debug\test.pdb (Full PDB)

@@ -30,7 +30,9 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nC
 	{
 		RRMLib::ClearDrawScreen();
 
-		//RRMLib::DrawExtendGraph(0, 0, 1000, 500, handle);
+		RRMLib::SetBlendMode(RRM_BLENDMODE_ALPHA, 30);
+		RRMLib::DrawExtendGraph(0, 0, 1000, 500, handle);
+		RRMLib::SetBlendMode(RRM_BLENDMODE_NONE, 0);
 
 		//if (frame++ > 240)
 		//{
@@ -44,12 +46,15 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nC
 		sprintf(titlebar, "%d", m);
 		RRMLib::SetMainWindowText(titlebar);
 
+		RRMLib::DrawRectExtendGraph(100, 100, 500, 500, 100, 300, 500, 500, handle, true, false);
 
 		frame += 10;
 		RRMLib::SetSoundVolume(frame, mp2Handle);
 
-
 		RRMLib::DrawBox(0, 0, 100, 100, RRMLib::GetColor(255, 0, 0), false);
+		RRMLib::DrawCircle(100, 100, 50, RRMLib::GetColor(255, 255, 255), false);
+		RRMLib::DrawPoint(100, 700, 0xffffffff);
+		RRMLib::DrawLine(100, 100, 800, 600, 0xffffffff);
 
 		//bool ret = RRMLib::GetJoypadDirectInputState(0, &dstate);
 
