@@ -135,6 +135,7 @@
     <ClInclude Include="Lazer.h" />
     <ClInclude Include="MapManager.h" />
     <ClInclude Include="MapRendar.h" />
+    <ClInclude Include="Mathematics.h" />
     <ClInclude Include="Meat.h" />
     <ClInclude Include="MultihitProtect.h" />
     <ClInclude Include="Mushroom.h" />

@@ -57,6 +57,12 @@ Fade::FadeOut()
 }
 
 void 
+Fade::Pause()
+{
+	_isPause = true;
+}
+
+void 
 Fade::Update()
 {
 	(this->*_func)();
@@ -88,6 +94,23 @@ Fade::FadeOut(const float& fadeSpeed)
 	_isFadeInEnd = false;
 }
 
+void
+Fade::PauseIn(const float& alpha)
+{
+	_func = &Fade::Pause;
+	_alpha = alpha;
+	_isFadeOutEnd = false;
+	_isFadeInEnd = false;
+	_isPause = false;
+}
+
+void
+Fade::PauseEnd()
+{
+	_func = &Fade::Wait;
+	_alpha = 0;
+	_isPause = false;
+}
 
 bool 
 Fade::IsFadeInEnd()
@@ -105,4 +128,10 @@ bool
 Fade::IsWait()
 {
 	return _isWait;
+}
+
+bool
+Fade::IsPause()
+{
+	return _isPause;
 }

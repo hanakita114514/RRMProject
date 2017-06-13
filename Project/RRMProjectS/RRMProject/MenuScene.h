@@ -3,36 +3,67 @@
 #include "Scene.h"
 #include "Vector2.h"
 #include "Arrow.h"
-
+#include "Rect.h"
 class DInput;
 
+
+
+//ロゴ情報格納用構造体
 class MenuScene : public Scene
 {
+	typedef struct LOGO
+	{
+		int image;
+		Rect rc;
+		float freamCnt;
+	}Logo;
+
+	enum LogoIdx
+	{
+		logo1,
+		logo2,
+
+		logoMax
+	};
+	const int LogoHeight = 64;
+	const int LogoWidth = 52;
 private:
 	int _titleHandle;
-	int _gameStartLogo;			//ロゴの画像ハンドル
-	int _stageId;				//ステージID
-	DInput* _dinput;
+	int _stageId;					//ステージID
+	int _logoIdx;					//Logo構造体配列の添え字
+	int _bg;						//背景の画像ハンドル
+	float _freamCnt;
 
-	Position _logoPosition;		//ロゴの位置
 	Arrow _arrow;				//矢印
+	Logo _logo[logoMax];			//ロゴの画像ハンドル
+	DInput* _dinput;
+	Vector2 _logoDefaultPos[logoMax];
 
-	bool prevRight, prevLeft;	//前フレームのスティック情報
-	bool right, left;			//現フレームのスティック情報
-	bool _fadeOutIn;			//フェードアウト検知用フラグ
+	bool prevRight, prevLeft,prevUp,prevDown;	//前フレームのスティック情報
+	bool right, left,up,down;			//現フレームのスティック情報
+	bool _fadeInStart;			//フェードイン検知用フラグ
 
 	void (MenuScene::*_update)();
 
 	void TitleUpdate();
 	void MenuUpdate();
-
 	void GameStart();
-	void StageSelect();
+	void Draw();
+	void LogoMove();
+
+	Vector2 ImageShaker(Rect& rect);
+
 public:
 	MenuScene();
 	~MenuScene();
 
 	bool Update();
+
+	bool IsStickRight();
+	bool IsStickLeft();
+	bool IsStickUp();
+	bool IsStickDown();
+
 
 };
 

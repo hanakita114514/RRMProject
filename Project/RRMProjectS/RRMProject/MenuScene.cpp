@@ -6,6 +6,9 @@
 #include "GameScene.h"
 #include "MapManager.h"
 #include "common.h"
+#include <math.h>
+#include "Circle.h"
+#include "Mathematics.h"
 
 const char* Stage[STAGE_ID_MAX] = 
 {
@@ -15,20 +18,36 @@ const char* Stage[STAGE_ID_MAX] =
 	{"Stage4"}
 };
 
+
 MenuScene::MenuScene()
 {
 	_titleHandle = DxLib::LoadGraph("Resource/img/title.png");
 	_update = &MenuScene::TitleUpdate;
 	_dinput = new DInput(0);
-	_stageId = 0;
-	_gameStartLogo = DxLib::LoadGraph("Resource/img/1PLAYER_MODE.png");
+	for (int i = 0; i < logoMax; i++)
+	{
+		_logo[i].image = DxLib::LoadGraph("Resource/img/UI/Arrow_Smile.png");
+		_logo[i].rc.pos = Vector2(WINDOW_WIDTH / 3, WINDOW_HEIGHT / 3 * (i + 1));
+		_logo[i].rc.h = LogoHeight;
+		_logo[i].rc.w = LogoWidth;
 
-	_logoPosition = Vector2(WINDOW_WIDTH / 3, WINDOW_HEIGHT / 3);
-	_arrow.SetPos(_logoPosition);
+		_logoDefaultPos[i] = _logo[i].rc.pos;
+		_logo[i].freamCnt = 0;
+	}
+
+	_arrow.SetPos(_logo[0].rc.pos);
+
+	_bg = DxLib::LoadGraph("Resource/img/BackGround/mori.jpg");
 
 	right = false;
 	left = false;
-	_fadeOutIn = false;
+	up = false;;
+	down = false;
+	_fadeInStart = false;
+	_logoIdx = 0;
+	_stageId = 0;
+
+	_freamCnt = 0;
 }
 
 
@@ -43,6 +62,11 @@ MenuScene::TitleUpdate()
 	DxLib::DrawGraph(0, 0, _titleHandle, true);
 	if (_dinput->Start())
 	{
+		Fade::Instance().FadeIn(5.0f);
+	}
+
+	if (Fade::Instance().IsFadeInEnd())
+	{
 		_update = &MenuScene::MenuUpdate;
 	}
 }
@@ -50,72 +74,220 @@ MenuScene::TitleUpdate()
 void 
 MenuScene::MenuUpdate()
 {
-	_arrow.Draw();
+	if (Fade::Instance().IsFadeOutEnd() || !Fade::Instance().IsPause())
+	{
+		if (IsStickUp())
+		{
+			_logoIdx--;
+			if (_logoIdx < 0)
+			{
+				_logoIdx = logoMax - 1;
+			}
+		}
 
-	DxLib::DrawGraph(_logoPosition.x, _logoPosition.y, _gameStartLogo, true);
+		if (IsStickDown())
+		{
+			_logoIdx++;
+			if (_logoIdx >= logoMax)
+			{
+				_logoIdx = 0;
+			}
+		}
+
+
+		//Bボタン（決定ボタン）がおされたのなら---------------------------------------
+		if (_dinput->IsTriger(KeyType::keyB))
+		{
+			switch (_logoIdx)
+			{
+			case 0:
+			{
+				_stageId = 0;
+				_update = &MenuScene::GameStart;
+				_logoIdx = 0;
+				Fade::Instance().PauseIn();
+			}
+			break;
+			case 1:
+			{
+				//Fade::Instance().FadeIn(10.0);
+			}
+			break;
+			default:
+				break;
+			}
+		}
+		//---------------------------------------------------------------------------------
+
+	}
+
+	if (Fade::Instance().IsFadeInEnd())
+	{
+		Fade::Instance().FadeOut(10.0f);
+	}
+	LogoMove();
+	_arrow.SetPos(_logoDefaultPos[_logoIdx]);
+
+	Draw();
+
+	_arrow.Draw();
+	for (int i = 0; i < logoMax; i++)
+	{
+		DxLib::DrawGraph(_logo[i].rc.pos.x, _logo[i].rc.pos.y, _logo[i].image, true);
+	}
 }
 
 void 
 MenuScene::GameStart()
 {
-	if (_dinput->IsPress(KeyType::keyA))
+	if (!_fadeInStart)
 	{
-		_update = &MenuScene::MenuUpdate;
+		if (IsStickUp())
+		{
+			_logoIdx--;
+			if (_logoIdx < 0)
+			{
+				_logoIdx = logoMax - 1;
+			}
+		}
+
+		if (IsStickDown())
+		{
+			_logoIdx++;
+			if (_logoIdx >= logoMax)
+			{
+				_logoIdx = 0;
+			}
+		}
+
+		if (_logoIdx == 1)
+		{
+			if (IsStickRight())	//右にスティックが倒されたか？
+			{
+				_stageId++;
+				if (_stageId >= STAGE_ID_MAX)
+				{
+					_stageId = 0;
+				}
+			}
+
+			if (IsStickLeft())		//左にスティックが倒されたか？
+			{
+				_stageId--;
+				if (_stageId < 0)
+				{
+					_stageId = STAGE_ID_MAX - 1;
+				}
+			}
+		}
+
+		if (_dinput->IsTriger(KeyType::keyA))
+		{
+			_update = &MenuScene::MenuUpdate;
+			_logoIdx = 0;
+			Fade::Instance().PauseEnd();
+		}
+		else if (_dinput->IsTriger(KeyType::keyB))
+		{
+			switch (_logoIdx)
+			{
+			case 0:
+			{
+				_stageId = 0;
+				Fade::Instance().FadeIn(10.0f);
+			}
+			break;
+			case 1:
+			{
+				Fade::Instance().FadeIn(10.0);
+			}
+			break;
+			default:
+				break;
+			}
+
+		}
+		_arrow.SetPos(_logoDefaultPos[_logoIdx]);
+
+		for (int i = 0; i < logoMax; i++)
+		{
+			DxLib::DrawGraph(_logo[i].rc.pos.x, _logo[i].rc.pos.y, _logo[i].image, true);
+		}
+		DrawString(0, 0, Stage[_stageId], 0xffffff);
 	}
 
-	Fade::Instance().FadeOut(10.0);
+	LogoMove();
+	_arrow.SetPos(_logoDefaultPos[_logoIdx]);
 
-	if (Fade::Instance().IsFadeOutEnd())
+	_arrow.Draw();
+	//ゲームシーンへの遷移
+	if (Fade::Instance().IsFadeInEnd())
 	{
+		MapManager::Instance().StageSelect(_stageId);
 		GameMain::Instance().ChangeScene(new GameScene());
 	}
+
+}
+
+void MenuScene::Draw()
+{
+	DxLib::DrawGraph(0, 0, _bg, true);
 }
 
 void
-MenuScene::StageSelect()
+MenuScene::LogoMove()
 {
-	prevRight = right;
-	prevLeft = left;
-
-	right = _dinput->Right();
-	left = _dinput->Left();
-
-	if (!_fadeOutIn)		//フェードアウト状態でないのなら
+	switch (_logoIdx)
 	{
-		if (right & (right ^ prevRight))	//右にスティックが倒されたか？
+	case logo1:
+	{
+		for (int i = 0; i < logoMax; i++)
 		{
-			_stageId++;
-			if (_stageId > STAGE_ID_MAX)
+			if (i == logo1)
 			{
-				_stageId = 0;
+				_logo[i].rc.pos = ImageShaker(_logo[i].rc);
+				continue;
 			}
-		}
 
-		if (left & (left ^ prevLeft))		//左にスティックが倒されたか？
-		{
-			_stageId--;
-			if (_stageId < 0)
-			{
-				_stageId = STAGE_ID_MAX;
-			}
-		}
-
-		if (_dinput->IsPress(KeyType::keyA))	//パッドのAボタンが押されたら
-		{
-			_update = &MenuScene::MenuUpdate;
-		}
-		else if (_dinput->IsPress(KeyType::keyB))
-		{
-			Fade::Instance().FadeOut(10.0);
-			_fadeOutIn = true;
+			_logo[i].rc.pos = _logoDefaultPos[i];
+			_logo[i].freamCnt = 0;
 		}
 	}
-
-	if (Fade::Instance().IsFadeOutEnd())
+	break;
+	case logo2:
 	{
-		GameMain::Instance().ChangeScene(new GameScene());
-		MapManager::Instance().StageSelect(_stageId);
+		for (int i = 0; i < logoMax; i++)
+		{
+			if (i == logo2)
+			{
+				_logo[i].rc.pos = ImageShaker(_logo[i].rc);
+				continue;
+			}
+			_logo[i].rc.pos = _logoDefaultPos[i];
+			_logo[i].freamCnt = 0;
+		}
 	}
+	break;
+	default:
+		break;
+	}
+}
+Vector2
+MenuScene::ImageShaker(Rect& rect)
+{
+	Vector2 pos = rect.pos;
+	Vector2 center = rect.Center();
+	Circle circle = {};
+	float fream;
+
+	circle.center = center;
+	circle.radius = 32;
+	_logo[_logoIdx].freamCnt++;
+
+	pos.x += sin(RAD * (_logo[_logoIdx].freamCnt * 2));
+	pos.y -= cos(RAD * (_logo[_logoIdx].freamCnt * 2));
+
+	return pos;
 }
 
 bool MenuScene::Update()
@@ -125,3 +297,58 @@ bool MenuScene::Update()
 
 	return true;
 }
+
+
+bool
+MenuScene::IsStickRight()
+{
+	prevRight = right;
+	right = _dinput->Right();
+
+	if (right & (right ^ prevRight))
+	{
+		return true;
+	}
+
+	return false;
+}
+
+bool
+MenuScene::IsStickLeft()
+{
+	prevLeft = left;
+	left = _dinput->Left();
+
+	if (left & (left ^ prevLeft))
+	{
+		return true;
+	}
+	return false;
+}
+
+bool
+MenuScene::IsStickUp()
+{
+	prevUp = up;
+	up = _dinput->Up();
+
+	if (up & (up ^ prevUp))
+	{
+		return true;
+	}
+	return false;
+}
+
+bool
+MenuScene::IsStickDown()
+{
+	prevDown = down;
+	down = _dinput->Down();
+
+	if (down & (down ^ prevDown))
+	{
+		return true;
+	}
+	return false;
+}
+

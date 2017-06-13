@@ -9,9 +9,9 @@ class Collision;
 class GameScene : public Scene
 {
 private:
+
 	Player _player;
 	Collision* _col;
-	std::vector<Block*> _colBlock;
 	
 	Camera _camera;
 

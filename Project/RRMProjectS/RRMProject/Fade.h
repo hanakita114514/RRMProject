@@ -11,6 +11,7 @@ private:
 	bool _isFadeInEnd;
 	bool _isFadeOutEnd;
 	bool _isWait;
+	bool _isPause;
 
 	int _handle;
 
@@ -22,6 +23,7 @@ private:
 	void FadeIn();
 	void FadeOut();
 	void Wait();
+	void Pause();
 
 public:
 	~Fade();
@@ -43,6 +45,9 @@ public:
 	// fadeSpeed フェードのスピードの設定
 	void FadeOut(const float& fadeSpeed);
 
+	void PauseIn(const float& alpha = 127);
+
+	void PauseEnd();
 
 	// フェードインが終わったか調べる
 	bool IsFadeInEnd();
@@ -52,5 +57,8 @@ public:
 
 	//待ち状態か？
 	bool IsWait();
+
+	//ポーズ状態か？
+	bool IsPause();
 };
 

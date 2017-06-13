@@ -11,10 +11,10 @@
 
 MapData _fileName[STAGE_ID_MAX] =
 {
-	{"Resource/data/map2.fmf","Resource/img/BackGround/mori.jpg"},
-	{"",""},
-	{"",""},
-	{"",""}
+	{"Resource/data/map1.fmf","Resource/img/BackGround/mori.jpg"},
+	{ "Resource/data/map2.fmf","Resource/img/BackGround/mori.jpg" },
+	{ "Resource/data/map1.fmf","Resource/img/BackGround/mori.jpg" },
+	{ "Resource/data/map2.fmf","Resource/img/BackGround/mori.jpg" }
 };
 
 MapManager::MapManager()
@@ -22,10 +22,9 @@ MapManager::MapManager()
 	//ファイル名を各クラスに渡しておく
 	for (int i = 0; i < STAGE_ID_MAX; i++)
 	{
-		_map[i] = new MapRendar(_fileName[0].mapName);
-		_bg[i] = new BackgroundRendar(_fileName[0].backGroundName);
+		_map[i] = new MapRendar(_fileName[i].mapName);
+		_bg[i] = new BackgroundRendar(_fileName[i].backGroundName);
 	}
-	createFlug = false;
 
 	EnemyManager::Instance().Create(EnemyType::egg, Position(500, 0));
 	EnemyManager::Instance().Create(EnemyType::egg, Position(300,0));

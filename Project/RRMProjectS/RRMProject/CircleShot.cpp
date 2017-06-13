@@ -1,5 +1,6 @@
 #include "CircleShot.h"
 #include "BulletManager.h"
+#include "Mathematics.h"
 
 const float RADIUS = 64;
 const int BULLET_NUM = 6;
@@ -16,7 +17,6 @@ CircleShot::~CircleShot()
 void 
 CircleShot::Create(Vector2 vec, Vector2 pos, Object *owner)
 {
-	const float RAD = 3.141592 / 180;
 
 	_freamCnt++;
 

@@ -2,9 +2,8 @@
 #include <math.h>
 #include <DxLib.h>
 #include "GameTime.h"
+#include "Mathematics.h"
 
-const float RAD = 3.14f / 180;				//ÉâÉWÉAÉì
-const float ANGLE = 1;				//î≠éÀäp
 const int AMPLITUDE = 1;			//êUÇÍïù
 const float REDUCE_LIFE = 1.0f;
 
@@ -39,7 +38,7 @@ SinBullet::Update()
 {
 	_freamCnt++;
 
-	_vel.y = sin((RAD /ANGLE * _freamCnt)) * AMPLITUDE;
+	_vel.y = sin((RAD * _freamCnt)) * AMPLITUDE;
 
 	LifeDecrease();
 
