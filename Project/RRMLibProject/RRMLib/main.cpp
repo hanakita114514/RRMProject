@@ -520,7 +520,6 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nC
 
 		//dev.Context()->Draw(6, 0);
 
-		input.ReadInput();
 		bool result = input.GetJoyState(js);
 		char       titlebar[32];
 		titlebar[0] = '\0';
@@ -538,9 +537,12 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nC
 
 		SetWindowText(hwnd, titlebar);
 
+		input.ReadInput();
+
+
 		SoundManager::Instance().Update();
 
-		//graphic.DrawGraph(0, 0, handle);
+		graphic.DrawGraph(0, 0, handle);
 		//graphic.DrawGraph(0, 0, rectHandle);
 		//graphic.DrawRectGraph(0, 0, 0 + ((frame % 60) / 10) * 32, 0, 32, 32, rectHandle, false, false);
 		++frame;

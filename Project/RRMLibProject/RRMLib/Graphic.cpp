@@ -329,6 +329,8 @@ Graphic::DrawGraph(float x, float y, int handle)
 	unsigned int offset = 0;
 	unsigned int stride = sizeof(Vertex2D);
 
+
+	//セッターはひとまとめにする
 	dev.Context()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
 	dev.Context()->VSSetShader(_vs2d, nullptr, 0);
 	dev.Context()->PSSetShader(_ps, nullptr, 0);
@@ -337,6 +339,9 @@ Graphic::DrawGraph(float x, float y, int handle)
 	dev.Context()->IASetVertexBuffers(0, 1, &vBuffer, &stride, &offset);
 
 	dev.Context()->Draw(4, 0);
+	
+	//使用した後リリース
+	vBuffer->Release();
 }
 
 // 画像の分割描画
@@ -427,6 +432,8 @@ Graphic::DrawRectGraph(float destX, float destY, int srcX, int srcY,
 	dev.Context()->IASetVertexBuffers(0, 1, &vb, &stride, &offset);
 
 	dev.Context()->Draw(4, 0);
+	vb->Release();
+
 }
 
 void 
@@ -455,6 +462,8 @@ Graphic::DrawExtendGraph(float lx, float ly, float rx, float ry, int handle)
 	dev.Context()->IASetVertexBuffers(0, 1, &vBuffer, &stride, &offset);
 
 	dev.Context()->Draw(4, 0);
+	vBuffer->Release();
+
 }
 
 void 
@@ -546,4 +555,6 @@ Graphic::DrawRectExtendGraph(float destLX, float destLY, float destRX, float des
 	dev.Context()->IASetVertexBuffers(0, 1, &vb, &stride, &offset);
 
 	dev.Context()->Draw(4, 0);
+	vb->Release();
+
 }

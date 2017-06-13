@@ -5,17 +5,20 @@
 
 #include <dinput.h>
 
-class DInput
+namespace RRMLib
 {
-private:
-	DIJOYSTATE _js;
+	class DInput
+	{
+	private:
+		DIJOYSTATE _js;
 
-public:
-	DInput();
-	~DInput();
-	bool Init();
-	BOOL ReadInput();
+	public:
+		DInput();
+		~DInput();
+		bool Init();
+		BOOL ReadInput();
 
-	bool GetJoyState(DIJOYSTATE& js);
-};
+		bool GetJoyState(DIJOYSTATE& js);
+	};
 
+}

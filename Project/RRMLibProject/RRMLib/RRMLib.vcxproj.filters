@@ -24,9 +24,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="RMMLib.h">
-      <Filter>ソース ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Common.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
@@ -67,6 +64,9 @@
       <Filter>ソース ファイル\Input</Filter>
     </ClInclude>
     <ClInclude Include="Renderer.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="RRMLib.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
   </ItemGroup>

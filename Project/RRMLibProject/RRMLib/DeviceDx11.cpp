@@ -251,5 +251,6 @@ DeviceDx11::SetCullingFlg(bool flg)
 HWND 
 DeviceDx11::WindowHandle() 
 {
+	_hwnd = WindowControl::Instance().WindowHandle();
 	return _hwnd; 
 }

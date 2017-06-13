@@ -1,4 +1,4 @@
-#include "RMMLib.h" 
+#include "RRMLib.h" 
 #include <Windows.h>
 #include <d3d11.h>
 #include <D3DX11.h>
@@ -15,7 +15,7 @@
 #include "Renderer.h"
 
 //インプット
-DInput dinput;
+RRMLib::DInput dinput;
 
 namespace RRMLib
 {

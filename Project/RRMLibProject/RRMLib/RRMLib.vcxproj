@@ -149,7 +149,7 @@
     <ClInclude Include="MediaPlayer.h" />
     <ClInclude Include="ReadMP3.h" />
     <ClInclude Include="Renderer.h" />
-    <ClInclude Include="RMMLib.h" />
+    <ClInclude Include="RRMLib.h" />
     <ClInclude Include="SoundManager.h" />
     <ClInclude Include="Vertex.h" />
     <ClInclude Include="WindowControl.h" />
