@@ -154,6 +154,7 @@
     <ClCompile Include="DInput.cpp" />
     <ClCompile Include="GeometryGraph.cpp" />
     <ClCompile Include="Graphic.cpp" />
+    <ClCompile Include="GraphList.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MediaControl.cpp" />
     <ClCompile Include="MediaPlayer.cpp" />
@@ -164,11 +165,12 @@
     <ClCompile Include="XAudio.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Common.h" />
+    <ClInclude Include="RRMCommon.h" />
     <ClInclude Include="DeviceDx11.h" />
     <ClInclude Include="DInput.h" />
     <ClInclude Include="GeometryGraph.h" />
     <ClInclude Include="Graphic.h" />
+    <ClInclude Include="GraphList.h" />
     <ClInclude Include="MediaControl.h" />
     <ClInclude Include="MediaPlayer.h" />
     <ClInclude Include="ReadMP3.h" />

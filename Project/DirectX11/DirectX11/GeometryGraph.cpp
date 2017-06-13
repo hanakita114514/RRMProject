@@ -147,7 +147,7 @@ GeometryGraph::CreateShader(ID3D11VertexShader*& vs2d, ID3D11VertexShader*& vs3d
 	return true;
 }
 
-void 
+DrawingStructure
 GeometryGraph::DrawBox(float lx, float ly, float rx, float ry, unsigned int color, bool fillFlag)
 {
 	HRESULT result = S_OK;
@@ -233,31 +233,46 @@ GeometryGraph::DrawBox(float lx, float ly, float rx, float ry, unsigned int colo
 
 	result = dev.Device()->CreateBuffer(&colorBufferDesc, &mbufsub, &colorBuf);
 
-	dev.Context()->PSSetConstantBuffers(1, 1, &colorBuf);
+	DrawingStructure ds = {};
+	ds.vs = _vs2d;
+	ds.ps = _ps;
+	ds.layout = _layout;
+	ds.texture = nullptr;
+	ds.vb = vb;
+	ds.offset = 0;
+	ds.drawNum = 5;
+	ds.colorBuffer = colorBuf;
+	ds.stride = sizeof(Vertex2D);
 
-	unsigned int offset = 0;
-	unsigned int stride = sizeof(Vertex2D);
+
+	//dev.Context()->PSSetConstantBuffers(1, 1, &colorBuf);
+
+	//unsigned int offset = 0;
+	//unsigned int stride = sizeof(Vertex2D);
 
 	if (fillFlag)
 	{
-		dev.Context()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+		//dev.Context()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+		ds.topology = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP;
 	}
 	else
 	{
-		dev.Context()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP);
+		//dev.Context()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP);
+		ds.topology = D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP;
 	}
 
-	dev.Context()->VSSetShader(_vs2d, nullptr, 0);
-	dev.Context()->PSSetShader(_ps, nullptr, 0);
-	dev.Context()->IASetInputLayout(_layout);
+	//dev.Context()->VSSetShader(_vs2d, nullptr, 0);
+	//dev.Context()->PSSetShader(_ps, nullptr, 0);
+	//dev.Context()->IASetInputLayout(_layout);
 	//dev.Context()->PSSetShaderResources(0, 1, &texture);
-	dev.Context()->IASetVertexBuffers(0, 1, &vb, &stride, &offset);
+	//dev.Context()->IASetVertexBuffers(0, 1, &vb, &stride, &offset);
 
-	dev.Context()->Draw(5, 0);
+	//dev.Context()->Draw(5, 0);
 
+	return ds;
 }
 
-void 
+DrawingStructure
 GeometryGraph::DrawLine(float lx, float ly, float rx, float ry, unsigned int color)
 {
 	HRESULT result = S_OK;
@@ -322,22 +337,35 @@ GeometryGraph::DrawLine(float lx, float ly, float rx, float ry, unsigned int col
 
 	result = dev.Device()->CreateBuffer(&colorBufferDesc, &mbufsub, &colorBuf);
 
-	dev.Context()->PSSetConstantBuffers(1, 1, &colorBuf);
+	//dev.Context()->PSSetConstantBuffers(1, 1, &colorBuf);
 
-	unsigned int offset = 0;
-	unsigned int stride = sizeof(Vertex2D);
+	//unsigned int offset = 0;
+	//unsigned int stride = sizeof(Vertex2D);
 
-	dev.Context()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP);
+	//dev.Context()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP);
 
-	dev.Context()->VSSetShader(_vs2d, nullptr, 0);
-	dev.Context()->PSSetShader(_ps, nullptr, 0);
-	dev.Context()->IASetInputLayout(_layout);
-	dev.Context()->IASetVertexBuffers(0, 1, &vb, &stride, &offset);
+	//dev.Context()->VSSetShader(_vs2d, nullptr, 0);
+	//dev.Context()->PSSetShader(_ps, nullptr, 0);
+	//dev.Context()->IASetInputLayout(_layout);
+	//dev.Context()->IASetVertexBuffers(0, 1, &vb, &stride, &offset);
 
-	dev.Context()->Draw(2, 0);
+	//dev.Context()->Draw(2, 0);
+
+	DrawingStructure ds = {};
+	ds.vs = _vs2d;
+	ds.ps = _ps;
+	ds.layout = _layout;
+	ds.texture = nullptr;
+	ds.vb = vb;
+	ds.offset = 0;
+	ds.drawNum = 2;
+	ds.topology = D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP;
+	ds.colorBuffer = colorBuf;
+	ds.stride = sizeof(Vertex2D);
+	return ds;
 }
 
-void 
+DrawingStructure
 GeometryGraph::DrawPoint(float x, float y, unsigned int color)
 {
 	HRESULT result = S_OK;
@@ -390,23 +418,37 @@ GeometryGraph::DrawPoint(float x, float y, unsigned int color)
 
 	result = dev.Device()->CreateBuffer(&colorBufferDesc, &mbufsub, &colorBuf);
 
-	dev.Context()->PSSetConstantBuffers(1, 1, &colorBuf);
+	//dev.Context()->PSSetConstantBuffers(1, 1, &colorBuf);
 
-	unsigned int offset = 0;
-	unsigned int stride = sizeof(Vertex2D);
+	//unsigned int offset = 0;
+	//unsigned int stride = sizeof(Vertex2D);
 
-	dev.Context()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_POINTLIST);
+	//dev.Context()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_POINTLIST);
 
-	dev.Context()->VSSetShader(_vs2d, nullptr, 0);
-	dev.Context()->PSSetShader(_ps, nullptr, 0);
-	dev.Context()->IASetInputLayout(_layout);
-	//dev.Context()->PSSetShaderResources(0, 1, &texture);
-	dev.Context()->IASetVertexBuffers(0, 1, &vb, &stride, &offset);
+	//dev.Context()->VSSetShader(_vs2d, nullptr, 0);
+	//dev.Context()->PSSetShader(_ps, nullptr, 0);
+	//dev.Context()->IASetInputLayout(_layout);
+	////dev.Context()->PSSetShaderResources(0, 1, &texture);
+	//dev.Context()->IASetVertexBuffers(0, 1, &vb, &stride, &offset);
 
-	dev.Context()->Draw(1, 0);
+	//dev.Context()->Draw(1, 0);
+
+	DrawingStructure ds = {};
+	ds.vs = _vs2d;
+	ds.ps = _ps;
+	ds.layout = _layout;
+	ds.texture = nullptr;
+	ds.vb = vb;
+	ds.offset = 0;
+	ds.drawNum = 1;
+	ds.topology = D3D11_PRIMITIVE_TOPOLOGY_POINTLIST;
+	ds.colorBuffer = colorBuf;
+	ds.stride = sizeof(Vertex2D);
+
+	return ds;
 }
 
-void 
+DrawingStructure
 GeometryGraph::DrawCircle(float x, float y, float r, unsigned int color, bool fillFlag)
 {
 	HRESULT result = S_OK;
@@ -462,25 +504,40 @@ GeometryGraph::DrawCircle(float x, float y, float r, unsigned int color, bool fi
 
 	result = dev.Device()->CreateBuffer(&colorBufferDesc, &mbufsub, &colorBuf);
 
-	dev.Context()->PSSetConstantBuffers(1, 1, &colorBuf);
+	//dev.Context()->PSSetConstantBuffers(1, 1, &colorBuf);
 
-	unsigned int offset = 0;
-	unsigned int stride = sizeof(Vertex2D);
+	//unsigned int offset = 0;
+	//unsigned int stride = sizeof(Vertex2D);
+
+	DrawingStructure ds = {};
+	ds.vs = _vs2d;
+	ds.ps = _ps;
+	ds.layout = _layout;
+	ds.texture = nullptr;
+	ds.vb = vb;
+	ds.offset = 0;
+	ds.drawNum = divNum;
+	ds.colorBuffer = colorBuf;
+	ds.stride = sizeof(Vertex2D);
 
 	if (fillFlag)
 	{
-		dev.Context()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+		//dev.Context()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+		ds.topology = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP;
 	}
 	else
 	{
-		dev.Context()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP);
+		//dev.Context()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP);
+		ds.topology = D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP;
 	}
 
-	dev.Context()->VSSetShader(_vs2d, nullptr, 0);
-	dev.Context()->PSSetShader(_ps, nullptr, 0);
-	dev.Context()->IASetInputLayout(_layout);
+	//dev.Context()->VSSetShader(_vs2d, nullptr, 0);
+	//dev.Context()->PSSetShader(_ps, nullptr, 0);
+	//dev.Context()->IASetInputLayout(_layout);
 	//dev.Context()->PSSetShaderResources(0, 1, &texture);
-	dev.Context()->IASetVertexBuffers(0, 1, &vb, &stride, &offset);
+	//dev.Context()->IASetVertexBuffers(0, 1, &vb, &stride, &offset);
 
-	dev.Context()->Draw(divNum, 0);
+	//dev.Context()->Draw(divNum, 0);
+
+	return ds;
 }

@@ -1,12 +1,7 @@
 #pragma once
 
 #include "Vertex.h"
-
-struct ID3D11ShaderResourceView;
-struct ID3D11VertexShader;
-struct ID3D11PixelShader;
-struct ID3D11InputLayout;
-struct ID3D11Buffer;
+#include "RRMCommon.h"
 
 class GeometryGraph
 {
@@ -32,12 +27,12 @@ public:
 	}
 
 	//î†ï`âÊ
-	void DrawBox(float lx, float ly, float rx, float ry, unsigned int color, bool fillFlag);
+	DrawingStructure DrawBox(float lx, float ly, float rx, float ry, unsigned int color, bool fillFlag);
 	//ê¸ï`âÊ
-	void DrawLine(float lx, float ly, float rx, float ry, unsigned int color);
+	DrawingStructure DrawLine(float lx, float ly, float rx, float ry, unsigned int color);
 	//ì_ï`âÊ
-	void DrawPoint(float x, float y, unsigned int color);
+	DrawingStructure DrawPoint(float x, float y, unsigned int color);
 	//â~ï`âÊ
-	void DrawCircle(float x, float y, float r, unsigned int color, bool fillFlag);
+	DrawingStructure DrawCircle(float x, float y, float r, unsigned int color, bool fillFlag);
 };
 

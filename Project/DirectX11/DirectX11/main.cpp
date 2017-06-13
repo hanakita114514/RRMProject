@@ -1,7 +1,6 @@
 #include <Windows.h>
 #include <d3d11.h>
 #include <D3DX11.h>
-#include "Common.h"
 #include "DeviceDx11.h"
 #include <xnamath.h>
 #include "WindowControl.h"
@@ -20,6 +19,8 @@
 
 #include <Shlwapi.h>
 #include "Renderer.h"
+
+#include "GraphList.h"
 
 struct MatrixForShader
 {
@@ -500,6 +501,8 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nC
 
 	int effectHandle = graphic.LoadGraph("Down.png");
 
+	DrawingStructure ds = graphic.CreatePolygon("rei.jpg");
+
 	while (true)
 	{
 		if (ProcessMessage() != 0)
@@ -520,7 +523,6 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nC
 
 		//dev.Context()->Draw(6, 0);
 
-		input.ReadInput();
 		bool result = input.GetJoyState(js);
 		char       titlebar[32];
 		titlebar[0] = '\0';
@@ -538,20 +540,28 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nC
 
 		SetWindowText(hwnd, titlebar);
 
+		input.ReadInput();
+
+
 		SoundManager::Instance().Update();
 
 		//graphic.DrawGraph(0, 0, handle);
 		//graphic.DrawGraph(0, 0, rectHandle);
 		//graphic.DrawRectGraph(0, 0, 0 + ((frame % 60) / 10) * 32, 0, 32, 32, rectHandle, false, false);
-		++frame;
+		//++frame;
 		//graphic.DrawExtendGraph(0, 0, 1000 , 700, handle);
 
 
 		Renderer::Instance().SetZBuffer(false);
+
+		//graphic.DrawGraph(0, 0, ds);
+
+		GraphList::Instance().Add(graphic.DrawGraph(0, 0, handle));
+
 		//Ô
-		gg.DrawBox(50, 50, 100, 100, GetColor(255,0,0), true);
+		GraphList::Instance().Add(gg.DrawBox(50, 50, 100, 100, GetColor(255,0,0), true));
 		//—Î
-		gg.DrawBox(100, 50, 150, 100, GetColor(0, 255, 0), true);
+		GraphList::Instance().Add(gg.DrawBox(100, 50, 150, 100, GetColor(0, 255, 0), true));
 		//Â
 		gg.DrawBox(150, 50, 200, 100, GetColor(0, 0, 255), true);
 		//”’
@@ -563,6 +573,8 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nC
 
 		gg.DrawLine(50, 50, 100, 50, 0xffffffff);
 
+		//graphic.DrawGraph(0, 0, effectHandle);
+
 		//gg.Instance().DrawCircle(200, 300, 50, GetColor(255, 0, 0), false);
 
 		//Renderer::Instance().AlphaBlend(20);
@@ -571,12 +583,9 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nC
 
 		//graphic.DrawRectExtendGraph(0, 0, 500, 500, 0, 0, 600, 600, handle, true, false);
 
-		
-		//graphic.DrawGraph(0, 0, effectHandle);
-
 		//graphic.DrawExtendGraph(0, 0, 1500, 700, handle);
 
-
+		GraphList::Instance().Draw();
 
 		dev.SwapChain()->Present(1, 0);
 	}

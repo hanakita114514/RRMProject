@@ -23,15 +23,27 @@ BOOL CALLBACK
 EnumAxesCalllback(const DIDEVICEOBJECTINSTANCE* pdidoi, VOID* pContext)
 {
 	HRESULT result;
-	DIPROPRANGE diprg;
+	DIPROPRANGE diprg = {};
 
-	diprg.diph.dwSize = sizeof(DIPROPRANGE);
-	diprg.diph.dwHeaderSize = sizeof(DIPROPHEADER);
+	//DirectInputの範囲設定
+	diprg.diph.dwSize = sizeof(diprg);
+	diprg.diph.dwHeaderSize = sizeof(diprg.diph);
 	diprg.diph.dwHow = DIPH_BYID;
 	diprg.diph.dwObj = pdidoi->dwType;
-	diprg.lMin = 0 - 1000;
-	diprg.lMax = 0 + 1000;
+	diprg.lMin = -1000;
+	diprg.lMax = +1000;
+
 	result = g_lpDIDevice->SetProperty(DIPROP_RANGE, &diprg.diph);
+
+	//デッドゾーンの設定
+	DIPROPDWORD diprop = {};
+	diprop.diph.dwSize = sizeof(DIPROPDWORD);
+	diprop.diph.dwHeaderSize = sizeof(DIPROPHEADER);
+	diprop.diph.dwHow = DIPH_BYID;
+	diprop.diph.dwObj = pdidoi->dwType;
+	diprop.dwData = 2000;
+
+	result = g_lpDIDevice->SetProperty(DIPROP_DEADZONE, &diprop.diph);
 
 	if (FAILED(result))
 	{
@@ -42,11 +54,14 @@ EnumAxesCalllback(const DIDEVICEOBJECTINSTANCE* pdidoi, VOID* pContext)
 
 DInput::DInput()
 {
+
 }
 
 
 DInput::~DInput()
 {
+	g_lpDIDevice->Release();
+	g_lpDI->Release();
 }
 
 bool
@@ -55,6 +70,7 @@ DInput::Init()
 	HRESULT result;
 	HWND hwnd = WindowControl::Instance().WindowHandle();
 	HINSTANCE hInst = (HINSTANCE)GetWindowLong(hwnd, GWL_HINSTANCE);
+
 	//インプット
 	result = DirectInput8Create(hInst, DIRECTINPUT_VERSION, IID_IDirectInput8,
 		(void**)&g_lpDI, nullptr);
@@ -129,6 +145,8 @@ DInput::ReadInput()
 {
 	DIJOYSTATE js;
 	HRESULT    hr;
+
+	RECT rc;
 	int        i;
 	char       titlebar[32];
 	char       subbuf[4];
@@ -138,8 +156,9 @@ DInput::ReadInput()
 	hr = g_lpDIDevice->Poll();
 	if (FAILED(hr)) return FALSE;
 
-	hr = g_lpDIDevice->GetDeviceState(sizeof(DIJOYSTATE), &js);
+	hr = g_lpDIDevice->GetDeviceState(sizeof(js), &js);
 	if (FAILED(hr)) return FALSE;
+
 
 	titlebar[0] = '\0';
 
@@ -165,7 +184,7 @@ DInput::ReadInput()
 bool 
 DInput::GetJoyState(DIJOYSTATE& js)
 {
-	HRESULT    hr;
+	HRESULT    hr = S_OK;
 
 	if (nullptr == g_lpDIDevice)
 	{
