@@ -559,7 +559,12 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nC
 
 		Renderer::Instance().SetZBuffer(false);
 
-		graphic.DrawGraph(x++, 0, ds);
+
+		for (int i = 0; i < 300; i++)
+		{
+			graphic.DrawGraph(x, i, ds);
+		}
+		x++;
 
 		//graphic.DrawGraph(0 * 384, 0 * 216, dsBuf[0]);
 		//graphic.DrawGraph(1 * 384, 0 * 216, dsBuf[1]);
