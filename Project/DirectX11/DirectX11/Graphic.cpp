@@ -583,7 +583,7 @@ Graphic::CreatePolygon(std::string filePath)
 }
 
 
-DrawingStructure
+void
 Graphic::DrawGraph(float x, float y, int handle)
 {
 	ID3D11ShaderResourceView* texture = (ID3D11ShaderResourceView*)handle;
@@ -597,34 +597,34 @@ Graphic::DrawGraph(float x, float y, int handle)
 	unsigned int stride = sizeof(Vertex2D);
 
 	//ï`âÊç\ë¢ëÃÇ…äiî[
-	DrawingStructure ds = {};
-	ds.vs = _vs2d;
-	ds.ps = _ps;
-	ds.topology = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP;
-	ds.layout = _layout;
-	ds.texSlot = 1;
-	ds.texture = texture;
-	ds.stride = sizeof(Vertex2D);
-	ds.offset = 0;
-	ds.drawNum = 4;
-	ds.vb = vBuffer;
+	//DrawingStructure ds = {};
+	//ds.vs = _vs2d;
+	//ds.ps = _ps;
+	//ds.topology = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP;
+	//ds.layout = _layout;
+	//ds.texSlot = 1;
+	//ds.texture = texture;
+	//ds.stride = sizeof(Vertex2D);
+	//ds.offset = 0;
+	//ds.drawNum = 4;
+	//ds.vb = vBuffer;
 
-	////ÉZÉbÉ^Å[ÇÕÇ–Ç∆Ç‹Ç∆ÇﬂÇ…Ç∑ÇÈ
-	//dev.Context()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
-	//dev.Context()->VSSetShader(_vs2d, nullptr, 0);
-	//dev.Context()->PSSetShader(_ps, nullptr, 0);
-	//dev.Context()->IASetInputLayout(_layout);
-	//dev.Context()->PSSetShaderResources(0, 1, &texture);
-	//dev.Context()->IASetVertexBuffers(0, 1, &vBuffer, &stride, &offset);
+	//ÉZÉbÉ^Å[ÇÕÇ–Ç∆Ç‹Ç∆ÇﬂÇ…Ç∑ÇÈ
+	dev.Context()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+	dev.Context()->VSSetShader(_vs2d, nullptr, 0);
+	dev.Context()->PSSetShader(_ps, nullptr, 0);
+	dev.Context()->IASetInputLayout(_layout);
+	dev.Context()->PSSetShaderResources(0, 1, &texture);
+	dev.Context()->IASetVertexBuffers(0, 1, &vBuffer, &stride, &offset);
 
-	//dev.Context()->Draw(4, 0);
+	dev.Context()->Draw(4, 0);
 	
 	//égópÇµÇΩå„ÉäÉäÅ[ÉX
+	vBuffer->Release();
 
-	return ds;
 }
 
-DrawingStructure&
+void
 Graphic::DrawGraph(float x, float y, DrawingStructure& ds)
 {
 	HRESULT result = S_OK;
@@ -640,12 +640,20 @@ Graphic::DrawGraph(float x, float y, DrawingStructure& ds)
 	memcpy(mappedsub.pData, vertex, sizeof(Vertex2D) * 4);
 	dev.Context()->Unmap(ds.vb, 0);
 
-	return ds;
+	dev.Context()->IASetPrimitiveTopology((D3D11_PRIMITIVE_TOPOLOGY)ds.topology);
+	dev.Context()->VSSetShader(ds.vs, nullptr, 0);
+	dev.Context()->PSSetShader(ds.ps, nullptr, 0);
+	dev.Context()->IASetInputLayout(ds.layout);
+	dev.Context()->PSSetShaderResources(0, ds.texSlot, &ds.texture);
+	dev.Context()->IASetVertexBuffers(0, 1, &ds.vb, &ds.stride, &ds.offset);
+
+	dev.Context()->Draw(ds.drawNum, 0);
+
 }
 
 
 // âÊëúÇÃï™äÑï`âÊ
-DrawingStructure
+void
 Graphic::DrawRectGraph(float destX, float destY, int srcX, int srcY,
 	int width, int height, int graphHandle, bool transFlag, bool trunFlag)
 {
@@ -721,36 +729,35 @@ Graphic::DrawRectGraph(float destX, float destY, int srcX, int srcY,
 
 	result = dev.Device()->CreateBuffer(&bufdesc, &subdata, &vb);
 
-	//ï`âÊç\ë¢ëÃÇ…äiî[
-	DrawingStructure ds = {};
-	ds.vs = _vs2d;
-	ds.ps = _ps;
-	ds.topology = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP;
-	ds.layout = _layout;
-	ds.texSlot = 1;
-	ds.texture = texture;
-	ds.stride = sizeof(Vertex2D);
-	ds.offset = 0;
-	ds.drawNum = 4;
-	ds.vb = vb;
+	////ï`âÊç\ë¢ëÃÇ…äiî[
+	//DrawingStructure ds = {};
+	//ds.vs = _vs2d;
+	//ds.ps = _ps;
+	//ds.topology = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP;
+	//ds.layout = _layout;
+	//ds.texSlot = 1;
+	//ds.texture = texture;
+	//ds.stride = sizeof(Vertex2D);
+	//ds.offset = 0;
+	//ds.drawNum = 4;
+	//ds.vb = vb;
 
-	//unsigned int offset = 0;
-	//unsigned int stride = sizeof(Vertex2D);
+	unsigned int offset = 0;
+	unsigned int stride = sizeof(Vertex2D);
 
-	//dev.Context()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
-	//dev.Context()->VSSetShader(_vs2d, nullptr, 0);
-	//dev.Context()->PSSetShader(_ps, nullptr, 0);
-	//dev.Context()->IASetInputLayout(_layout);
-	//dev.Context()->PSSetShaderResources(0, 1, &texture);
-	//dev.Context()->IASetVertexBuffers(0, 1, &vb, &stride, &offset);
+	dev.Context()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+	dev.Context()->VSSetShader(_vs2d, nullptr, 0);
+	dev.Context()->PSSetShader(_ps, nullptr, 0);
+	dev.Context()->IASetInputLayout(_layout);
+	dev.Context()->PSSetShaderResources(0, 1, &texture);
+	dev.Context()->IASetVertexBuffers(0, 1, &vb, &stride, &offset);
 
-	//dev.Context()->Draw(4, 0);
-	//vb->Release();
+	dev.Context()->Draw(4, 0);
+	vb->Release();
 
-	return ds;
 }
 
-DrawingStructure
+void
 Graphic::DrawExtendGraph(float lx, float ly, float rx, float ry, int handle)
 {
 	ID3D11ShaderResourceView* texture = (ID3D11ShaderResourceView*)handle;
@@ -765,36 +772,34 @@ Graphic::DrawExtendGraph(float lx, float ly, float rx, float ry, int handle)
 	ID3D11Buffer* vBuffer = CreateBuffer2D(lx + width / 2, ly + height / 2, width, height);
 
 	DeviceDx11& dev = DeviceDx11::Instance();
-	//unsigned int offset = 0;
-	//unsigned int stride = sizeof(Vertex2D);
+	unsigned int offset = 0;
+	unsigned int stride = sizeof(Vertex2D);
 
-	//dev.Context()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
-	//dev.Context()->VSSetShader(_vs2d, nullptr, 0);
-	//dev.Context()->PSSetShader(_ps, nullptr, 0);
-	//dev.Context()->IASetInputLayout(_layout);
-	//dev.Context()->PSSetShaderResources(0, 1, &texture);
-	//dev.Context()->IASetVertexBuffers(0, 1, &vBuffer, &stride, &offset);
+	dev.Context()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+	dev.Context()->VSSetShader(_vs2d, nullptr, 0);
+	dev.Context()->PSSetShader(_ps, nullptr, 0);
+	dev.Context()->IASetInputLayout(_layout);
+	dev.Context()->PSSetShaderResources(0, 1, &texture);
+	dev.Context()->IASetVertexBuffers(0, 1, &vBuffer, &stride, &offset);
 
-	//dev.Context()->Draw(4, 0);
-	//vBuffer->Release();
+	dev.Context()->Draw(4, 0);
+	vBuffer->Release();
 
-	//ï`âÊç\ë¢ëÃÇ…äiî[
-	DrawingStructure ds = {};
-	ds.vs = _vs2d;
-	ds.ps = _ps;
-	ds.topology = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP;
-	ds.layout = _layout;
-	ds.texSlot = 1;
-	ds.texture = texture;
-	ds.stride = sizeof(Vertex2D);
-	ds.offset = 0;
-	ds.drawNum = 4;
-	ds.vb = vBuffer;
-
-	return ds;
+	////ï`âÊç\ë¢ëÃÇ…äiî[
+	//DrawingStructure ds = {};
+	//ds.vs = _vs2d;
+	//ds.ps = _ps;
+	//ds.topology = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP;
+	//ds.layout = _layout;
+	//ds.texSlot = 1;
+	//ds.texture = texture;
+	//ds.stride = sizeof(Vertex2D);
+	//ds.offset = 0;
+	//ds.drawNum = 4;
+	//ds.vb = vBuffer;
 }
 
-DrawingStructure
+void
 Graphic::DrawRectExtendGraph(float destLX, float destLY, float destRX, float destRY, int srcX, int srcY,
 	int width, int height, int graphHandle, bool transFlag, bool trunFlag)
 {
@@ -872,33 +877,31 @@ Graphic::DrawRectExtendGraph(float destLX, float destLY, float destRX, float des
 
 	result = dev.Device()->CreateBuffer(&bufdesc, &subdata, &vb);
 
-	//unsigned int offset = 0;
-	//unsigned int stride = sizeof(Vertex2D);
+	unsigned int offset = 0;
+	unsigned int stride = sizeof(Vertex2D);
 
-	//dev.Context()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
-	//dev.Context()->VSSetShader(_vs2d, nullptr, 0);
-	//dev.Context()->PSSetShader(_ps, nullptr, 0);
-	//dev.Context()->IASetInputLayout(_layout);
-	//dev.Context()->PSSetShaderResources(0, 1, &texture);
-	//dev.Context()->IASetVertexBuffers(0, 1, &vb, &stride, &offset);
+	dev.Context()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+	dev.Context()->VSSetShader(_vs2d, nullptr, 0);
+	dev.Context()->PSSetShader(_ps, nullptr, 0);
+	dev.Context()->IASetInputLayout(_layout);
+	dev.Context()->PSSetShaderResources(0, 1, &texture);
+	dev.Context()->IASetVertexBuffers(0, 1, &vb, &stride, &offset);
 
-	//dev.Context()->Draw(4, 0);
-	//vb->Release();
+	dev.Context()->Draw(4, 0);
+	vb->Release();
 
 
-	//ï`âÊç\ë¢ëÃÇ…äiî[
-	DrawingStructure ds = {};
-	ds.vs = _vs2d;
-	ds.ps = _ps;
-	ds.topology = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP;
-	ds.layout = _layout;
-	ds.texSlot = 1;
-	ds.texture = texture;
-	ds.stride = sizeof(Vertex2D);
-	ds.offset = 0;
-	ds.drawNum = 4;
-	ds.vb = vb;
-
-	return ds;
+	////ï`âÊç\ë¢ëÃÇ…äiî[
+	//DrawingStructure ds = {};
+	//ds.vs = _vs2d;
+	//ds.ps = _ps;
+	//ds.topology = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP;
+	//ds.layout = _layout;
+	//ds.texSlot = 1;
+	//ds.texture = texture;
+	//ds.stride = sizeof(Vertex2D);
+	//ds.offset = 0;
+	//ds.drawNum = 4;
+	//ds.vb = vb;
 
 }

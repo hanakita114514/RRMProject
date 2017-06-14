@@ -559,17 +559,17 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nC
 
 		Renderer::Instance().SetZBuffer(false);
 
-		GraphList::Instance().Add(graphic.DrawGraph(x++, 0, ds));
+		graphic.DrawGraph(x++, 0, ds);
 
-		GraphList::Instance().Add(graphic.DrawGraph(0 * 384, 0 * 216, dsBuf[0]));
-		GraphList::Instance().Add(graphic.DrawGraph(1 * 384, 0 * 216, dsBuf[1]));
+		//graphic.DrawGraph(0 * 384, 0 * 216, dsBuf[0]);
+		//graphic.DrawGraph(1 * 384, 0 * 216, dsBuf[1]);
 
 		//GraphList::Instance().Add(graphic.DrawGraph(0, 0, handle));
 
 		//Ô
-		//GraphList::Instance().Add(gg.DrawBox(50, 50, 100, 100, GetColor(255,0,0), true));
+		gg.DrawBox(50, 50, 100, 100, GetColor(255,0,0), true);
 		//—Î
-		//GraphList::Instance().Add(gg.DrawBox(100, 50, 150, 100, GetColor(0, 255, 0), true));
+		gg.DrawBox(100, 50, 150, 100, GetColor(0, 255, 0), true);
 		//Â
 		gg.DrawBox(150, 50, 200, 100, GetColor(0, 0, 255), true);
 		//”’
@@ -593,7 +593,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nC
 
 		//graphic.DrawExtendGraph(0, 0, 1500, 700, handle);
 
-		GraphList::Instance().Draw();
+		//GraphList::Instance().Draw();
 
 		dev.SwapChain()->Present(1, 0);
 	}

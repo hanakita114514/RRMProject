@@ -67,22 +67,22 @@ public:
 
 	//‰æ‘œ‚Ì•`‰æ
 	//Œ´“_¶ã‚©‚ç•`‰æ
-	DrawingStructure DrawGraph(float x, float y, int handle);
+	void DrawGraph(float x, float y, int handle);
 	//Šù‚É¶¬‚³‚ê‚½ƒ|ƒŠƒSƒ“‚ğg‚Á‚ÄÀ•W¶ã•`‰æ
-	DrawingStructure& DrawGraph(float x, float y, DrawingStructure& ds);
+	void DrawGraph(float x, float y, DrawingStructure& ds);
 
 	//‰æ‘œ‚ÌŠgk•`‰æ
 	// lx ly ¶ãÀ•W
 	// rx ry ‰E‰ºÀ•W
 	// handle ‰æ‘œƒnƒ“ƒhƒ‹
-	DrawingStructure DrawExtendGraph(float lx, float ly, float rx, float ry, int handle);
+	void DrawExtendGraph(float lx, float ly, float rx, float ry, int handle);
 
 	// ‰æ‘œ‚Ì•ªŠ„•`‰æ
-	DrawingStructure DrawRectGraph(float destX, float destY,int srcX, int srcY,
+	void DrawRectGraph(float destX, float destY,int srcX, int srcY,
 		int width, int height, int graphHandle, bool transFlag, bool trunFlag);
 
 	//‰æ‘œ‚Ì•ªŠ„Šgk•`‰æ
-	DrawingStructure DrawRectExtendGraph(float destLX, float destLY, float destRX, float destRY, int srcX, int srcY,
+	void DrawRectExtendGraph(float destLX, float destLY, float destRX, float destRY, int srcX, int srcY,
 		int width, int height, int graphHandle, bool transFlag, bool trunFlag);
 };
 

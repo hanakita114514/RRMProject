@@ -10,6 +10,7 @@ private:
 	ID3D11VertexShader* _vs3d;		//頂点シェーダ
 	ID3D11PixelShader* _ps;			//ピクセルシェーダ
 	ID3D11InputLayout* _layout;		//レイアウト
+	ID3D11Buffer* _colorBuf;		//カラー用コンスタントバッファ
 
 	GeometryGraph();
 	GeometryGraph(const GeometryGraph&);
@@ -27,12 +28,12 @@ public:
 	}
 
 	//箱描画
-	DrawingStructure DrawBox(float lx, float ly, float rx, float ry, unsigned int color, bool fillFlag);
+	void DrawBox(float lx, float ly, float rx, float ry, unsigned int color, bool fillFlag);
 	//線描画
-	DrawingStructure DrawLine(float lx, float ly, float rx, float ry, unsigned int color);
+	void DrawLine(float lx, float ly, float rx, float ry, unsigned int color);
 	//点描画
-	DrawingStructure DrawPoint(float x, float y, unsigned int color);
+	void DrawPoint(float x, float y, unsigned int color);
 	//円描画
-	DrawingStructure DrawCircle(float x, float y, float r, unsigned int color, bool fillFlag);
+	void DrawCircle(float x, float y, float r, unsigned int color, bool fillFlag);
 };
 
