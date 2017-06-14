@@ -68,8 +68,8 @@ Graphic::CreateBuffer2D(float x, float y, float width, float height)
 	D3D11_BUFFER_DESC bufdesc = {};
 	bufdesc.ByteWidth = sizeof(vertices);
 	bufdesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-	bufdesc.Usage = D3D11_USAGE_DYNAMIC;
-	bufdesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+	bufdesc.Usage = D3D11_USAGE_DEFAULT;
+	bufdesc.CPUAccessFlags = 0;
 	bufdesc.MiscFlags = 0;
 	bufdesc.StructureByteStride = sizeof(Vertex2D);
 
@@ -86,9 +86,14 @@ Graphic::CreateBuffer2D(float x, float y, float width, float height)
 	return vb;
 }
 
-Vertex2D* 
-Graphic::CreateVertex2D(float x, float y, float width, float height)
+ID3D11Buffer*
+Graphic::CreateBuffer2DWrite(float x, float y, float width, float height)
 {
+	HRESULT result = S_OK;
+	DeviceDx11& dev = DeviceDx11::Instance();
+
+	ID3D11Buffer* vb;
+
 	Vertex2D vertices[4];
 
 	WindowControl& wc = WindowControl::Instance();
@@ -128,7 +133,67 @@ Graphic::CreateVertex2D(float x, float y, float width, float height)
 	vertices[3].uv.x = 1;
 	vertices[3].uv.y = 1;
 
-	return vertices;
+	//頂点バッファの作成
+	D3D11_BUFFER_DESC bufdesc = {};
+	bufdesc.ByteWidth = sizeof(vertices);
+	bufdesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+	bufdesc.Usage = D3D11_USAGE_DYNAMIC;
+	bufdesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+	bufdesc.MiscFlags = 0;
+	bufdesc.StructureByteStride = sizeof(Vertex2D);
+
+	D3D11_SUBRESOURCE_DATA subdata = {};
+	subdata.pSysMem = &vertices[0];
+
+	result = dev.Device()->CreateBuffer(&bufdesc, &subdata, &vb);
+
+	if (FAILED(result))
+	{
+		return nullptr;
+	}
+
+	return vb;
+}
+
+void 
+Graphic::CreateVertex2D(float x, float y, float width, float height, Vertex2D* vertices)
+{
+	WindowControl& wc = WindowControl::Instance();
+
+	//ウィンドウ座標系を-1～1にクランプ
+	float fx = (x - wc.WindowWidth() / 2) / (wc.WindowWidth() / 2);
+	float fy = ((y - wc.WindowHeight() / 2) / (wc.WindowHeight() / 2)) * -1;
+
+	float fw = (width / 2) / (wc.WindowWidth() / 2);
+	float fh = (height / 2) / (wc.WindowHeight() / 2);
+
+	//左上
+	vertices[0].pos.x = fx - fw;
+	vertices[0].pos.y = fy + fh;
+	vertices[0].pos.z = 0;
+	vertices[0].uv.x = 0;
+	vertices[0].uv.y = 0;
+
+	//右上
+	vertices[1].pos.x = fx + fw;
+	vertices[1].pos.y = fy + fh;
+	vertices[1].pos.z = 0;
+	vertices[1].uv.x = 1;
+	vertices[1].uv.y = 0;
+
+	//左下
+	vertices[2].pos.x = fx - fw;
+	vertices[2].pos.y = fy - fh;
+	vertices[2].pos.z = 0;
+	vertices[2].uv.x = 0;
+	vertices[2].uv.y = 1;
+
+	//右下
+	vertices[3].pos.x = fx + fw;
+	vertices[3].pos.y = fy - fh;
+	vertices[3].pos.z = 0;
+	vertices[3].uv.x = 1;
+	vertices[3].uv.y = 1;
 }
 
 ID3D11Buffer* 
@@ -393,7 +458,7 @@ Graphic::CreatePolygon(std::string filePath)
 	ds.ps = _ps;
 	ds.topology = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP;
 	ds.layout = _layout;
-	ds.vb = CreateBuffer2D(0, 0, 1000, 1000);
+	ds.vb = CreateBuffer2DWrite(0, 0, 1000, 1000);
 	ds.stride = sizeof(Vertex2D);
 	ds.offset = 0;
 
@@ -447,23 +512,25 @@ Graphic::DrawGraph(float x, float y, int handle)
 	return ds;
 }
 
-void 
-Graphic::DrawGraph(float x, float y, DrawingStructure ds)
+DrawingStructure&
+Graphic::DrawGraph(float x, float y, DrawingStructure& ds)
 {
 	HRESULT result = S_OK;
 	DeviceDx11& dev = DeviceDx11::Instance();
 
 	int handle = (int)ds.texture;
 	TexData t = _texData[handle];
-	Vertex2D* vertex = CreateVertex2D(x + t.width / 2, y + t.height / 2, t.width, t.height);
+	Vertex2D vertex[4];
+	CreateVertex2D(x + t.width / 2, y + t.height / 2, t.width, t.height, vertex);
 
 	WindowControl& wc = WindowControl::Instance();	
 
 	D3D11_MAPPED_SUBRESOURCE mappedsub = {};
-	//result = dev.Context()->Map(ds.vb, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedsub);
-	//memcpy(mappedsub.pData, &bufdesc, sizeof(bufdesc));
-	//dev.Context()->Unmap(ds.vb, 0);
+	result = dev.Context()->Map(ds.vb, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedsub);
+	memcpy(mappedsub.pData, vertex, sizeof(Vertex2D) * 4);
+	dev.Context()->Unmap(ds.vb, 0);
 
+	return ds;
 }
 
 

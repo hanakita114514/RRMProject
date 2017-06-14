@@ -60,8 +60,14 @@ DInput::DInput()
 
 DInput::~DInput()
 {
-	g_lpDIDevice->Release();
-	g_lpDI->Release();
+	if (g_lpDIDevice)
+	{
+		g_lpDIDevice->Release();
+	}
+	if (g_lpDI)
+	{
+		g_lpDI->Release();
+	}
 }
 
 bool

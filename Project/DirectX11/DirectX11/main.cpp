@@ -503,6 +503,8 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nC
 
 	DrawingStructure ds = graphic.CreatePolygon("rei.jpg");
 
+	int x = 0;
+
 	while (true)
 	{
 		if (ProcessMessage() != 0)
@@ -554,14 +556,14 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nC
 
 		Renderer::Instance().SetZBuffer(false);
 
-		//graphic.DrawGraph(0, 0, ds);
+		GraphList::Instance().Add(graphic.DrawGraph(x++, 0, ds));
 
-		GraphList::Instance().Add(graphic.DrawGraph(0, 0, handle));
+		//GraphList::Instance().Add(graphic.DrawGraph(0, 0, handle));
 
 		//ê‘
-		GraphList::Instance().Add(gg.DrawBox(50, 50, 100, 100, GetColor(255,0,0), true));
+		//GraphList::Instance().Add(gg.DrawBox(50, 50, 100, 100, GetColor(255,0,0), true));
 		//óŒ
-		GraphList::Instance().Add(gg.DrawBox(100, 50, 150, 100, GetColor(0, 255, 0), true));
+		//GraphList::Instance().Add(gg.DrawBox(100, 50, 150, 100, GetColor(0, 255, 0), true));
 		//ê¬
 		gg.DrawBox(150, 50, 200, 100, GetColor(0, 0, 255), true);
 		//îí

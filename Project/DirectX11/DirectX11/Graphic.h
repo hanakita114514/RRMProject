@@ -27,7 +27,10 @@ private:
 	Graphic& operator=(const Graphic&);
 
 	ID3D11Buffer* CreateBuffer2D(float x, float y, float width, float height);
-	Vertex2D* CreateVertex2D(float x, float y, float width, float height);
+	//CPU‚©‚ç“®“I‘‚«Š·‚¦‰Â
+	ID3D11Buffer* CreateBuffer2DWrite(float x, float y, float width, float height);
+
+	void CreateVertex2D(float x, float y, float width, float height, Vertex2D* vertices);
 
 	ID3D11Buffer* CreateBuffer3D(float x, float y, float z, float width, float height);
 
@@ -59,7 +62,7 @@ public:
 	//Œ´“_¶ã‚©‚ç•`‰æ
 	DrawingStructure DrawGraph(float x, float y, int handle);
 	//Šù‚É¶¬‚³‚ê‚½ƒ|ƒŠƒSƒ“‚ğg‚Á‚ÄÀ•W¶ã•`‰æ
-	void DrawGraph(float x, float y, DrawingStructure ds);
+	DrawingStructure& DrawGraph(float x, float y, DrawingStructure& ds);
 
 	//‰æ‘œ‚ÌŠgk•`‰æ
 	// lx ly ¶ãÀ•W
