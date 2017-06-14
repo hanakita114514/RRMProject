@@ -26,16 +26,22 @@ private:
 	Graphic(const Graphic&);
 	Graphic& operator=(const Graphic&);
 
+	//頂点バッファの生成
 	ID3D11Buffer* CreateBuffer2D(float x, float y, float width, float height);
-	//CPUから動的書き換え可
-	ID3D11Buffer* CreateBuffer2DWrite(float x, float y, float width, float height);
 
-	void CreateVertex2D(float x, float y, float width, float height, Vertex2D* vertices);
+	ID3D11Buffer* CreateBuffer2D(float x, float y, float width, float height, float luvX, float luvY, float ruvX, float ruvY,
+		DrawingStructure& ds);
+	//CPUから動的書き換え可
+	ID3D11Buffer* CreateBuffer2DWrite(float x, float y, float width, float height, DrawingStructure& ds);
+
+	void CreateVertex2D(float x, float y, float width, float height, Vertex2D* vertices, DrawingStructure& ds);
 
 	ID3D11Buffer* CreateBuffer3D(float x, float y, float z, float width, float height);
 
 	HRESULT CreateShader(ID3D11VertexShader*& vs2d, ID3D11VertexShader*& vs3d, ID3D11InputLayout*& layout, ID3D11PixelShader*& ps);
 
+	//シェーダ用に座標をクランプ
+	void CrampForShader(float& x, float& y);
 
 public:
 	~Graphic();
@@ -56,7 +62,8 @@ public:
 	DrawingStructure CreatePolygon(std::string filePath);
 
 	//画像の分割読み込み
-	HRESULT LoadDivGraph(std::string filePath);
+	HRESULT LoadDivGraph(std::string filePath, int allNum,
+		int xNum, int yNum, int width, int height, DrawingStructure* handleBuf);
 
 	//画像の描画
 	//原点左上から描画
@@ -74,6 +81,7 @@ public:
 	DrawingStructure DrawRectGraph(float destX, float destY,int srcX, int srcY,
 		int width, int height, int graphHandle, bool transFlag, bool trunFlag);
 
+	//画像の分割拡縮描画
 	DrawingStructure DrawRectExtendGraph(float destLX, float destLY, float destRX, float destRY, int srcX, int srcY,
 		int width, int height, int graphHandle, bool transFlag, bool trunFlag);
 };

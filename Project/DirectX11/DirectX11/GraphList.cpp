@@ -60,7 +60,7 @@ GraphList::Draw()
 
 		dev.Context()->IASetVertexBuffers(0, 1, &d.vb, &d.stride, &d.offset);
 		dev.Context()->Draw(d.drawNum, 0);
-		d.vb->Release();
+		//d.vb->Release();
 	}
 
 	_drawList.clear();

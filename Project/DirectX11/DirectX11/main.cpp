@@ -503,6 +503,9 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nC
 
 	DrawingStructure ds = graphic.CreatePolygon("rei.jpg");
 
+	DrawingStructure dsBuf[25];
+	graphic.LoadDivGraph("rei.jpg", 25, 5, 5, 384, 216, dsBuf);
+
 	int x = 0;
 
 	while (true)
@@ -557,6 +560,9 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nC
 		Renderer::Instance().SetZBuffer(false);
 
 		GraphList::Instance().Add(graphic.DrawGraph(x++, 0, ds));
+
+		GraphList::Instance().Add(graphic.DrawGraph(0 * 384, 0 * 216, dsBuf[0]));
+		GraphList::Instance().Add(graphic.DrawGraph(1 * 384, 0 * 216, dsBuf[1]));
 
 		//GraphList::Instance().Add(graphic.DrawGraph(0, 0, handle));
 
