@@ -30,5 +30,6 @@ public:
 
 	std::vector<Enemy*>& GetEnemyList() { return _enemyList; }
 
+	bool EnemyEradication();
 };
 

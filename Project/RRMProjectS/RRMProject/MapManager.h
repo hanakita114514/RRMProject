@@ -2,7 +2,6 @@
 #include "Block.h"
 #include <vector>
 
-const int STAGE_ID_MAX = 4;
 
 class MapRendar;
 class BackgroundRendar;
@@ -15,12 +14,20 @@ typedef struct MAP_DAATA
 	char* backGroundName;
 }MapData;
 
+enum class Stage
+{
+	stage1,
+	stage2,
+	stage3,
+	stage4,
+	stageMax
+};
 
 class MapManager
 {
 private:
-	MapRendar* _map[STAGE_ID_MAX];
-	BackgroundRendar* _bg[STAGE_ID_MAX];
+	MapRendar* _map[(int)Stage::stageMax];
+	BackgroundRendar* _bg[(int)Stage::stageMax];
 	EnemyFactory* _fac;
 	Enemy* newEnemy;
 
@@ -57,6 +64,7 @@ public:
 	MapRendar* GetMap(int id) { return _map[id ]; }
 	int GetStageId()			{ return _stageId; }
 
-	MapRendar* StageSelect(int stageId);
+	bool StageSelect(int stageId);
+	bool NextStage();
 };
 

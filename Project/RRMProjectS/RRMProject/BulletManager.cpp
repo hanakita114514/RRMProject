@@ -9,7 +9,6 @@ BulletManager::BulletManager()
 
 BulletManager::~BulletManager()
 {
-	Delete();
 }
 
 void BulletManager::Update()

@@ -18,13 +18,6 @@ class MenuScene : public Scene
 		float freamCnt;
 	}Logo;
 
-	enum LogoIdx
-	{
-		logo1,
-		logo2,
-
-		logoMax
-	};
 	const int LogoHeight = 64;
 	const int LogoWidth = 52;
 private:
@@ -35,13 +28,12 @@ private:
 	float _freamCnt;
 
 	Arrow _arrow;				//矢印
-	Logo _logo[logoMax];			//ロゴの画像ハンドル
+	Logo _logo[(int)(LogoIdx::logoMax)];			//ロゴの画像ハンドル
 	DInput* _dinput;
-	Vector2 _logoDefaultPos[logoMax];
+	Vector2 _logoDefaultPos[(int)(LogoIdx::logoMax)];
 
 	bool prevRight, prevLeft,prevUp,prevDown;	//前フレームのスティック情報
 	bool right, left,up,down;			//現フレームのスティック情報
-	bool _fadeInStart;			//フェードイン検知用フラグ
 
 	void (MenuScene::*_update)();
 

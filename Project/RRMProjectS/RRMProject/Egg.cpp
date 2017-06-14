@@ -36,8 +36,6 @@ Egg::Egg(int* handle, const Position& pos)
 	_circle.radius = _rc.w / 2;
 
 	_isAlive = true;
-
-
 }
 
 Egg::~Egg()

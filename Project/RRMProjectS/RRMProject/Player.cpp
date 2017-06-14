@@ -498,3 +498,9 @@ Player::HitGround()
 		_vel.y += GRAVITY * GameTime::Instance().GetTimeScale() * GameTime::Instance().GetTimeScale() * _nosedive;
 	}
 }
+
+bool 
+Player::IsInputKey(KeyType type)
+{
+	return _input.IsTriger(type);
+}

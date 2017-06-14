@@ -83,7 +83,6 @@ Fade::FadeIn(const float& fadeSpeed)
 	_func = &Fade::FadeIn;
 	_isFadeOutEnd = false;
 	_isFadeInEnd = false;
-
 }
 void 
 Fade::FadeOut(const float& fadeSpeed)
@@ -112,11 +111,13 @@ Fade::PauseEnd()
 	_isPause = false;
 }
 
+
 bool 
 Fade::IsFadeInEnd()
 {
 	return _isFadeInEnd;
 }
+
 
 bool 
 Fade::IsFadeOutEnd()

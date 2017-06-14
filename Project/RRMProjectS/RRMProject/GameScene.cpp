@@ -9,6 +9,8 @@
 #include "MapRendar.h"
 #include "Fade.h"
 #include "EffectManager.h"
+#include "GameMain.h"
+#include "ResultScene.h"
 
 GameScene::GameScene() : _player(0,_camera), _camera(_player.GetRect().pos)
 {
@@ -21,34 +23,52 @@ GameScene::GameScene() : _player(0,_camera), _camera(_player.GetRect().pos)
 	_camera.Init();
 }
 
+GameScene::GameScene(LogoIdx state) : _player(0, _camera), _camera(_player.GetRect().pos)
+{
+	_col = new Collision();
+	EnemyManager::Instance();
+	BulletManager::Instance();
+	MapManager::Instance().Initialize();
+	Fade::Instance().FadeOut(5.0f);
+	_logoState = state;
+	_sceneChangeFlag = false;
+
+	_camera.Init();
+}
 
 GameScene::~GameScene()
 {
 	delete _col;
+	BulletManager::Instance().Delete();
 }
 
 bool GameScene::Update()
 {
 	//XV--------------------------------------------------------------------
 
-	_player.Update();
-	MapManager::Instance().Update();
-	EnemyManager::Instance().Update();
-	BulletManager::Instance().Update();
-	EffectManager::Instance().Update();
-	_camera.Update();
+	if (!_sceneChangeFlag)
+	{
+		if (Fade::Instance().IsWait())
+		{
+			_player.Update();
+			MapManager::Instance().Update();
+			EnemyManager::Instance().Update();
+			BulletManager::Instance().Update();
+			EffectManager::Instance().Update();
+		}
+		_camera.Update();
 
-	//“–‚½‚è”»’è
-	ColProcess();
+		//“–‚½‚è”»’è
+		ColProcess();
+	}
+		//•`‰æ--------------------------------------------------------------------
+		MapManager::Instance().Draw(_camera.GetOffset());
+		EnemyManager::Instance().Draw(_camera.GetOffset());
+		BulletManager::Instance().Draw(_camera.GetOffset());
+		_player.Draw();
+		EffectManager::Instance().Draw(_camera.GetOffset());
 
-	//•`‰æ--------------------------------------------------------------------
-	MapManager::Instance().Draw(_camera.GetOffset());
-	EnemyManager::Instance().Draw(_camera.GetOffset());
-	BulletManager::Instance().Draw(_camera.GetOffset());
-	_player.Draw();
-	EffectManager::Instance().Draw(_camera.GetOffset());
-
-	DxLib::DrawFormatString(0, 0, 0xffffffff, "GameScene");
+	StageClear();
 
 	return true;
 }
@@ -106,12 +126,9 @@ void GameScene::PlayerColEnemy()
 			continue;
 		}
 		segmentHit = _col->LineCross(_player.GetRect(),_player.GetVel(), e->GetRect(),e->GetVel());
-		//hitFlag = _col->IsHit(_player.GetRect(), e->GetRect());
 		if (segmentHit || hitFlag)
 		{
 			_player.Hit(e);
-			//e->Hit(&_player);
-
 			break;
 		}
 	}
@@ -208,4 +225,24 @@ GameScene::ColProcess()
 	BulletColBlock();
 	BulletColPlayer();
 	BulletColEnemy();
+}
+
+void GameScene::StageClear()
+{
+	if (Fade::Instance().IsFadeInEnd())
+	{
+		_sceneChangeFlag = true;
+	}
+
+	if (EnemyManager::Instance().EnemyEradication() && Fade::Instance().IsWait())
+	{
+		Fade::Instance().FadeIn(10.0);
+	}
+
+	DxLib::DrawFormatString(0, 0, 0xffffffff, "GameScene");
+
+	if (_sceneChangeFlag)
+	{
+		GameMain::Instance().ChangeScene(new ResultScene(_logoState));
+	}
 }

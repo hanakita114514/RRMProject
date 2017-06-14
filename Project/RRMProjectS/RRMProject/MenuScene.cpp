@@ -10,7 +10,7 @@
 #include "Circle.h"
 #include "Mathematics.h"
 
-const char* Stage[STAGE_ID_MAX] = 
+const char* Stage[(int)Stage::stageMax] = 
 {
 	{"Stage1"},
 	{"Stage2"},
@@ -24,7 +24,7 @@ MenuScene::MenuScene()
 	_titleHandle = DxLib::LoadGraph("Resource/img/title.png");
 	_update = &MenuScene::TitleUpdate;
 	_dinput = new DInput(0);
-	for (int i = 0; i < logoMax; i++)
+	for (int i = 0; i < (int)(LogoIdx::logoMax); i++)
 	{
 		_logo[i].image = DxLib::LoadGraph("Resource/img/UI/Arrow_Smile.png");
 		_logo[i].rc.pos = Vector2(WINDOW_WIDTH / 3, WINDOW_HEIGHT / 3 * (i + 1));
@@ -43,7 +43,6 @@ MenuScene::MenuScene()
 	left = false;
 	up = false;;
 	down = false;
-	_fadeInStart = false;
 	_logoIdx = 0;
 	_stageId = 0;
 
@@ -53,7 +52,7 @@ MenuScene::MenuScene()
 
 MenuScene::~MenuScene()
 {
-
+	delete _dinput;
 }
 
 void 
@@ -81,14 +80,14 @@ MenuScene::MenuUpdate()
 			_logoIdx--;
 			if (_logoIdx < 0)
 			{
-				_logoIdx = logoMax - 1;
+				_logoIdx = (int)(LogoIdx::logoMax) - 1;
 			}
 		}
 
 		if (IsStickDown())
 		{
 			_logoIdx++;
-			if (_logoIdx >= logoMax)
+			if (_logoIdx >= (int)(LogoIdx::logoMax))
 			{
 				_logoIdx = 0;
 			}
@@ -131,7 +130,7 @@ MenuScene::MenuUpdate()
 	Draw();
 
 	_arrow.Draw();
-	for (int i = 0; i < logoMax; i++)
+	for (int i = 0; i <(int)(LogoIdx::logoMax); i++)
 	{
 		DxLib::DrawGraph(_logo[i].rc.pos.x, _logo[i].rc.pos.y, _logo[i].image, true);
 	}
@@ -140,21 +139,21 @@ MenuScene::MenuUpdate()
 void 
 MenuScene::GameStart()
 {
-	if (!_fadeInStart)
+	if (Fade::Instance().IsWait())
 	{
 		if (IsStickUp())
 		{
 			_logoIdx--;
 			if (_logoIdx < 0)
 			{
-				_logoIdx = logoMax - 1;
+				_logoIdx = (int)(LogoIdx::logoMax) - 1;
 			}
 		}
 
 		if (IsStickDown())
 		{
 			_logoIdx++;
-			if (_logoIdx >= logoMax)
+			if (_logoIdx >= (int)(LogoIdx::logoMax))
 			{
 				_logoIdx = 0;
 			}
@@ -165,7 +164,7 @@ MenuScene::GameStart()
 			if (IsStickRight())	//右にスティックが倒されたか？
 			{
 				_stageId++;
-				if (_stageId >= STAGE_ID_MAX)
+				if (_stageId >= (int)Stage::stageMax)
 				{
 					_stageId = 0;
 				}
@@ -176,7 +175,7 @@ MenuScene::GameStart()
 				_stageId--;
 				if (_stageId < 0)
 				{
-					_stageId = STAGE_ID_MAX - 1;
+					_stageId = (int)Stage::stageMax - 1;
 				}
 			}
 		}
@@ -206,10 +205,12 @@ MenuScene::GameStart()
 				break;
 			}
 
+			_logoState = static_cast<LogoIdx>(_logoIdx);
+
 		}
 		_arrow.SetPos(_logoDefaultPos[_logoIdx]);
 
-		for (int i = 0; i < logoMax; i++)
+		for (int i = 0; i < (int)(LogoIdx::logoMax); i++)
 		{
 			DxLib::DrawGraph(_logo[i].rc.pos.x, _logo[i].rc.pos.y, _logo[i].image, true);
 		}
@@ -224,7 +225,7 @@ MenuScene::GameStart()
 	if (Fade::Instance().IsFadeInEnd())
 	{
 		MapManager::Instance().StageSelect(_stageId);
-		GameMain::Instance().ChangeScene(new GameScene());
+		GameMain::Instance().ChangeScene(new GameScene(_logoState));
 	}
 
 }
@@ -239,11 +240,11 @@ MenuScene::LogoMove()
 {
 	switch (_logoIdx)
 	{
-	case logo1:
+	case static_cast<int>(LogoIdx::GameStart):
 	{
-		for (int i = 0; i < logoMax; i++)
+		for (int i = 0; i < (int)(LogoIdx::logoMax); i++)
 		{
-			if (i == logo1)
+			if (i == static_cast<int>(LogoIdx::GameStart))
 			{
 				_logo[i].rc.pos = ImageShaker(_logo[i].rc);
 				continue;
@@ -254,11 +255,11 @@ MenuScene::LogoMove()
 		}
 	}
 	break;
-	case logo2:
+	case static_cast<int>(LogoIdx::StageSelect) :
 	{
-		for (int i = 0; i < logoMax; i++)
+		for (int i = 0; i < (int)(LogoIdx::logoMax); i++)
 		{
-			if (i == logo2)
+			if (i == static_cast<int>(LogoIdx::StageSelect))
 			{
 				_logo[i].rc.pos = ImageShaker(_logo[i].rc);
 				continue;
@@ -276,12 +277,6 @@ Vector2
 MenuScene::ImageShaker(Rect& rect)
 {
 	Vector2 pos = rect.pos;
-	Vector2 center = rect.Center();
-	Circle circle = {};
-	float fream;
-
-	circle.center = center;
-	circle.radius = 32;
 	_logo[_logoIdx].freamCnt++;
 
 	pos.x += sin(RAD * (_logo[_logoIdx].freamCnt * 2));

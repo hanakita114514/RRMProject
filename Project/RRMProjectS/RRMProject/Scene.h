@@ -6,6 +6,16 @@ class Scene
 {
 protected:
 
+	enum class LogoIdx
+	{
+		GameStart,
+		StageSelect,
+
+		logoMax
+	};
+
+	LogoIdx _logoState;
+
 public:
 	Scene();
 	virtual ~Scene();

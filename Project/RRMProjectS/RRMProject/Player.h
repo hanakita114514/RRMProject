@@ -103,5 +103,7 @@ public:
 
 
 	bool IsHitGround() { return _hitGround; }
+
+	bool IsInputKey(KeyType key);
 };
 

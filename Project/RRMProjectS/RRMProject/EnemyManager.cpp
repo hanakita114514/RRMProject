@@ -65,3 +65,14 @@ EnemyManager::Delete()
 		itr = _enemyList.erase(itr);
 	}
 }
+
+bool
+EnemyManager::EnemyEradication()
+{
+	if (_enemyList.size() == 0)
+	{
+		return true;
+	}
+
+	return false;
+}

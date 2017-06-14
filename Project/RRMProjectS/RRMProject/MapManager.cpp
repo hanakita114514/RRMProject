@@ -9,7 +9,7 @@
 #include "Player.h"
 #include "EnemyManager.h"
 
-MapData _fileName[STAGE_ID_MAX] =
+MapData _fileName[(int)Stage::stageMax] =
 {
 	{"Resource/data/map1.fmf","Resource/img/BackGround/mori.jpg"},
 	{ "Resource/data/map2.fmf","Resource/img/BackGround/mori.jpg" },
@@ -20,15 +20,12 @@ MapData _fileName[STAGE_ID_MAX] =
 MapManager::MapManager()
 {
 	//ファイル名を各クラスに渡しておく
-	for (int i = 0; i < STAGE_ID_MAX; i++)
+	for (int i = 0; i < (int)Stage::stageMax; i++)
 	{
 		_map[i] = new MapRendar(_fileName[i].mapName);
 		_bg[i] = new BackgroundRendar(_fileName[i].backGroundName);
 	}
 
-	EnemyManager::Instance().Create(EnemyType::egg, Position(500, 0));
-	EnemyManager::Instance().Create(EnemyType::egg, Position(300,0));
-	EnemyManager::Instance().Create(EnemyType::egg, Position(1214, 0));
 
 	_stageId = 0;
 }
@@ -37,16 +34,18 @@ MapManager::~MapManager()
 {
 	Delete();
 
-	delete _map[_stageId];
-	delete _bg[_stageId];
+	delete[] _map;
+	delete[] _bg;
 }
 
 bool MapManager::Initialize()
 {
 	_mapErr = _map[_stageId]->MapLoad();
 	_bgErr = _bg[_stageId]->Initialize();
+	EnemyManager::Instance().Create(EnemyType::egg, Position(1214, 0));
 
-	if (_mapErr != true || _bgErr != true)	//マップもしくは背景で失敗したか？
+
+	if (!_mapErr|| !_bgErr)	//マップもしくは背景で失敗したか？
 	{
 		return false;
 	}
@@ -84,10 +83,30 @@ MapManager::Delete()
 	}
 }
 
-MapRendar*
+bool
 MapManager::StageSelect(int stageId)
 {
 	_stageId = stageId;
 
-	return _map[_stageId];
+	if (_stageId >= (int)Stage::stageMax)
+	{
+		return false;
+	}
+	 _map[_stageId];
+
+	 return true;
+}
+
+bool
+MapManager::NextStage()
+{
+	_stageId++;
+
+	if (_stageId >= (int)Stage::stageMax)
+	{
+		return false;
+	}
+	_map[_stageId];
+
+	return true;
 }
