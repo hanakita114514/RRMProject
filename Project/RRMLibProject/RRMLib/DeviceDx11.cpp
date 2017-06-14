@@ -1,6 +1,5 @@
 #include "DeviceDx11.h"
 #include <d3d11.h>
-#include "Common.h"
 
 DeviceDx11::DeviceDx11()
 {

@@ -13,6 +13,7 @@
 #include "SoundManager.h"
 #include "GeometryGraph.h"
 #include "Renderer.h"
+#include "GraphList.h"
 
 //インプット
 RRMLib::DInput dinput;
@@ -230,6 +231,13 @@ namespace RRMLib
 		return color;
 	}
 
+	//リストに格納されたリソースを一斉描画
+	void DrawGraphList()
+	{
+		Renderer::Instance().SetZBuffer(false);
+		GraphList::Instance().Draw();
+	}
+
 	//ブレンドモードを設定
 	void SetBlendMode(int mode, int pal)
 	{
@@ -250,7 +258,7 @@ namespace RRMLib
 	//DInput
 	bool GetJoypadDirectInputState(int inputType, DJOYPAD_STATE* joystate)
 	{
-		DIJOYSTATE js;
+		DIJOYSTATE js = {};
 		bool ret = false;
 		const int povNum = 4;
 		const int buttonNum = 32;

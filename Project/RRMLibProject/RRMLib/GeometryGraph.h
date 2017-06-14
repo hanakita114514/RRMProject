@@ -1,12 +1,7 @@
 #pragma once
 
 #include "Vertex.h"
-
-struct ID3D11ShaderResourceView;
-struct ID3D11VertexShader;
-struct ID3D11PixelShader;
-struct ID3D11InputLayout;
-struct ID3D11Buffer;
+#include "RRMCommon.h"
 
 class GeometryGraph
 {
@@ -15,6 +10,7 @@ private:
 	ID3D11VertexShader* _vs3d;		//頂点シェーダ
 	ID3D11PixelShader* _ps;			//ピクセルシェーダ
 	ID3D11InputLayout* _layout;		//レイアウト
+	ID3D11Buffer* _colorBuf;		//カラー用コンスタントバッファ
 
 	GeometryGraph();
 	GeometryGraph(const GeometryGraph&);

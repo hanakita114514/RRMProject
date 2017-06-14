@@ -145,10 +145,12 @@
     <ClInclude Include="dinputex.h" />
     <ClInclude Include="GeometryGraph.h" />
     <ClInclude Include="Graphic.h" />
+    <ClInclude Include="GraphList.h" />
     <ClInclude Include="MediaControl.h" />
     <ClInclude Include="MediaPlayer.h" />
     <ClInclude Include="ReadMP3.h" />
     <ClInclude Include="Renderer.h" />
+    <ClInclude Include="RRMCommon.h" />
     <ClInclude Include="RRMLib.h" />
     <ClInclude Include="SoundManager.h" />
     <ClInclude Include="Vertex.h" />
@@ -160,6 +162,7 @@
     <ClCompile Include="DInput.cpp" />
     <ClCompile Include="GeometryGraph.cpp" />
     <ClCompile Include="Graphic.cpp" />
+    <ClCompile Include="GraphList.cpp" />
     <ClCompile Include="MediaControl.cpp" />
     <ClCompile Include="MediaPlayer.cpp" />
     <ClCompile Include="ReadMP3.cpp" />

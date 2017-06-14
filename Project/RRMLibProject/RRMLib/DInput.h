@@ -20,5 +20,4 @@ namespace RRMLib
 
 		bool GetJoyState(DIJOYSTATE& js);
 	};
-
 }
