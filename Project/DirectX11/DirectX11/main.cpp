@@ -501,7 +501,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nC
 
 	int effectHandle = graphic.LoadGraph("Down.png");
 
-	DrawingStructure ds = graphic.CreatePolygon("bullet.png");
+	DrawingStructure ds = graphic.CreatePolygon("rei.jpg");
 
 	DrawingStructure dsBuf[25];
 	graphic.LoadDivGraph("rei.jpg", 25, 5, 5, 384, 216, dsBuf);
@@ -558,12 +558,16 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nC
 
 
 		Renderer::Instance().SetZBuffer(false);
+		DeviceDx11::Instance().SetCullingFlg(false);
 
 
-		for (int i = 0; i < 5000; i++)
+		for (int i = 0; i < 1000; i++)
 		{
-			graphic.DrawGraph(x + i, i, ds);
+			//graphic.DrawGraph(x, i, ds);
+			graphic.DrawExtendGraph(x, 0, 1000, 700, ds);
+
 		}
+		//graphic.DrawExtendGraph(0, 0, 1000, 700, ds);
 		x++;
 
 		//graphic.DrawGraph(0 * 384, 0 * 216, dsBuf[0]);

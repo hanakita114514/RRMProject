@@ -27,6 +27,10 @@ private:
 	DeviceDx11(const DeviceDx11&);
 	DeviceDx11& operator=(const DeviceDx11&);
 
+	HRESULT DefaultInit(WindowControl& wc);
+	HRESULT AntiAliasingInit(WindowControl& wc);
+	HRESULT Direct2DInit(WindowControl& wc);
+
 public:
 	~DeviceDx11();
 

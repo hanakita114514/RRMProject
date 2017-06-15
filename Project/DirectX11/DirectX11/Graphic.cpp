@@ -799,6 +799,36 @@ Graphic::DrawExtendGraph(float lx, float ly, float rx, float ry, int handle)
 	//ds.vb = vBuffer;
 }
 
+void 
+Graphic::DrawExtendGraph(float lx, float ly, float rx, float ry, DrawingStructure ds)
+{
+	WindowControl& wc = WindowControl::Instance();
+	HRESULT result;
+	DeviceDx11& dev = DeviceDx11::Instance();
+
+	float width = rx - lx;
+	float height = ry - ly;
+
+	Vertex2D vertex[4];
+	//ID3D11Buffer* vBuffer = CreateBuffer2D(lx + width / 2, ly + height / 2, width, height);
+	CreateVertex2D(lx + width / 2, ly + height / 2, width, height, vertex, ds);
+
+	D3D11_MAPPED_SUBRESOURCE mappedsub = {};
+	result = dev.Context()->Map(ds.vb, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedsub);
+	memcpy(mappedsub.pData, vertex, sizeof(Vertex2D) * 4);
+	dev.Context()->Unmap(ds.vb, 0);
+
+
+	dev.Context()->IASetPrimitiveTopology((D3D11_PRIMITIVE_TOPOLOGY)ds.topology);
+	dev.Context()->VSSetShader(ds.vs, nullptr, 0);
+	dev.Context()->PSSetShader(ds.ps, nullptr, 0);
+	dev.Context()->IASetInputLayout(_layout);
+	dev.Context()->PSSetShaderResources(0, 1, &ds.texture);
+	dev.Context()->IASetVertexBuffers(0, 1, &ds.vb, &ds.stride, &ds.offset);
+
+	dev.Context()->Draw(ds.drawNum, 0);
+}
+
 void
 Graphic::DrawRectExtendGraph(float destLX, float destLY, float destRX, float destRY, int srcX, int srcY,
 	int width, int height, int graphHandle, bool transFlag, bool trunFlag)

@@ -76,6 +76,7 @@ public:
 	// rx ry 右下座標
 	// handle 画像ハンドル
 	void DrawExtendGraph(float lx, float ly, float rx, float ry, int handle);
+	void DrawExtendGraph(float lx, float ly, float rx, float ry, DrawingStructure ds);
 
 	// 画像の分割描画
 	void DrawRectGraph(float destX, float destY,int srcX, int srcY,

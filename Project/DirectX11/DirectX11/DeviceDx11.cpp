@@ -1,5 +1,8 @@
 #include "DeviceDx11.h"
 #include <d3d11.h>
+#include <d2d1.h>
+
+#pragma comment(lib, "d2d1.lib")
 
 DeviceDx11::DeviceDx11()
 {
@@ -14,13 +17,10 @@ DeviceDx11::~DeviceDx11()
 {
 }
 
-HRESULT 
-DeviceDx11::Init(WindowControl& wc)
+HRESULT
+DeviceDx11::DefaultInit(WindowControl& wc)
 {
-
-	HWND hwnd = wc.WindowHandle();
-	HRESULT result = S_OK;
-
+	HRESULT result;
 	//デバイスとスワップチェーンの作成
 	DXGI_SWAP_CHAIN_DESC sd = {};
 
@@ -39,7 +39,7 @@ DeviceDx11::Init(WindowControl& wc)
 	D3D_FEATURE_LEVEL* pFeatureLevel = nullptr;
 
 	//デバイスの作成とスワップチェインの生成
-	 result = D3D11CreateDeviceAndSwapChain(nullptr,	//既定のアダプタを使用
+	result = D3D11CreateDeviceAndSwapChain(nullptr,	//既定のアダプタを使用
 		D3D_DRIVER_TYPE_HARDWARE,	//ハードウェアアクセラレータを使用
 		nullptr,	//ソフトウェアラスタライザ
 		0,
@@ -52,94 +52,154 @@ DeviceDx11::Init(WindowControl& wc)
 		pFeatureLevel,
 		&_context);
 
-	 //アンチエイリアシングの設定
+	return S_OK;
+}
 
-	//_swapchain->Release();
+HRESULT
+DeviceDx11::AntiAliasingInit(WindowControl& wc)
+{
+	//アンチエイリアシングの設定
 
-	//result = D3D11CreateDevice(nullptr,
-	//	D3D_DRIVER_TYPE_HARDWARE,
-	//	nullptr,
-	//	0,
-	//	&pFeatureLevels,
-	//	1,
-	//	D3D11_SDK_VERSION,
-	//	&_device,
-	//	pFeatureLevel,
-	//	&_context);
+	HRESULT result;
+	D3D_FEATURE_LEVEL pFeatureLevels = D3D_FEATURE_LEVEL_11_0; //使用するフィーチャDirectX11
+	D3D_FEATURE_LEVEL* pFeatureLevel = nullptr;
+	HWND hwnd = wc.WindowHandle();
 
-	//if (FAILED(result))
-	//{
-	//	MessageBox(hwnd, "failed D3D11CreateDevice", "Error", MB_OK);
-	//	return result;
-	//}
+	result = D3D11CreateDevice(nullptr,
+		D3D_DRIVER_TYPE_HARDWARE,
+		nullptr,
+		0,
+		&pFeatureLevels,
+		1,
+		D3D11_SDK_VERSION,
+		&_device,
+		pFeatureLevel,
+		&_context);
 
-	////インターフェースをクエリ
-	//IDXGIDevice1* pDxgi = nullptr;
-	//result = _device->QueryInterface(__uuidof(IDXGIDevice1), (void**)&pDxgi);
-	//if (FAILED(result))
-	//{
-	//	MessageBox(hwnd, "failed QueryInterface", "Error", MB_OK);
-	//	return result;
-	//}
+	if (FAILED(result))
+	{
+		MessageBox(hwnd, "failed D3D11CreateDevice", "Error", MB_OK);
+		return result;
+	}
 
-	////Dxgiからアダプタを取得
-	//IDXGIAdapter* pAdapter = nullptr;
-	//result = pDxgi->GetAdapter(&pAdapter);
-	//if (FAILED(result))
-	//{
-	//	MessageBox(hwnd, "failed GetAdapter", "Error", MB_OK);
-	//	return result;
-	//}
+	//インターフェースをクエリ
+	IDXGIDevice1* pDxgi = nullptr;
+	result = _device->QueryInterface(__uuidof(IDXGIDevice1), (void**)&pDxgi);
+	if (FAILED(result))
+	{
+		MessageBox(hwnd, "failed QueryInterface", "Error", MB_OK);
+		return result;
+	}
 
-	////アダプタからファクトリを取得
-	//IDXGIFactory* pDxgiFactory = nullptr;
-	//pAdapter->GetParent(__uuidof(IDXGIFactory), (void**)&pDxgiFactory);
-	//if (pDxgiFactory == nullptr)
-	//{
-	//	MessageBox(hwnd, "failed GetFactory", "Error", MB_OK);
-	//	return result;
-	//}
+	//Dxgiからアダプタを取得
+	IDXGIAdapter* pAdapter = nullptr;
+	result = pDxgi->GetAdapter(&pAdapter);
+	if (FAILED(result))
+	{
+		MessageBox(hwnd, "failed GetAdapter", "Error", MB_OK);
+		return result;
+	}
 
-	////アンチエイリアスの設定
-	//DXGI_SAMPLE_DESC sampleDesc;
-	//for (int cnt = 0; cnt <= D3D11_MAX_MULTISAMPLE_SAMPLE_COUNT; ++cnt)
-	//{
-	//	UINT quality;
+	//アダプタからファクトリを取得
+	IDXGIFactory* pDxgiFactory = nullptr;
+	pAdapter->GetParent(__uuidof(IDXGIFactory), (void**)&pDxgiFactory);
+	if (pDxgiFactory == nullptr)
+	{
+		MessageBox(hwnd, "failed GetFactory", "Error", MB_OK);
+		return result;
+	}
 
-	//	result = _device->CheckMultisampleQualityLevels(DXGI_FORMAT_D24_UNORM_S8_UINT, cnt, &quality);
+	//アンチエイリアスの設定
+	DXGI_SAMPLE_DESC sampleDesc;
+	for (int cnt = 0; cnt <= D3D11_MAX_MULTISAMPLE_SAMPLE_COUNT; ++cnt)
+	{
+		UINT quality;
 
-	//	if (SUCCEEDED(result))
-	//	{
-	//		if (0 < quality)
-	//		{
-	//			sampleDesc.Count = cnt;
-	//			sampleDesc.Quality = quality - 1;
-	//		}
-	//	}
-	//}
+		result = _device->CheckMultisampleQualityLevels(DXGI_FORMAT_D24_UNORM_S8_UINT, cnt, &quality);
 
-	////スワップチェインパラメータ設定
-	//sd = {};
-	//sd.BufferCount = 1;
-	//sd.BufferDesc.Width = wc.WindowWidth();
-	//sd.BufferDesc.Height = wc.WindowHeight();
-	//sd.BufferDesc.RefreshRate.Numerator = 60;
-	//sd.BufferDesc.RefreshRate.Denominator = 1;
-	//sd.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-	//sd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
-	//sd.OutputWindow = hwnd;
-	//sd.SampleDesc = sampleDesc;
-	//sd.Windowed = TRUE;
-	//sd.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
-	//sd.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
+		if (SUCCEEDED(result))
+		{
+			if (0 < quality)
+			{
+				sampleDesc.Count = cnt;
+				sampleDesc.Quality = quality - 1;
+			}
+		}
+	}
 
-	//result = pDxgiFactory->CreateSwapChain(_device, &sd, &_swapchain);
-	//
-	//if (FAILED(result))
-	//{
-	//	MessageBox(hwnd, "failed createSwapChain", "Error", MB_OK);
-	//	return result;
-	//}
+	//スワップチェインパラメータ設定
+	DXGI_SWAP_CHAIN_DESC sd = {};
+	sd.BufferCount = 1;
+	sd.BufferDesc.Width = wc.WindowWidth();
+	sd.BufferDesc.Height = wc.WindowHeight();
+	sd.BufferDesc.RefreshRate.Numerator = 60;
+	sd.BufferDesc.RefreshRate.Denominator = 1;
+	sd.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+	sd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
+	sd.OutputWindow = hwnd;
+	sd.SampleDesc = sampleDesc;
+	sd.Windowed = TRUE;
+	sd.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
+	sd.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
+
+	result = pDxgiFactory->CreateSwapChain(_device, &sd, &_swapchain);
+	
+	if (FAILED(result))
+	{
+		MessageBox(hwnd, "failed createSwapChain", "Error", MB_OK);
+		return result;
+	}
+
+	return result;
+}
+
+HRESULT 
+DeviceDx11::Direct2DInit(WindowControl& wc)
+{
+	HRESULT result;
+
+#ifdef DEBUG
+	const UINT flags = D3D11_CREATE_DEVICE_BGRA_SUPPORT | D3D11_CREATE_DEVICE_DEBUG | D3D11_CREATE_DEVICE_SINGLETHREADED;
+#else
+	const UINT flags = D3D11_CREATE_DEVICE_BGRA_SUPPORT | D3D11_CREATE_DEVICE_SINGLETHREADED;
+
+#endif // DEBUG
+
+	//デバイスの生成
+	result = D3D11CreateDevice(nullptr,
+		D3D_DRIVER_TYPE_HARDWARE,
+		nullptr,
+		flags,
+		nullptr,
+		0,
+		D3D11_SDK_VERSION,
+		&_device,
+		nullptr,
+		&_context);
+
+	ID2D1Factory* pD2DFactory = nullptr;
+	result = D2D1CreateFactory(
+		D2D1_FACTORY_TYPE_SINGLE_THREADED,
+		&pD2DFactory
+	);
+
+
+	return result;
+}
+
+HRESULT 
+DeviceDx11::Init(WindowControl& wc)
+{
+
+	HWND hwnd = wc.WindowHandle();
+	HRESULT result = S_OK;
+
+
+	DefaultInit(wc);
+	//Direct2DInit(wc);
+
+	//AntiAliasingInit(wc);
+
 
 	//カリングの設定
 	D3D11_RASTERIZER_DESC raster_desc = {};

@@ -64,7 +64,7 @@ Renderer::Init()
 
 	//デプスステンシルビュー(DSV)を作成
 	//Zバッファ
-	D3D11_TEXTURE2D_DESC descDepth;
+	D3D11_TEXTURE2D_DESC descDepth = {};
 	descDepth.Width = wc.WindowWidth();
 	descDepth.Height = wc.WindowHeight();
 	descDepth.MipLevels = 1;
@@ -83,7 +83,14 @@ Renderer::Init()
 		return false;
 	}
 
-	result = dev.Device()->CreateDepthStencilView(_depthTexture2D, nullptr, &_dsv);
+	//深度/ステンシルビューの作成
+	D3D11_DEPTH_STENCIL_VIEW_DESC descDSV;
+	descDSV.Format = descDepth.Format;
+	descDSV.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
+	descDSV.Flags = 0;
+	descDSV.Texture2D.MipSlice = 0;
+
+	result = dev.Device()->CreateDepthStencilView(_depthTexture2D, &descDSV, &_dsv);
 	if (FAILED(result))
 	{
 		return false;
