@@ -4,9 +4,9 @@
 #include "MapManager.h"
 #include <math.h>
 #include "EffectManager.h"
+#include "Mathematics.h"
 
 const float GRAVITY = 0.75f;
-const float RAD = 3.141592 / 180;
 
 Egg::Egg(int* handle, const Position& pos)
 {
@@ -80,7 +80,6 @@ Egg::AliveUpdate()
 
 	(this->*_state)();
 
-	//Jump();
 	Move();
 
 	_vel.x = 0;
@@ -88,7 +87,7 @@ Egg::AliveUpdate()
 	if (_hp.GetHitPoint() <= 0)
 	{
 		_update = &Egg::DyingUpdate;
-		EffectManager::Instance().Create(EffectType::erasure, _rc.Center(), Vector2(1.5f, 1.5f), 1.3f, true);
+		EffectManager::Instance().Create(EffectType::erasure, _rc.Center(), Vector2(1.5f, 1.5f), 1.3f);
 		_isAlive = false;
 	}
 }
@@ -113,7 +112,7 @@ void Egg::Draw(const Vector2& offset)
 		drawPos.y = _rc.pos.y - offset.y;
 
 		_hpbar.Draw(Position(drawPos.x + 16, drawPos.y - 16), _hp);
-		DxLib::DrawGraph(drawPos.x, drawPos.y, _img[0], true);
+		DxLib::DrawGraph((int)drawPos.x, (int)drawPos.y, _img[0], true);
 	}
 }
 
@@ -229,26 +228,6 @@ void Egg::ShotAngleCalc(Vector2 shootPos)
 	float normal = sqrt(vec.x * vec.x + vec.y * vec.y);
 	
 	_shootVec = Vector2(vec.x / normal, vec.y / normal);
-}
-
-void Egg::Hit(Player* other)
-{
-}
-
-void Egg::Hit(Block* other)
-{
-	_rc.SetBottom(other->GetRect().Top());
-	_hitGround = true;
-	_vel.y = 0;
-}
-
-void
-Egg::Hit(Bullet* other)
-{
-	if (other->GetObjType() == ObjectType::player)
-	{
-		_hp.Damage(other->GetPower());
-	}
 }
 
 void 

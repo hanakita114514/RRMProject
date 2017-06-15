@@ -30,5 +30,5 @@ void Block::Draw(const Vector2& offset)
 	drawPos.x = _rc.pos.x - offset.x;
 	drawPos.y = _rc.pos.y - offset.y;
 
-	DxLib::DrawGraph(drawPos.x, drawPos.y, _handle, true);
+	DxLib::DrawGraph((int)drawPos.x, (int)drawPos.y, _handle, true);
 }

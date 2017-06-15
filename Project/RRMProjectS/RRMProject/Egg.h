@@ -60,10 +60,6 @@ public:
 
 	void ShotAngleCalc(Vector2 shootPos);
 
-	void Hit(Player* other);
-	void Hit(Block* other);
-	void Hit(Bullet* other);
-
 	//Žã‘Ì‰»
 	void Weakening();
 

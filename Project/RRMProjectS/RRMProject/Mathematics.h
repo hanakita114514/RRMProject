@@ -1,4 +1,4 @@
 #pragma once
 
-const float RAD = 3.141592 / 180;
+const float RAD = 3.141592f / 180;
 

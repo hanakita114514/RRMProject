@@ -1,7 +1,7 @@
 #pragma once
 #include "Vector2.h"
-class Rect;
-class Circle;
+#include "Rect.h"
+#include "Circle.h"
 class Player;
 class Enemy;
 

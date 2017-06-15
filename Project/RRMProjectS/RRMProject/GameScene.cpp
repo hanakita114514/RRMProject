@@ -40,13 +40,14 @@ GameScene::~GameScene()
 {
 	delete _col;
 	BulletManager::Instance().Delete();
+	EffectManager::Instance().Delete();
 }
 
 bool GameScene::Update()
 {
 	//çXêV--------------------------------------------------------------------
 
-	if (!_sceneChangeFlag)
+	if (!_sceneChangeFlag && Fade::Instance().IsFadeOutEnd())
 	{
 		if (Fade::Instance().IsWait())
 		{

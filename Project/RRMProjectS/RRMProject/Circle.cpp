@@ -4,11 +4,11 @@
 void
 Circle::DrawCircle()
 {
-	DxLib::DrawCircle(pos.x, pos.y, radius, 0xffffffff, false);
+	DxLib::DrawCircle((int)pos.x, (int)pos.y, (int)radius, 0xffffffff, false);
 }
 
 void
 Circle::DrawGraph(int handle)
 {
-	DxLib::DrawGraph(pos.x - radius, pos.y - radius, handle, true);
+	DxLib::DrawGraph((int)(pos.x - radius), (int)(pos.y - radius), handle, true);
 }

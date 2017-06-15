@@ -1,6 +1,5 @@
 #include "MapManager.h"
 #include "BackgroundRendar.h"
-#include "MapRendar.h"
 #include "EnemyFactory.h"
 #include "EnemyManager.h"
 #include "GameMain.h"
@@ -22,10 +21,9 @@ MapManager::MapManager()
 	//ファイル名を各クラスに渡しておく
 	for (int i = 0; i < (int)Stage::stageMax; i++)
 	{
-		_map[i] = new MapRendar(_fileName[i].mapName);
-		_bg[i] = new BackgroundRendar(_fileName[i].backGroundName);
+		_map[i].Initialize(_fileName[i].mapName);
+		_bgErr = _bg[i].Initialize(_fileName[i].backGroundName);
 	}
-
 
 	_stageId = 0;
 }
@@ -33,41 +31,34 @@ MapManager::MapManager()
 MapManager::~MapManager()
 {
 	Delete();
-
-	delete[] _map;
-	delete[] _bg;
 }
 
 bool MapManager::Initialize()
 {
-	_mapErr = _map[_stageId]->MapLoad();
-	_bgErr = _bg[_stageId]->Initialize();
+	_mapErr = _map[_stageId].MapLoad();
 	EnemyManager::Instance().Create(EnemyType::egg, Position(1214, 0));
-
 
 	if (!_mapErr|| !_bgErr)	//マップもしくは背景で失敗したか？
 	{
 		return false;
 	}
-
 	return true;
 }
 
 void MapManager::Finalize()
 {
-		delete[] _map;
-		delete[] _bg;
+
 }
 
 void MapManager::Update()
 {
-	_list = _map[_stageId]->GetBlockList();
+	_list = _map[_stageId].GetBlockList();
 }
 
 void MapManager::Draw(const Vector2& offset)
 {
-	_bg[_stageId]->Draw();
-	_map[_stageId]->MapDraw(offset);
+	_bg[_stageId].Draw();
+	_map[_stageId].MapDraw(offset);
 }
 
 void 

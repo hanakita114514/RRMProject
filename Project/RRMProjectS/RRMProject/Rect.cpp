@@ -10,5 +10,5 @@ Rect::DrawBox()
 void 
 Rect::DrawGraph(int handle)
 {
-	DxLib::DrawGraph(pos.x, pos.y, handle, true);
+	DxLib::DrawGraph((int)pos.x, (int)pos.y, handle, true);
 }

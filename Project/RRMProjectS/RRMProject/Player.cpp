@@ -13,6 +13,8 @@
 const float GRAVITY = 0.75f;
 const float jump_power = 20;
 const float fall_coefficient = 0.45f;
+const int slow_second = 60;					//éûä‘Ç™íxÇ≠Ç»ÇÈïbêî
+const int stop_second = 30;					//éûä‘Çé~ÇﬂÇÈïbêî
 
 Player::Player(int padType, Camera& camera) 
 	: _input(padType), _hp(100), _pp(3), _camera(camera)
@@ -221,7 +223,7 @@ Player::AliveUpdate()
 	//ÉpÉäÉB
 	if (_input.Parry())
 	{
-		_sd.TheWorld(30.0f);
+		_sd.TheWorld(stop_second);
 		_camera.Quake(Vector2(0, 7));
 	}
 
@@ -315,7 +317,7 @@ Player::Draw()
 		break;
 
 	case Player::PlayerState::neutral:
-		DxLib::DrawGraph(drawPos.x, drawPos.y, _handleMap[PlayerState::neutral], true);
+		DxLib::DrawGraph((int)drawPos.x, (int)drawPos.y, _handleMap[PlayerState::neutral], true);
 		break;
 
 	case Player::PlayerState::walk:
@@ -325,18 +327,19 @@ Player::Draw()
 		break;
 
 	case Player::PlayerState::shoot:
-		DxLib::DrawGraph(drawPos.x, drawPos.y, _handleMap[PlayerState::attack], true);
+		DxLib::DrawGraph((int)drawPos.x, (int)drawPos.y, _handleMap[PlayerState::attack], true);
 		break;
 
 	case Player::PlayerState::avoidance:
-		DxLib::DrawGraph(drawPos.x, drawPos.y, _handleMap[PlayerState::avoidance], true);
+		DxLib::DrawGraph((int)drawPos.x, (int)drawPos.y, _handleMap[PlayerState::avoidance], true);
 		break;
 
 	default:
 		break;
 	}
 
-	DxLib::DrawLine(_rc.Left() + (_rc.w / 2), _rc.Top(), _rc.Left() + (_rc.w / 2), _rc.Bottom(), 0xff0000, false);
+	DxLib::DrawLine((int)(_rc.Left() + (_rc.w / 2)), (int)(_rc.Top()),
+					(int)(_rc.Left() + (_rc.w / 2)), (int)(_rc.Bottom()), 0xff0000, false);
 
 #ifdef DEBUG
 	_rc.DrawBox();
@@ -478,7 +481,7 @@ void Player::Hit(Bullet* other)
 void 
 Player::SlowMotion()
 {
-	_sd.SlowMotion(60.0f);
+	_sd.SlowMotion(slow_second);
 }
 
 void

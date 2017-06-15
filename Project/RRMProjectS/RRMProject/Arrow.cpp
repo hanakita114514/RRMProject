@@ -17,7 +17,7 @@ Arrow::~Arrow()
 
 void Arrow::Draw()
 {
-	DxLib::DrawGraph(_pos.x, _pos.y, _arrowHandle, true);
+	DxLib::DrawGraph((int)_pos.x, (int)_pos.y, _arrowHandle, true);
 }
 
 void Arrow::SetPos(Position position)

@@ -1,6 +1,6 @@
 #include "Comet.h"
 #include "BulletManager.h"
-
+#include "Mathematics.h"
 
 Comet::Comet()
 {
@@ -13,8 +13,6 @@ Comet::~Comet()
 
 void Comet::Create(Vector2 vec, Vector2 pos, Object *owner)
 {
-	const float PI = 3.141592;
-	const float RAD = PI / 180;
 	const int BULLET_MAX = 12;
 
 	_pos = pos;

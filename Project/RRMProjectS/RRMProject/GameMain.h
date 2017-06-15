@@ -4,7 +4,6 @@
 class Scene;
 class Player;
 class Collision;
-class Rect;
 class Block;
 
 class GameMain

@@ -1,9 +1,8 @@
 #include "ShootingStar.h"
 #include "BulletManager.h"
+#include "Mathematics.h"
 const float OFFSET = 100;
 const float RADIUS = 64;
-const float PI = 3.141592;
-const float RAD = PI / 180;
 int stt = 0;
 const int STT_MAX = 5;
 

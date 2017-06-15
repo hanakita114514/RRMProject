@@ -3,7 +3,17 @@
 #include <DxLib.h>
 #include <string.h>
 
-MapRendar::MapRendar(const char* mapFilePath)
+MapRendar::MapRendar()
+{
+}
+
+MapRendar::~MapRendar()
+{
+
+}
+
+void
+MapRendar::Initialize(const char* mapFilePath)
 {
 	DxLib::LoadDivGraph("Resource/img/MapChip1.png", MAP_IMAGE_ALL_NUM, MAP_IMAGE_X_NUM, MAP_IMAGE_Y_NUM, 32, 32, _mapImage);
 
@@ -11,12 +21,8 @@ MapRendar::MapRendar(const char* mapFilePath)
 	{
 		_checkArray[i] = MAP_IMAGE_X_NUM * i;
 	}
+
 	_filePath = mapFilePath;
-}
-
-MapRendar::~MapRendar()
-{
-
 }
 
 bool MapRendar::MapLoad()

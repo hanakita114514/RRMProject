@@ -62,8 +62,10 @@ private:
 	int _checkNum;
 
 public:
-	MapRendar(const char* mapFilePath);
+	MapRendar();
 	~MapRendar();
+
+	void Initialize(const char* mapFilePath);
 
 	bool MapLoad();
 	void MapDraw(const Vector2& offset);

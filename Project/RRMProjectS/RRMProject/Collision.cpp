@@ -461,7 +461,7 @@ Collision::LinerInterpolation(Rect& rect, Vector2& velocityA, Circle& circle, Ve
 		return false;
 	}
 
-	float time = 0.1;
+	float time = 0.1f;
 	Vector2 nextPosA, nextPosB;
 	nextPosA = rect.pos;
 	nextPosB = circle.center;

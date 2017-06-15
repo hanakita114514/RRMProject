@@ -1,10 +1,9 @@
 #pragma once
 #include "Block.h"
 #include <vector>
+#include "MapRendar.h"
+#include "BackgroundRendar.h"
 
-
-class MapRendar;
-class BackgroundRendar;
 class EnemyFactory;
 class Enemy;
 
@@ -26,8 +25,8 @@ enum class Stage
 class MapManager
 {
 private:
-	MapRendar* _map[(int)Stage::stageMax];
-	BackgroundRendar* _bg[(int)Stage::stageMax];
+	MapRendar _map[(int)Stage::stageMax];
+	BackgroundRendar _bg[(int)Stage::stageMax];
 	EnemyFactory* _fac;
 	Enemy* newEnemy;
 
@@ -61,7 +60,7 @@ public:
 
 	EnemyFactory* GetEnemyFact() { return _fac; }
 	std::vector<Block*>& GetList() { return _list; }
-	MapRendar* GetMap(int id) { return _map[id ]; }
+	MapRendar* GetMap(int id) { return &_map[id ]; }
 	int GetStageId()			{ return _stageId; }
 
 	bool StageSelect(int stageId);

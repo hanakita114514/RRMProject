@@ -61,14 +61,14 @@ inline
 Vector2 Normalize(Vector2 v)
 {
 	double normal = sqrt(v.x * v.x + v.y * v.y);
-	return Vector2(v.x / normal, v.y / normal);
+	return Vector2((float)(v.x / normal),(float)( v.y / normal));
 }
 inline
 Vector2 Normalize(Vector2 v1, Vector2 v2)
 {
 	Vector2 vec = v1 - v2;
 	double normal = sqrt(vec.x * vec.x + vec.y * vec.y);
-	Vector2 vel = Vector2(vec.x / normal, vec.y / normal);
+	Vector2 vel = Vector2((float)(vec.x / normal), (float)(vec.y / normal));
 
 	return vel;
 }
@@ -80,7 +80,7 @@ float dot(Vector2 v1, Vector2 v2)
 }
 
 inline
-double cross(Vector2 v1, Vector2 v2)
+float cross(Vector2 v1, Vector2 v2)
 {
 	return (v1.x * v2.y - v1.y * v2.x);
 }

@@ -19,7 +19,7 @@ GeneralEffect::GeneralEffect(int handle, const Position& pos,
 	_animUV.resize(ROW_NUM * COLUMN_NUM);
 	for (int i = 0; i < _animUV.size(); i++)
 	{
-		_animUV[i] = Vector2(EFFECT_SIZE_W * (i % COLUMN_NUM), EFFECT_SIZE_H * (i / COLUMN_NUM));
+		_animUV[i] = Vector2((float)(EFFECT_SIZE_W * (i % COLUMN_NUM)), (float)(EFFECT_SIZE_H * (i / COLUMN_NUM)));
 	}
 
 	if (isLoop)
@@ -40,7 +40,7 @@ GeneralEffect::~GeneralEffect()
 int 
 GeneralEffect::AnimUV()
 {
-	int animFrame = (int)_frame / _speed;
+	int animFrame = (int)(_frame / _speed);
 
 	_uv = _animUV[animFrame % EFFECT_NUM];
 
@@ -85,5 +85,5 @@ GeneralEffect::Draw(const Vector2& offset)
 	//	EFFECT_SIZE_W, EFFECT_SIZE_H, _handle, true, false);
 
 	DxLib::DrawRectExtendGraphF(drawPos.x, drawPos.y, drawPos.x + EFFECT_SIZE_W * _size.x, drawPos.y + EFFECT_SIZE_H * _size.y,
-		_uv.x, _uv.y, EFFECT_SIZE_W, EFFECT_SIZE_H, _handle, true);
+		(int)_uv.x, (int)_uv.y, (int)EFFECT_SIZE_W, (int)EFFECT_SIZE_H, _handle, true);
 }

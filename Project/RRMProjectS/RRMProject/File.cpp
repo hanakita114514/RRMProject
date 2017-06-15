@@ -75,7 +75,7 @@ void File::FileLoad(FMFHEADER& header, vector<vector<unsigned int>>& array)
 
 	array.resize(header.dwHeight);
 
-	for (i = 0; i < header.dwHeight; ++i)
+	for (i = 0; i < height; ++i)
 	{
 		array[i].resize(header.dwWidth);
 	}

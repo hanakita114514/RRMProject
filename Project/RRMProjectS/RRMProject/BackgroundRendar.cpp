@@ -4,9 +4,8 @@
 #include "common.h"
 #include <iostream>
 
-BackgroundRendar::BackgroundRendar(const char* imageFilePath)
+BackgroundRendar::BackgroundRendar()
 {
-	_filePath = imageFilePath;
 }
 
 
@@ -14,8 +13,11 @@ BackgroundRendar::~BackgroundRendar()
 {
 }
 
-bool BackgroundRendar::Initialize()
+bool BackgroundRendar::Initialize(const char* imageFilePath)
 {
+
+	_filePath = imageFilePath;
+
 	_bgImage = DxLib::LoadGraph(_filePath);
 	if (_bgImage == -1)		//ÉGÉâÅ[ÇµÇΩÇ©ÅH
 	{

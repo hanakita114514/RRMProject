@@ -1,6 +1,6 @@
 #include "Enemy.h"
 #include "Block.h"
-
+#include "Bullet.h"
 
 Enemy::Enemy() : _hp(50.0f)
 {
@@ -42,5 +42,9 @@ Enemy::Hit(Player* other)
 void
 Enemy::Hit(Bullet* other)
 {
+	if (other->GetObjType() == ObjectType::player)
+	{
+		_hp.Damage((int)other->GetPower());
+	}
 
 }

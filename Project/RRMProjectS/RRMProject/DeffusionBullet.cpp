@@ -4,7 +4,7 @@
 #include <time.h>
 #include "GameTime.h"
 
-const int BULLET_SPEED = 5.0f;
+const float BULLET_SPEED = 5.0f;
 const float REDUCE_LIFE = 1.0f;
 
 DeffusionBullet::DeffusionBullet(int handle)
@@ -63,9 +63,9 @@ DeffusionBullet::Deffusion()
 	std::mt19937 mt(rnd());
 	std::uniform_int_distribution<> rand(-30, 30);
 
-	_randVec.y = rand(mt);
+	_randVec.y = (float)rand(mt);
 	std::uniform_int_distribution<> xrand(0, 30);
-	_randVec.x = xrand(mt);
+	_randVec.x = (float)xrand(mt);
 
 	_randVec += _circle.pos;
 	_vel = Normalize(_randVec,_circle.pos);

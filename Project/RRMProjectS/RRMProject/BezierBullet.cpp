@@ -54,7 +54,7 @@ void BezierBullet::Draw(const Vector2& offset)
 
 void BezierBullet::BezierCurve()
 {
-	_t += 0.01;
+	_t += 0.01f;
 	//時間経過による目標点の計算-----------------------------------------
 	_nextPos.x = ((1 - _t) * (1 - _t) * (1 - _t) * _etyPoint.x) +
 		(3 * (1 - _t) * (1 - _t) * _t * _ctlPoint.x) +

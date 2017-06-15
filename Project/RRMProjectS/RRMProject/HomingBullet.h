@@ -2,7 +2,7 @@
 #include "Bullet.h"
 #include <memory>
 
-const float PI = 3.14;
+const float PI = 3.14f;
 class HomingBullet : public Bullet
 {
 private:

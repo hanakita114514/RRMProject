@@ -6,10 +6,10 @@ private:
 	const char* _filePath;				//画像ファイルのパス
 
 public:
-	BackgroundRendar(const char* imageFilePath);
+	BackgroundRendar();
 	~BackgroundRendar();
 
-	bool Initialize();
+	bool Initialize(const char* imageFilePath);
 	void Draw();					//描画
 };
 
