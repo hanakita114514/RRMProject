@@ -501,7 +501,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nC
 
 	int effectHandle = graphic.LoadGraph("Down.png");
 
-	DrawingStructure ds = graphic.CreatePolygon("rei.jpg");
+	DrawingStructure ds = graphic.CreatePolygon("bullet.png");
 
 	DrawingStructure dsBuf[25];
 	graphic.LoadDivGraph("rei.jpg", 25, 5, 5, 384, 216, dsBuf);
@@ -560,9 +560,9 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nC
 		Renderer::Instance().SetZBuffer(false);
 
 
-		for (int i = 0; i < 300; i++)
+		for (int i = 0; i < 5000; i++)
 		{
-			graphic.DrawGraph(x, i, ds);
+			graphic.DrawGraph(x + i, i, ds);
 		}
 		x++;
 
@@ -572,19 +572,19 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nC
 		//GraphList::Instance().Add(graphic.DrawGraph(0, 0, handle));
 
 		//Ô
-		gg.DrawBox(50, 50, 100, 100, GetColor(255,0,0), true);
+		//gg.DrawBox(50, 50, 100, 100, GetColor(255,0,0), true);
 		//—Î
-		gg.DrawBox(100, 50, 150, 100, GetColor(0, 255, 0), true);
+		//gg.DrawBox(100, 50, 150, 100, GetColor(0, 255, 0), true);
 		//Â
-		gg.DrawBox(150, 50, 200, 100, GetColor(0, 0, 255), true);
+		//gg.DrawBox(150, 50, 200, 100, GetColor(0, 0, 255), true);
 		//”’
-		gg.DrawBox(200, 50, 250, 100, GetColor(255, 255, 255), true);
+		//gg.DrawBox(200, 50, 250, 100, GetColor(255, 255, 255), true);
 
 		//gg.DrawLine(0, 100, 200, 100, GetColor(255, 0, 0));
 
-		gg.DrawPoint(50, 200, GetColor(255, 255, 0));
+		//gg.DrawPoint(50, 200, GetColor(255, 255, 0));
 
-		gg.DrawLine(50, 50, 100, 50, 0xffffffff);
+		//gg.DrawLine(50, 50, 100, 50, 0xffffffff);
 
 		//graphic.DrawGraph(0, 0, effectHandle);
 

@@ -5,6 +5,7 @@
 #include "DeviceDx11.h"
 #include "WindowControl.h"
 #include "GraphList.h"
+#include "Renderer.h"
 
 Graphic::Graphic()
 {
@@ -468,7 +469,7 @@ Graphic::LoadGraph(std::string filePath)
 
 	handle = (int)tex;
 
-	if (result != S_OK)
+	if (FAILED(result))
 	{
 		handle = -1;
 	}
@@ -648,7 +649,6 @@ Graphic::DrawGraph(float x, float y, DrawingStructure& ds)
 	dev.Context()->IASetVertexBuffers(0, 1, &ds.vb, &ds.stride, &ds.offset);
 
 	dev.Context()->Draw(ds.drawNum, 0);
-
 }
 
 
