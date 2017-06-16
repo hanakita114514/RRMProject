@@ -67,12 +67,19 @@ namespace RRMLib
 	//‰æ‘œ“Ç‚İ‚İ
 	int LoadGraph(std::string filePath);
 
+	//‰æ‘œ‚Ì•ªŠ„“Ç‚İ‚İ
+	int LoadDivGraph(std::string filePath, int allNum, int xNum, int yNum, int width, int height, int* handleBuf);
+
+	//‰æ‘œ‚Ìíœ
+	void DeleteGraph(int handle);
+
 	//------------------------------------------------------------------------------------
 	//•`‰æŒn
 	//------------------------------------------------------------------------------------
 	//‰æ‘œ‚Ì•`‰æ
 	//¶ã‚©‚ç•`‰æ‚·‚é
 	void DrawGraph(int x, int y, int graphHandle);
+	//void DrawGraph(int x, int y, DrawingStructure drawData);
 
 	//‰æ‘œ‚Ì‹éŒ`•`‰æ
 	void DrawRectGraph(float destX, float destY, int srcX, int srcY,
@@ -102,9 +109,6 @@ namespace RRMLib
 
 	//Fî•ñ‚ğæ“¾‚·‚é
 	unsigned int GetColor(unsigned char red, unsigned char green, unsigned char blue);
-
-	//ƒŠƒXƒg‚ÉŠi”[‚³‚ê‚½ƒf[ƒ^‚ğ•`‰æ‚·‚é
-	void DrawGraphList();
 
 	//------------------------------------------------------------------------------------
 	//ƒuƒŒƒ“ƒhŠÖ”

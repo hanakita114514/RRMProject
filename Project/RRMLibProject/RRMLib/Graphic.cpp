@@ -5,6 +5,7 @@
 #include "DeviceDx11.h"
 #include "WindowControl.h"
 #include "GraphList.h"
+#include "Renderer.h"
 
 Graphic::Graphic()
 {
@@ -448,7 +449,7 @@ Graphic::CreateShader(ID3D11VertexShader*& vs2d, ID3D11VertexShader*& vs3d, ID3D
 }
 
 int 
-Graphic::LoadGraph(std::string filePath)
+Graphic::LoadTexture(std::string filePath)
 {
 	
 	HRESULT result;
@@ -468,7 +469,7 @@ Graphic::LoadGraph(std::string filePath)
 
 	handle = (int)tex;
 
-	if (result != S_OK)
+	if (FAILED(result))
 	{
 		handle = -1;
 	}
@@ -486,13 +487,13 @@ Graphic::LoadGraph(std::string filePath)
 
 HRESULT 
 Graphic::LoadDivGraph(std::string filePath, int allNum,
-	int xNum, int yNum, int width, int height, DrawingStructure* handleBuf)
+	int xNum, int yNum, int width, int height, int* handleBuf)
 {   
 	HRESULT result = S_OK;
 
 	DeviceDx11& dev = DeviceDx11::Instance();
 
-	int handle = LoadGraph(filePath);
+	int handle = LoadTexture(filePath);
 
 	//テクスチャの読み込み
 	ID3D11ShaderResourceView* tex = (ID3D11ShaderResourceView*)handle;
@@ -503,27 +504,31 @@ Graphic::LoadDivGraph(std::string filePath, int allNum,
 	{
 		XMFLOAT3 luv;
 		luv.x = (float)((i % xNum) / (float)xNum);
-		luv.y = (float)((i / yNum) / (float)yNum);
+		luv.y = (float)((i / xNum) / (float)yNum);
 		XMFLOAT3 ruv;
 		ruv.x = (float)(((i % xNum) + 1) / (float)xNum);
-		ruv.y = (float)(((i / yNum) + 1) / (float)yNum);
+		ruv.y = (float)(((i / xNum) + 1) / (float)yNum);
+
+		DrawingStructure* ds = new DrawingStructure();
 
 		//初期化
-		handleBuf[i] = initDS;
+		//handleBuf[i] = initDS;
 
-		handleBuf[i].vs = _vs2d;
-		handleBuf[i].ps = _ps;
-		handleBuf[i].layout = _layout;
-		handleBuf[i].texture = tex;
-		handleBuf[i].texSlot = 1;
-		handleBuf[i].offset = 0;
-		handleBuf[i].stride = sizeof(Vertex2D);
-		handleBuf[i].topology = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP;
-		handleBuf[i].drawNum = 4;
-		handleBuf[i].colorBuffer = nullptr;
-		handleBuf[i].vb = CreateBuffer2D(0, 0, width, height, luv.x, luv.y, ruv.x, ruv.y, handleBuf[i]);
-		handleBuf[i].vertex.height = height;
-		handleBuf[i].vertex.width = width;
+
+		ds->vs = _vs2d;
+		ds->ps = _ps;
+		ds->layout = _layout;
+		ds->texture = tex;
+		ds->texSlot = 1;
+		ds->offset = 0;
+		ds->stride = sizeof(Vertex2D);
+		ds->topology = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP;
+		ds->drawNum = 4;
+		ds->colorBuffer = nullptr;
+		ds->vb = CreateBuffer2D(0, 0, width, height, luv.x, luv.y, ruv.x, ruv.y, *ds);
+		ds->vertex.height = height;
+		ds->vertex.width = width;
+		handleBuf[i] = (int)ds;
 	}
 
 	TexData data;
@@ -553,127 +558,233 @@ Graphic::CreatePolygon()
 	return ds;
 }
 
-DrawingStructure
-Graphic::CreatePolygon(std::string filePath)
+int
+Graphic::LoadGraph(std::string filePath)
 {
 	HRESULT result = S_OK;
 	DeviceDx11& dev = DeviceDx11::Instance();
 
-	DrawingStructure ds = {};
-	ds.drawNum = 4;
-	ds.vs = _vs2d;
-	ds.ps = _ps;
-	ds.topology = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP;
-	ds.layout = _layout;
-	ds.vb = CreateBuffer2DWrite(0, 0, 1000, 1000, ds);
-	ds.stride = sizeof(Vertex2D);
-	ds.offset = 0;
-	ds.dynamicFlag = true;
+	DrawingStructure* ds = new DrawingStructure();
+	ds->drawNum = 4;
+	ds->vs = _vs2d;
+	ds->ps = _ps;
+	ds->topology = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP;
+	ds->layout = _layout;
+	ds->vb = CreateBuffer2DWrite(0, 0, 1000, 1000, *ds);
+	ds->stride = sizeof(Vertex2D);
+	ds->offset = 0;
+	ds->dynamicFlag = true;
 
-	int handle = LoadGraph(filePath);
+	int handle = LoadTexture(filePath);
 	ID3D11ShaderResourceView* texture = (ID3D11ShaderResourceView*)handle;
-	ds.texSlot = 1;
-	ds.texture = texture;
+	ds->texSlot = 1;
+	ds->texture = texture;
 
 	TexData t = _texData[handle];
-	ds.vertex.width = t.width;
-	ds.vertex.height = t.height;
+	ds->vertex.width = t.width;
+	ds->vertex.height = t.height;
 
-	return ds;
+	return (int)ds;
 }
 
+
+//void
+//Graphic::DrawGraph(float x, float y, int handle)
+//{
+//	ID3D11ShaderResourceView* texture = (ID3D11ShaderResourceView*)handle;
+//	TexData t = _texData[handle];
+//	WindowControl& wc = WindowControl::Instance();
+//	//ID3D11Buffer* vBuffer = CreateBuffer2D(x, y, t.width, t.height);
+//	ID3D11Buffer* vBuffer = CreateBuffer2D(x + t.width / 2, y + t.height / 2, t.width, t.height);
+//
+//	DeviceDx11& dev = DeviceDx11::Instance();
+//	unsigned int offset = 0;
+//	unsigned int stride = sizeof(Vertex2D);
+//
+//	//描画構造体に格納
+//	//DrawingStructure ds = {};
+//	//ds.vs = _vs2d;
+//	//ds.ps = _ps;
+//	//ds.topology = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP;
+//	//ds.layout = _layout;
+//	//ds.texSlot = 1;
+//	//ds.texture = texture;
+//	//ds.stride = sizeof(Vertex2D);
+//	//ds.offset = 0;
+//	//ds.drawNum = 4;
+//	//ds.vb = vBuffer;
+//
+//	//セッターはひとまとめにする
+//	dev.Context()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+//	dev.Context()->VSSetShader(_vs2d, nullptr, 0);
+//	dev.Context()->PSSetShader(_ps, nullptr, 0);
+//	dev.Context()->IASetInputLayout(_layout);
+//	dev.Context()->PSSetShaderResources(0, 1, &texture);
+//	dev.Context()->IASetVertexBuffers(0, 1, &vBuffer, &stride, &offset);
+//
+//	dev.Context()->Draw(4, 0);
+//	
+//	//使用した後リリース
+//	vBuffer->Release();
+//
+//}
 
 void
 Graphic::DrawGraph(float x, float y, int handle)
 {
-	ID3D11ShaderResourceView* texture = (ID3D11ShaderResourceView*)handle;
-	TexData t = _texData[handle];
-	WindowControl& wc = WindowControl::Instance();
-	//ID3D11Buffer* vBuffer = CreateBuffer2D(x, y, t.width, t.height);
-	ID3D11Buffer* vBuffer = CreateBuffer2D(x + t.width / 2, y + t.height / 2, t.width, t.height);
-
-	DeviceDx11& dev = DeviceDx11::Instance();
-	unsigned int offset = 0;
-	unsigned int stride = sizeof(Vertex2D);
-
-	//描画構造体に格納
-	//DrawingStructure ds = {};
-	//ds.vs = _vs2d;
-	//ds.ps = _ps;
-	//ds.topology = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP;
-	//ds.layout = _layout;
-	//ds.texSlot = 1;
-	//ds.texture = texture;
-	//ds.stride = sizeof(Vertex2D);
-	//ds.offset = 0;
-	//ds.drawNum = 4;
-	//ds.vb = vBuffer;
-
-	//セッターはひとまとめにする
-	dev.Context()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
-	dev.Context()->VSSetShader(_vs2d, nullptr, 0);
-	dev.Context()->PSSetShader(_ps, nullptr, 0);
-	dev.Context()->IASetInputLayout(_layout);
-	dev.Context()->PSSetShaderResources(0, 1, &texture);
-	dev.Context()->IASetVertexBuffers(0, 1, &vBuffer, &stride, &offset);
-
-	dev.Context()->Draw(4, 0);
-	
-	//使用した後リリース
-	vBuffer->Release();
-
-}
-
-void
-Graphic::DrawGraph(float x, float y, DrawingStructure& ds)
-{
 	HRESULT result = S_OK;
 	DeviceDx11& dev = DeviceDx11::Instance();
 
+	DrawingStructure* ds = (DrawingStructure*)handle;
+
 	Vertex2D vertex[4];
-	CreateVertex2D(x + ds.vertex.width / 2, y + ds.vertex.height / 2, ds.vertex.width, ds.vertex.height, vertex, ds);
+	CreateVertex2D(x + ds->vertex.width / 2, y + ds->vertex.height / 2, ds->vertex.width, ds->vertex.height, vertex, *ds);
 
 	WindowControl& wc = WindowControl::Instance();	
 
 	D3D11_MAPPED_SUBRESOURCE mappedsub = {};
-	result = dev.Context()->Map(ds.vb, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedsub);
+	result = dev.Context()->Map(ds->vb, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedsub);
 	memcpy(mappedsub.pData, vertex, sizeof(Vertex2D) * 4);
-	dev.Context()->Unmap(ds.vb, 0);
+	dev.Context()->Unmap(ds->vb, 0);
 
-	dev.Context()->IASetPrimitiveTopology((D3D11_PRIMITIVE_TOPOLOGY)ds.topology);
-	dev.Context()->VSSetShader(ds.vs, nullptr, 0);
-	dev.Context()->PSSetShader(ds.ps, nullptr, 0);
-	dev.Context()->IASetInputLayout(ds.layout);
-	dev.Context()->PSSetShaderResources(0, ds.texSlot, &ds.texture);
-	dev.Context()->IASetVertexBuffers(0, 1, &ds.vb, &ds.stride, &ds.offset);
+	dev.Context()->IASetPrimitiveTopology((D3D11_PRIMITIVE_TOPOLOGY)ds->topology);
+	dev.Context()->VSSetShader(ds->vs, nullptr, 0);
+	dev.Context()->PSSetShader(ds->ps, nullptr, 0);
+	dev.Context()->IASetInputLayout(ds->layout);
+	dev.Context()->PSSetShaderResources(0, ds->texSlot, &ds->texture);
+	dev.Context()->IASetVertexBuffers(0, 1, &ds->vb, &ds->stride, &ds->offset);
 
-	dev.Context()->Draw(ds.drawNum, 0);
-
+	dev.Context()->Draw(ds->drawNum, 0);
 }
 
+//
+//// 画像の分割描画
+//void
+//Graphic::DrawRectGraph(float destX, float destY, int srcX, int srcY,
+//	int width, int height, int graphHandle, bool transFlag, bool turnFlag)
+//{
+//	HRESULT result;
+//	DeviceDx11& dev = DeviceDx11::Instance();
+//	ID3D11ShaderResourceView* texture = (ID3D11ShaderResourceView*)graphHandle;
+//	TexData t = _texData[graphHandle];
+//
+//	//バッファの生成
+//	//ID3D11Buffer* vBuffer = CreateBuffer2D(0, 0, 0, t.width, t.height);
+//
+//	ID3D11Buffer* vb;
+//
+//	Vertex2D vertices[4];
+//
+//	WindowControl& wc = WindowControl::Instance();
+//
+//	//ウィンドウ座標系を-1～1にクランプ
+//	float x = destX + width / 2;
+//	float y = destY + height / 2;
+//	float fx = (x - wc.WindowWidth() / 2) / (wc.WindowWidth() / 2);
+//	float fy = ((y - wc.WindowHeight() / 2) / (wc.WindowHeight() / 2)) * -1;
+//
+//	float fw = ((float)width / 2) / ((float)wc.WindowWidth() / 2);
+//	float fh = ((float)height / 2) / ((float)wc.WindowHeight() / 2);
+//
+//
+//	//左上
+//	vertices[0].pos.x = (fx - fw);
+//	vertices[0].pos.y = fy + fh;
+//	vertices[0].pos.z = 0;
+//	vertices[0].uv.x = srcX / t.width;
+//	vertices[0].uv.y = srcY / t.height;
+//
+//	//右上
+//	vertices[1].pos.x = (fx + fw);
+//	vertices[1].pos.y = fy + fh;
+//	vertices[1].pos.z = 0;
+//	vertices[1].uv.x = (width + srcX) / t.width;
+//	vertices[1].uv.y = srcY / t.height;
+//
+//	//左下
+//	vertices[2].pos.x = (fx - fw);
+//	vertices[2].pos.y = fy - fh;
+//	vertices[2].pos.z = 0;
+//	vertices[2].uv.x = srcX / t.width;;
+//	vertices[2].uv.y = (height + srcY) / t.height;
+//
+//	//右下
+//	vertices[3].pos.x = (fx + fw);
+//	vertices[3].pos.y = fy - fh;
+//	vertices[3].pos.z = 0;
+//	vertices[3].uv.x = (width + srcX) / t.width;
+//	vertices[3].uv.y = (height + srcY) / t.height;
+//
+//	if (turnFlag)
+//	{
+//		vertices[0].uv.x = (width + srcX) / t.width;
+//		vertices[0].uv.y = srcY / t.height;
+//
+//		vertices[1].uv.x = srcX / t.width;
+//		vertices[1].uv.y = srcY / t.height;
+//
+//		vertices[2].uv.x = (width + srcX) / t.width;
+//		vertices[2].uv.y = (height + srcY) / t.height;
+//
+//		vertices[3].uv.x = srcX / t.width;;
+//		vertices[3].uv.y = (height + srcY) / t.height;
+//	}
+//
+//
+//	//頂点バッファの作成
+//	D3D11_BUFFER_DESC bufdesc = {};
+//	bufdesc.ByteWidth = sizeof(vertices[0]) * 4;
+//	bufdesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+//	bufdesc.Usage = D3D11_USAGE_DEFAULT;
+//	bufdesc.CPUAccessFlags = 0;
+//	bufdesc.MiscFlags = 0;
+//	bufdesc.StructureByteStride = sizeof(Vertex2D);
+//
+//	D3D11_SUBRESOURCE_DATA subdata = {};
+//	subdata.pSysMem = &vertices[0];
+//
+//	result = dev.Device()->CreateBuffer(&bufdesc, &subdata, &vb);
+//
+//	////描画構造体に格納
+//	//DrawingStructure ds = {};
+//	//ds.vs = _vs2d;
+//	//ds.ps = _ps;
+//	//ds.topology = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP;
+//	//ds.layout = _layout;
+//	//ds.texSlot = 1;
+//	//ds.texture = texture;
+//	//ds.stride = sizeof(Vertex2D);
+//	//ds.offset = 0;
+//	//ds.drawNum = 4;
+//	//ds.vb = vb;
+//
+//	unsigned int offset = 0;
+//	unsigned int stride = sizeof(Vertex2D);
+//
+//	dev.Context()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+//	dev.Context()->VSSetShader(_vs2d, nullptr, 0);
+//	dev.Context()->PSSetShader(_ps, nullptr, 0);
+//	dev.Context()->IASetInputLayout(_layout);
+//	dev.Context()->PSSetShaderResources(0, 1, &texture);
+//	dev.Context()->IASetVertexBuffers(0, 1, &vb, &stride, &offset);
+//
+//	dev.Context()->Draw(4, 0);
+//	vb->Release();
+//
+//}
 
-// 画像の分割描画
-void
+void 
 Graphic::DrawRectGraph(float destX, float destY, int srcX, int srcY,
-	int width, int height, int graphHandle, bool transFlag, bool trunFlag)
+	int width, int height, int graphHandle, bool transFlag, bool turnFlag)
 {
 	HRESULT result;
 	DeviceDx11& dev = DeviceDx11::Instance();
-	ID3D11ShaderResourceView* texture = (ID3D11ShaderResourceView*)graphHandle;
-	TexData t = _texData[graphHandle];
-
-	//バッファの生成
-	//ID3D11Buffer* vBuffer = CreateBuffer2D(0, 0, 0, t.width, t.height);
-
-	ID3D11Buffer* vb;
+	DrawingStructure* ds = (DrawingStructure*)graphHandle;
+	int texHandle = (int)ds->texture;
+	TexData t = _texData[texHandle];
 
 	Vertex2D vertices[4];
 
-	int turn = 1;
-	if (trunFlag)
-	{
-		turn = -1;
-	}
 	WindowControl& wc = WindowControl::Instance();
 
 	//ウィンドウ座標系を-1～1にクランプ
@@ -687,140 +798,269 @@ Graphic::DrawRectGraph(float destX, float destY, int srcX, int srcY,
 
 
 	//左上
-	vertices[0].pos.x = (fx - fw) * turn;
+	vertices[0].pos.x = (fx - fw);
 	vertices[0].pos.y = fy + fh;
 	vertices[0].pos.z = 0;
-	vertices[0].uv.x = srcX / t.width;
-	vertices[0].uv.y = srcY / t.height;
+	vertices[0].uv.x = srcX / ds->vertex.width;
+	vertices[0].uv.y = srcY / ds->vertex.height;
 
 	//右上
-	vertices[1].pos.x = (fx + fw) * turn;
+	vertices[1].pos.x = (fx + fw);
 	vertices[1].pos.y = fy + fh;
 	vertices[1].pos.z = 0;
-	vertices[1].uv.x = (width + srcX) / t.width;
-	vertices[1].uv.y = srcY / t.height;
+	vertices[1].uv.x = (width + srcX) / ds->vertex.width;
+	vertices[1].uv.y = srcY / ds->vertex.height;
 
 	//左下
-	vertices[2].pos.x = (fx - fw) * turn;
+	vertices[2].pos.x = (fx - fw);
 	vertices[2].pos.y = fy - fh;
 	vertices[2].pos.z = 0;
-	vertices[2].uv.x = srcX / t.width;;
-	vertices[2].uv.y = (height + srcY) / t.height;
+	vertices[2].uv.x = srcX / ds->vertex.width;;
+	vertices[2].uv.y = (height + srcY) / ds->vertex.height;
 
 	//右下
-	vertices[3].pos.x = (fx + fw) * turn;
+	vertices[3].pos.x = (fx + fw);
 	vertices[3].pos.y = fy - fh;
 	vertices[3].pos.z = 0;
-	vertices[3].uv.x = (width + srcX) / t.width;
-	vertices[3].uv.y = (height + srcY) / t.height;
+	vertices[3].uv.x = (width + srcX) / ds->vertex.width;
+	vertices[3].uv.y = (height + srcY) / ds->vertex.height;
 
+	if (turnFlag)
+	{
+		vertices[0].uv.x = (width + srcX) / ds->vertex.width;
+		vertices[0].uv.y = srcY / ds->vertex.height;
 
-	//頂点バッファの作成
-	D3D11_BUFFER_DESC bufdesc = {};
-	bufdesc.ByteWidth = sizeof(vertices[0]) * 4;
-	bufdesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-	bufdesc.Usage = D3D11_USAGE_DEFAULT;
-	bufdesc.CPUAccessFlags = 0;
-	bufdesc.MiscFlags = 0;
-	bufdesc.StructureByteStride = sizeof(Vertex2D);
+		vertices[1].uv.x = srcX / ds->vertex.width;
+		vertices[1].uv.y = srcY / ds->vertex.height;
 
-	D3D11_SUBRESOURCE_DATA subdata = {};
-	subdata.pSysMem = &vertices[0];
+		vertices[2].uv.x = (width + srcX) / ds->vertex.width;
+		vertices[2].uv.y = (height + srcY) / ds->vertex.height;
 
-	result = dev.Device()->CreateBuffer(&bufdesc, &subdata, &vb);
+		vertices[3].uv.x = srcX / ds->vertex.width;;
+		vertices[3].uv.y = (height + srcY) / ds->vertex.height;
+	}
 
-	////描画構造体に格納
-	//DrawingStructure ds = {};
-	//ds.vs = _vs2d;
-	//ds.ps = _ps;
-	//ds.topology = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP;
-	//ds.layout = _layout;
-	//ds.texSlot = 1;
-	//ds.texture = texture;
-	//ds.stride = sizeof(Vertex2D);
-	//ds.offset = 0;
-	//ds.drawNum = 4;
-	//ds.vb = vb;
+	D3D11_MAPPED_SUBRESOURCE mappedsub = {};
+	result = dev.Context()->Map(ds->vb, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedsub);
+	memcpy(mappedsub.pData, vertices, sizeof(Vertex2D) * 4);
+	dev.Context()->Unmap(ds->vb, 0);
+
 
 	unsigned int offset = 0;
 	unsigned int stride = sizeof(Vertex2D);
 
-	dev.Context()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
-	dev.Context()->VSSetShader(_vs2d, nullptr, 0);
-	dev.Context()->PSSetShader(_ps, nullptr, 0);
-	dev.Context()->IASetInputLayout(_layout);
-	dev.Context()->PSSetShaderResources(0, 1, &texture);
-	dev.Context()->IASetVertexBuffers(0, 1, &vb, &stride, &offset);
+	dev.Context()->IASetPrimitiveTopology((D3D11_PRIMITIVE_TOPOLOGY)ds->topology);
+	dev.Context()->VSSetShader(ds->vs, nullptr, 0);
+	dev.Context()->PSSetShader(ds->ps, nullptr, 0);
+	dev.Context()->IASetInputLayout(ds->layout);
+	dev.Context()->PSSetShaderResources(0, 1, &ds->texture);
+	dev.Context()->IASetVertexBuffers(0, 1, &ds->vb, &ds->stride, &ds->offset);
 
-	dev.Context()->Draw(4, 0);
-	vb->Release();
-
+	dev.Context()->Draw(ds->drawNum, 0);
 }
 
-void
+//void
+//Graphic::DrawExtendGraph(float lx, float ly, float rx, float ry, int handle)
+//{
+//	ID3D11ShaderResourceView* texture = (ID3D11ShaderResourceView*)handle;
+//	TexData t = _texData[handle];
+//	WindowControl& wc = WindowControl::Instance();
+//	//ID3D11Buffer* vBuffer = CreateBuffer2D(x, y, t.width, t.height);
+//
+//	float width = rx - lx;
+//	float height = ry - ly;
+//
+//
+//	ID3D11Buffer* vBuffer = CreateBuffer2D(lx + width / 2, ly + height / 2, width, height);
+//
+//	DeviceDx11& dev = DeviceDx11::Instance();
+//	unsigned int offset = 0;
+//	unsigned int stride = sizeof(Vertex2D);
+//
+//	dev.Context()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+//	dev.Context()->VSSetShader(_vs2d, nullptr, 0);
+//	dev.Context()->PSSetShader(_ps, nullptr, 0);
+//	dev.Context()->IASetInputLayout(_layout);
+//	dev.Context()->PSSetShaderResources(0, 1, &texture);
+//	dev.Context()->IASetVertexBuffers(0, 1, &vBuffer, &stride, &offset);
+//
+//	dev.Context()->Draw(4, 0);
+//	vBuffer->Release();
+//
+//	////描画構造体に格納
+//	//DrawingStructure ds = {};
+//	//ds.vs = _vs2d;
+//	//ds.ps = _ps;
+//	//ds.topology = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP;
+//	//ds.layout = _layout;
+//	//ds.texSlot = 1;
+//	//ds.texture = texture;
+//	//ds.stride = sizeof(Vertex2D);
+//	//ds.offset = 0;
+//	//ds.drawNum = 4;
+//	//ds.vb = vBuffer;
+//}
+
+void 
 Graphic::DrawExtendGraph(float lx, float ly, float rx, float ry, int handle)
 {
-	ID3D11ShaderResourceView* texture = (ID3D11ShaderResourceView*)handle;
-	TexData t = _texData[handle];
 	WindowControl& wc = WindowControl::Instance();
-	//ID3D11Buffer* vBuffer = CreateBuffer2D(x, y, t.width, t.height);
+	HRESULT result;
+	DeviceDx11& dev = DeviceDx11::Instance();
+
+	DrawingStructure* ds = (DrawingStructure*)handle;
 
 	float width = rx - lx;
 	float height = ry - ly;
 
+	Vertex2D vertex[4];
+	CreateVertex2D(lx + width / 2, ly + height / 2, width, height, vertex, *ds);
 
-	ID3D11Buffer* vBuffer = CreateBuffer2D(lx + width / 2, ly + height / 2, width, height);
+	D3D11_MAPPED_SUBRESOURCE mappedsub = {};
+	result = dev.Context()->Map(ds->vb, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedsub);
+	memcpy(mappedsub.pData, vertex, sizeof(Vertex2D) * 4);
+	dev.Context()->Unmap(ds->vb, 0);
 
-	DeviceDx11& dev = DeviceDx11::Instance();
-	unsigned int offset = 0;
-	unsigned int stride = sizeof(Vertex2D);
 
-	dev.Context()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
-	dev.Context()->VSSetShader(_vs2d, nullptr, 0);
-	dev.Context()->PSSetShader(_ps, nullptr, 0);
+	dev.Context()->IASetPrimitiveTopology((D3D11_PRIMITIVE_TOPOLOGY)ds->topology);
+	dev.Context()->VSSetShader(ds->vs, nullptr, 0);
+	dev.Context()->PSSetShader(ds->ps, nullptr, 0);
 	dev.Context()->IASetInputLayout(_layout);
-	dev.Context()->PSSetShaderResources(0, 1, &texture);
-	dev.Context()->IASetVertexBuffers(0, 1, &vBuffer, &stride, &offset);
+	dev.Context()->PSSetShaderResources(0, 1, &ds->texture);
+	dev.Context()->IASetVertexBuffers(0, 1, &ds->vb, &ds->stride, &ds->offset);
 
-	dev.Context()->Draw(4, 0);
-	vBuffer->Release();
-
-	////描画構造体に格納
-	//DrawingStructure ds = {};
-	//ds.vs = _vs2d;
-	//ds.ps = _ps;
-	//ds.topology = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP;
-	//ds.layout = _layout;
-	//ds.texSlot = 1;
-	//ds.texture = texture;
-	//ds.stride = sizeof(Vertex2D);
-	//ds.offset = 0;
-	//ds.drawNum = 4;
-	//ds.vb = vBuffer;
+	dev.Context()->Draw(ds->drawNum, 0);
 }
 
-void
+//void
+//Graphic::DrawRectExtendGraph(float destLX, float destLY, float destRX, float destRY, int srcX, int srcY,
+//	int width, int height, int graphHandle, bool transFlag, bool turnFlag)
+//{
+//	HRESULT result;
+//	DeviceDx11& dev = DeviceDx11::Instance();
+//	ID3D11ShaderResourceView* texture = (ID3D11ShaderResourceView*)graphHandle;
+//	TexData t = _texData[graphHandle];
+//
+//	//バッファの生成
+//	//ID3D11Buffer* vBuffer = CreateBuffer2D(0, 0, 0, t.width, t.height);
+//
+//	ID3D11Buffer* vb;
+//
+//	Vertex2D vertices[4];
+//
+//	WindowControl& wc = WindowControl::Instance();
+//
+//	//ウィンドウ座標系を-1～1にクランプ
+//	float w = destRX - destLX;
+//	float h = destRY - destLY;
+//
+//	float x = destLX + w / 2;
+//	float y = destLY + h / 2;
+//	float fx = (x - wc.WindowWidth() / 2) / (wc.WindowWidth() / 2);
+//	float fy = ((y - wc.WindowHeight() / 2) / (wc.WindowHeight() / 2)) * -1;
+//
+//	float fw = ((float)w / 2) / ((float)wc.WindowWidth() / 2);
+//	float fh = ((float)h / 2) / ((float)wc.WindowHeight() / 2);
+//
+//
+//	//左上
+//	vertices[0].pos.x = (fx - fw);
+//	vertices[0].pos.y = fy + fh;
+//	vertices[0].pos.z = 0;
+//	vertices[0].uv.x = srcX / t.width;
+//	vertices[0].uv.y = srcY / t.height;
+//
+//	//右上
+//	vertices[1].pos.x = (fx + fw);
+//	vertices[1].pos.y = fy + fh;
+//	vertices[1].pos.z = 0;
+//	vertices[1].uv.x = (width + srcX) / t.width;
+//	vertices[1].uv.y = srcY / t.height;
+//
+//	//左下
+//	vertices[2].pos.x = (fx - fw);
+//	vertices[2].pos.y = fy - fh;
+//	vertices[2].pos.z = 0;
+//	vertices[2].uv.x = srcX / t.width;;
+//	vertices[2].uv.y = (height + srcY) / t.height;
+//
+//	//右下
+//	vertices[3].pos.x = (fx + fw);
+//	vertices[3].pos.y = fy - fh;
+//	vertices[3].pos.z = 0;
+//	vertices[3].uv.x = (width + srcX) / t.width;
+//	vertices[3].uv.y = (height + srcY) / t.height;
+//
+//	if (turnFlag)
+//	{
+//		vertices[0].uv.x = (width + srcX) / t.width;
+//		vertices[0].uv.y = srcY / t.height;
+//
+//		vertices[1].uv.x = srcX / t.width;
+//		vertices[1].uv.y = srcY / t.height;
+//
+//		vertices[2].uv.x = (width + srcX) / t.width;
+//		vertices[2].uv.y = (height + srcY) / t.height;
+//
+//		vertices[3].uv.x = srcX / t.width;;
+//		vertices[3].uv.y = (height + srcY) / t.height;
+//	}
+//
+//	//頂点バッファの作成
+//	D3D11_BUFFER_DESC bufdesc = {};
+//	bufdesc.ByteWidth = sizeof(vertices[0]) * 4;
+//	bufdesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+//	bufdesc.Usage = D3D11_USAGE_DEFAULT;
+//	bufdesc.CPUAccessFlags = 0;
+//	bufdesc.MiscFlags = 0;
+//	bufdesc.StructureByteStride = sizeof(Vertex2D);
+//
+//	D3D11_SUBRESOURCE_DATA subdata = {};
+//	subdata.pSysMem = &vertices[0];
+//
+//	result = dev.Device()->CreateBuffer(&bufdesc, &subdata, &vb);
+//
+//	unsigned int offset = 0;
+//	unsigned int stride = sizeof(Vertex2D);
+//
+//	dev.Context()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+//	dev.Context()->VSSetShader(_vs2d, nullptr, 0);
+//	dev.Context()->PSSetShader(_ps, nullptr, 0);
+//	dev.Context()->IASetInputLayout(_layout);
+//	dev.Context()->PSSetShaderResources(0, 1, &texture);
+//	dev.Context()->IASetVertexBuffers(0, 1, &vb, &stride, &offset);
+//
+//	dev.Context()->Draw(4, 0);
+//	vb->Release();
+//
+//
+//	////描画構造体に格納
+//	//DrawingStructure ds = {};
+//	//ds.vs = _vs2d;
+//	//ds.ps = _ps;
+//	//ds.topology = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP;
+//	//ds.layout = _layout;
+//	//ds.texSlot = 1;
+//	//ds.texture = texture;
+//	//ds.stride = sizeof(Vertex2D);
+//	//ds.offset = 0;
+//	//ds.drawNum = 4;
+//	//ds.vb = vb;
+//
+//}
+
+void 
 Graphic::DrawRectExtendGraph(float destLX, float destLY, float destRX, float destRY, int srcX, int srcY,
-	int width, int height, int graphHandle, bool transFlag, bool trunFlag)
+	int width, int height, int graphHandle, bool transFlag, bool turnFlag)
 {
 	HRESULT result;
 	DeviceDx11& dev = DeviceDx11::Instance();
-	ID3D11ShaderResourceView* texture = (ID3D11ShaderResourceView*)graphHandle;
-	TexData t = _texData[graphHandle];
-
-	//バッファの生成
-	//ID3D11Buffer* vBuffer = CreateBuffer2D(0, 0, 0, t.width, t.height);
-
-	ID3D11Buffer* vb;
 
 	Vertex2D vertices[4];
 
-	int turn = 1;
-	if (trunFlag)
-	{
-		turn = -1;
-	}
 	WindowControl& wc = WindowControl::Instance();
+
+	DrawingStructure* ds = (DrawingStructure*)graphHandle;
 
 	//ウィンドウ座標系を-1～1にクランプ
 	float w = destRX - destLX;
@@ -836,72 +1076,65 @@ Graphic::DrawRectExtendGraph(float destLX, float destLY, float destRX, float des
 
 
 	//左上
-	vertices[0].pos.x = (fx - fw) * turn;
+	vertices[0].pos.x = (fx - fw);
 	vertices[0].pos.y = fy + fh;
 	vertices[0].pos.z = 0;
-	vertices[0].uv.x = srcX / t.width;
-	vertices[0].uv.y = srcY / t.height;
+	vertices[0].uv.x = srcX / ds->vertex.width;
+	vertices[0].uv.y = srcY / ds->vertex.height;
 
 	//右上
-	vertices[1].pos.x = (fx + fw) * turn;
+	vertices[1].pos.x = (fx + fw);
 	vertices[1].pos.y = fy + fh;
 	vertices[1].pos.z = 0;
-	vertices[1].uv.x = (width + srcX) / t.width;
-	vertices[1].uv.y = srcY / t.height;
+	vertices[1].uv.x = (width + srcX) / ds->vertex.width;
+	vertices[1].uv.y = srcY / ds->vertex.height;
 
 	//左下
-	vertices[2].pos.x = (fx - fw) * turn;
+	vertices[2].pos.x = (fx - fw);
 	vertices[2].pos.y = fy - fh;
 	vertices[2].pos.z = 0;
-	vertices[2].uv.x = srcX / t.width;;
-	vertices[2].uv.y = (height + srcY) / t.height;
+	vertices[2].uv.x = srcX / ds->vertex.width;;
+	vertices[2].uv.y = (height + srcY) / ds->vertex.height;
 
 	//右下
-	vertices[3].pos.x = (fx + fw) * turn;
+	vertices[3].pos.x = (fx + fw);
 	vertices[3].pos.y = fy - fh;
 	vertices[3].pos.z = 0;
-	vertices[3].uv.x = (width + srcX) / t.width;
-	vertices[3].uv.y = (height + srcY) / t.height;
+	vertices[3].uv.x = (width + srcX) / ds->vertex.width;
+	vertices[3].uv.y = (height + srcY) / ds->vertex.height;
 
-	//頂点バッファの作成
-	D3D11_BUFFER_DESC bufdesc = {};
-	bufdesc.ByteWidth = sizeof(vertices[0]) * 4;
-	bufdesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-	bufdesc.Usage = D3D11_USAGE_DEFAULT;
-	bufdesc.CPUAccessFlags = 0;
-	bufdesc.MiscFlags = 0;
-	bufdesc.StructureByteStride = sizeof(Vertex2D);
+	if (turnFlag)
+	{
+		vertices[0].uv.x = (width + srcX) / ds->vertex.width;
+		vertices[0].uv.y = srcY / ds->vertex.height;
 
-	D3D11_SUBRESOURCE_DATA subdata = {};
-	subdata.pSysMem = &vertices[0];
+		vertices[1].uv.x = srcX / ds->vertex.width;
+		vertices[1].uv.y = srcY / ds->vertex.height;
 
-	result = dev.Device()->CreateBuffer(&bufdesc, &subdata, &vb);
+		vertices[2].uv.x = (width + srcX) / ds->vertex.width;
+		vertices[2].uv.y = (height + srcY) / ds->vertex.height;
 
-	unsigned int offset = 0;
-	unsigned int stride = sizeof(Vertex2D);
+		vertices[3].uv.x = srcX / ds->vertex.width;;
+		vertices[3].uv.y = (height + srcY) / ds->vertex.height;
+	}
+	D3D11_MAPPED_SUBRESOURCE mappedsub = {};
+	result = dev.Context()->Map(ds->vb, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedsub);
+	memcpy(mappedsub.pData, vertices, sizeof(Vertex2D) * 4);
+	dev.Context()->Unmap(ds->vb, 0);
 
-	dev.Context()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
-	dev.Context()->VSSetShader(_vs2d, nullptr, 0);
-	dev.Context()->PSSetShader(_ps, nullptr, 0);
-	dev.Context()->IASetInputLayout(_layout);
-	dev.Context()->PSSetShaderResources(0, 1, &texture);
-	dev.Context()->IASetVertexBuffers(0, 1, &vb, &stride, &offset);
+	dev.Context()->IASetPrimitiveTopology((D3D11_PRIMITIVE_TOPOLOGY)ds->topology);
+	dev.Context()->VSSetShader(ds->vs, nullptr, 0);
+	dev.Context()->PSSetShader(ds->ps, nullptr, 0);
+	dev.Context()->IASetInputLayout(ds->layout);
+	dev.Context()->PSSetShaderResources(0, 1, &ds->texture);
+	dev.Context()->IASetVertexBuffers(0, 1, &ds->vb, &ds->stride, &ds->offset);
 
-	dev.Context()->Draw(4, 0);
-	vb->Release();
+	dev.Context()->Draw(ds->drawNum, 0);
+}
 
-
-	////描画構造体に格納
-	//DrawingStructure ds = {};
-	//ds.vs = _vs2d;
-	//ds.ps = _ps;
-	//ds.topology = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP;
-	//ds.layout = _layout;
-	//ds.texSlot = 1;
-	//ds.texture = texture;
-	//ds.stride = sizeof(Vertex2D);
-	//ds.offset = 0;
-	//ds.drawNum = 4;
-	//ds.vb = vb;
-
+void 
+Graphic::DeleteGraph(int handle)
+{
+	DrawingStructure* ds = (DrawingStructure*)handle;
+	delete(ds);
 }

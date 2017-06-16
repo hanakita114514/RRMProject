@@ -95,7 +95,7 @@ c:\program files (x86)\microsoft directx sdk (june 2010)\include\xnamathmisc.inl
 c:\program files (x86)\microsoft directx sdk (june 2010)\include\xnamathmisc.inl(519): warning C4838: 'unsigned int' から 'INT' への変換には縮小変換が必要です
   C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
 c:\users\1501343\desktop\卒制\trunk\project\rrmlibproject\rrmlib\XAudio.h(57): warning C4091: 'typedef ': 変数が何も宣言されていないときは、'XAudio::FrameHeader' の左辺を無視します。
-RRMLib.cpp(169): warning C4244: '引数': 'int' から 'float' への変換です。データが失われる可能性があります。
+RRMLib.cpp(181): warning C4244: '引数': 'int' から 'float' への変換です。データが失われる可能性があります。
 d3dx11.lib(d3dx11_43.dll) : warning LNK4006: __NULL_IMPORT_DESCRIPTOR は d3d11.lib(d3d11.dll) で定義されています。2 つ目以降の定義は無視されます。
 cri_ware_pcx86_le_import.lib(cri_ware_pcx86_le.dll) : warning LNK4006: __NULL_IMPORT_DESCRIPTOR は d3d11.lib(d3d11.dll) で定義されています。2 つ目以降の定義は無視されます。
 XAudio2.lib(XAudio2_8.dll) : warning LNK4006: __NULL_IMPORT_DESCRIPTOR は d3d11.lib(d3d11.dll) で定義されています。2 つ目以降の定義は無視されます。

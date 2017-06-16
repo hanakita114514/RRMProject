@@ -11,6 +11,7 @@ Renderer::Renderer()
 		_backColor[i] = 0.0f;
 	}
 	_backColor[3] = 1.0f;
+
 }
 
 
@@ -63,7 +64,7 @@ Renderer::Init()
 
 	//デプスステンシルビュー(DSV)を作成
 	//Zバッファ
-	D3D11_TEXTURE2D_DESC descDepth;
+	D3D11_TEXTURE2D_DESC descDepth = {};
 	descDepth.Width = wc.WindowWidth();
 	descDepth.Height = wc.WindowHeight();
 	descDepth.MipLevels = 1;
@@ -82,7 +83,14 @@ Renderer::Init()
 		return false;
 	}
 
-	result = dev.Device()->CreateDepthStencilView(_depthTexture2D, nullptr, &_dsv);
+	//深度/ステンシルビューの作成
+	D3D11_DEPTH_STENCIL_VIEW_DESC descDSV;
+	descDSV.Format = descDepth.Format;
+	descDSV.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
+	descDSV.Flags = 0;
+	descDSV.Texture2D.MipSlice = 0;
+
+	result = dev.Device()->CreateDepthStencilView(_depthTexture2D, &descDSV, &_dsv);
 	if (FAILED(result))
 	{
 		return false;
@@ -108,12 +116,11 @@ Renderer::Init()
 void 
 Renderer::CreateDefaultBlend()
 {
-	//DeviceDx11& dev = DeviceDx11::Instance();
-	//HRESULT result = S_OK;
+	DeviceDx11& dev = DeviceDx11::Instance();
+	HRESULT result = S_OK;
 
 	//D3D11_RENDER_TARGET_BLEND_DESC RenderTarget;
 	////アルファブレンディングの設定
-	//ID3D11BlendState* blendstate = nullptr;
 	//D3D11_BLEND_DESC blenddesc = {};
 	//blenddesc.AlphaToCoverageEnable = false;
 	//blenddesc.IndependentBlendEnable = false;
@@ -129,10 +136,8 @@ Renderer::CreateDefaultBlend()
 
 	//float blendFactor[] = { 0.0f, 0.0f, 0.0f, 0.0f };
 
-	//result = dev.Device()->CreateBlendState(&blenddesc, &blendstate);
+	//result = dev.Device()->CreateBlendState(&blenddesc, &_defaultBlend);
 
-	DeviceDx11& dev = DeviceDx11::Instance();
-	HRESULT result = S_OK;
 	//アルファブレンディングの設定
 	D3D11_BLEND_DESC blenddesc = {};
 	blenddesc.AlphaToCoverageEnable = false;

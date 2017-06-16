@@ -236,8 +236,6 @@ GeometryGraph::DrawBox(float lx, float ly, float rx, float ry, unsigned int colo
 
 	result = dev.Device()->CreateBuffer(&bufdesc, &subdata, &vb);
 
-
-
 	//DrawingStructure ds = {};
 	//ds.vs = _vs2d;
 	//ds.ps = _ps;

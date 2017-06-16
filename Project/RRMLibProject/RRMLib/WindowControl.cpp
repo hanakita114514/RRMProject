@@ -42,7 +42,7 @@ WindowControl::Init()
 
 	//ウィンドウの生成
 	_hwnd = CreateWindow(w.lpszClassName,
-		"DirectX Test",
+		"DirectX",
 		WS_OVERLAPPEDWINDOW ^ WS_MAXIMIZEBOX ^ WS_THICKFRAME,
 		CW_USEDEFAULT,
 		CW_USEDEFAULT,

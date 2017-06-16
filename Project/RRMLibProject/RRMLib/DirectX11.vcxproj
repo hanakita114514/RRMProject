@@ -129,7 +129,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(DX_DIR)\Lib\x86;$(CRI_LIB)\libs\x86;$(WIN_LIB)\x86$(CRI_LIB)\libs\x86</AdditionalLibraryDirectories>
-      <AdditionalDependencies>d3d11.lib;d3dx11.lib;cri_ware_pcx86_le_import.lib;XAudio2.lib;winmm.lib;msacm32.lib;Strmiids.lib;Quartz.lib;cri_ware_pcx86_LE_import.lib;d3dx9.lib;dxguid.lib;dinput8.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d2d1.lib;d3d11.lib;d3dx11.lib;cri_ware_pcx86_le_import.lib;XAudio2.lib;winmm.lib;msacm32.lib;Strmiids.lib;Quartz.lib;cri_ware_pcx86_LE_import.lib;d3dx9.lib;dxguid.lib;dinput8.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

@@ -162,6 +162,18 @@ namespace RRMLib
 		return handle;
 	}
 
+	//‰æ‘œ‚Ì•ªŠ„“Ç‚İ‚İ
+	int LoadDivGraph(std::string filePath, int allNum, int xNum, int yNum, int width, int height, int* handleBuf)
+	{
+		int ret = Graphic::Instance().LoadDivGraph(filePath, allNum, xNum, yNum, width, height, handleBuf);
+		return ret;
+	}
+
+	void DeleteGraph(int handle)
+	{
+		Graphic::Instance().DeleteGraph(handle);
+	}
+
 	//‰æ‘œ‚ğ•`‰æ
 	void DrawGraph(int x, int y, int graphHandle)
 	{
@@ -177,6 +189,7 @@ namespace RRMLib
 		Graphic::Instance().DrawRectGraph(destX, destY, srcX, srcY,
 			width, height, graphHandle, transFlag, trunFlag);
 	}
+
 
 	//‰æ‘œ‚ÌŠgk•`‰æ
 	void DrawExtendGraph(float lx, float ly, float rx, float ry, int handle)
@@ -229,13 +242,6 @@ namespace RRMLib
 		color = red << 24 | green << 16 | blue << 8;
 		color |= 0x000000ff;
 		return color;
-	}
-
-	//ƒŠƒXƒg‚ÉŠi”[‚³‚ê‚½ƒŠƒ\[ƒX‚ğˆêÄ•`‰æ
-	void DrawGraphList()
-	{
-		Renderer::Instance().SetZBuffer(false);
-		GraphList::Instance().Draw();
 	}
 
 	//ƒuƒŒƒ“ƒhƒ‚[ƒh‚ğİ’è
