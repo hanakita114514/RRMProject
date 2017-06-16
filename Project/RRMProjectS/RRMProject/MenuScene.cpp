@@ -27,7 +27,7 @@ MenuScene::MenuScene()
 	for (int i = 0; i < (int)(LogoIdx::logoMax); i++)
 	{
 		_logo[i].image = DxLib::LoadGraph("Resource/img/UI/Arrow_Smile.png");
-		_logo[i].rc.pos = Vector2(WINDOW_WIDTH / 3, WINDOW_HEIGHT / 3 * (i + 1));
+		_logo[i].rc.pos = Vector2((float)(WINDOW_WIDTH / 3), (float)(WINDOW_HEIGHT / 3 * (i + 1)));
 		_logo[i].rc.h = LogoHeight;
 		_logo[i].rc.w = LogoWidth;
 
@@ -75,6 +75,7 @@ MenuScene::MenuUpdate()
 {
 	if (Fade::Instance().IsFadeOutEnd() || !Fade::Instance().IsPause())
 	{
+		
 		if (IsStickUp())
 		{
 			_logoIdx--;
@@ -132,7 +133,7 @@ MenuScene::MenuUpdate()
 	_arrow.Draw();
 	for (int i = 0; i <(int)(LogoIdx::logoMax); i++)
 	{
-		DxLib::DrawGraph(_logo[i].rc.pos.x, _logo[i].rc.pos.y, _logo[i].image, true);
+		DxLib::DrawGraph((int)_logo[i].rc.pos.x, (int)_logo[i].rc.pos.y, _logo[i].image, true);
 	}
 }
 
@@ -212,7 +213,7 @@ MenuScene::GameStart()
 
 		for (int i = 0; i < (int)(LogoIdx::logoMax); i++)
 		{
-			DxLib::DrawGraph(_logo[i].rc.pos.x, _logo[i].rc.pos.y, _logo[i].image, true);
+			DxLib::DrawGraph((int)_logo[i].rc.pos.x, (int)_logo[i].rc.pos.y, _logo[i].image, true);
 		}
 		DrawString(0, 0, Stage[_stageId], 0xffffff);
 	}

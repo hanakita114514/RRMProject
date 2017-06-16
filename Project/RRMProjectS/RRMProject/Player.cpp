@@ -47,9 +47,10 @@ Player::Player(int padType, Camera& camera)
 	_state = &Player::NeutralState;
 	_isdir = &Player::DirRight;
 
-	_grazePoint.pos.x = _rc.w / 2;
-	_grazePoint.pos.y = _rc.h / 2;
-	_grazePoint.radius = 11;
+	_tool[0] = BulletType::normal;
+	_tool[1] = BulletType::deffusion;
+	_tool[2] = BulletType::homing;
+	_toolIdx = 0;
 
 	_avoidTime = 15.0f;
 
@@ -185,7 +186,7 @@ void Player::ShootState()
 {
 	Vector2 end = Vector2(1280, 720);
 	_ps = PlayerState::shoot;
-		Bullet* bullet = BulletManager::Instance().Create(BulletType::homing, _dir, ObjectType::player, _shootPos, this);
+		Bullet* bullet = BulletManager::Instance().Create(_tool[_toolIdx], _dir, ObjectType::player, _shootPos, this);
 		bullet->SetPos(_shootPos);
 }
 
@@ -239,6 +240,8 @@ Player::AliveUpdate()
 		_dig.Digest();
 	}
 
+	//”ò‚Ñ“¹‹ïØ‚è‘Ö‚¦
+	ToolSwitch();
 
 #ifdef DEBUG
 	if (CheckHitKey(KEY_INPUT_Z)
@@ -502,8 +505,25 @@ Player::HitGround()
 	}
 }
 
-bool 
-Player::IsInputKey(KeyType type)
+void
+Player::ToolSwitch()
 {
-	return _input.IsTriger(type);
+	if (_input.ToolSwitch())
+	{
+		_toolIdx++;
+	}
+
+	if (_toolIdx >= ToolMax)
+	{
+		_toolIdx = 0;
+	}
+}
+
+void
+Player::WeaponSwitch()
+{
+	if (_input.WeaponSwitch())
+	{
+
+	}
 }

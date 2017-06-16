@@ -33,7 +33,12 @@ bool GameMain::Init()
 	DxLib::ChangeWindowMode(true);
 	DxLib::SetGraphMode(WINDOW_WIDTH, WINDOW_HEIGHT, COLOR_BIT);
 	DxLib::SetDrawScreen(DX_SCREEN_BACK);
-
+	_dataManager.Load(FileType::system, _data);
+	if (_data.firstStratUp)
+	{
+		_data.firstStratUp = false;
+		_dataManager.Save(FileType::system, _data);
+	}
 	Fade::Instance().Init();
 	_scene = new MenuScene();
 

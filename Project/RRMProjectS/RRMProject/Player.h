@@ -11,6 +11,8 @@
 #include "MultihitProtect.h"
 #include "Camera.h"
 
+#include "Bullet.h"
+
 #include <map>
 
 class Player : public RectObj
@@ -29,6 +31,7 @@ private:
 	};
 	std::map<PlayerState, int> _handleMap;
 
+	static const int ToolMax = 3;
 private:
 	HitPoint _hp;			//体力
 
@@ -42,13 +45,14 @@ private:
 
 	Vector2 _dir;			//向き（1…右向き、-1…左向き)
 	Vector2 _shootPos;		//弾の発射位置
-	Circle _grazePoint;		//弾との当たり判定用の位置
+	BulletType _tool[ToolMax];
 
 	MultihitProtect _mhp;	//多段ヒットを防ぐ
 
 	Camera& _camera;
 
 	int _nosedive;
+	int _toolIdx;
 
 	float _avoidTime;		//回避時間
 
@@ -79,6 +83,9 @@ private:
 
 	void HitGround();
 
+	void ToolSwitch();
+	void WeaponSwitch();
+
 public:
 	Player(int padType, Camera& camera);	//使うパッド番号を指定
 	~Player();
@@ -93,8 +100,6 @@ public:
 	Vector2& GetVel() { return _vel; }
 	Vector2& GetDir() { return _dir; }
 
-	Circle GetGraze() { return _grazePoint; }
-
 	void SlowMotion();
 
 	void Hit(Enemy* other);
@@ -104,6 +109,5 @@ public:
 
 	bool IsHitGround() { return _hitGround; }
 
-	bool IsInputKey(KeyType key);
 };
 

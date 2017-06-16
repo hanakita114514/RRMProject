@@ -18,8 +18,8 @@ class MenuScene : public Scene
 		float freamCnt;
 	}Logo;
 
-	const int LogoHeight = 64;
-	const int LogoWidth = 52;
+	const float LogoHeight = 64;
+	const float LogoWidth = 52;
 private:
 	int _titleHandle;
 	int _stageId;					//ステージID

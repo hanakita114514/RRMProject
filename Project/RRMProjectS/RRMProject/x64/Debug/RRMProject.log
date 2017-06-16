@@ -1,8 +1,3 @@
-﻿  Enemy.cpp
-c:\users\1501344\desktop\新しいフォルダー (2)\trunk\project\rrmprojects\rrmproject\enemy.cpp(6): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-  Egg.cpp
-  コードを生成中...
-  スキップ中... (関連する変更は検出されませんでした)
-  EnemyFactory.cpp
+﻿  DataManager.cpp
   RRMProject.vcxproj -> C:\Users\1501344\Desktop\新しいフォルダー (2)\trunk\Project\RRMProjectS\x64\Debug\RRMProject.exe
   RRMProject.vcxproj -> C:\Users\1501344\Desktop\新しいフォルダー (2)\trunk\Project\RRMProjectS\x64\Debug\RRMProject.pdb (Full PDB)

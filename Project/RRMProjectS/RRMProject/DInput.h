@@ -20,12 +20,20 @@ enum class KeyType : unsigned int
 	keyTumbRight,
 };
 
+enum TrigerType
+{
+	leftTriger,
+	rightTriger,
+	trigerMax
+};
+
 
 class DInput
 {
 private:
 	DINPUT_JOYSTATE _pad;
 	DINPUT_JOYSTATE _history[HISTORY_NUM];
+	bool _prevTriger[trigerMax],_triger[trigerMax];
 
 	int _padType;
 	unsigned char GetKey(const unsigned char* pad, const KeyType& key);
@@ -54,6 +62,10 @@ public:
 	bool Right();
 	bool Up();
 	bool Down();
+
+	//R,LÉgÉäÉKÅ[èàóù
+	bool LeftTriger();
+	bool RightTriger();
 
 	//ã}ç~â∫
 	bool Nosedive();

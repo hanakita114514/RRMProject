@@ -35,6 +35,11 @@ DInput::DInput(int padType)
 		_history[i] = d;
 	}
 	_pad = d;
+
+	for (int i = 0; i < trigerMax; i++)
+	{
+		_triger[i] = false;
+	}
 }
 
 
@@ -59,6 +64,11 @@ DInput::Update()
 
 	_history[0] = _pad;
 	GetJoypadDirectInputState(_padType, &_pad);
+
+	for (int i = 0; i < trigerMax; i++)
+	{
+		_prevTriger[i] = _triger[i];
+	}
 }
 
 
@@ -165,6 +175,26 @@ DInput::Down()
 
 }
 
+bool
+DInput::LeftTriger()
+{
+	if (_pad.Z > 500)
+	{
+		return true;
+	}
+	return false;
+}
+
+bool
+DInput::RightTriger()
+{
+	if (_pad.Z < -500)
+	{
+		return true;
+	}
+	return false;
+}
+
 bool 
 DInput::Nosedive()
 {
@@ -249,12 +279,25 @@ DInput::Parry()
 bool 
 DInput::WeaponSwitch()
 {
+	_triger[rightTriger] = RightTriger();
+
+	if (_triger[rightTriger] & (_triger[rightTriger] ^ _prevTriger[rightTriger]))
+	{
+		return true;
+	}
 	return false;
 }
 
 bool 
 DInput::ToolSwitch()
 {
+	_triger[leftTriger] = LeftTriger();
+
+	if (_triger[leftTriger] & (_triger[leftTriger] ^ _prevTriger[leftTriger]))
+	{
+		return true;
+	}
+
 	return false;
 
 }

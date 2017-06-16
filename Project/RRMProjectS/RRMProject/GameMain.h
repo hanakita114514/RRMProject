@@ -1,10 +1,11 @@
 #pragma once
-#include <vector>
+#include "DataManager.h"
 
 class Scene;
 class Player;
 class Collision;
 class Block;
+
 
 class GameMain
 {
@@ -15,24 +16,10 @@ private:
 
 	Scene* _scene;
 	Player* p1;
-	//BulletManager* _bullet;
-	//MapManager* _map;
-	//EnemyManager* _enemy;
-	Collision* _col;
 
-	std::vector<Block*> _colBlock;
+	DataManager _dataManager;
 
-	void PlayerColBlock(Player *p);
-	void EnemyColBlock();
-	void PlayerColEnemy(Player *p);
-	void BulletColPlayer(Player *p);
-	void BulletColBlock();
-	void BulletColEnemy();
-
-	void CreateColBox();
-
-	void ColProcess(Player* p);
-
+	SysData _data;
 
 public:
 	~GameMain();
@@ -48,9 +35,5 @@ public:
 	void Terminate();
 
 	void ChangeScene(Scene* scene);
-	//BulletManager* GetBulletMng()		{return _bullet;}
-	//MapManager* GetMap()				{ return _map; }
-	//EnemyManager* GetEnemy() { return _enemy; }
-
 };
 

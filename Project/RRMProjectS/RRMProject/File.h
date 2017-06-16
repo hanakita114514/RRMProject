@@ -3,6 +3,7 @@
 #include <string.h>
 #include <vector>
 #include "MapRendar.h"
+#include "GameMain.h"
 
 class RectObj;
 
@@ -29,4 +30,7 @@ public:
 	void Finalize();
 
 	void FileLoad(FMFHEADER& header, vector<vector<unsigned int>>& array);
+
+	void FileLoad(SysData& data,int size);
+	void FileWrite(SysData& data);
 };

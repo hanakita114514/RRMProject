@@ -31,7 +31,9 @@ bool File::Initialize()
 
 	return true;
 }
-bool File::Initialize(FILE_INIT_TYPE type)
+
+//ÉGÉâÅ[Ç»ÇÁÇŒfalse,ê¨å˜Ç»ÇÁtrueÇï‘Ç∑
+bool File::Initialize(FILE_INIT_TYPE type)		
 {
 	switch (type)
 	{
@@ -95,3 +97,19 @@ void File::FileLoad(FMFHEADER& header, vector<vector<unsigned int>>& array)
 
 }
 
+void
+File::FileLoad(SysData& data, int size)
+{
+	fseek(_filePointer, 0, SEEK_SET);
+
+	for (int i = 0; i < size; ++i)
+	{
+		fread(&data, sizeof(unsigned char), 1, _filePointer);
+	}
+}
+
+void 
+File::FileWrite(SysData& data)
+{
+	fwrite(&data, sizeof(SysData), 1, _filePointer);
+}
