@@ -54,43 +54,46 @@ public:
 
 	//‰æ‘œ‚ğ“Ç‚İ‚Ş
 	//–ß‚è’l ¸”s@-1 ¬Œ÷ ‚»‚êˆÈŠO‚Ì”’l
-	int LoadGraph(std::string filePath);
+	int LoadTexture(std::string filePath);
 
 	//ƒ|ƒŠƒSƒ“‚ğ¶¬
 	DrawingStructure CreatePolygon();
 	//ƒeƒNƒXƒ`ƒƒ•t‚«ƒ|ƒŠƒSƒ“‚Ì¶¬
-	DrawingStructure CreatePolygon(std::string filePath);
+	int LoadGraph(std::string filePath);
 
 	//‰æ‘œ‚Ì•ªŠ„“Ç‚İ‚İ
 	HRESULT LoadDivGraph(std::string filePath, int allNum,
-		int xNum, int yNum, int width, int height, DrawingStructure* handleBuf);
+		int xNum, int yNum, int width, int height, int* handleBuf);
 
 	//‰æ‘œ‚Ì•`‰æ
 	//Œ´“_¶ã‚©‚ç•`‰æ
-	void DrawGraph(float x, float y, int handle);
+	//void DrawGraph(float x, float y, int handle);
 	//Šù‚É¶¬‚³‚ê‚½ƒ|ƒŠƒSƒ“‚ğg‚Á‚ÄÀ•W¶ã•`‰æ
-	void DrawGraph(float x, float y, DrawingStructure& ds);
+	void DrawGraph(float x, float y, int handle);
 
 	//‰æ‘œ‚ÌŠgk•`‰æ
 	// lx ly ¶ãÀ•W
 	// rx ry ‰E‰ºÀ•W
 	// handle ‰æ‘œƒnƒ“ƒhƒ‹
 	void DrawExtendGraph(float lx, float ly, float rx, float ry, int handle);
-	void DrawExtendGraph(float lx, float ly, float rx, float ry, DrawingStructure ds);
+	//void DrawExtendGraph(float lx, float ly, float rx, float ry, DrawingStructure ds);
 
 	// ‰æ‘œ‚Ì•ªŠ„•`‰æ
 	void DrawRectGraph(float destX, float destY,int srcX, int srcY,
 		int width, int height, int graphHandle, bool transFlag, bool turnFlag);
 
 	//DivGraph‚Å“Ç‚İ‚ñ‚¾‰æ‘œ‚Íg‚¦‚Ü‚¹‚ñ
-	void DrawRectGraph(float destX, float destY, int srcX, int srcY,
-		int width, int height, DrawingStructure ds, bool transFlag, bool turnFlag);
+	//void DrawRectGraph(float destX, float destY, int srcX, int srcY,
+		//int width, int height, DrawingStructure ds, bool transFlag, bool turnFlag);
 
 	//‰æ‘œ‚Ì•ªŠ„Šgk•`‰æ
 	void DrawRectExtendGraph(float destLX, float destLY, float destRX, float destRY, int srcX, int srcY,
 		int width, int height, int graphHandle, bool transFlag, bool turnFlag);
 
-	void DrawRectExtendGraph(float destLX, float destLY, float destRX, float destRY, int srcX, int srcY,
-		int width, int height, DrawingStructure ds, bool transFlag, bool turnFlag);
+	//void DrawRectExtendGraph(float destLX, float destLY, float destRX, float destRY, int srcX, int srcY,
+	//	int width, int height, DrawingStructure ds, bool transFlag, bool turnFlag);
+
+	//‰æ‘œ‚Ìíœ
+	void DeleteGraph(int handle);
 };
 
