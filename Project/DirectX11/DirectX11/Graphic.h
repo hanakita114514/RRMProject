@@ -80,10 +80,17 @@ public:
 
 	// ‰æ‘œ‚Ì•ªŠ„•`‰æ
 	void DrawRectGraph(float destX, float destY,int srcX, int srcY,
-		int width, int height, int graphHandle, bool transFlag, bool trunFlag);
+		int width, int height, int graphHandle, bool transFlag, bool turnFlag);
+
+	//DivGraph‚Å“Ç‚İ‚ñ‚¾‰æ‘œ‚Íg‚¦‚Ü‚¹‚ñ
+	void DrawRectGraph(float destX, float destY, int srcX, int srcY,
+		int width, int height, DrawingStructure ds, bool transFlag, bool turnFlag);
 
 	//‰æ‘œ‚Ì•ªŠ„Šgk•`‰æ
 	void DrawRectExtendGraph(float destLX, float destLY, float destRX, float destRY, int srcX, int srcY,
-		int width, int height, int graphHandle, bool transFlag, bool trunFlag);
+		int width, int height, int graphHandle, bool transFlag, bool turnFlag);
+
+	void DrawRectExtendGraph(float destLX, float destLY, float destRX, float destRY, int srcX, int srcY,
+		int width, int height, DrawingStructure ds, bool transFlag, bool turnFlag);
 };
 

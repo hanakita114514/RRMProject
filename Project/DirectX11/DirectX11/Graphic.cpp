@@ -655,7 +655,7 @@ Graphic::DrawGraph(float x, float y, DrawingStructure& ds)
 // 画像の分割描画
 void
 Graphic::DrawRectGraph(float destX, float destY, int srcX, int srcY,
-	int width, int height, int graphHandle, bool transFlag, bool trunFlag)
+	int width, int height, int graphHandle, bool transFlag, bool turnFlag)
 {
 	HRESULT result;
 	DeviceDx11& dev = DeviceDx11::Instance();
@@ -669,11 +669,6 @@ Graphic::DrawRectGraph(float destX, float destY, int srcX, int srcY,
 
 	Vertex2D vertices[4];
 
-	int turn = 1;
-	if (trunFlag)
-	{
-		turn = -1;
-	}
 	WindowControl& wc = WindowControl::Instance();
 
 	//ウィンドウ座標系を-1～1にクランプ
@@ -687,32 +682,47 @@ Graphic::DrawRectGraph(float destX, float destY, int srcX, int srcY,
 
 
 	//左上
-	vertices[0].pos.x = (fx - fw) * turn;
+	vertices[0].pos.x = (fx - fw);
 	vertices[0].pos.y = fy + fh;
 	vertices[0].pos.z = 0;
 	vertices[0].uv.x = srcX / t.width;
 	vertices[0].uv.y = srcY / t.height;
 
 	//右上
-	vertices[1].pos.x = (fx + fw) * turn;
+	vertices[1].pos.x = (fx + fw);
 	vertices[1].pos.y = fy + fh;
 	vertices[1].pos.z = 0;
 	vertices[1].uv.x = (width + srcX) / t.width;
 	vertices[1].uv.y = srcY / t.height;
 
 	//左下
-	vertices[2].pos.x = (fx - fw) * turn;
+	vertices[2].pos.x = (fx - fw);
 	vertices[2].pos.y = fy - fh;
 	vertices[2].pos.z = 0;
 	vertices[2].uv.x = srcX / t.width;;
 	vertices[2].uv.y = (height + srcY) / t.height;
 
 	//右下
-	vertices[3].pos.x = (fx + fw) * turn;
+	vertices[3].pos.x = (fx + fw);
 	vertices[3].pos.y = fy - fh;
 	vertices[3].pos.z = 0;
 	vertices[3].uv.x = (width + srcX) / t.width;
 	vertices[3].uv.y = (height + srcY) / t.height;
+
+	if (turnFlag)
+	{
+		vertices[0].uv.x = (width + srcX) / t.width;
+		vertices[0].uv.y = srcY / t.height;
+
+		vertices[1].uv.x = srcX / t.width;
+		vertices[1].uv.y = srcY / t.height;
+
+		vertices[2].uv.x = (width + srcX) / t.width;
+		vertices[2].uv.y = (height + srcY) / t.height;
+
+		vertices[3].uv.x = srcX / t.width;;
+		vertices[3].uv.y = (height + srcY) / t.height;
+	}
 
 
 	//頂点バッファの作成
@@ -755,6 +765,90 @@ Graphic::DrawRectGraph(float destX, float destY, int srcX, int srcY,
 	dev.Context()->Draw(4, 0);
 	vb->Release();
 
+}
+void 
+Graphic::DrawRectGraph(float destX, float destY, int srcX, int srcY,
+	int width, int height, DrawingStructure ds, bool transFlag, bool turnFlag)
+{
+	HRESULT result;
+	DeviceDx11& dev = DeviceDx11::Instance();
+	int graphHandle = (int)ds.texture;
+	TexData t = _texData[graphHandle];
+
+	Vertex2D vertices[4];
+
+	WindowControl& wc = WindowControl::Instance();
+
+	//ウィンドウ座標系を-1～1にクランプ
+	float x = destX + width / 2;
+	float y = destY + height / 2;
+	float fx = (x - wc.WindowWidth() / 2) / (wc.WindowWidth() / 2);
+	float fy = ((y - wc.WindowHeight() / 2) / (wc.WindowHeight() / 2)) * -1;
+
+	float fw = ((float)width / 2) / ((float)wc.WindowWidth() / 2);
+	float fh = ((float)height / 2) / ((float)wc.WindowHeight() / 2);
+
+
+	//左上
+	vertices[0].pos.x = (fx - fw);
+	vertices[0].pos.y = fy + fh;
+	vertices[0].pos.z = 0;
+	vertices[0].uv.x = srcX / ds.vertex.width;
+	vertices[0].uv.y = srcY / ds.vertex.height;
+
+	//右上
+	vertices[1].pos.x = (fx + fw);
+	vertices[1].pos.y = fy + fh;
+	vertices[1].pos.z = 0;
+	vertices[1].uv.x = (width + srcX) / ds.vertex.width;
+	vertices[1].uv.y = srcY / ds.vertex.height;
+
+	//左下
+	vertices[2].pos.x = (fx - fw);
+	vertices[2].pos.y = fy - fh;
+	vertices[2].pos.z = 0;
+	vertices[2].uv.x = srcX / ds.vertex.width;;
+	vertices[2].uv.y = (height + srcY) / ds.vertex.height;
+
+	//右下
+	vertices[3].pos.x = (fx + fw);
+	vertices[3].pos.y = fy - fh;
+	vertices[3].pos.z = 0;
+	vertices[3].uv.x = (width + srcX) / ds.vertex.width;
+	vertices[3].uv.y = (height + srcY) / ds.vertex.height;
+
+	if (turnFlag)
+	{
+		vertices[0].uv.x = (width + srcX) / ds.vertex.width;
+		vertices[0].uv.y = srcY / ds.vertex.height;
+
+		vertices[1].uv.x = srcX / ds.vertex.width;
+		vertices[1].uv.y = srcY / ds.vertex.height;
+
+		vertices[2].uv.x = (width + srcX) / ds.vertex.width;
+		vertices[2].uv.y = (height + srcY) / ds.vertex.height;
+
+		vertices[3].uv.x = srcX / ds.vertex.width;;
+		vertices[3].uv.y = (height + srcY) / ds.vertex.height;
+	}
+
+	D3D11_MAPPED_SUBRESOURCE mappedsub = {};
+	result = dev.Context()->Map(ds.vb, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedsub);
+	memcpy(mappedsub.pData, vertices, sizeof(Vertex2D) * 4);
+	dev.Context()->Unmap(ds.vb, 0);
+
+
+	unsigned int offset = 0;
+	unsigned int stride = sizeof(Vertex2D);
+
+	dev.Context()->IASetPrimitiveTopology((D3D11_PRIMITIVE_TOPOLOGY)ds.topology);
+	dev.Context()->VSSetShader(ds.vs, nullptr, 0);
+	dev.Context()->PSSetShader(ds.ps, nullptr, 0);
+	dev.Context()->IASetInputLayout(ds.layout);
+	dev.Context()->PSSetShaderResources(0, 1, &ds.texture);
+	dev.Context()->IASetVertexBuffers(0, 1, &ds.vb, &ds.stride, &ds.offset);
+
+	dev.Context()->Draw(ds.drawNum, 0);
 }
 
 void
@@ -831,7 +925,7 @@ Graphic::DrawExtendGraph(float lx, float ly, float rx, float ry, DrawingStructur
 
 void
 Graphic::DrawRectExtendGraph(float destLX, float destLY, float destRX, float destRY, int srcX, int srcY,
-	int width, int height, int graphHandle, bool transFlag, bool trunFlag)
+	int width, int height, int graphHandle, bool transFlag, bool turnFlag)
 {
 	HRESULT result;
 	DeviceDx11& dev = DeviceDx11::Instance();
@@ -845,11 +939,6 @@ Graphic::DrawRectExtendGraph(float destLX, float destLY, float destRX, float des
 
 	Vertex2D vertices[4];
 
-	int turn = 1;
-	if (trunFlag)
-	{
-		turn = -1;
-	}
 	WindowControl& wc = WindowControl::Instance();
 
 	//ウィンドウ座標系を-1～1にクランプ
@@ -866,32 +955,47 @@ Graphic::DrawRectExtendGraph(float destLX, float destLY, float destRX, float des
 
 
 	//左上
-	vertices[0].pos.x = (fx - fw) * turn;
+	vertices[0].pos.x = (fx - fw);
 	vertices[0].pos.y = fy + fh;
 	vertices[0].pos.z = 0;
 	vertices[0].uv.x = srcX / t.width;
 	vertices[0].uv.y = srcY / t.height;
 
 	//右上
-	vertices[1].pos.x = (fx + fw) * turn;
+	vertices[1].pos.x = (fx + fw);
 	vertices[1].pos.y = fy + fh;
 	vertices[1].pos.z = 0;
 	vertices[1].uv.x = (width + srcX) / t.width;
 	vertices[1].uv.y = srcY / t.height;
 
 	//左下
-	vertices[2].pos.x = (fx - fw) * turn;
+	vertices[2].pos.x = (fx - fw);
 	vertices[2].pos.y = fy - fh;
 	vertices[2].pos.z = 0;
 	vertices[2].uv.x = srcX / t.width;;
 	vertices[2].uv.y = (height + srcY) / t.height;
 
 	//右下
-	vertices[3].pos.x = (fx + fw) * turn;
+	vertices[3].pos.x = (fx + fw);
 	vertices[3].pos.y = fy - fh;
 	vertices[3].pos.z = 0;
 	vertices[3].uv.x = (width + srcX) / t.width;
 	vertices[3].uv.y = (height + srcY) / t.height;
+
+	if (turnFlag)
+	{
+		vertices[0].uv.x = (width + srcX) / t.width;
+		vertices[0].uv.y = srcY / t.height;
+
+		vertices[1].uv.x = srcX / t.width;
+		vertices[1].uv.y = srcY / t.height;
+
+		vertices[2].uv.x = (width + srcX) / t.width;
+		vertices[2].uv.y = (height + srcY) / t.height;
+
+		vertices[3].uv.x = srcX / t.width;;
+		vertices[3].uv.y = (height + srcY) / t.height;
+	}
 
 	//頂点バッファの作成
 	D3D11_BUFFER_DESC bufdesc = {};
@@ -934,4 +1038,85 @@ Graphic::DrawRectExtendGraph(float destLX, float destLY, float destRX, float des
 	//ds.drawNum = 4;
 	//ds.vb = vb;
 
+}
+
+void 
+Graphic::DrawRectExtendGraph(float destLX, float destLY, float destRX, float destRY, int srcX, int srcY,
+	int width, int height, DrawingStructure ds, bool transFlag, bool turnFlag)
+{
+	HRESULT result;
+	DeviceDx11& dev = DeviceDx11::Instance();
+
+	Vertex2D vertices[4];
+
+	WindowControl& wc = WindowControl::Instance();
+
+	//ウィンドウ座標系を-1～1にクランプ
+	float w = destRX - destLX;
+	float h = destRY - destLY;
+
+	float x = destLX + w / 2;
+	float y = destLY + h / 2;
+	float fx = (x - wc.WindowWidth() / 2) / (wc.WindowWidth() / 2);
+	float fy = ((y - wc.WindowHeight() / 2) / (wc.WindowHeight() / 2)) * -1;
+
+	float fw = ((float)w / 2) / ((float)wc.WindowWidth() / 2);
+	float fh = ((float)h / 2) / ((float)wc.WindowHeight() / 2);
+
+
+	//左上
+	vertices[0].pos.x = (fx - fw);
+	vertices[0].pos.y = fy + fh;
+	vertices[0].pos.z = 0;
+	vertices[0].uv.x = srcX / ds.vertex.width;
+	vertices[0].uv.y = srcY / ds.vertex.height;
+
+	//右上
+	vertices[1].pos.x = (fx + fw);
+	vertices[1].pos.y = fy + fh;
+	vertices[1].pos.z = 0;
+	vertices[1].uv.x = (width + srcX) / ds.vertex.width;
+	vertices[1].uv.y = srcY / ds.vertex.height;
+
+	//左下
+	vertices[2].pos.x = (fx - fw);
+	vertices[2].pos.y = fy - fh;
+	vertices[2].pos.z = 0;
+	vertices[2].uv.x = srcX / ds.vertex.width;;
+	vertices[2].uv.y = (height + srcY) / ds.vertex.height;
+
+	//右下
+	vertices[3].pos.x = (fx + fw);
+	vertices[3].pos.y = fy - fh;
+	vertices[3].pos.z = 0;
+	vertices[3].uv.x = (width + srcX) / ds.vertex.width;
+	vertices[3].uv.y = (height + srcY) / ds.vertex.height;
+
+	if (turnFlag)
+	{
+		vertices[0].uv.x = (width + srcX) / ds.vertex.width;
+		vertices[0].uv.y = srcY / ds.vertex.height;
+
+		vertices[1].uv.x = srcX / ds.vertex.width;
+		vertices[1].uv.y = srcY / ds.vertex.height;
+
+		vertices[2].uv.x = (width + srcX) / ds.vertex.width;
+		vertices[2].uv.y = (height + srcY) / ds.vertex.height;
+
+		vertices[3].uv.x = srcX / ds.vertex.width;;
+		vertices[3].uv.y = (height + srcY) / ds.vertex.height;
+	}
+	D3D11_MAPPED_SUBRESOURCE mappedsub = {};
+	result = dev.Context()->Map(ds.vb, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedsub);
+	memcpy(mappedsub.pData, vertices, sizeof(Vertex2D) * 4);
+	dev.Context()->Unmap(ds.vb, 0);
+
+	dev.Context()->IASetPrimitiveTopology((D3D11_PRIMITIVE_TOPOLOGY)ds.topology);
+	dev.Context()->VSSetShader(ds.vs, nullptr, 0);
+	dev.Context()->PSSetShader(ds.ps, nullptr, 0);
+	dev.Context()->IASetInputLayout(ds.layout);
+	dev.Context()->PSSetShaderResources(0, 1, &ds.texture);
+	dev.Context()->IASetVertexBuffers(0, 1, &ds.vb, &ds.stride, &ds.offset);
+
+	dev.Context()->Draw(ds.drawNum, 0);
 }

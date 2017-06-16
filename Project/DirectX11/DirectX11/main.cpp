@@ -560,12 +560,12 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nC
 		Renderer::Instance().SetZBuffer(false);
 		DeviceDx11::Instance().SetCullingFlg(false);
 
-
-		for (int i = 0; i < 1000; i++)
+		for (int i = 0; i < 200; i++)
 		{
 			//graphic.DrawGraph(x, i, ds);
-			graphic.DrawExtendGraph(x, 0, 1000, 700, ds);
-
+			//graphic.DrawExtendGraph(x, 0, 1000, 700, dsBuf[0]);
+			graphic.DrawRectGraph(x, 0, 100, 100, 300, 300, ds, true, true);
+			//graphic.DrawRectExtendGraph(0, 0, 100, 100, 100, 200, 400, 400, ds, true, true);
 		}
 		//graphic.DrawExtendGraph(0, 0, 1000, 700, ds);
 		x++;
@@ -576,7 +576,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nC
 		//GraphList::Instance().Add(graphic.DrawGraph(0, 0, handle));
 
 		//Ô
-		//gg.DrawBox(50, 50, 100, 100, GetColor(255,0,0), true);
+		gg.DrawBox(50, 50, 100, 100, GetColor(255,0,0), true);
 		//—Î
 		//gg.DrawBox(100, 50, 150, 100, GetColor(0, 255, 0), true);
 		//Â
