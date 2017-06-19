@@ -36,6 +36,14 @@ public:
 
 	void ChangeScene(Scene* scene);
 
+	//すべてのデータの更新
 	void DataUpdate(SaveData& data);
+
+	//キャラクター情報の更新
+	void CharacterDataUpdate(const CharacterData& data);
+
+	//キャラクター情報のコピー
+	//渡されたCharacterData構造体にキャラクター情報をコピーする
+	void CharacterDataCopy(CharacterData & data);
 };
 

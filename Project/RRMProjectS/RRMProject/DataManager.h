@@ -12,6 +12,12 @@ typedef struct SAVE_DATA
 	int chooseWeaponNum;		//‘I‘ğ‚·‚é‚±‚Æ‚ª‚Å‚«‚é•Ší‚Ì”
 }SaveData;
 
+struct CharacterData
+{
+	unsigned int tool[3];
+	unsigned int weapon[2];
+};
+
 enum class FileType
 {
 	system,

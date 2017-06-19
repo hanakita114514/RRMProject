@@ -75,7 +75,6 @@ MenuScene::MenuUpdate()
 {
 	if (Fade::Instance().IsFadeOutEnd() || !Fade::Instance().IsPause())
 	{
-		
 		if (IsStickUp())
 		{
 			_logoIdx--;
@@ -110,7 +109,8 @@ MenuScene::MenuUpdate()
 			break;
 			case 1:
 			{
-				//Fade::Instance().FadeIn(10.0);
+				_update = &MenuScene::Configuration;
+				Fade::Instance().PauseIn();
 			}
 			break;
 			default:
@@ -229,6 +229,17 @@ MenuScene::GameStart()
 		GameMain::Instance().ChangeScene(new GameScene(_logoState));
 	}
 
+}
+
+void
+MenuScene::Configuration()
+{
+	if (_dinput->IsTriger(KeyType::keyA))
+	{
+		_update = &MenuScene::MenuUpdate;
+	}
+
+	_arrow.SetPos(_logoDefaultPos[_logoIdx]);
 }
 
 void MenuScene::Draw()

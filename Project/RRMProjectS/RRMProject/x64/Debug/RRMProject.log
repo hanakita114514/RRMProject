@@ -1,1 +1,103 @@
-﻿RRMLib_d.lib(RRMLib.obj) : fatal error LNK1112: モジュールのコンピューターの種類 'X86' は対象コンピューターの種類 'x64' と競合しています。
+﻿  TitleScene.cpp
+  Scene.cpp
+  ResultScene.cpp
+  OfficialScene.cpp
+c:\users\1501344\desktop\新しいフォルダー (2)\trunk\project\rrmprojects\rrmproject\officialscene.cpp(22): warning C4244: '引数': 'time_t' から 'unsigned int' への変換です。データが失われる可能性があります。
+c:\users\1501344\desktop\新しいフォルダー (2)\trunk\project\rrmprojects\rrmproject\officialscene.cpp(37): warning C4244: '=': 'int' から 'float' への変換です。データが失われる可能性があります。
+c:\users\1501344\desktop\新しいフォルダー (2)\trunk\project\rrmprojects\rrmproject\officialscene.cpp(38): warning C4244: '=': 'int' から 'float' への変換です。データが失われる可能性があります。
+c:\users\1501344\desktop\新しいフォルダー (2)\trunk\project\rrmprojects\rrmproject\officialscene.cpp(40): warning C4244: '引数': 'int' から 'float' への変換です。データが失われる可能性があります。
+  MenuScene.cpp
+  main.cpp
+  XInput.cpp
+  UpEffect.cpp
+c:\users\1501344\desktop\新しいフォルダー (2)\trunk\project\rrmprojects\rrmproject\upeffect.cpp(75): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+  UIManager.cpp
+  UIFactory.cpp
+  UI.cpp
+  Timer.cpp
+  TestSpell.cpp
+  Spell.cpp
+  SoundManager.cpp
+  SlowDown.cpp
+  SinBullet.cpp
+  ShootingStar.cpp
+  RectObj.cpp
+  Rect.cpp
+  コードを生成中...
+  コンパイル中...
+  PowerPoint.cpp
+  Player.cpp
+c:\users\1501344\desktop\新しいフォルダー (2)\trunk\project\rrmprojects\rrmproject\player.cpp(345): warning C4244: '引数': 'int' から 'float' への変換です。データが失われる可能性があります。
+  Object.cpp
+  NormalBullet.cpp
+  Mushroom.cpp
+c:\users\1501344\desktop\新しいフォルダー (2)\trunk\project\rrmprojects\rrmproject\mushroom.cpp(30): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+  MultihitProtect.cpp
+  Meat.cpp
+c:\users\1501344\desktop\新しいフォルダー (2)\trunk\project\rrmprojects\rrmproject\meat.cpp(30): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+  MapRendar.cpp
+c:\users\1501344\desktop\新しいフォルダー (2)\trunk\project\rrmprojects\rrmproject\maprendar.cpp(83): warning C4244: '引数': 'unsigned int' から 'float' への変換です。データが失われる可能性があります。
+c:\users\1501344\desktop\新しいフォルダー (2)\trunk\project\rrmprojects\rrmproject\maprendar.cpp(85): warning C4244: '引数': 'const int' から 'float' への変換です。データが失われる可能性があります。
+  MapManager.cpp
+  Lazer.cpp
+  HPBar.cpp
+c:\users\1501344\desktop\新しいフォルダー (2)\trunk\project\rrmprojects\rrmproject\hpbar.cpp(37): warning C4244: '引数': 'const float' から 'int' への変換です。データが失われる可能性があります。
+  HomingBullet.cpp
+  HitPoint.cpp
+c:\users\1501344\desktop\新しいフォルダー (2)\trunk\project\rrmprojects\rrmproject\hitpoint.cpp(6): warning C4244: '初期化中': 'int' から 'float' への変換です。データが失われる可能性があります。
+c:\users\1501344\desktop\新しいフォルダー (2)\trunk\project\rrmprojects\rrmproject\hitpoint.cpp(17): warning C4244: '=': 'int' から 'float' への変換です。データが失われる可能性があります。
+c:\users\1501344\desktop\新しいフォルダー (2)\trunk\project\rrmprojects\rrmproject\hitpoint.cpp(20): warning C4244: '=': 'int' から 'float' への変換です。データが失われる可能性があります。
+  Hamburger.cpp
+c:\users\1501344\desktop\新しいフォルダー (2)\trunk\project\rrmprojects\rrmproject\hamburger.cpp(29): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+  GraphicLoad.cpp
+  GeneralEffect.cpp
+  GameTime.cpp
+  GameScene.cpp
+  GameoverScene.cpp
+  GameMain.cpp
+c:\users\1501344\desktop\新しいフォルダー (2)\trunk\project\rrmprojects\rrmproject\gamemain.cpp(38): warning C4101: 'saveData': ローカル変数は 1 度も使われていません。
+  コードを生成中...
+c:\users\1501344\desktop\新しいフォルダー (2)\trunk\project\rrmprojects\rrmproject\object.h(34): warning C4172: ローカル変数またはテンポラリのアドレスを返します
+  コンパイル中...
+  Food.cpp
+  File.cpp
+  Fade.cpp
+  EnemyManager.cpp
+  EnemyFactory.cpp
+  Enemy.cpp
+c:\users\1501344\desktop\新しいフォルダー (2)\trunk\project\rrmprojects\rrmproject\enemy.cpp(6): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+  Egg.cpp
+  EffectManager.cpp
+  EffectFactory.cpp
+  Effect.cpp
+  DownEffect.cpp
+c:\users\1501344\desktop\新しいフォルダー (2)\trunk\project\rrmprojects\rrmproject\downeffect.cpp(74): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+  DInput.cpp
+  Digestion.cpp
+  DeffusionBullet.cpp
+  DataManager.cpp
+  Comet.cpp
+  Collision.cpp
+  ClearScene.cpp
+  CircleShot.cpp
+  CircleObj.cpp
+  コードを生成中...
+c:\users\1501344\desktop\新しいフォルダー (2)\trunk\project\rrmprojects\rrmproject\digestion.cpp(37): warning C4700: 初期化されていないローカル変数 'ret' が使用されます
+c:\users\1501344\desktop\新しいフォルダー (2)\trunk\project\rrmprojects\rrmproject\object.h(34): warning C4172: ローカル変数またはテンポラリのアドレスを返します
+c:\users\1501344\desktop\新しいフォルダー (2)\trunk\project\rrmprojects\rrmproject\dinput.cpp(332): warning C4172: ローカル変数またはテンポラリのアドレスを返します: v
+  コンパイル中...
+  CircleBullet.cpp
+  Circle.cpp
+c:\users\1501344\desktop\新しいフォルダー (2)\trunk\project\rrmprojects\rrmproject\circle.cpp(7): warning C4244: '引数': 'int' から 'float' への変換です。データが失われる可能性があります。
+  Camera.cpp
+  BulletManager.cpp
+  BulletFactory.cpp
+  Bullet.cpp
+  Block.cpp
+  BezierBullet.cpp
+  BackgroundRendar.cpp
+  Arrow.cpp
+  AbstractSpell.cpp
+  コードを生成中...
+c:\users\1501344\desktop\新しいフォルダー (2)\trunk\project\rrmprojects\rrmproject\abstractspell.cpp(43): warning C4715: 'AbstractSpell::GetSpell': 値を返さないコントロール パスがあります。
+RRMLib_d.lib(RRMLib.obj) : fatal error LNK1112: モジュールのコンピューターの種類 'X86' は対象コンピューターの種類 'x64' と競合しています。

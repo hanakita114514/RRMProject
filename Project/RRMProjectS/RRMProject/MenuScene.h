@@ -40,6 +40,8 @@ private:
 	void TitleUpdate();
 	void MenuUpdate();
 	void GameStart();
+	void Configuration();
+
 	void Draw();
 	void LogoMove();
 

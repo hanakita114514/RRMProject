@@ -35,7 +35,6 @@ bool GameMain::Init()
 	RRMLib::ChangeFullScreenMode(false);
 	RRMLib::SetWindowSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 
-	SaveData saveData;
 	//if (RRMLib::RRMLib_Init() == -1)  //DXƒ‰ƒCƒuƒ‰ƒŠ‰Šú‰»
 	//{
 	//	return false;
@@ -150,4 +149,20 @@ void
 GameMain::DataUpdate(SaveData& data)
 {
 	_data = data;
+}
+
+void
+GameMain::CharacterDataUpdate(const CharacterData& data)
+{
+	*_data.tool = *data.tool;
+	*_data.weapon = *data.weapon;
+
+	_dataManager.Save(_data);
+}
+
+void
+GameMain::CharacterDataCopy(CharacterData& data)
+{
+	*data.tool = *_data.tool;
+	*data.weapon = *_data.weapon;
 }
