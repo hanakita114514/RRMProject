@@ -1,5 +1,5 @@
 #include "HPBar.h"
-#include "DxLib.h"
+#include "RRMLib.h"
 #include "GraphicLoad.h"
 
 const float HPBAR_MAX = 28.0f;
@@ -20,8 +20,8 @@ HPBar::~HPBar()
 void
 HPBar::Draw(const Position& pos, HitPoint& hp)
 {
-	//DxLib::DrawExtendGraph(12, 10, 40, 16, _gaugeHandle, true);
-	//DxLib::DrawGraph(10, 10, _barHandle, true);
+	//RRMLib::DrawExtendGraph(12, 10, 40, 16, _gaugeHandle, true);
+	//RRMLib::DrawGraph(10, 10, _barHandle, true);
 
 	float offsetX = HPBAR_MAX * ( hp.GetHitPoint() / hp.GetMaxHP());
 	if (offsetX < 0.f)
@@ -33,6 +33,6 @@ HPBar::Draw(const Position& pos, HitPoint& hp)
 		offsetX = HPBAR_MAX;
 	}
 
-	DxLib::DrawExtendGraphF(pos.x + INIT_BAR_POS, pos.y, pos.x + INIT_BAR_POS + offsetX, pos.y + 6, _gaugeHandle, true);
-	DxLib::DrawGraph(pos.x, pos.y, _barHandle, true);
+	RRMLib::DrawExtendGraph(pos.x + INIT_BAR_POS, pos.y, pos.x + INIT_BAR_POS + offsetX, pos.y + 6, _gaugeHandle);
+	RRMLib::DrawGraph(pos.x, pos.y, _barHandle);
 }

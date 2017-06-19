@@ -1,6 +1,6 @@
 #include "SinBullet.h"
 #include <math.h>
-#include <DxLib.h>
+#include <RRMLib.h>
 #include "GameTime.h"
 #include "Mathematics.h"
 

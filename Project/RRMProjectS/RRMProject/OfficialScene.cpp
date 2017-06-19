@@ -1,7 +1,7 @@
 #include "OfficialScene.h"
 #include "GameMain.h"
 #include "TitleScene.h"
-#include <DxLib.h>
+#include <RRMLib.h>
 #include "common.h"
 #include "Fade.h"
 #include <math.h>
@@ -42,21 +42,21 @@ bool OfficialScene::Update()
 	_hp.Damage(1);
 
 	//----------•`‰æ----------------------------------------------------------------------------
-	DrawFormatString(100, 100, 0xffffffff, "Official Scene");
+	//DrawFormatString(100, 100, 0xffffffff, "Official Scene");
 
  	em.Update();
 	em.Draw(Vector2(0, 0));
 
 
-	if (CheckHitKey(KEY_INPUT_RETURN) && Fade::Instance().IsWait())
-	{
-		Fade::Instance().FadeIn(5.0f);
-	}
+
 	if (Fade::Instance().IsFadeInEnd())
 	{
 		GameMain::Instance().ChangeScene(new TitleScene());
 	}
-
+	if (Fade::Instance().IsWait())
+	{
+		Fade::Instance().FadeIn(5.0f);
+	}
 	return true;
 }
 

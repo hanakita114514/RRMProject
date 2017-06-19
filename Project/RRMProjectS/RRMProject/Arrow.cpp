@@ -1,7 +1,7 @@
 #include "Arrow.h"
 #include "GraphicLoad.h"
 #include "Rect.h"
-#include <DxLib.h>
+#include <RRMLib.h>
 
 Arrow::Arrow()
 {
@@ -17,7 +17,7 @@ Arrow::~Arrow()
 
 void Arrow::Draw()
 {
-	DxLib::DrawGraph((int)_pos.x, (int)_pos.y, _arrowHandle, true);
+	RRMLib::DrawGraph((int)_pos.x, (int)_pos.y, _arrowHandle);
 }
 
 void Arrow::SetPos(Position position)

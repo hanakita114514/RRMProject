@@ -1,5 +1,5 @@
 #include "DeffusionBullet.h"
-#include <DxLib.h>
+#include <RRMLib.h>
 #include <math.h>
 #include <time.h>
 #include "GameTime.h"

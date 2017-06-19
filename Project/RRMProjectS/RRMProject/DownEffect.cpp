@@ -1,6 +1,6 @@
 #include "DownEffect.h"
 #include "GameTime.h"
-#include <DxLib.h>
+#include <RRMLib.h>
 
 //エフェクト一つ当たりの大きさ
 const int EFFECT_SIZE_W = 256;
@@ -67,9 +67,9 @@ DownEffect::Draw(const Vector2& offset)
 	drawPos.x = _pos.x - offset.x - (EFFECT_SIZE_W / 2) * _size.x;
 	drawPos.y = _pos.y - offset.y - (EFFECT_SIZE_H / 2) * _size.y;
 	
-	//DxLib::DrawRectGraph(drawPos.x, drawPos.y, _uv.x, _uv.y,
+	//RRMLib::DrawRectGraph(drawPos.x, drawPos.y, _uv.x, _uv.y,
 	//	EFFECT_SIZE_W, EFFECT_SIZE_H, _handle, true, false);
 
-	DxLib::DrawRectExtendGraphF(drawPos.x, drawPos.y, drawPos.x + EFFECT_SIZE_W * _size.x, drawPos.y + EFFECT_SIZE_H * _size.y,
-		_uv.x, _uv.y, EFFECT_SIZE_W, EFFECT_SIZE_H, _handle, true);
+	RRMLib::DrawRectExtendGraph(drawPos.x, drawPos.y, drawPos.x + EFFECT_SIZE_W * _size.x, drawPos.y + EFFECT_SIZE_H * _size.y,
+		_uv.x, _uv.y, EFFECT_SIZE_W, EFFECT_SIZE_H, _handle, true, false);
 }

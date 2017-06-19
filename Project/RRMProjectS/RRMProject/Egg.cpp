@@ -1,5 +1,5 @@
 #include "Egg.h"
-#include <DxLib.h>
+#include <RRMLib.h>
 #include "GameMain.h"
 #include "MapManager.h"
 #include <math.h>
@@ -68,14 +68,14 @@ Egg::AliveUpdate()
 		_vel.y += GRAVITY;
 	}
 
-	if (CheckHitKey(KEY_INPUT_LEFT))
-	{
-		_vel.x = -2;
-	}
-	else if (CheckHitKey(KEY_INPUT_RIGHT))
-	{
-		_vel.x = 2;
-	}
+	//if (CheckHitKey(KEY_INPUT_LEFT))
+	//{
+	//	_vel.x = -2;
+	//}
+	//else if (CheckHitKey(KEY_INPUT_RIGHT))
+	//{
+	//	_vel.x = 2;
+	//}
 
 
 	(this->*_state)();
@@ -112,7 +112,7 @@ void Egg::Draw(const Vector2& offset)
 		drawPos.y = _rc.pos.y - offset.y;
 
 		_hpbar.Draw(Position(drawPos.x + 16, drawPos.y - 16), _hp);
-		DxLib::DrawGraph((int)drawPos.x, (int)drawPos.y, _img[0], true);
+		RRMLib::DrawGraph((int)drawPos.x, (int)drawPos.y, _img[0]);
 	}
 }
 

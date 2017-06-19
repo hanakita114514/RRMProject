@@ -1,5 +1,5 @@
 #include "Meat.h"
-#include <DxLib.h>
+#include <RRMLib.h>
 
 Meat::Meat()
 {
@@ -27,7 +27,7 @@ void Meat::Update()
 
 void Meat::Draw()
 {
-	DxLib::DrawGraph(_rc.pos.x, _rc.pos.y, _handle, true);
+	RRMLib::DrawGraph(_rc.pos.x, _rc.pos.y, _handle);
 }
 
 void Meat::Anim()

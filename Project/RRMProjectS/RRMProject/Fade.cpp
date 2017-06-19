@@ -1,5 +1,5 @@
 #include "Fade.h"
-#include <DxLib.h>
+#include <RRMLib.h>
 
 
 Fade::Fade()
@@ -20,7 +20,7 @@ Fade::Init()
 	_alpha = 0;
 	_fadeSpeed = 0;
 	_func = &Fade::Wait;
-	_handle = DxLib::LoadGraph("Resource/img/BackGround/Fade.png");
+	_handle = RRMLib::LoadGraph("Resource/img/BackGround/Fade.png");
 	_isWait = false;
 	_isFadeInEnd = false;
 	_isFadeOutEnd = false;
@@ -71,9 +71,9 @@ Fade::Update()
 void 
 Fade::Draw()
 {
-	SetDrawBlendMode(DX_BLENDMODE_ALPHA, (int)_alpha);
-	DrawGraph(0, 0, _handle, false);
-	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+	RRMLib::SetBlendMode(RRM_BLENDMODE_ALPHA, (int)_alpha);
+	RRMLib::DrawGraph(0, 0, _handle);
+	RRMLib::SetBlendMode(RRM_BLENDMODE_NONE, 0);
 }
 
 void  

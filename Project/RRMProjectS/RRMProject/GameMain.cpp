@@ -13,6 +13,7 @@
 #include "EnemyFactory.h"
 #include "GameScene.h"
 #include "MenuScene.h"
+#include <RRMLib.h>
 
 
 GameMain::GameMain()
@@ -26,14 +27,22 @@ GameMain::~GameMain()
 
 bool GameMain::Init()
 {
-	SaveData saveData;
-	if (DxLib::DxLib_Init() == -1)  //DXライブラリ初期化
+
+	if(RRMLib::RRMLib_Init() == -1)
 	{
 		return false;
 	}
-	DxLib::ChangeWindowMode(true);
-	DxLib::SetGraphMode(WINDOW_WIDTH, WINDOW_HEIGHT, COLOR_BIT);
-	DxLib::SetDrawScreen(DX_SCREEN_BACK);
+	RRMLib::ChangeFullScreenMode(false);
+	RRMLib::SetWindowSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+
+	SaveData saveData;
+	//if (RRMLib::RRMLib_Init() == -1)  //DXライブラリ初期化
+	//{
+	//	return false;
+	//}
+	//RRMLib::ChangeWindowMode(true);
+	//RRMLib::SetGraphMode(WINDOW_WIDTH, WINDOW_HEIGHT, COLOR_BIT);
+	//RRMLib::SetDrawScreen(DX_SCREEN_BACK);
 
 	_dataManager.Load(_data);
 
@@ -103,9 +112,9 @@ void GameMain::GameLoop()
 
 	DInput _dinput(DX_INPUT_PAD1);
 
-	while (ProcessMessage() == 0 && loopOk)
+	while (RRMLib::ProcessMessage() == 0 && loopOk)
 	{
-		DxLib::ClearDrawScreen();
+		RRMLib::ClearDrawScreen();
 
 
 		//更新-----------------------
@@ -116,7 +125,7 @@ void GameMain::GameLoop()
 		//描画-----------------------
 		Fade::Instance().Draw();
 
-		DxLib::ScreenFlip();
+		RRMLib::ScreenFlip();
 
 		if (CheckHitKey(KEY_INPUT_ESCAPE))
 		{
@@ -128,7 +137,7 @@ void GameMain::GameLoop()
 
 void GameMain::Terminate()
 {
-	DxLib::DxLib_End();
+	RRMLib::RRMLib_End();
 }
 
 void GameMain::ChangeScene(Scene* scene)

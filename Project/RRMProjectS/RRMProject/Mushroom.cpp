@@ -1,5 +1,5 @@
 #include "Mushroom.h"
-#include <DxLib.h>
+#include <RRMLib.h>
 
 Mushroom::Mushroom()
 {
@@ -27,7 +27,7 @@ void Mushroom::Update()
 
 void Mushroom::Draw(const Vector2& offset)
 {
-	DxLib::DrawGraph(_rc.pos.x, _rc.pos.y, _handle, true);
+	RRMLib::DrawGraph(_rc.pos.x, _rc.pos.y, _handle);
 }
 
 void Mushroom::Anim()

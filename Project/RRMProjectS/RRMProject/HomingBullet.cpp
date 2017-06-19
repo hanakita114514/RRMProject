@@ -1,6 +1,6 @@
 #include "HomingBullet.h"
 #include <math.h>
-#include <DxLib.h>
+#include <RRMLib.h>
 #include "GameTime.h"
 #include "EnemyManager.h"
 

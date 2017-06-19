@@ -1,6 +1,6 @@
 #include "GeneralEffect.h"
 #include "GameTime.h"
-#include <DxLib.h>
+#include <RRMLib.h>
 #include <vector>
 
 GeneralEffect::GeneralEffect(int handle, const Position& pos,
@@ -81,9 +81,9 @@ GeneralEffect::Draw(const Vector2& offset)
 	drawPos.x = _pos.x - offset.x - (EFFECT_SIZE_W / 2) * _size.x;
 	drawPos.y = _pos.y - offset.y - (EFFECT_SIZE_H / 2) * _size.y;
 
-	//DxLib::DrawRectGraph(drawPos.x, drawPos.y, _uv.x, _uv.y,
+	//RRMLib::DrawRectGraph(drawPos.x, drawPos.y, _uv.x, _uv.y,
 	//	EFFECT_SIZE_W, EFFECT_SIZE_H, _handle, true, false);
 
-	DxLib::DrawRectExtendGraphF(drawPos.x, drawPos.y, drawPos.x + EFFECT_SIZE_W * _size.x, drawPos.y + EFFECT_SIZE_H * _size.y,
-		(int)_uv.x, (int)_uv.y, (int)EFFECT_SIZE_W, (int)EFFECT_SIZE_H, _handle, true);
+	RRMLib::DrawRectExtendGraph(drawPos.x, drawPos.y, drawPos.x + EFFECT_SIZE_W * _size.x, drawPos.y + EFFECT_SIZE_H * _size.y,
+		(int)_uv.x, (int)_uv.y, (int)EFFECT_SIZE_W, (int)EFFECT_SIZE_H, _handle, true, false);
 }

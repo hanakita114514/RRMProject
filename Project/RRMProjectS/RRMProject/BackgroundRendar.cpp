@@ -1,6 +1,6 @@
 #include "BackgroundRendar.h"
 #include "File.h"
-#include "DxLib.h"
+#include "RRMLib.h"
 #include "common.h"
 #include <iostream>
 
@@ -18,7 +18,7 @@ bool BackgroundRendar::Initialize(const char* imageFilePath)
 
 	_filePath = imageFilePath;
 
-	_bgImage = DxLib::LoadGraph(_filePath);
+	_bgImage = RRMLib::LoadGraph(_filePath);
 	if (_bgImage == -1)		//ÉGÉâÅ[ÇµÇΩÇ©ÅH
 	{
 		return false;
@@ -29,5 +29,5 @@ bool BackgroundRendar::Initialize(const char* imageFilePath)
 
 void BackgroundRendar::Draw()
 {
-	DxLib::DrawExtendGraph(0, 0, WINDOW_WIDTH + 1, WINDOW_HEIGHT + 1, _bgImage, true);
+	RRMLib::DrawExtendGraph(0, 0, WINDOW_WIDTH + 1, WINDOW_HEIGHT + 1, _bgImage);
 }

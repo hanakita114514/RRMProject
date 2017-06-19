@@ -1,5 +1,4 @@
 #include "MenuScene.h"
-#include <DxLib.h>
 #include "DInput.h"
 #include "Fade.h"
 #include "GameMain.h"
@@ -9,6 +8,7 @@
 #include <math.h>
 #include "Circle.h"
 #include "Mathematics.h"
+#include <RRMLib.h>
 
 const char* Stage[(int)Stage::stageMax] = 
 {
@@ -21,12 +21,12 @@ const char* Stage[(int)Stage::stageMax] =
 
 MenuScene::MenuScene()
 {
-	_titleHandle = DxLib::LoadGraph("Resource/img/title.png");
+	_titleHandle = RRMLib::LoadGraph("Resource/img/title.png");
 	_update = &MenuScene::TitleUpdate;
 	_dinput = new DInput(0);
 	for (int i = 0; i < (int)(LogoIdx::logoMax); i++)
 	{
-		_logo[i].image = DxLib::LoadGraph("Resource/img/UI/Arrow_Smile.png");
+		_logo[i].image = RRMLib::LoadGraph("Resource/img/UI/Arrow_Smile.png");
 		_logo[i].rc.pos = Vector2((float)(WINDOW_WIDTH / 3), (float)(WINDOW_HEIGHT / 3 * (i + 1)));
 		_logo[i].rc.h = LogoHeight;
 		_logo[i].rc.w = LogoWidth;
@@ -37,7 +37,7 @@ MenuScene::MenuScene()
 
 	_arrow.SetPos(_logo[0].rc.pos);
 
-	_bg = DxLib::LoadGraph("Resource/img/BackGround/mori.jpg");
+	_bg = RRMLib::LoadGraph("Resource/img/BackGround/mori.jpg");
 
 	right = false;
 	left = false;
@@ -58,7 +58,7 @@ MenuScene::~MenuScene()
 void 
 MenuScene::TitleUpdate()
 {
-	DxLib::DrawGraph(0, 0, _titleHandle, true);
+	RRMLib::DrawGraph(0, 0, _titleHandle);
 	if (_dinput->Start())
 	{
 		Fade::Instance().FadeIn(5.0f);
@@ -133,7 +133,7 @@ MenuScene::MenuUpdate()
 	_arrow.Draw();
 	for (int i = 0; i <(int)(LogoIdx::logoMax); i++)
 	{
-		DxLib::DrawGraph((int)_logo[i].rc.pos.x, (int)_logo[i].rc.pos.y, _logo[i].image, true);
+		RRMLib::DrawGraph((int)_logo[i].rc.pos.x, (int)_logo[i].rc.pos.y, _logo[i].image);
 	}
 }
 
@@ -213,9 +213,9 @@ MenuScene::GameStart()
 
 		for (int i = 0; i < (int)(LogoIdx::logoMax); i++)
 		{
-			DxLib::DrawGraph((int)_logo[i].rc.pos.x, (int)_logo[i].rc.pos.y, _logo[i].image, true);
+			RRMLib::DrawGraph((int)_logo[i].rc.pos.x, (int)_logo[i].rc.pos.y, _logo[i].image);
 		}
-		DrawString(0, 0, Stage[_stageId], 0xffffff);
+//		DrawString(0, 0, Stage[_stageId], 0xffffff);
 	}
 
 	LogoMove();
@@ -233,7 +233,7 @@ MenuScene::GameStart()
 
 void MenuScene::Draw()
 {
-	DxLib::DrawGraph(0, 0, _bg, true);
+	RRMLib::DrawGraph(0, 0, _bg);
 }
 
 void

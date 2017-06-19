@@ -17,17 +17,17 @@ DInput::DInput(int padType)
 {
 	_padType = padType;
 
-	int padNumber[4] =
-	{
-		DX_INPUT_PAD1,
-		DX_INPUT_PAD2,
-		DX_INPUT_PAD3,
-		DX_INPUT_PAD4,
-	};
+	//int padNumber[4] =
+	//{
+	//	DX_INPUT_PAD1,
+	//	DX_INPUT_PAD2,
+	//	DX_INPUT_PAD3,
+	//	DX_INPUT_PAD4,
+	//};
 
-	_padType = padNumber[padType];
+	_padType = 0;
 
-	DINPUT_JOYSTATE d = {};
+	RRMLib::DJOYPAD_STATE d = {};
 
 	//ÉLÅ[óöóÇÃèâä˙âª
 	for (int i = 0; i < HISTORY_NUM; i++)
@@ -75,7 +75,7 @@ DInput::Update()
 bool
 DInput::IsTriger(const KeyType& keyType)
 {
-	if (GetKey(_pad.Buttons, keyType) & ~GetKey(_history[0].Buttons, keyType))
+	if (GetKey(_pad.buttons, keyType) & ~GetKey(_history[0].buttons, keyType))
 	{
 		return true;;
 	}
@@ -95,7 +95,7 @@ DInput::IsTriger(const KeyType& keyType)
 bool 
 DInput::IsPress(const KeyType& keyType)
 {
-	if (GetKey(_pad.Buttons, keyType))
+	if (GetKey(_pad.buttons, keyType))
 	{
 		return true;
 	}
@@ -105,7 +105,7 @@ DInput::IsPress(const KeyType& keyType)
 bool 
 DInput::IsRelease(const KeyType& keyType)
 {
-	if (~GetKey(_pad.Buttons, keyType) & GetKey(_history[0].Buttons, keyType))
+	if (~GetKey(_pad.buttons, keyType) & GetKey(_history[0].buttons, keyType))
 	{
 		return true;;
 	}
@@ -136,7 +136,7 @@ DInput::IsRepeat(const KeyType& keyType)
 bool 
 DInput::Left()
 {
-	if (_pad.X < 0)
+	if (_pad.x < 0)
 	{
 		return true;
 	}
@@ -146,7 +146,7 @@ DInput::Left()
 bool 
 DInput::Right()
 {
-	if (_pad.X > 0)
+	if (_pad.x > 0)
 	{
 		return true;
 	}
@@ -156,7 +156,7 @@ DInput::Right()
 bool 
 DInput::Up()
 {
-	if (_pad.Y < 0)
+	if (_pad.y < 0)
 	{
 		return true;
 	}
@@ -166,7 +166,7 @@ DInput::Up()
 bool 
 DInput::Down()
 {
-	if (_pad.Y > 0)
+	if (_pad.y > 0)
 	{
 		return true;
 	}
@@ -178,7 +178,7 @@ DInput::Down()
 bool
 DInput::LeftTriger()
 {
-	if (_pad.Z > 500)
+	if (_pad.z > 500)
 	{
 		return true;
 	}
@@ -188,7 +188,7 @@ DInput::LeftTriger()
 bool
 DInput::RightTriger()
 {
-	if (_pad.Z < -500)
+	if (_pad.z < -500)
 	{
 		return true;
 	}
@@ -198,9 +198,9 @@ DInput::RightTriger()
 bool 
 DInput::Nosedive()
 {
-	if (_pad.Y - _history[0].Y > 300)
+	if (_pad.y - _history[0].y > 300)
 	{
-		if (_pad.Y > 600)
+		if (_pad.y > 600)
 		{
 			return true;
 		}
@@ -327,7 +327,7 @@ Vector2&
 DInput::Dir()
 {
 	Vector2 v;
-	v.x = _pad.X / 1000.0f;
-	v.y = _pad.Y / 1000.0f;
+	v.x = _pad.x / 1000.0f;
+	v.y = _pad.y / 1000.0f;
 	return v;
 }

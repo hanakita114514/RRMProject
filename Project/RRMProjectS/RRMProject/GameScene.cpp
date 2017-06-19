@@ -1,5 +1,5 @@
 #include "GameScene.h"
-#include <DxLib.h>
+#include <RRMLib.h>
 #include "MapManager.h"
 #include "Block.h"
 #include "Collision.h"
@@ -240,7 +240,7 @@ void GameScene::StageClear()
 		Fade::Instance().FadeIn(10.0);
 	}
 
-	DxLib::DrawFormatString(0, 0, 0xffffffff, "GameScene");
+//	RRMLib::DrawFormatString(0, 0, 0xffffffff, "GameScene");
 
 	if (_sceneChangeFlag)
 	{

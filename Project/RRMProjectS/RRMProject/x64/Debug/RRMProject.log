@@ -1,6 +1,1 @@
-﻿  File.cpp
-c:\users\1501344\desktop\新しいフォルダー (2)\trunk\project\rrmprojects\rrmproject\file.cpp(68): warning C4101: 'y': ローカル変数は 1 度も使われていません。
-c:\users\1501344\desktop\新しいフォルダー (2)\trunk\project\rrmprojects\rrmproject\file.cpp(68): warning C4101: 'x': ローカル変数は 1 度も使われていません。
-     ライブラリ C:\Users\1501344\Desktop\新しいフォルダー (2)\trunk\Project\RRMProjectS\x64\Debug\RRMProject.lib とオブジェクト C:\Users\1501344\Desktop\新しいフォルダー (2)\trunk\Project\RRMProjectS\x64\Debug\RRMProject.exp を作成中
-  RRMProject.vcxproj -> C:\Users\1501344\Desktop\新しいフォルダー (2)\trunk\Project\RRMProjectS\x64\Debug\RRMProject.exe
-  RRMProject.vcxproj -> C:\Users\1501344\Desktop\新しいフォルダー (2)\trunk\Project\RRMProjectS\x64\Debug\RRMProject.pdb (Full PDB)
+﻿RRMLib_d.lib(RRMLib.obj) : fatal error LNK1112: モジュールのコンピューターの種類 'X86' は対象コンピューターの種類 'x64' と競合しています。

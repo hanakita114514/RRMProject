@@ -1,5 +1,5 @@
 #include "Hamburger.h"
-#include <DxLib.h>
+#include <RRMLib.h>
 
 Hamburger::Hamburger()
 {
@@ -26,7 +26,7 @@ void Hamburger::Update()
 
 void Hamburger::Draw()
 {
-	DxLib::DrawGraph(_rc.pos.x, _rc.pos.y, _handle, true);
+	RRMLib::DrawGraph(_rc.pos.x, _rc.pos.y, _handle);
 }
 
 void Hamburger::Anim()

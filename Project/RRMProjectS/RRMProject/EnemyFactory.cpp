@@ -1,13 +1,13 @@
 #include "EnemyFactory.h"
 #include "Egg.h"
 #include "Mushroom.h"
-#include <DxLib.h>
+#include <RRMLib.h>
 
 EnemyFactory::EnemyFactory()
 {
-	_eggImg[0] = DxLib::LoadGraph("Resource/img/Enemy/Tamaran1.bmp");
-	_eggImg[1] = DxLib::LoadGraph("Resource/img/Enemy/Tamaran2.bmp");
-	_eggImg[2] = DxLib::LoadGraph("Resource/img/Enemy/Tamaran3.bmp");
+	_eggImg[0] = RRMLib::LoadGraph("Resource/img/Enemy/Tamaran1.bmp");
+	_eggImg[1] = RRMLib::LoadGraph("Resource/img/Enemy/Tamaran2.bmp");
+	_eggImg[2] = RRMLib::LoadGraph("Resource/img/Enemy/Tamaran3.bmp");
 
 }
 

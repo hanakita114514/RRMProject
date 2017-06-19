@@ -2,7 +2,7 @@
 #include "HomingBullet.h"
 #include "NormalBullet.h"
 #include "SinBullet.h"
-#include <DxLib.h>
+#include <RRMLib.h>
 #include "Lazer.h"
 #include "BezierBullet.h"
 #include "DeffusionBullet.h"
@@ -10,7 +10,7 @@
 
 BulletFactory::BulletFactory()
 {
-	_handle = DxLib::LoadGraph("Resource/img/Bullet/bullet.png");
+	_handle = RRMLib::LoadGraph("Resource/img/Bullet/bullet.png");
 }
 
 

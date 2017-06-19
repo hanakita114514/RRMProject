@@ -1,6 +1,6 @@
 #include "MapRendar.h"
 #include "File.h"
-#include <DxLib.h>
+#include <RRMLib.h>
 #include <string.h>
 
 MapRendar::MapRendar()
@@ -15,7 +15,7 @@ MapRendar::~MapRendar()
 void
 MapRendar::Initialize(const char* mapFilePath)
 {
-	DxLib::LoadDivGraph("Resource/img/MapChip1.png", MAP_IMAGE_ALL_NUM, MAP_IMAGE_X_NUM, MAP_IMAGE_Y_NUM, 32, 32, _mapImage);
+	RRMLib::LoadDivGraph("Resource/img/MapChip1.png", MAP_IMAGE_ALL_NUM, MAP_IMAGE_X_NUM, MAP_IMAGE_Y_NUM, 32, 32, _mapImage);
 
 	for (int i = 0; i < MAP_ARRAY_SIZE_Y; i++)
 	{

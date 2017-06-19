@@ -1,4 +1,4 @@
-#include <DxLib.h>
+#include <RRMLib.h>
 #include "Player.h"
 #include "BulletManager.h"
 #include "NormalBullet.h"
@@ -21,11 +21,11 @@ Player::Player(int padType, Camera& camera)
 {
 	_update = &Player::AliveUpdate;
 
-	_handle = DxLib::LoadGraph("Resource/img/player/player.png");
+	_handle = RRMLib::LoadGraph("Resource/img/player/player.png");
 
-	_handleMap[PlayerState::neutral] = DxLib::LoadGraph("Resource/img/player/player.png");
-	_handleMap[PlayerState::attack] = DxLib::LoadGraph("Resource/img/player/attack.png");
-	_handleMap[PlayerState::avoidance] = DxLib::LoadGraph("Resource/img/player/avoidance.png");
+	_handleMap[PlayerState::neutral] = RRMLib::LoadGraph("Resource/img/player/player.png");
+	_handleMap[PlayerState::attack] = RRMLib::LoadGraph("Resource/img/player/attack.png");
+	_handleMap[PlayerState::avoidance] = RRMLib::LoadGraph("Resource/img/player/avoidance.png");
 
 
 	Rect rc = {};
@@ -320,7 +320,7 @@ Player::Draw()
 		break;
 
 	case Player::PlayerState::neutral:
-		DxLib::DrawGraph((int)drawPos.x, (int)drawPos.y, _handleMap[PlayerState::neutral], true);
+		RRMLib::DrawGraph((int)drawPos.x, (int)drawPos.y, _handleMap[PlayerState::neutral]);
 		break;
 
 	case Player::PlayerState::walk:
@@ -330,19 +330,19 @@ Player::Draw()
 		break;
 
 	case Player::PlayerState::shoot:
-		DxLib::DrawGraph((int)drawPos.x, (int)drawPos.y, _handleMap[PlayerState::attack], true);
+		RRMLib::DrawGraph((int)drawPos.x, (int)drawPos.y, _handleMap[PlayerState::attack]);
 		break;
 
 	case Player::PlayerState::avoidance:
-		DxLib::DrawGraph((int)drawPos.x, (int)drawPos.y, _handleMap[PlayerState::avoidance], true);
+		RRMLib::DrawGraph((int)drawPos.x, (int)drawPos.y, _handleMap[PlayerState::avoidance]);
 		break;
 
 	default:
 		break;
 	}
 
-	DxLib::DrawLine((int)(_rc.Left() + (_rc.w / 2)), (int)(_rc.Top()),
-					(int)(_rc.Left() + (_rc.w / 2)), (int)(_rc.Bottom()), 0xff0000, false);
+	RRMLib::DrawLine((int)(_rc.Left() + (_rc.w / 2)), (int)(_rc.Top()),
+					(int)(_rc.Left() + (_rc.w / 2)), (int)(_rc.Bottom()), 0xff0000);
 
 #ifdef DEBUG
 	_rc.DrawBox();

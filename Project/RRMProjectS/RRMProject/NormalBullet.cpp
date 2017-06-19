@@ -1,5 +1,5 @@
 #include "NormalBullet.h"
-#include "DxLib.h"
+#include "RRMLib.h"
 #include "GameTime.h"
 
 const float BULLET_SPEED = 5.0f;

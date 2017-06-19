@@ -1,5 +1,5 @@
 #include "Lazer.h"
-#include <DxLib.h>
+#include <RRMLib.h>
 #include "BulletFactory.h"
 #include "BulletManager.h"
 #include "GameMain.h"
@@ -10,7 +10,7 @@ const float REDUCE_LIFE = 1.0f;
 
 Lazer::Lazer()
 {
-	DxLib::LoadDivGraph("Resource/img/lazer.png", IMAGE_MAX, IMAGE_MAX, 1, IMAGE_SIZE_X, IMAGE_SIZE_Y, _handle);
+	RRMLib::LoadDivGraph("Resource/img/lazer.png", IMAGE_MAX, IMAGE_MAX, 1, IMAGE_SIZE_X, IMAGE_SIZE_Y, _handle);
 }
 
 
@@ -49,5 +49,5 @@ void Lazer::Update()
 
 void Lazer::Draw(const Vector2& offset)
 {
-	DrawRotaGraph(_circle.pos.x, _circle.pos.y, 1,RAD, _handle[0], true);
+//	DrawRotaGraph(_circle.pos.x, _circle.pos.y, 1,RAD, _handle[0], true);
 }

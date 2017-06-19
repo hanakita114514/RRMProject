@@ -3,20 +3,20 @@
 
 XInput::XInput(int inputType)
 {
-	int padNumber[4] =
-	{
-		DX_INPUT_PAD1,
-		DX_INPUT_PAD2,
-		DX_INPUT_PAD3,
-		DX_INPUT_PAD4,
-	};
+	//int padNumber[4] =
+	//{
+	//	DX_INPUT_PAD1,
+	//	DX_INPUT_PAD2,
+	//	DX_INPUT_PAD3,
+	//	DX_INPUT_PAD4,
+	//};
 
-	_inputType = padNumber[inputType];
+	_inputType = 0;
 
 	//ƒL[—š—ğ‚Ì‰Šú‰»
 	for (int i = 0; i < HISTORY_NUM; i++)
 	{
-		XINPUT_STATE x = {};
+		//XINPUT_STATE x = {};
 		//_history[i] = x;
 	}
 }
@@ -36,7 +36,7 @@ XInput::Update()
 	}
 
 	_history[0] = _xinput;
-	DxLib::GetJoypadXInputState(_inputType, &_xinput);
+	//RRMLib::GetJoypadXInputState(_inputType, &_xinput);
 }
 
 bool

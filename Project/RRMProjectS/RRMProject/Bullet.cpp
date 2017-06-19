@@ -1,5 +1,5 @@
 #include "Bullet.h"
-#include <DxLib.h>
+#include <RRMLib.h>
 #include "EffectManager.h"
 
 Bullet::Bullet()

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <DxLib.h>
+#include <RRMLib.h>
 #include "Vector2.h"
 #include <map>
 
@@ -31,8 +31,8 @@ enum TrigerType
 class DInput
 {
 private:
-	DINPUT_JOYSTATE _pad;
-	DINPUT_JOYSTATE _history[HISTORY_NUM];
+	RRMLib::DJOYPAD_STATE _pad;
+	RRMLib::DJOYPAD_STATE _history[HISTORY_NUM];
 	bool _prevTriger[trigerMax],_triger[trigerMax];
 
 	int _padType;
