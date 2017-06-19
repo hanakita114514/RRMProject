@@ -152,6 +152,7 @@ GameScene::BulletColPlayer()
 		if ((hitFlag || segmentHit) && (_player.GetObjType() != b->GetObjType()))
 		{
 			b->Hit(&_player);
+			_player.Hit(b);
 		}
 
 	}

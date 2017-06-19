@@ -151,7 +151,7 @@ void Player::AvoidanceUpdate()
 	_ps = PlayerState::avoidance;
 
 	//”­“®‚µ‚½uŠÔ‚Í“®‚©‚È‚¢
-	if (_avoidTime >= 10.0f)
+	if (_avoidTime >= 11.0f)
 	{
 		return;
 	}
@@ -169,8 +169,8 @@ void Player::AvoidanceUpdate()
 
 	Vector2 v = Normalize(_vel);
 
-	_rc.pos.x += v.x * 20.0f * GameTime::Instance().GetTimeScale();
-	_rc.pos.y += v.y * 20.0f * GameTime::Instance().GetTimeScale();
+	_rc.pos.x += v.x * 23.0f * GameTime::Instance().GetTimeScale();
+	_rc.pos.y += v.y * 23.0f * GameTime::Instance().GetTimeScale();
 
 	if (_hitGround == true)
 	{
@@ -213,7 +213,7 @@ Player::AliveUpdate()
 			_pp.Use();
 			_vel = _input.Dir();
 			_update = &Player::AvoidanceUpdate;
-			_avoidTime = 15.0f;
+			_avoidTime = 17.0f;
 			_nosedive = 1;
 			return;
 		}
@@ -254,7 +254,27 @@ Player::AliveUpdate()
 
 	(this->*_state)();
 
+}
 
+void 
+Player::DamageUpdate()
+{
+
+}
+
+void 
+Player::DyingUpdate()
+{
+}
+
+void
+Player::Update()
+{
+	_input.Update();
+	_sd.Update();
+	_pp.Update();
+
+	(this->*_update)();
 
 	// ŽžŠÔ‚ªŽ~‚Ü‚Á‚Ä‚é‚Æ‚«‚Í“®‚©‚³‚È‚¢
 	if (GameTime::Instance().GetTimeScale() != 0)
@@ -282,28 +302,6 @@ Player::AliveUpdate()
 	{
 		_rc.pos.y = 0 - 128;
 	}
-}
-
-void 
-Player::DamageUpdate()
-{
-
-}
-
-void 
-Player::DyingUpdate()
-{
-	int a = 0;
-}
-
-void
-Player::Update()
-{
-	_input.Update();
-	_sd.Update();
-	_pp.Update();
-
-	(this->*_update)();
 
 }
 
@@ -405,7 +403,6 @@ void Player::Hit(Enemy* other)
 
 		if (lenY < lenX)	//XŽ²‚É‰Ÿ‚µ–ß‚·
 		{
-			int i = 0;
 			if (_dir.x == 1)		//‰EˆÚ“®
 			{
 				if (_rc.pos.x < other->GetRect().pos.x)
@@ -416,7 +413,6 @@ void Player::Hit(Enemy* other)
 			}
 			else				//¶ˆÚ“®
 			{
-				int i = 0;
 				if (_rc.pos.x > other->GetRect().pos.x)
 				{
 					_rc.SetLeft(other->GetRect().Right());
@@ -455,7 +451,6 @@ void Player::Hit(Block* other)
 
 	if (lenY < lenX)	//XŽ²‚É‰Ÿ‚µ–ß‚·
 	{
-		int i = 0;
 		if (_dir.x == 1)		//‰EˆÚ“®
 		{
 			if (_rc.pos.x < other->GetRect().pos.x)
@@ -466,7 +461,6 @@ void Player::Hit(Block* other)
 		}
 		else				//¶ˆÚ“®
 		{
-			int i = 0;
 			if (_rc.pos.x > other->GetRect().pos.x)
 			{
 				_rc.SetLeft(other->GetRect().Right());
@@ -478,7 +472,16 @@ void Player::Hit(Block* other)
 
 void Player::Hit(Bullet* other)
 {
+	if (other->GetObjType() == ObjectType::enemy)
+	{
+		if (_update == &Player::AliveUpdate)
+		{
 
+		}
+		if (_update == &Player::AvoidanceUpdate)
+		{
+		}
+	}
 }
 
 void 
@@ -526,4 +529,14 @@ Player::WeaponSwitch()
 	{
 
 	}
+}
+
+bool 
+Player::IsAvoidance()
+{
+	if (_update == &Player::AvoidanceUpdate)
+	{
+		return true;
+	}
+	return false;
 }

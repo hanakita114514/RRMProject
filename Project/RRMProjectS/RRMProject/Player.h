@@ -108,6 +108,7 @@ public:
 
 
 	bool IsHitGround() { return _hitGround; }
+	bool IsAvoidance();
 
 };
 

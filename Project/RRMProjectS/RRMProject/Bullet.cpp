@@ -1,6 +1,7 @@
 #include "Bullet.h"
 #include <RRMLib.h>
 #include "EffectManager.h"
+#include "Player.h"
 
 Bullet::Bullet()
 {
@@ -37,7 +38,10 @@ Bullet::GetObjType()
 
 void Bullet::Hit(Player* other)
 {
-	Destory();
+	if (!other->IsAvoidance())
+	{
+		Destory();
+	}
 }
 
 void Bullet::Hit(Enemy* other)
