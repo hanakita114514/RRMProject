@@ -19,6 +19,7 @@ private:
 	ID3D11VertexShader* _vs3d;		//頂点シェーダ
 	ID3D11PixelShader* _ps;			//ピクセルシェーダ
 	ID3D11InputLayout* _layout;		//レイアウト
+	ID3D11Buffer* _vb;				//頂点バッファ
 
 	std::map<int, TexData> _texData;
 

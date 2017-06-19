@@ -606,6 +606,8 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nC
 		dev.SwapChain()->Present(1, 0);
 	}
 
+	graphic.DeleteGraph(handle);
+
 	SoundManager::Instance().Terminate();
 	XAudio::Instance().Terminate();
 	MediaControl::Instance().Terminate();

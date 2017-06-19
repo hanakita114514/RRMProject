@@ -11,6 +11,8 @@ Graphic::Graphic()
 {
 	HRESULT result = 
 		Graphic::CreateShader(_vs2d, _vs3d, _layout, _ps);
+	DrawingStructure ds;
+	_vb = CreateBuffer2DWrite(0, 0, 0, 0, ds);
 }
 
 
@@ -485,6 +487,35 @@ Graphic::LoadTexture(std::string filePath)
 	return handle;
 }
 
+int
+Graphic::LoadGraph(std::string filePath)
+{
+	HRESULT result = S_OK;
+	DeviceDx11& dev = DeviceDx11::Instance();
+
+	DrawingStructure* ds = new DrawingStructure();
+	ds->drawNum = 4;
+	ds->vs = _vs2d;
+	ds->ps = _ps;
+	ds->topology = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP;
+	ds->layout = _layout;
+	ds->vb = CreateBuffer2DWrite(0, 0, 1000, 1000, *ds);
+	ds->stride = sizeof(Vertex2D);
+	ds->offset = 0;
+	ds->dynamicFlag = true;
+
+	int handle = LoadTexture(filePath);
+	ID3D11ShaderResourceView* texture = (ID3D11ShaderResourceView*)handle;
+	ds->texSlot = 1;
+	ds->texture = texture;
+
+	TexData t = _texData[handle];
+	ds->vertex.width = t.width;
+	ds->vertex.height = t.height;
+
+	return (int)ds;
+}
+
 HRESULT 
 Graphic::LoadDivGraph(std::string filePath, int allNum,
 	int xNum, int yNum, int width, int height, int* handleBuf)
@@ -557,36 +588,6 @@ Graphic::CreatePolygon()
 
 	return ds;
 }
-
-int
-Graphic::LoadGraph(std::string filePath)
-{
-	HRESULT result = S_OK;
-	DeviceDx11& dev = DeviceDx11::Instance();
-
-	DrawingStructure* ds = new DrawingStructure();
-	ds->drawNum = 4;
-	ds->vs = _vs2d;
-	ds->ps = _ps;
-	ds->topology = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP;
-	ds->layout = _layout;
-	ds->vb = CreateBuffer2DWrite(0, 0, 1000, 1000, *ds);
-	ds->stride = sizeof(Vertex2D);
-	ds->offset = 0;
-	ds->dynamicFlag = true;
-
-	int handle = LoadTexture(filePath);
-	ID3D11ShaderResourceView* texture = (ID3D11ShaderResourceView*)handle;
-	ds->texSlot = 1;
-	ds->texture = texture;
-
-	TexData t = _texData[handle];
-	ds->vertex.width = t.width;
-	ds->vertex.height = t.height;
-
-	return (int)ds;
-}
-
 
 //void
 //Graphic::DrawGraph(float x, float y, int handle)
@@ -1136,5 +1137,8 @@ void
 Graphic::DeleteGraph(int handle)
 {
 	DrawingStructure* ds = (DrawingStructure*)handle;
+	ds->texture->Release();
+	ds->vb->Release();
 	delete(ds);
+	ds = nullptr;
 }

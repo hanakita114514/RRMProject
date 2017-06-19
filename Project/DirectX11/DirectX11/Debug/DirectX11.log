@@ -93,8 +93,116 @@ c:\program files (x86)\microsoft directx sdk (june 2010)\include\xnamathconvert.
 c:\program files (x86)\microsoft directx sdk (june 2010)\include\xnamathvector.inl(1269): warning C4838: 'unsigned int' から 'INT' への変換には縮小変換が必要です
 c:\program files (x86)\microsoft directx sdk (june 2010)\include\xnamathmisc.inl(518): warning C4838: 'unsigned int' から 'INT' への変換には縮小変換が必要です
 c:\program files (x86)\microsoft directx sdk (june 2010)\include\xnamathmisc.inl(519): warning C4838: 'unsigned int' から 'INT' への変換には縮小変換が必要です
-c:\users\1501343\desktop\卒制\trunk\project\directx11\directx11\graphic.cpp(528): warning C4244: '引数': 'int' から 'float' への変換です。データが失われる可能性があります。
-c:\users\1501343\desktop\卒制\trunk\project\directx11\directx11\graphic.cpp(529): warning C4244: '=': 'int' から 'float' への変換です。データが失われる可能性があります。
-c:\users\1501343\desktop\卒制\trunk\project\directx11\directx11\graphic.cpp(530): warning C4244: '=': 'int' から 'float' への変換です。データが失われる可能性があります。
+c:\users\1501343\desktop\卒制\trunk\project\directx11\directx11\graphic.cpp(559): warning C4244: '引数': 'int' から 'float' への変換です。データが失われる可能性があります。
+c:\users\1501343\desktop\卒制\trunk\project\directx11\directx11\graphic.cpp(560): warning C4244: '=': 'int' から 'float' への変換です。データが失われる可能性があります。
+c:\users\1501343\desktop\卒制\trunk\project\directx11\directx11\graphic.cpp(561): warning C4244: '=': 'int' から 'float' への変換です。データが失われる可能性があります。
+  コードを生成中...
+  コンパイル中...
+  main.cpp
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(12): warning C4005: 'DXGI_STATUS_OCCLUDED': マクロが再定義されました。
+  c:\program files (x86)\windows kits\8.1\include\shared\winerror.h(50092): note: 'DXGI_STATUS_OCCLUDED' の以前の定義を確認してください
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(13): warning C4005: 'DXGI_STATUS_CLIPPED': マクロが再定義されました。
+  c:\program files (x86)\windows kits\8.1\include\shared\winerror.h(50101): note: 'DXGI_STATUS_CLIPPED' の以前の定義を確認してください
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(14): warning C4005: 'DXGI_STATUS_NO_REDIRECTION': マクロが再定義されました。
+  c:\program files (x86)\windows kits\8.1\include\shared\winerror.h(50110): note: 'DXGI_STATUS_NO_REDIRECTION' の以前の定義を確認してください
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(15): warning C4005: 'DXGI_STATUS_NO_DESKTOP_ACCESS': マクロが再定義されました。
+  c:\program files (x86)\windows kits\8.1\include\shared\winerror.h(50119): note: 'DXGI_STATUS_NO_DESKTOP_ACCESS' の以前の定義を確認してください
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(16): warning C4005: 'DXGI_STATUS_GRAPHICS_VIDPN_SOURCE_IN_USE': マクロが再定義されました。
+  c:\program files (x86)\windows kits\8.1\include\shared\winerror.h(50128): note: 'DXGI_STATUS_GRAPHICS_VIDPN_SOURCE_IN_USE' の以前の定義を確認してください
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(17): warning C4005: 'DXGI_STATUS_MODE_CHANGED': マクロが再定義されました。
+  c:\program files (x86)\windows kits\8.1\include\shared\winerror.h(50137): note: 'DXGI_STATUS_MODE_CHANGED' の以前の定義を確認してください
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(18): warning C4005: 'DXGI_STATUS_MODE_CHANGE_IN_PROGRESS': マクロが再定義されました。
+  c:\program files (x86)\windows kits\8.1\include\shared\winerror.h(50146): note: 'DXGI_STATUS_MODE_CHANGE_IN_PROGRESS' の以前の定義を確認してください
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(21): warning C4005: 'DXGI_ERROR_INVALID_CALL': マクロが再定義されました。
+  c:\program files (x86)\windows kits\8.1\include\shared\winerror.h(50161): note: 'DXGI_ERROR_INVALID_CALL' の以前の定義を確認してください
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(22): warning C4005: 'DXGI_ERROR_NOT_FOUND': マクロが再定義されました。
+  c:\program files (x86)\windows kits\8.1\include\shared\winerror.h(50170): note: 'DXGI_ERROR_NOT_FOUND' の以前の定義を確認してください
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(23): warning C4005: 'DXGI_ERROR_MORE_DATA': マクロが再定義されました。
+  c:\program files (x86)\windows kits\8.1\include\shared\winerror.h(50179): note: 'DXGI_ERROR_MORE_DATA' の以前の定義を確認してください
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(24): warning C4005: 'DXGI_ERROR_UNSUPPORTED': マクロが再定義されました。
+  c:\program files (x86)\windows kits\8.1\include\shared\winerror.h(50188): note: 'DXGI_ERROR_UNSUPPORTED' の以前の定義を確認してください
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(25): warning C4005: 'DXGI_ERROR_DEVICE_REMOVED': マクロが再定義されました。
+  c:\program files (x86)\windows kits\8.1\include\shared\winerror.h(50197): note: 'DXGI_ERROR_DEVICE_REMOVED' の以前の定義を確認してください
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(26): warning C4005: 'DXGI_ERROR_DEVICE_HUNG': マクロが再定義されました。
+  c:\program files (x86)\windows kits\8.1\include\shared\winerror.h(50206): note: 'DXGI_ERROR_DEVICE_HUNG' の以前の定義を確認してください
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(27): warning C4005: 'DXGI_ERROR_DEVICE_RESET': マクロが再定義されました。
+  c:\program files (x86)\windows kits\8.1\include\shared\winerror.h(50216): note: 'DXGI_ERROR_DEVICE_RESET' の以前の定義を確認してください
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(28): warning C4005: 'DXGI_ERROR_WAS_STILL_DRAWING': マクロが再定義されました。
+  c:\program files (x86)\windows kits\8.1\include\shared\winerror.h(50225): note: 'DXGI_ERROR_WAS_STILL_DRAWING' の以前の定義を確認してください
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(29): warning C4005: 'DXGI_ERROR_FRAME_STATISTICS_DISJOINT': マクロが再定義されました。
+  c:\program files (x86)\windows kits\8.1\include\shared\winerror.h(50235): note: 'DXGI_ERROR_FRAME_STATISTICS_DISJOINT' の以前の定義を確認してください
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(30): warning C4005: 'DXGI_ERROR_GRAPHICS_VIDPN_SOURCE_IN_USE': マクロが再定義されました。
+  c:\program files (x86)\windows kits\8.1\include\shared\winerror.h(50244): note: 'DXGI_ERROR_GRAPHICS_VIDPN_SOURCE_IN_USE' の以前の定義を確認してください
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(31): warning C4005: 'DXGI_ERROR_DRIVER_INTERNAL_ERROR': マクロが再定義されました。
+  c:\program files (x86)\windows kits\8.1\include\shared\winerror.h(50254): note: 'DXGI_ERROR_DRIVER_INTERNAL_ERROR' の以前の定義を確認してください
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(32): warning C4005: 'DXGI_ERROR_NONEXCLUSIVE': マクロが再定義されました。
+  c:\program files (x86)\windows kits\8.1\include\shared\winerror.h(50263): note: 'DXGI_ERROR_NONEXCLUSIVE' の以前の定義を確認してください
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(33): warning C4005: 'DXGI_ERROR_NOT_CURRENTLY_AVAILABLE': マクロが再定義されました。
+  c:\program files (x86)\windows kits\8.1\include\shared\winerror.h(50272): note: 'DXGI_ERROR_NOT_CURRENTLY_AVAILABLE' の以前の定義を確認してください
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(34): warning C4005: 'DXGI_ERROR_REMOTE_CLIENT_DISCONNECTED': マクロが再定義されました。
+  c:\program files (x86)\windows kits\8.1\include\shared\winerror.h(50282): note: 'DXGI_ERROR_REMOTE_CLIENT_DISCONNECTED' の以前の定義を確認してください
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(35): warning C4005: 'DXGI_ERROR_REMOTE_OUTOFMEMORY': マクロが再定義されました。
+  c:\program files (x86)\windows kits\8.1\include\shared\winerror.h(50291): note: 'DXGI_ERROR_REMOTE_OUTOFMEMORY' の以前の定義を確認してください
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\d3d11.h(917): warning C4005: 'D3D11_ERROR_TOO_MANY_UNIQUE_STATE_OBJECTS': マクロが再定義されました。
+  c:\program files (x86)\windows kits\8.1\include\shared\winerror.h(50469): note: 'D3D11_ERROR_TOO_MANY_UNIQUE_STATE_OBJECTS' の以前の定義を確認してください
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\d3d11.h(918): warning C4005: 'D3D11_ERROR_FILE_NOT_FOUND': マクロが再定義されました。
+  c:\program files (x86)\windows kits\8.1\include\shared\winerror.h(50478): note: 'D3D11_ERROR_FILE_NOT_FOUND' の以前の定義を確認してください
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\d3d11.h(919): warning C4005: 'D3D11_ERROR_TOO_MANY_UNIQUE_VIEW_OBJECTS': マクロが再定義されました。
+  c:\program files (x86)\windows kits\8.1\include\shared\winerror.h(50488): note: 'D3D11_ERROR_TOO_MANY_UNIQUE_VIEW_OBJECTS' の以前の定義を確認してください
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\d3d11.h(920): warning C4005: 'D3D11_ERROR_DEFERRED_CONTEXT_MAP_WITHOUT_INITIAL_DISCARD': マクロが再定義されました。
+  c:\program files (x86)\windows kits\8.1\include\shared\winerror.h(50497): note: 'D3D11_ERROR_DEFERRED_CONTEXT_MAP_WITHOUT_INITIAL_DISCARD' の以前の定義を確認してください
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\d3d10.h(608): warning C4005: 'D3D10_ERROR_TOO_MANY_UNIQUE_STATE_OBJECTS': マクロが再定義されました。
+  c:\program files (x86)\windows kits\8.1\include\shared\winerror.h(50445): note: 'D3D10_ERROR_TOO_MANY_UNIQUE_STATE_OBJECTS' の以前の定義を確認してください
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\d3d10.h(609): warning C4005: 'D3D10_ERROR_FILE_NOT_FOUND': マクロが再定義されました。
+  c:\program files (x86)\windows kits\8.1\include\shared\winerror.h(50454): note: 'D3D10_ERROR_FILE_NOT_FOUND' の以前の定義を確認してください
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\xnamath.h(2662): warning C4838: 'unsigned int' から 'INT' への変換には縮小変換が必要です
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\xnamath.h(2663): warning C4838: 'unsigned int' から 'INT' への変換には縮小変換が必要です
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\xnamath.h(2664): warning C4838: 'unsigned int' から 'INT' への変換には縮小変換が必要です
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\xnamath.h(2665): warning C4838: 'unsigned int' から 'INT' への変換には縮小変換が必要です
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\xnamath.h(2666): warning C4838: 'unsigned int' から 'INT' への変換には縮小変換が必要です
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\xnamath.h(2667): warning C4838: 'unsigned int' から 'INT' への変換には縮小変換が必要です
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\xnamath.h(2668): warning C4838: 'unsigned int' から 'INT' への変換には縮小変換が必要です
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\xnamath.h(2689): warning C4838: 'unsigned int' から 'INT' への変換には縮小変換が必要です
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\xnamath.h(2690): warning C4838: 'unsigned int' から 'INT' への変換には縮小変換が必要です
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\xnamath.h(2691): warning C4838: 'unsigned int' から 'INT' への変換には縮小変換が必要です
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\xnamath.h(2694): warning C4838: 'unsigned int' から 'INT' への変換には縮小変換が必要です
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\xnamath.h(2695): warning C4838: 'unsigned int' から 'INT' への変換には縮小変換が必要です
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\xnamath.h(2698): warning C4838: 'unsigned int' から 'INT' への変換には縮小変換が必要です
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\xnamath.h(2702): warning C4838: 'unsigned int' から 'INT' への変換には縮小変換が必要です
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\xnamath.h(2712): warning C4838: 'unsigned int' から 'INT' への変換には縮小変換が必要です
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\xnamath.h(2713): warning C4838: 'unsigned int' から 'INT' への変換には縮小変換が必要です
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\xnamath.h(2715): warning C4838: 'unsigned int' から 'INT' への変換には縮小変換が必要です
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\xnamath.h(2716): warning C4838: 'unsigned int' から 'INT' への変換には縮小変換が必要です
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\xnamath.h(2717): warning C4838: 'unsigned int' から 'INT' への変換には縮小変換が必要です
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\xnamath.h(2727): warning C4838: 'unsigned int' から 'INT' への変換には縮小変換が必要です
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\xnamath.h(2728): warning C4838: 'unsigned int' から 'INT' への変換には縮小変換が必要です
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\xnamath.h(2729): warning C4838: 'unsigned int' から 'INT' への変換には縮小変換が必要です
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\xnamath.h(2730): warning C4838: 'unsigned int' から 'INT' への変換には縮小変換が必要です
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\xnamath.h(2731): warning C4838: 'unsigned int' から 'INT' への変換には縮小変換が必要です
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\xnamath.h(2732): warning C4838: 'unsigned int' から 'INT' への変換には縮小変換が必要です
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\xnamath.h(2742): warning C4838: 'unsigned int' から 'INT' への変換には縮小変換が必要です
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\xnamath.h(2743): warning C4838: 'unsigned int' から 'INT' への変換には縮小変換が必要です
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\xnamath.h(2754): warning C4838: 'unsigned int' から 'INT' への変換には縮小変換が必要です
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\xnamathconvert.inl(2254): warning C4838: 'unsigned int' から 'INT' への変換には縮小変換が必要です
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\xnamathconvert.inl(4523): warning C4838: 'unsigned int' から 'INT' への変換には縮小変換が必要です
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\xnamathconvert.inl(4577): warning C4838: 'unsigned int' から 'INT' への変換には縮小変換が必要です
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\xnamathconvert.inl(4639): warning C4838: 'unsigned int' から 'INT' への変換には縮小変換が必要です
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\xnamathconvert.inl(4707): warning C4838: 'unsigned int' から 'INT' への変換には縮小変換が必要です
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\xnamathconvert.inl(4770): warning C4838: 'unsigned int' から 'INT' への変換には縮小変換が必要です
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\xnamathconvert.inl(4832): warning C4838: 'unsigned int' から 'INT' への変換には縮小変換が必要です
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\xnamathvector.inl(1269): warning C4838: 'unsigned int' から 'INT' への変換には縮小変換が必要です
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\xnamathmisc.inl(518): warning C4838: 'unsigned int' から 'INT' への変換には縮小変換が必要です
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\xnamathmisc.inl(519): warning C4838: 'unsigned int' から 'INT' への変換には縮小変換が必要です
+  c:\program files (x86)\microsoft directx sdk (june 2010)\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+c:\users\1501343\desktop\卒制\trunk\project\directx11\directx11\xaudio.h(57): warning C4091: 'typedef ': 変数が何も宣言されていないときは、'XAudio::FrameHeader' の左辺を無視します。
+c:\users\1501343\desktop\卒制\trunk\project\directx11\directx11\main.cpp(534): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\string.h(90): note: 'strcat' の宣言を確認してください
+c:\users\1501343\desktop\卒制\trunk\project\directx11\directx11\main.cpp(538): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\string.h(90): note: 'strcat' の宣言を確認してください
+  コードを生成中...
+  スキップ中... (関連する変更は検出されませんでした)
+  Renderer.cpp
+  GraphList.cpp
+  GeometryGraph.cpp
   DirectX11.vcxproj -> C:\Users\1501343\Desktop\卒制\trunk\Project\DirectX11\Debug\DirectX11.exe
   DirectX11.vcxproj -> C:\Users\1501343\Desktop\卒制\trunk\Project\DirectX11\Debug\DirectX11.pdb (Full PDB)
