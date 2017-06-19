@@ -8,6 +8,119 @@
 
 const double PI = 3.141592f;
 
+ID3D11Buffer* CreateVertexBufferBox()
+{
+	HRESULT hr = S_OK;
+	DeviceDx11& dev = DeviceDx11::Instance();
+	ID3D11Buffer* vb;
+
+	const int vertexNum = 5;
+
+	//頂点バッファの作成
+	Vertex2D vertices[vertexNum];
+
+	for (int i = 0; i < vertexNum; i++)
+	{
+		vertices[i].pos.x = 0;
+		vertices[i].pos.y = 0;
+		vertices[i].pos.z = 0;
+		vertices[i].uv.x = 0;
+		vertices[i].uv.y = 0;
+	}
+
+	//頂点バッファの作成
+	D3D11_BUFFER_DESC bufdesc = {};
+	bufdesc.ByteWidth = sizeof(vertices);
+	bufdesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+	bufdesc.Usage = D3D11_USAGE_DYNAMIC;
+	bufdesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+	bufdesc.MiscFlags = 0;
+	bufdesc.StructureByteStride = sizeof(Vertex2D);
+
+	D3D11_SUBRESOURCE_DATA subdata = {};
+	subdata.pSysMem = &vertices[0];
+
+	hr = dev.Device()->CreateBuffer(&bufdesc, &subdata, &vb);
+
+	return vb;
+}
+
+ID3D11Buffer* CreateVertexBufferLine()
+{
+	HRESULT hr = S_OK;
+	DeviceDx11& dev = DeviceDx11::Instance();
+	ID3D11Buffer* vb;
+
+	const int vertexNum = 2;
+
+	//頂点バッファの作成
+	Vertex2D vertices[vertexNum];
+
+	for (int i = 0; i < vertexNum; i++)
+	{
+		//左上
+		vertices[i].pos.x = 0;
+		vertices[i].pos.y = 0;
+		vertices[i].pos.z = 0;
+		vertices[i].uv.x = 0;
+		vertices[i].uv.y = 0;
+	}
+
+	//頂点バッファの作成
+	D3D11_BUFFER_DESC bufdesc = {};
+	bufdesc.ByteWidth = sizeof(vertices);
+	bufdesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+	bufdesc.Usage = D3D11_USAGE_DYNAMIC;
+	bufdesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+	bufdesc.MiscFlags = 0;
+	bufdesc.StructureByteStride = sizeof(Vertex2D);
+
+	D3D11_SUBRESOURCE_DATA subdata = {};
+	subdata.pSysMem = &vertices[0];
+
+	hr = dev.Device()->CreateBuffer(&bufdesc, &subdata, &vb);
+
+	return vb;
+}
+
+ID3D11Buffer* CreateVertexBufferCircle()
+{
+	HRESULT hr = S_OK;
+	DeviceDx11& dev = DeviceDx11::Instance();
+	ID3D11Buffer* vb;
+
+	const int divNum = 512;
+
+	Vertex2D vertices[divNum];
+
+	WindowControl& wc = WindowControl::Instance();
+
+	for (int i = 0; i < divNum; i++)
+	{
+		vertices[i].pos.x = 0;
+		vertices[i].pos.y = 0;
+		vertices[i].pos.z = 0;
+		vertices[i].uv.x = 0;
+		vertices[i].uv.y = 0;
+	}
+
+	//頂点バッファの作成
+	D3D11_BUFFER_DESC bufdesc = {};
+	bufdesc.ByteWidth = sizeof(vertices);
+	bufdesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+	bufdesc.Usage = D3D11_USAGE_DYNAMIC;
+	bufdesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+	bufdesc.MiscFlags = 0;
+	bufdesc.StructureByteStride = sizeof(Vertex2D);
+
+	D3D11_SUBRESOURCE_DATA subdata = {};
+	subdata.pSysMem = &vertices[0];
+
+	hr = dev.Device()->CreateBuffer(&bufdesc, &subdata, &vb);
+
+	return vb;
+}
+
 GeometryGraph::GeometryGraph()
 {
 	DeviceDx11& dev = DeviceDx11::Instance();
@@ -28,11 +141,28 @@ GeometryGraph::GeometryGraph()
 	result = dev.Device()->CreateBuffer(&colorBufferDesc, &mbufsub, &_colorBuf);
 	dev.Context()->PSSetConstantBuffers(1, 1, &_colorBuf);
 
+	//箱頂点バッファの作成
+	_vbBox = CreateVertexBufferBox();
+
+	//線用
+	_vbLine = CreateVertexBufferLine();
+
+	//円用
+	_vbCircle = CreateVertexBufferCircle();
+
 }
 
 
 GeometryGraph::~GeometryGraph()
 {
+	_vbBox->Release();
+	_vbLine->Release();
+	_vbCircle->Release();
+	_vs2d->Release();
+	_vs3d->Release();
+	_ps->Release();
+	_layout->Release();
+	_colorBuf->Release();
 }
 
 bool 
@@ -170,8 +300,6 @@ GeometryGraph::DrawBox(float lx, float ly, float rx, float ry, unsigned int colo
 	HRESULT result = S_OK;
 	DeviceDx11& dev = DeviceDx11::Instance();
 
-	ID3D11Buffer* vb;
-
 	Vertex2D vertices[5];
 
 	WindowControl& wc = WindowControl::Instance();
@@ -221,37 +349,15 @@ GeometryGraph::DrawBox(float lx, float ly, float rx, float ry, unsigned int colo
 	vertices[4].uv.x = 0;
 	vertices[4].uv.y = 0;
 
-
-	//頂点バッファの作成
-	D3D11_BUFFER_DESC bufdesc = {};
-	bufdesc.ByteWidth = sizeof(vertices);
-	bufdesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-	bufdesc.Usage = D3D11_USAGE_DEFAULT;
-	bufdesc.CPUAccessFlags = 0;
-	bufdesc.MiscFlags = 0;
-	bufdesc.StructureByteStride = sizeof(Vertex2D);
-
-	D3D11_SUBRESOURCE_DATA subdata = {};
-	subdata.pSysMem = &vertices[0];
-
-	result = dev.Device()->CreateBuffer(&bufdesc, &subdata, &vb);
-
-	//DrawingStructure ds = {};
-	//ds.vs = _vs2d;
-	//ds.ps = _ps;
-	//ds.layout = _layout;
-	//ds.texture = nullptr;
-	//ds.vb = vb;
-	//ds.offset = 0;
-	//ds.drawNum = 5;
-	//ds.colorBuffer = colorBuf;
-	//ds.stride = sizeof(Vertex2D);
-
 	D3D11_MAPPED_SUBRESOURCE mappedsub = {};
 	result = dev.Context()->Map(_colorBuf, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedsub);
 	memcpy(mappedsub.pData, &color, sizeof(unsigned int));
 	dev.Context()->Unmap(_colorBuf, 0);
 
+	mappedsub = {};
+	result = dev.Context()->Map(_vbBox, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedsub);
+	memcpy(mappedsub.pData, vertices, sizeof(Vertex2D) * 5);
+	dev.Context()->Unmap(_vbBox, 0);
 
 	unsigned int offset = 0;
 	unsigned int stride = sizeof(Vertex2D);
@@ -268,7 +374,7 @@ GeometryGraph::DrawBox(float lx, float ly, float rx, float ry, unsigned int colo
 	dev.Context()->VSSetShader(_vs2d, nullptr, 0);
 	dev.Context()->PSSetShader(_ps, nullptr, 0);
 	dev.Context()->IASetInputLayout(_layout);
-	dev.Context()->IASetVertexBuffers(0, 1, &vb, &stride, &offset);
+	dev.Context()->IASetVertexBuffers(0, 1, &_vbBox, &stride, &offset);
 
 	dev.Context()->Draw(5, 0);
 }
@@ -278,8 +384,6 @@ GeometryGraph::DrawLine(float lx, float ly, float rx, float ry, unsigned int col
 {
 	HRESULT result = S_OK;
 	DeviceDx11& dev = DeviceDx11::Instance();
-
-	ID3D11Buffer* vb;
 
 	Vertex2D vertices[2];
 
@@ -310,24 +414,15 @@ GeometryGraph::DrawLine(float lx, float ly, float rx, float ry, unsigned int col
 	vertices[1].uv.y = 0;
 
 
-	//頂点バッファの作成
-	D3D11_BUFFER_DESC bufdesc = {};
-	bufdesc.ByteWidth = sizeof(vertices);
-	bufdesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-	bufdesc.Usage = D3D11_USAGE_DEFAULT;
-	bufdesc.CPUAccessFlags = 0;
-	bufdesc.MiscFlags = 0;
-	bufdesc.StructureByteStride = sizeof(Vertex2D);
-
-	D3D11_SUBRESOURCE_DATA subdata = {};
-	subdata.pSysMem = &vertices[0];
-
-	result = dev.Device()->CreateBuffer(&bufdesc, &subdata, &vb);
-
 	D3D11_MAPPED_SUBRESOURCE mappedsub = {};
 	result = dev.Context()->Map(_colorBuf, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedsub);
 	memcpy(mappedsub.pData, &color, sizeof(unsigned int));
 	dev.Context()->Unmap(_colorBuf, 0);
+
+	mappedsub = {};
+	result = dev.Context()->Map(_vbLine, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedsub);
+	memcpy(mappedsub.pData, vertices, sizeof(Vertex2D) * 2);
+	dev.Context()->Unmap(_vbLine, 0);
 
 	unsigned int offset = 0;
 	unsigned int stride = sizeof(Vertex2D);
@@ -337,7 +432,7 @@ GeometryGraph::DrawLine(float lx, float ly, float rx, float ry, unsigned int col
 	dev.Context()->VSSetShader(_vs2d, nullptr, 0);
 	dev.Context()->PSSetShader(_ps, nullptr, 0);
 	dev.Context()->IASetInputLayout(_layout);
-	dev.Context()->IASetVertexBuffers(0, 1, &vb, &stride, &offset);
+	dev.Context()->IASetVertexBuffers(0, 1, &_vbLine, &stride, &offset);
 
 	dev.Context()->Draw(2, 0);
 
@@ -453,24 +548,15 @@ GeometryGraph::DrawCircle(float x, float y, float r, unsigned int color, bool fi
 		vertices[i].uv.y = 0;
 	}
 
-	//頂点バッファの作成
-	D3D11_BUFFER_DESC bufdesc = {};
-	bufdesc.ByteWidth = sizeof(vertices);
-	bufdesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-	bufdesc.Usage = D3D11_USAGE_DEFAULT;
-	bufdesc.CPUAccessFlags = 0;
-	bufdesc.MiscFlags = 0;
-	bufdesc.StructureByteStride = sizeof(Vertex2D);
-
-	D3D11_SUBRESOURCE_DATA subdata = {};
-	subdata.pSysMem = &vertices[0];
-
-	result = dev.Device()->CreateBuffer(&bufdesc, &subdata, &vb);
-
 	D3D11_MAPPED_SUBRESOURCE mappedsub = {};
 	result = dev.Context()->Map(_colorBuf, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedsub);
 	memcpy(mappedsub.pData, &color, sizeof(unsigned int));
 	dev.Context()->Unmap(_colorBuf, 0);
+
+	mappedsub = {};
+	result = dev.Context()->Map(_vbCircle, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedsub);
+	memcpy(mappedsub.pData, vertices, sizeof(Vertex2D) * divNum);
+	dev.Context()->Unmap(_vbCircle, 0);
 
 	unsigned int offset = 0;
 	unsigned int stride = sizeof(Vertex2D);
@@ -500,7 +586,7 @@ GeometryGraph::DrawCircle(float x, float y, float r, unsigned int color, bool fi
 	dev.Context()->VSSetShader(_vs2d, nullptr, 0);
 	dev.Context()->PSSetShader(_ps, nullptr, 0);
 	dev.Context()->IASetInputLayout(_layout);
-	dev.Context()->IASetVertexBuffers(0, 1, &vb, &stride, &offset);
+	dev.Context()->IASetVertexBuffers(0, 1, &_vbCircle, &stride, &offset);
 
 	dev.Context()->Draw(divNum, 0);
 }

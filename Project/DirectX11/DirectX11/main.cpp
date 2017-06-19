@@ -559,12 +559,12 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nC
 
 		for (int i = 0; i < 200; i++)
 		{
-			//graphic.DrawGraph(x, i * 250, dsBuf[i % 25]);
-			//graphic.DrawExtendGraph(x, 0, 1000, 700, dsBuf[0]);
-			//graphic.DrawRectGraph(x, 0, 100, 100, 300, 300, ds, true, true);
+			graphic.DrawGraph(x, 0, handle);
+			//graphic.DrawExtendGraph(x, 0, 1000, 700, handle);
+			//graphic.DrawRectGraph(x, 0, 100, 100, 300, 300, handle, true, true);
 			//graphic.DrawRectExtendGraph(0, 0, 100, 100, 100, 200, 400, 400, ds, true, true);
 			//graphic.DrawRectGraph(0, 0, 100, 100, 500, 500, handle, true, true);
-			graphic.DrawRectExtendGraph(0, 0, 1000, 500, 100,300, 500,500,handle,true,false);
+			//graphic.DrawRectExtendGraph(0, 0, 1000, 500, 100,300, 500,500, dsBuf[0],true,false);
 		}
 		//graphic.DrawExtendGraph(0, 0, 1000, 700, ds);
 		x++;
@@ -590,8 +590,6 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nC
 		//gg.DrawLine(50, 50, 100, 50, 0xffffffff);
 
 		//graphic.DrawGraph(0, 0, effectHandle);
-
-		//gg.Instance().DrawCircle(200, 300, 50, GetColor(255, 0, 0), false);
 
 		//Renderer::Instance().AlphaBlend(20);
 		//graphic.DrawGraph(0, 0, handle);
