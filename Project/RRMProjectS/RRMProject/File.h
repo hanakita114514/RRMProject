@@ -31,6 +31,9 @@ public:
 
 	void FileLoad(FMFHEADER& header, vector<vector<unsigned int>>& array);
 
-	void FileLoad(SysData& data,int size);
-	void FileWrite(SysData& data);
+	//全データ読み込み
+	void FileLoad(SaveData& data, int size);
+
+	//全データ書き込み
+	void FileWrite(const SaveData& data);
 };

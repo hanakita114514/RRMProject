@@ -74,6 +74,7 @@ void File::FileLoad(FMFHEADER& header, vector<vector<unsigned int>>& array)
 	int layerSize = header.byLayerCount;				//レイヤーの数
 	int height = header.dwHeight;						//マップの高さ
 	int width = header.dwWidth;							//マップの幅
+	int size = header.dwSize;
 
 	array.resize(header.dwHeight);
 
@@ -97,19 +98,18 @@ void File::FileLoad(FMFHEADER& header, vector<vector<unsigned int>>& array)
 
 }
 
-void
-File::FileLoad(SysData& data, int size)
+
+void 
+File::FileLoad(SaveData& data, int size)
 {
 	fseek(_filePointer, 0, SEEK_SET);
 
-	for (int i = 0; i < size; ++i)
-	{
-		fread(&data, sizeof(unsigned char), 1, _filePointer);
-	}
+	fread(&data, sizeof(SaveData), 1, _filePointer);
+
 }
 
-void 
-File::FileWrite(SysData& data)
+void
+File::FileWrite(const SaveData& data)
 {
-	fwrite(&data, sizeof(SysData), 1, _filePointer);
+	fwrite(&data, sizeof(SaveData), 1, _filePointer);
 }

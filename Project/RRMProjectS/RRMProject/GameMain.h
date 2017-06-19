@@ -19,7 +19,7 @@ private:
 
 	DataManager _dataManager;
 
-	SysData _data;
+	SaveData _data;
 
 public:
 	~GameMain();
@@ -35,5 +35,7 @@ public:
 	void Terminate();
 
 	void ChangeScene(Scene* scene);
+
+	void DataUpdate(SaveData& data);
 };
 

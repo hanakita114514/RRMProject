@@ -1,10 +1,5 @@
 #include "DataManager.h"
 #include "File.h"
-char* _filePath[(int)FileType::max] = 
-{ 
-	{ "Resource/data/save/sys.dat" },
-	{"Resource/data/save/character/dat"}
-};
 
 DataManager::DataManager()
 {
@@ -17,37 +12,26 @@ DataManager::~DataManager()
 }
 
 void
-DataManager::Save(FileType type,SysData& data)
+DataManager::Save(SaveData& data)
 {
-	File* file = new File(_filePath[(int)type]);
-	_err = file->Initialize(FILE_INIT_TYPE::FILE_WRITE);
-
-	if (!_err)				//ファイルオープンに失敗
-	{
-		data.firstStratUp = true;
-		data.stageProgress = 0;
-	}
-	else
-	{
-		file->FileLoad(data, sizeof(SysData));
-		file->FileWrite(data);
-	}
-
+	File* file = new File("Resource/data/save/saveData.rrm");
+	file->Initialize(FILE_INIT_TYPE::FILE_WRITE);
+	file->FileWrite(data);
 }
 
 void
-DataManager::Load(FileType type , SysData& data)
+DataManager::Load(SaveData& data)
 {
-	File* file = new File(_filePath[(int)type]);
-	_err = file->Initialize(FILE_INIT_TYPE::FILE_READ);
-
-	if (!_err)				//ファイルオープンに失敗
+	File* file = new File( "Resource/data/save/saveData.rrm");
+	if (_err = file->Initialize(FILE_INIT_TYPE::FILE_READ))
 	{
-		data.firstStratUp = true;
-		data.stageProgress = 0;
+		file->FileLoad(data, sizeof(SaveData));
 	}
 	else
 	{
-		file->FileLoad(data, sizeof(SysData));
+		SaveData defaultData = {};
+		data = defaultData;
+		Save(data);
 	}
+
 }
