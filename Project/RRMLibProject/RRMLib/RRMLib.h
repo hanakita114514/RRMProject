@@ -60,6 +60,9 @@ namespace RRMLib
 	//0 ～ 255で指定
 	void ChangeBackColor(int red, int green, int blue);
 
+	//メッセージボックスを表示
+	void ShowMessageBox(std::string text, std::string title);
+
 	//------------------------------------------------------------------------------------
 	//ロード系
 	//------------------------------------------------------------------------------------

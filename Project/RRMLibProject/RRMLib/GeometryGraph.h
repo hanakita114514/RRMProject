@@ -11,6 +11,9 @@ private:
 	ID3D11PixelShader* _ps;			//ピクセルシェーダ
 	ID3D11InputLayout* _layout;		//レイアウト
 	ID3D11Buffer* _colorBuf;		//カラー用コンスタントバッファ
+	ID3D11Buffer* _vbBox;			//箱描画用頂点バッファ
+	ID3D11Buffer* _vbLine;			//線用頂点バッファ
+	ID3D11Buffer* _vbCircle;		//円用頂点バッファ
 
 	GeometryGraph();
 	GeometryGraph(const GeometryGraph&);

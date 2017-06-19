@@ -11,11 +11,18 @@ Graphic::Graphic()
 {
 	HRESULT result = 
 		Graphic::CreateShader(_vs2d, _vs3d, _layout, _ps);
+	DrawingStructure ds;
+	_vb = CreateBuffer2DWrite(0, 0, 0, 0, ds);
 }
 
 
 Graphic::~Graphic()
 {
+	_vb->Release();
+	_vs2d->Release();
+	_vs3d->Release();
+	_layout->Release();
+	_ps->Release();
 }
 
 void 
@@ -485,6 +492,35 @@ Graphic::LoadTexture(std::string filePath)
 	return handle;
 }
 
+int
+Graphic::LoadGraph(std::string filePath)
+{
+	HRESULT result = S_OK;
+	DeviceDx11& dev = DeviceDx11::Instance();
+
+	DrawingStructure* ds = new DrawingStructure();
+	ds->drawNum = 4;
+	ds->vs = _vs2d;
+	ds->ps = _ps;
+	ds->topology = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP;
+	ds->layout = _layout;
+	ds->stride = sizeof(Vertex2D);
+	ds->offset = 0;
+
+	int handle = LoadTexture(filePath);
+	ID3D11ShaderResourceView* texture = (ID3D11ShaderResourceView*)handle;
+	ds->texSlot = 1;
+	ds->texture = texture;
+
+	TexData t = _texData[handle];
+	ds->vertex.width = t.width;
+	ds->vertex.height = t.height;
+	ds->vertex.luv = XMFLOAT2(0, 0);
+	ds->vertex.ruv = XMFLOAT2(1, 1);
+
+	return (int)ds;
+}
+
 HRESULT 
 Graphic::LoadDivGraph(std::string filePath, int allNum,
 	int xNum, int yNum, int width, int height, int* handleBuf)
@@ -502,10 +538,10 @@ Graphic::LoadDivGraph(std::string filePath, int allNum,
 
 	for (int i = 0; i < allNum; i++)
 	{
-		XMFLOAT3 luv;
+		XMFLOAT2 luv;
 		luv.x = (float)((i % xNum) / (float)xNum);
 		luv.y = (float)((i / xNum) / (float)yNum);
-		XMFLOAT3 ruv;
+		XMFLOAT2 ruv;
 		ruv.x = (float)(((i % xNum) + 1) / (float)xNum);
 		ruv.y = (float)(((i / xNum) + 1) / (float)yNum);
 
@@ -513,7 +549,6 @@ Graphic::LoadDivGraph(std::string filePath, int allNum,
 
 		//‰Šú‰»
 		//handleBuf[i] = initDS;
-
 
 		ds->vs = _vs2d;
 		ds->ps = _ps;
@@ -525,7 +560,9 @@ Graphic::LoadDivGraph(std::string filePath, int allNum,
 		ds->topology = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP;
 		ds->drawNum = 4;
 		ds->colorBuffer = nullptr;
-		ds->vb = CreateBuffer2D(0, 0, width, height, luv.x, luv.y, ruv.x, ruv.y, *ds);
+		//ds->vb = CreateBuffer2D(0, 0, width, height, luv.x, luv.y, ruv.x, ruv.y, *ds);
+		ds->vertex.luv = luv;
+		ds->vertex.ruv = ruv;
 		ds->vertex.height = height;
 		ds->vertex.width = width;
 		handleBuf[i] = (int)ds;
@@ -551,42 +588,11 @@ Graphic::CreatePolygon()
 	ds.ps = _ps;
 	ds.topology = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP;
 	ds.layout = _layout;
-	ds.vb = CreateBuffer2D(0, 0, 0, 0);
 	ds.stride = sizeof(Vertex2D);
 	ds.offset = 0;
 
 	return ds;
 }
-
-int
-Graphic::LoadGraph(std::string filePath)
-{
-	HRESULT result = S_OK;
-	DeviceDx11& dev = DeviceDx11::Instance();
-
-	DrawingStructure* ds = new DrawingStructure();
-	ds->drawNum = 4;
-	ds->vs = _vs2d;
-	ds->ps = _ps;
-	ds->topology = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP;
-	ds->layout = _layout;
-	ds->vb = CreateBuffer2DWrite(0, 0, 1000, 1000, *ds);
-	ds->stride = sizeof(Vertex2D);
-	ds->offset = 0;
-	ds->dynamicFlag = true;
-
-	int handle = LoadTexture(filePath);
-	ID3D11ShaderResourceView* texture = (ID3D11ShaderResourceView*)handle;
-	ds->texSlot = 1;
-	ds->texture = texture;
-
-	TexData t = _texData[handle];
-	ds->vertex.width = t.width;
-	ds->vertex.height = t.height;
-
-	return (int)ds;
-}
-
 
 //void
 //Graphic::DrawGraph(float x, float y, int handle)
@@ -643,16 +649,16 @@ Graphic::DrawGraph(float x, float y, int handle)
 	WindowControl& wc = WindowControl::Instance();	
 
 	D3D11_MAPPED_SUBRESOURCE mappedsub = {};
-	result = dev.Context()->Map(ds->vb, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedsub);
+	result = dev.Context()->Map(_vb, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedsub);
 	memcpy(mappedsub.pData, vertex, sizeof(Vertex2D) * 4);
-	dev.Context()->Unmap(ds->vb, 0);
+	dev.Context()->Unmap(_vb, 0);
 
 	dev.Context()->IASetPrimitiveTopology((D3D11_PRIMITIVE_TOPOLOGY)ds->topology);
 	dev.Context()->VSSetShader(ds->vs, nullptr, 0);
 	dev.Context()->PSSetShader(ds->ps, nullptr, 0);
 	dev.Context()->IASetInputLayout(ds->layout);
 	dev.Context()->PSSetShaderResources(0, ds->texSlot, &ds->texture);
-	dev.Context()->IASetVertexBuffers(0, 1, &ds->vb, &ds->stride, &ds->offset);
+	dev.Context()->IASetVertexBuffers(0, 1, &_vb, &ds->stride, &ds->offset);
 
 	dev.Context()->Draw(ds->drawNum, 0);
 }
@@ -841,9 +847,9 @@ Graphic::DrawRectGraph(float destX, float destY, int srcX, int srcY,
 	}
 
 	D3D11_MAPPED_SUBRESOURCE mappedsub = {};
-	result = dev.Context()->Map(ds->vb, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedsub);
+	result = dev.Context()->Map(_vb, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedsub);
 	memcpy(mappedsub.pData, vertices, sizeof(Vertex2D) * 4);
-	dev.Context()->Unmap(ds->vb, 0);
+	dev.Context()->Unmap(_vb, 0);
 
 
 	unsigned int offset = 0;
@@ -854,7 +860,7 @@ Graphic::DrawRectGraph(float destX, float destY, int srcX, int srcY,
 	dev.Context()->PSSetShader(ds->ps, nullptr, 0);
 	dev.Context()->IASetInputLayout(ds->layout);
 	dev.Context()->PSSetShaderResources(0, 1, &ds->texture);
-	dev.Context()->IASetVertexBuffers(0, 1, &ds->vb, &ds->stride, &ds->offset);
+	dev.Context()->IASetVertexBuffers(0, 1, &_vb, &ds->stride, &ds->offset);
 
 	dev.Context()->Draw(ds->drawNum, 0);
 }
@@ -917,9 +923,9 @@ Graphic::DrawExtendGraph(float lx, float ly, float rx, float ry, int handle)
 	CreateVertex2D(lx + width / 2, ly + height / 2, width, height, vertex, *ds);
 
 	D3D11_MAPPED_SUBRESOURCE mappedsub = {};
-	result = dev.Context()->Map(ds->vb, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedsub);
+	result = dev.Context()->Map(_vb, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedsub);
 	memcpy(mappedsub.pData, vertex, sizeof(Vertex2D) * 4);
-	dev.Context()->Unmap(ds->vb, 0);
+	dev.Context()->Unmap(_vb, 0);
 
 
 	dev.Context()->IASetPrimitiveTopology((D3D11_PRIMITIVE_TOPOLOGY)ds->topology);
@@ -927,7 +933,7 @@ Graphic::DrawExtendGraph(float lx, float ly, float rx, float ry, int handle)
 	dev.Context()->PSSetShader(ds->ps, nullptr, 0);
 	dev.Context()->IASetInputLayout(_layout);
 	dev.Context()->PSSetShaderResources(0, 1, &ds->texture);
-	dev.Context()->IASetVertexBuffers(0, 1, &ds->vb, &ds->stride, &ds->offset);
+	dev.Context()->IASetVertexBuffers(0, 1, &_vb, &ds->stride, &ds->offset);
 
 	dev.Context()->Draw(ds->drawNum, 0);
 }
@@ -1118,16 +1124,16 @@ Graphic::DrawRectExtendGraph(float destLX, float destLY, float destRX, float des
 		vertices[3].uv.y = (height + srcY) / ds->vertex.height;
 	}
 	D3D11_MAPPED_SUBRESOURCE mappedsub = {};
-	result = dev.Context()->Map(ds->vb, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedsub);
+	result = dev.Context()->Map(_vb, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedsub);
 	memcpy(mappedsub.pData, vertices, sizeof(Vertex2D) * 4);
-	dev.Context()->Unmap(ds->vb, 0);
+	dev.Context()->Unmap(_vb, 0);
 
 	dev.Context()->IASetPrimitiveTopology((D3D11_PRIMITIVE_TOPOLOGY)ds->topology);
 	dev.Context()->VSSetShader(ds->vs, nullptr, 0);
 	dev.Context()->PSSetShader(ds->ps, nullptr, 0);
 	dev.Context()->IASetInputLayout(ds->layout);
 	dev.Context()->PSSetShaderResources(0, 1, &ds->texture);
-	dev.Context()->IASetVertexBuffers(0, 1, &ds->vb, &ds->stride, &ds->offset);
+	dev.Context()->IASetVertexBuffers(0, 1, &_vb, &ds->stride, &ds->offset);
 
 	dev.Context()->Draw(ds->drawNum, 0);
 }
@@ -1136,5 +1142,7 @@ void
 Graphic::DeleteGraph(int handle)
 {
 	DrawingStructure* ds = (DrawingStructure*)handle;
+	ds->texture->Release();
 	delete(ds);
+	ds = nullptr;
 }

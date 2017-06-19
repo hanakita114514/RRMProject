@@ -154,6 +154,13 @@ namespace RRMLib
 		Renderer::Instance().BackGroundColor(red, green, blue);
 	}
 
+	//メッセージボックス
+	void ShowMessageBox(std::string text, std::string title)
+	{
+		HWND hwnd = WindowControl::Instance().WindowHandle();
+		MessageBox(hwnd, text.c_str(), title.c_str(), MB_OK);
+	}
+
 	//画像の読み込み
 	int LoadGraph(std::string filePath)
 	{
@@ -169,6 +176,7 @@ namespace RRMLib
 		return ret;
 	}
 
+	//読み込んだ画像を削除
 	void DeleteGraph(int handle)
 	{
 		Graphic::Instance().DeleteGraph(handle);

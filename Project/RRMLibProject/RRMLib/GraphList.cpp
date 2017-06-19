@@ -58,7 +58,7 @@ GraphList::Draw()
 			d.colorBuffer->Release();
 		}
 
-		dev.Context()->IASetVertexBuffers(0, 1, &d.vb, &d.stride, &d.offset);
+		//dev.Context()->IASetVertexBuffers(0, 1, &d.vb, &d.stride, &d.offset);
 		dev.Context()->Draw(d.drawNum, 0);
 		//d.vb->Release();
 	}
