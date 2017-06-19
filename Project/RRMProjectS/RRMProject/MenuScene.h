@@ -31,6 +31,7 @@ private:
 	Logo _logo[(int)(LogoIdx::logoMax)];			//ロゴの画像ハンドル
 	DInput* _dinput;
 	Vector2 _logoDefaultPos[(int)(LogoIdx::logoMax)];
+	Vector2 _velocity;								//矢印の移動量
 
 	bool prevRight, prevLeft,prevUp,prevDown;	//前フレームのスティック情報
 	bool right, left,up,down;			//現フレームのスティック情報
@@ -43,8 +44,11 @@ private:
 	void Configuration();
 
 	void Draw();
-	void LogoMove();
 
+	void LogoMove();
+	void UpMove();
+	void DownMove();
+	bool Exit();
 	Vector2 ImageShaker(Rect& rect);
 
 public:

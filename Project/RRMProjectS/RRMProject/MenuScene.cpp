@@ -47,6 +47,7 @@ MenuScene::MenuScene()
 	_stageId = 0;
 
 	_freamCnt = 0;
+	_velocity = {};
 }
 
 
@@ -75,24 +76,8 @@ MenuScene::MenuUpdate()
 {
 	if (Fade::Instance().IsFadeOutEnd() || !Fade::Instance().IsPause())
 	{
-		if (IsStickUp())
-		{
-			_logoIdx--;
-			if (_logoIdx < 0)
-			{
-				_logoIdx = (int)(LogoIdx::logoMax) - 1;
-			}
-		}
-
-		if (IsStickDown())
-		{
-			_logoIdx++;
-			if (_logoIdx >= (int)(LogoIdx::logoMax))
-			{
-				_logoIdx = 0;
-			}
-		}
-
+		UpMove();
+		DownMove();
 
 		//Bボタン（決定ボタン）がおされたのなら---------------------------------------
 		if (_dinput->IsTriger(KeyType::keyB))
@@ -104,12 +89,15 @@ MenuScene::MenuUpdate()
 				_stageId = 0;
 				_update = &MenuScene::GameStart;
 				_logoIdx = 0;
+				_arrow.SetPos(_logoDefaultPos[_logoIdx]);
 				Fade::Instance().PauseIn();
 			}
 			break;
 			case 1:
 			{
 				_update = &MenuScene::Configuration;
+				_logoIdx = 0;
+				_arrow.SetPos(_logoDefaultPos[_logoIdx]);
 				Fade::Instance().PauseIn();
 			}
 			break;
@@ -126,8 +114,6 @@ MenuScene::MenuUpdate()
 		Fade::Instance().FadeOut(10.0f);
 	}
 	LogoMove();
-	_arrow.SetPos(_logoDefaultPos[_logoIdx]);
-
 	Draw();
 
 	_arrow.Draw();
@@ -142,23 +128,8 @@ MenuScene::GameStart()
 {
 	if (Fade::Instance().IsWait())
 	{
-		if (IsStickUp())
-		{
-			_logoIdx--;
-			if (_logoIdx < 0)
-			{
-				_logoIdx = (int)(LogoIdx::logoMax) - 1;
-			}
-		}
-
-		if (IsStickDown())
-		{
-			_logoIdx++;
-			if (_logoIdx >= (int)(LogoIdx::logoMax))
-			{
-				_logoIdx = 0;
-			}
-		}
+		UpMove();
+		DownMove();
 
 		if (_logoIdx == 1)
 		{
@@ -181,10 +152,11 @@ MenuScene::GameStart()
 			}
 		}
 
-		if (_dinput->IsTriger(KeyType::keyA))
+		if (Exit())
 		{
 			_update = &MenuScene::MenuUpdate;
 			_logoIdx = 0;
+			_arrow.SetPos(_logoDefaultPos[_logoIdx]);
 			Fade::Instance().PauseEnd();
 		}
 		else if (_dinput->IsTriger(KeyType::keyB))
@@ -207,19 +179,15 @@ MenuScene::GameStart()
 			}
 
 			_logoState = static_cast<LogoIdx>(_logoIdx);
-
 		}
-		_arrow.SetPos(_logoDefaultPos[_logoIdx]);
 
 		for (int i = 0; i < (int)(LogoIdx::logoMax); i++)
 		{
 			RRMLib::DrawGraph((int)_logo[i].rc.pos.x, (int)_logo[i].rc.pos.y, _logo[i].image);
 		}
-//		DrawString(0, 0, Stage[_stageId], 0xffffff);
 	}
 
 	LogoMove();
-	_arrow.SetPos(_logoDefaultPos[_logoIdx]);
 
 	_arrow.Draw();
 	//ゲームシーンへの遷移
@@ -234,12 +202,30 @@ MenuScene::GameStart()
 void
 MenuScene::Configuration()
 {
-	if (_dinput->IsTriger(KeyType::keyA))
+	if (Fade::Instance().IsWait())
 	{
-		_update = &MenuScene::MenuUpdate;
+		UpMove();
+		DownMove();
+
+		if (Exit())
+		{
+			_update = &MenuScene::MenuUpdate;
+			_logoIdx = 0;
+			_arrow.SetPos(_logoDefaultPos[_logoIdx]);
+			Fade::Instance().PauseEnd();
+		}
+	}
+	Draw();
+
+	_arrow.Draw();
+	LogoMove();
+
+	for (int i = 0; i < (int)(LogoIdx::logoMax); i++)
+	{
+		RRMLib::DrawGraph((int)_logo[i].rc.pos.x, (int)_logo[i].rc.pos.y, _logo[i].image);
 	}
 
-	_arrow.SetPos(_logoDefaultPos[_logoIdx]);
+
 }
 
 void MenuScene::Draw()
@@ -285,6 +271,7 @@ MenuScene::LogoMove()
 		break;
 	}
 }
+
 Vector2
 MenuScene::ImageShaker(Rect& rect)
 {
@@ -359,3 +346,56 @@ MenuScene::IsStickDown()
 	return false;
 }
 
+void
+MenuScene::UpMove()
+{
+	if (IsStickUp())
+	{
+		_logoIdx--;
+		if (_logoIdx < 0)
+		{
+			_logoIdx = (int)(LogoIdx::logoMax) - 1;
+			_velocity = _logoDefaultPos[_logoIdx] - _logoDefaultPos[_logoIdx - 1];
+		}
+		else
+		{
+			_velocity = _logoDefaultPos[_logoIdx] - _logoDefaultPos[_logoIdx + 1];
+		}
+	}
+	_arrow.Move(_velocity);
+
+	_velocity = { 0,0 };
+}
+
+void
+MenuScene::DownMove()
+{
+	if (IsStickDown())
+	{
+		_logoIdx++;
+		if (_logoIdx >= (int)(LogoIdx::logoMax))
+		{
+			_logoIdx = 0;
+			_velocity = _logoDefaultPos[_logoIdx] - _logoDefaultPos[_logoIdx + 1];
+		}
+		else
+		{
+			_velocity = _logoDefaultPos[_logoIdx] - _logoDefaultPos[_logoIdx - 1];
+		}
+	}
+	_arrow.Move(_velocity);
+
+	_velocity = { 0,0 };
+}
+
+bool 
+MenuScene::Exit()
+{
+	if (_dinput->IsTriger(KeyType::keyA))
+	{
+		_logoIdx = 0;
+		return true;
+	}
+
+	return false;
+}

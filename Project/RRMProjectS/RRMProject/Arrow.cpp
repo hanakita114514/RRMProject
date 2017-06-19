@@ -20,6 +20,11 @@ void Arrow::Draw()
 	RRMLib::DrawGraph((int)_pos.x, (int)_pos.y, _arrowHandle);
 }
 
+void Arrow::Move(Vector2 velocity)
+{
+	_pos.y += velocity.y;
+}
+
 void Arrow::SetPos(Position position)
 {
 	_pos.x = position.x - _width;

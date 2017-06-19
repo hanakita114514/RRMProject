@@ -15,6 +15,8 @@ public:
 
 	void Draw();
 
+	void Move(Vector2 velocity);
+
 	void SetPos(Position position);
 };
 
