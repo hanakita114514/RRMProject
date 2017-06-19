@@ -15,7 +15,7 @@ namespace RRMLib
 		int rX, rY, rZ;
 		int slider[2];
 		unsigned int pov[4];
-		unsigned int buttons[32];	//押されたボタンは128
+		unsigned char buttons[32];	//押されたボタンは128
 
 	}DJOYPAD_STATE;
 
@@ -60,6 +60,9 @@ namespace RRMLib
 	//0 ～ 255で指定
 	void ChangeBackColor(int red, int green, int blue);
 
+	//メッセージボックスを表示
+	void ShowMessageBox(std::string text, std::string title);
+
 	//------------------------------------------------------------------------------------
 	//ロード系
 	//------------------------------------------------------------------------------------
@@ -67,12 +70,19 @@ namespace RRMLib
 	//画像読み込み
 	int LoadGraph(std::string filePath);
 
+	//画像の分割読み込み
+	int LoadDivGraph(std::string filePath, int allNum, int xNum, int yNum, int width, int height, int* handleBuf);
+
+	//画像の削除
+	void DeleteGraph(int handle);
+
 	//------------------------------------------------------------------------------------
 	//描画系
 	//------------------------------------------------------------------------------------
 	//画像の描画
 	//左上から描画する
 	void DrawGraph(int x, int y, int graphHandle);
+	//void DrawGraph(int x, int y, DrawingStructure drawData);
 
 	//画像の矩形描画
 	void DrawRectGraph(float destX, float destY, int srcX, int srcY,
