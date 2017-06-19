@@ -1,24 +1,83 @@
-﻿  Player.cpp
-c:\users\1501343\desktop\卒制\trunk\project\rrmprojects\rrmproject\player.cpp(343): warning C4244: '引数': 'int' から 'float' への変換です。データが失われる可能性があります。
-  Bullet.cpp
-  コードを生成中...
-  スキップ中... (関連する変更は検出されませんでした)
-  TitleScene.cpp
-  TestSpell.cpp
-  Spell.cpp
-  ShootingStar.cpp
-  ResultScene.cpp
-  MenuScene.cpp
-  MapManager.cpp
-  Lazer.cpp
-  GameScene.cpp
-  GameMain.cpp
-  EnemyFactory.cpp
-  Egg.cpp
-  Comet.cpp
-  Collision.cpp
-  CircleShot.cpp
-  BulletManager.cpp
-  BulletFactory.cpp
-  RRMProject.vcxproj -> C:\Users\1501343\Desktop\卒制\trunk\Project\RRMProjectS\Debug\RRMProject.exe
-  RRMProject.vcxproj -> C:\Users\1501343\Desktop\卒制\trunk\Project\RRMProjectS\Debug\RRMProject.pdb (Full PDB)
+﻿2017/06/19 21:59:45 にビルドを開始しました。
+     1>ノード 2 上のプロジェクト "C:\Users\ryo\Desktop\RRMProject\trunk\Project\RRMProjectS\RRMProject\RRMProject.vcxproj" (Build ターゲット)。
+     1>ClCompile:
+         D:\RYO\Program Files\VC\bin\CL.exe /c /I"D:\デスクトップ\DxLib" /IC:\Users\ryo\Desktop\RRMProject\trunk\Project\RRMLIB\ /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _MBCS /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt SlowDown.cpp
+         SlowDown.cpp
+       Link:
+         D:\RYO\Program Files\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\ryo\Desktop\RRMProject\trunk\Project\RRMProjectS\Debug\RRMProject.exe" /INCREMENTAL /NOLOGO /LIBPATH:"D:\デスクトップ\DxLib" /LIBPATH:C:\Users\ryo\Desktop\RRMProject\trunk\Project\RRMLIB RRMLib_d.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"C:\Users\ryo\Desktop\RRMProject\trunk\Project\RRMProjectS\Debug\RRMProject.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\ryo\Desktop\RRMProject\trunk\Project\RRMProjectS\Debug\RRMProject.lib" /MACHINE:X86 Debug\AbstractSpell.obj
+         Debug\Arrow.obj
+         Debug\BackgroundRendar.obj
+         Debug\BezierBullet.obj
+         Debug\Block.obj
+         Debug\Bullet.obj
+         Debug\BulletFactory.obj
+         Debug\BulletManager.obj
+         Debug\Camera.obj
+         Debug\Circle.obj
+         Debug\CircleBullet.obj
+         Debug\CircleObj.obj
+         Debug\CircleShot.obj
+         Debug\ClearScene.obj
+         Debug\Collision.obj
+         Debug\Comet.obj
+         Debug\DataManager.obj
+         Debug\DeffusionBullet.obj
+         Debug\Digestion.obj
+         Debug\DInput.obj
+         Debug\DownEffect.obj
+         Debug\Effect.obj
+         Debug\EffectFactory.obj
+         Debug\EffectManager.obj
+         Debug\Egg.obj
+         Debug\Enemy.obj
+         Debug\EnemyFactory.obj
+         Debug\EnemyManager.obj
+         Debug\Fade.obj
+         Debug\File.obj
+         Debug\Food.obj
+         Debug\GameMain.obj
+         Debug\GameoverScene.obj
+         Debug\GameScene.obj
+         Debug\GameTime.obj
+         Debug\GeneralEffect.obj
+         Debug\GraphicLoad.obj
+         Debug\Hamburger.obj
+         Debug\HitPoint.obj
+         Debug\HomingBullet.obj
+         Debug\HPBar.obj
+         Debug\Lazer.obj
+         Debug\MapManager.obj
+         Debug\MapRendar.obj
+         Debug\Meat.obj
+         Debug\MultihitProtect.obj
+         Debug\Mushroom.obj
+         Debug\NormalBullet.obj
+         Debug\Object.obj
+         Debug\Player.obj
+         Debug\PowerPoint.obj
+         Debug\Rect.obj
+         Debug\RectObj.obj
+         Debug\ShootingStar.obj
+         Debug\SinBullet.obj
+         Debug\SlowDown.obj
+         Debug\SoundManager.obj
+         Debug\Spell.obj
+         Debug\TestSpell.obj
+         Debug\Timer.obj
+         Debug\UI.obj
+         Debug\UIFactory.obj
+         Debug\UIManager.obj
+         Debug\UpEffect.obj
+         Debug\XInput.obj
+         Debug\main.obj
+         Debug\MenuScene.obj
+         Debug\OfficialScene.obj
+         Debug\ResultScene.obj
+         Debug\Scene.obj
+         Debug\TitleScene.obj
+         RRMProject.vcxproj -> C:\Users\ryo\Desktop\RRMProject\trunk\Project\RRMProjectS\Debug\RRMProject.exe
+     1>プロジェクト "C:\Users\ryo\Desktop\RRMProject\trunk\Project\RRMProjectS\RRMProject\RRMProject.vcxproj" (Build ターゲット) のビルドが完了しました。
+
+ビルドに成功しました。
+
+経過時間 00:00:00.59

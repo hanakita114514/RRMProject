@@ -1,5 +1,7 @@
 #pragma once
 #include "Timer.h"
+#include <map>
+#include "Object.h"
 
 //ゲーム全体の時間を管理
 class GameTime
@@ -15,6 +17,10 @@ private:
 	float _timeScale;
 
 	float _deltaTime;
+
+	//キャラ事の時間
+	std::map<Object*, float> _timeScales;
+
 public:
 	~GameTime();
 
@@ -26,9 +32,13 @@ public:
 	}
 
 	//時間の係数を変更
-	//0.0f ～ 1.0fで指定
+	//0.0f ～ 2.0fで指定
 	void SetTimeScale(float scale);
+	void SetTimeScale(float scale, Object* other);
+
 	const float& GetTimeScale();
+	const float& GetTimeScale(Object* other);
+
 	const float& GetDeltaTime();
 
 	//ループ始まる最初に呼ぶ

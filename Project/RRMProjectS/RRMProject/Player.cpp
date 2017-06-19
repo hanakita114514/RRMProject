@@ -480,6 +480,7 @@ void Player::Hit(Bullet* other)
 		}
 		if (_update == &Player::AvoidanceUpdate)
 		{
+			_sd.SlowMotion(6.0f);
 		}
 	}
 }
@@ -514,11 +515,7 @@ Player::ToolSwitch()
 	if (_input.ToolSwitch())
 	{
 		_toolIdx++;
-	}
-
-	if (_toolIdx >= ToolMax)
-	{
-		_toolIdx = 0;
+		_toolIdx = (_toolIdx + 1) % ToolMax;
 	}
 }
 

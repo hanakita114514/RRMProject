@@ -2,6 +2,7 @@
 #include <RRMLib.h>
 #include "EffectManager.h"
 #include "Player.h"
+#include "GameTime.h"
 
 Bullet::Bullet()
 {
