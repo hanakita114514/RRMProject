@@ -27,7 +27,7 @@ private:
 		attack,
 		shoot,
 		avoidance,
-
+		invincible,
 	};
 	std::map<PlayerState, int> _handleMap;
 
@@ -51,10 +51,14 @@ private:
 
 	Camera& _camera;
 
+	float _armor;
+
 	int _nosedive;
 	int _toolIdx;
 
 	float _avoidTime;		//回避時間
+
+	float _invincibleTime;	//無敵時間
 
 	bool _isJump;
 	bool _hitGround;
@@ -71,6 +75,7 @@ private:
 	void AvoidanceUpdate();
 	void DamageUpdate();
 	void DyingUpdate();
+	void InvincibleUpdate();
 
 	void (Player::*_state)();
 	void AttackState();
@@ -85,6 +90,10 @@ private:
 
 	void ToolSwitch();
 	void WeaponSwitch();
+
+	//距離減衰
+	void DistanceAttenuation();
+
 
 public:
 	Player(int padType, Camera& camera);	//使うパッド番号を指定
@@ -106,9 +115,10 @@ public:
 	void Hit(Block* other);
 	void Hit(Bullet* other);
 
+	void Damage(float power);
 
 	bool IsHitGround() { return _hitGround; }
 	bool IsAvoidance();
-
+	bool IsDamage();
 };
 

@@ -63,6 +63,9 @@ public:
 	bool Up();
 	bool Down();
 
+	//ニュートラル
+	bool Neautral();
+
 	//R,Lトリガー処理
 	bool LeftTriger();
 	bool RightTriger();

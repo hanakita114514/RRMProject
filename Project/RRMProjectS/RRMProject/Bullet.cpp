@@ -55,6 +55,11 @@ void Bullet::Hit(Block* other)
 	Destory();
 }
 
+void Bullet::Hit(Bullet* other)
+{
+
+}
+
 Object*
 Bullet::GetOwner()
 {

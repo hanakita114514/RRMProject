@@ -64,6 +64,7 @@ public:
 	void Hit(Player* otheer);
 	void Hit(Enemy* other);
 	void Hit(Block* other);
+	void Hit(Bullet* other);
 
 	Vector2 GetVel() { return _vel; }
 	float GetPower() { return _pow; }

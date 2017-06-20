@@ -2,7 +2,7 @@
 
 
 
-HitPoint::HitPoint(int hp) : _hp(hp), _maxHp(hp)
+HitPoint::HitPoint(float hp) : _hp(hp), _maxHp(hp)
 {
 }
 
@@ -12,7 +12,7 @@ HitPoint::~HitPoint()
 }
 
 void
-HitPoint::SetMaxHp(int hp)
+HitPoint::SetMaxHp(float hp)
 {
 	_maxHp = hp;
 	if (IsHpMax())
@@ -22,7 +22,7 @@ HitPoint::SetMaxHp(int hp)
 }
 
 void 
-HitPoint::Recovery(int recval)
+HitPoint::Recovery(float recval)
 {
 	_hp += recval;
 	if (IsHpMax())
@@ -32,7 +32,7 @@ HitPoint::Recovery(int recval)
 }
 
 void 
-HitPoint::Damage(int damage)
+HitPoint::Damage(float damage)
 {
 	_hp -= damage;
 }

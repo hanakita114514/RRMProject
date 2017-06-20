@@ -30,7 +30,7 @@ CircleShot::Create(Vector2 vec, Vector2 pos, Object *owner)
 
 		Circle _circle = {};
 
-		_circle.center = _pos;
+		_circle.pos = _pos;
 		_circle.radius = RADIUS;
 
 		Vector2 circlePos = _pos;

@@ -21,10 +21,10 @@ ShootingStar::Create(Vector2 vec, Vector2 pos, Object* owner)
 {
 
 	Circle circle = {};
-	circle.center = pos;
+	circle.pos = pos;
 	circle.pos.y -= OFFSET;
 	circle.radius = RADIUS;
-	pos = circle.center;
+	pos = circle.pos;
 	pos.y -= circle.radius;
 
 	Bullet* bullet = nullptr;

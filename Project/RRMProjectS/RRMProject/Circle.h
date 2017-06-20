@@ -6,7 +6,6 @@ struct Circle
 {
 	Position pos;
 	float radius;
-	Position center;
 
 	Circle() : pos(0, 0), radius(0)
 	{

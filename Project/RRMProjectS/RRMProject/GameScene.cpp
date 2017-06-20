@@ -217,7 +217,6 @@ GameScene::BulletColEnemy()
 
 }
 
-
 void 
 GameScene::ColProcess()
 {

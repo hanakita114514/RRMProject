@@ -51,7 +51,7 @@ void Egg::Initialize()
 void 
 Egg::AliveUpdate()
 {
-	_circle.center = _rc.Center();
+	_circle.pos = _rc.Center();
 
 	_freamCnt++;
 	_shotPos = Vector2(_rc.Left(), _rc.Top());
@@ -200,8 +200,8 @@ void Egg::Shot(BulletType type, int count)	//çUåÇ
 	}
 	case BulletType::circleBullet:
 	{
-		_shotPos.x = _circle.center.x - (_circle.radius * 2) * cos(RAD * (cnt * 90) + _freamCnt) / 2;
-		_shotPos.y = _circle.center.y - (_circle.radius * 2) * sin(RAD * (cnt * 90) + _freamCnt) / 2;
+		_shotPos.x = _circle.pos.x - (_circle.radius * 2) * cos(RAD * (cnt * 90) + _freamCnt) / 2;
+		_shotPos.y = _circle.pos.y - (_circle.radius * 2) * sin(RAD * (cnt * 90) + _freamCnt) / 2;
 		--cnt;
 
 		ShotAngleCalc(_shotPos);
@@ -224,7 +224,7 @@ void Egg::Shot(BulletType type, int count)	//çUåÇ
 
 void Egg::ShotAngleCalc(Vector2 shootPos)
 {
-	Vector2 vec = shootPos - _circle.center;
+	Vector2 vec = shootPos - _circle.pos;
 	float normal = sqrt(vec.x * vec.x + vec.y * vec.y);
 	
 	_shootVec = Vector2(vec.x / normal, vec.y / normal);

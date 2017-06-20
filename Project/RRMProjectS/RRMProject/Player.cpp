@@ -16,6 +16,9 @@ const float fall_coefficient = 0.45f;
 const int slow_second = 60;					//ŠÔ‚ª’x‚­‚È‚é•b”
 const int stop_second = 30;					//ŠÔ‚ğ~‚ß‚é•b”
 
+const int armor_life = 200.0f;				//ƒA[ƒ}[‚Ì‘Ï‹v’l
+
+
 Player::Player(int padType, Camera& camera) 
 	: _input(padType), _hp(100), _pp(3), _camera(camera)
 {
@@ -54,6 +57,7 @@ Player::Player(int padType, Camera& camera)
 
 	_avoidTime = 15.0f;
 
+	_armor = armor_life;
 }
 
 
@@ -142,6 +146,34 @@ Player::NeutralState()
 	_ps = PlayerState::neutral;
 }
 
+void 
+Player::InvincibleUpdate()
+{
+	_invincibleTime -= 1 * GameTime::Instance().GetTimeScale(this);
+	_ps = PlayerState::invincible;
+
+	_vel.x = 0;
+
+	Move();
+	Jump();
+
+	HitGround();
+
+
+	// ŠÔ‚ª~‚Ü‚Á‚Ä‚é‚Æ‚«‚Í“®‚©‚³‚È‚¢
+	if (GameTime::Instance().GetTimeScale() != 0)
+	{
+		_rc.pos.y += _vel.y;
+	}
+
+	_rc.pos.x += _vel.x;
+
+	if (_invincibleTime <= 0)
+	{
+		_update = &Player::AliveUpdate;
+	}
+}
+
 void Player::AvoidanceUpdate()
 {
 	_avoidTime -= 1.0f * GameTime::Instance().GetTimeScale();
@@ -194,6 +226,7 @@ void
 Player::AliveUpdate()
 {
 	_state = &Player::NeutralState;
+
 	_vel.x = 0;
 
 	Move();
@@ -254,12 +287,38 @@ Player::AliveUpdate()
 
 	(this->*_state)();
 
+	// ŠÔ‚ª~‚Ü‚Á‚Ä‚é‚Æ‚«‚Í“®‚©‚³‚È‚¢
+	if (GameTime::Instance().GetTimeScale() != 0)
+	{
+		_rc.pos.y += _vel.y;
+	}
+
+	_rc.pos.x += _vel.x;
+
 }
 
 void 
 Player::DamageUpdate()
 {
+	_vel.y += GRAVITY * GameTime::Instance().GetTimeScale() * GameTime::Instance().GetTimeScale();
+	// ŠÔ‚ª~‚Ü‚Á‚Ä‚é‚Æ‚«‚Í“®‚©‚³‚È‚¢
+	if (GameTime::Instance().GetTimeScale() != 0)
+	{
+		_rc.pos.y += _vel.y;
+	}
 
+	_rc.pos.x += _vel.x;
+
+	DistanceAttenuation();
+	if (_vel.x == 0)
+	{
+		_update = &Player::InvincibleUpdate;
+		_invincibleTime = 60.0f;
+	}
+	//if (_damageTime <= 0.0f)
+	//{
+	//	_update = &Player::AliveUpdate;
+	//}
 }
 
 void 
@@ -276,22 +335,17 @@ Player::Update()
 
 	(this->*_update)();
 
-	// ŠÔ‚ª~‚Ü‚Á‚Ä‚é‚Æ‚«‚Í“®‚©‚³‚È‚¢
-	if (GameTime::Instance().GetTimeScale() != 0)
-	{
-		_rc.pos.y += _vel.y;
-	}
-
-	_rc.pos.x += _vel.x;
 
 	//ˆÚ“®§ŒÀ
-	if (_camera.GetMapSize().w <= _rc.pos.x)
+	if (_camera.GetMapSize().w <= _rc.pos.x + _rc.w)
 	{
-		_rc.pos.x = _camera.GetMapSize().w;
+		_rc.pos.x = _camera.GetMapSize().w - _rc.w;
+		_vel.x = 0;
 	}
 	if (_rc.pos.x <= 0)
 	{
 		_rc.pos.x = 0;
+		_vel.x = 0;
 	}
 
 	if (_camera.GetMapSize().h <= _rc.pos.y)
@@ -335,6 +389,12 @@ Player::Draw()
 		RRMLib::DrawGraph((int)drawPos.x, (int)drawPos.y, _handleMap[PlayerState::avoidance]);
 		break;
 
+	case Player::PlayerState::invincible:
+		if (((int)_invincibleTime / 3) % 2 == 0)
+		{
+			RRMLib::DrawGraph((int)drawPos.x, (int)drawPos.y, _handleMap[PlayerState::neutral]);
+		}
+		break;
 	default:
 		break;
 	}
@@ -476,11 +536,13 @@ void Player::Hit(Bullet* other)
 	{
 		if (_update == &Player::AliveUpdate)
 		{
-
+			Damage(other->GetPower());
+			return;
 		}
 		if (_update == &Player::AvoidanceUpdate)
 		{
-			_sd.SlowMotion(6.0f);
+			_sd.SlowMotion(3);
+			return;
 		}
 	}
 }
@@ -536,4 +598,44 @@ Player::IsAvoidance()
 		return true;
 	}
 	return false;
+}
+
+bool 
+Player::IsDamage()
+{
+	if (_update == &Player::DamageUpdate)
+	{
+		return true;
+	}
+	return false;
+}
+
+void 
+Player::DistanceAttenuation()
+{
+	if (_vel.x > 0)
+	{
+		_vel.x -= 0.2f;
+	}
+	if (_vel.x < 0)
+	{
+		_vel.x += 0.2f;
+	}
+	if (abs(_vel.x) < 0.5f)
+	{
+		_vel.x = 0;
+	}
+}
+
+void
+Player::Damage(float power)
+{
+	_armor -= power;
+	if (_armor <= 0)
+	{
+		_vel.x = _dir.x * 10.0f * -1.0f;
+		_vel.y = -8.0f;
+		_update = &Player::DamageUpdate;
+		_armor = armor_life;
+	}
 }

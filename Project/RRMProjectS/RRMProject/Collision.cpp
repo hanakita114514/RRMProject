@@ -82,9 +82,7 @@ Collision::IsHit(Circle &c1, Circle &c2)
 	float x = abs(c1.pos.x - c2.pos.x);
 	float y = abs(c1.pos.y - c2.pos.y);
 
-	float dist = sqrt(x * x + y * y);
-
-	if (dist < c1.radius + c2.radius)
+	if (x * x + y * y < c1.radius + c2.radius)
 	{
 		hitFlag = true;
 	}
@@ -464,13 +462,13 @@ Collision::LinerInterpolation(Rect& rect, Vector2& velocityA, Circle& circle, Ve
 	float time = 0.1f;
 	Vector2 nextPosA, nextPosB;
 	nextPosA = rect.pos;
-	nextPosB = circle.center;
+	nextPosB = circle.pos;
 	if (velocityA.x * velocityB.x < 0)
 	{
 		while (time < 10)
 		{
 			nextPosA.x = (rect.pos.x + (rect.pos.x + velocityA.x)) * time;
-			nextPosB.x = (circle.center.x + (circle.center.x + velocityB.x)) * time;
+			nextPosB.x = (circle.pos.x + (circle.pos.x + velocityB.x)) * time;
 
 			if (moveRightA)
 			{

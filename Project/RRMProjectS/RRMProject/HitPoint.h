@@ -6,15 +6,15 @@ private:
 	float _maxHp;
 
 public:
-	HitPoint(int hp);	//HPを設定
+	HitPoint(float hp);	//HPを設定
 	~HitPoint();
 
-	void SetMaxHp(int hp);
+	void SetMaxHp(float hp);
 
 	//回復
-	void Recovery(int recval);
+	void Recovery(float recval);
 	//ダメージ
-	void Damage(int damage);
+	void Damage(float damage);
 
 	//HPが0であるか？
 	bool IsDead();

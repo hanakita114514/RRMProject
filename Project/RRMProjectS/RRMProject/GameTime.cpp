@@ -5,28 +5,31 @@
 GameTime::GameTime()
 {
 	_deltaTime = 1.0f;
-	_timeScale = 1.0f;
 }
-
 
 GameTime::~GameTime()
 {
 }
 
-
 //ŽžŠÔ‚ÌŒW”‚ð•ÏX
-//0.0f ` 1.0f‚ÅŽw’è
+//0.0f ` 2.0f‚ÅŽw’è
 void 
 GameTime::SetTimeScale(float scale)
 {
-	_timeScale = scale;
 	if (scale > 2.0f)
 	{
 		_timeScale = 2.0f;
 	}
-	else if(scale < 0.0f)
+	else if (scale < 0.0f)
 	{
 		_timeScale = 0.0f;
+	}
+	_timeScale = scale;
+
+	for (auto t : _timeScales)
+	{
+		t.second.timeScale = _timeScale;
+		t.second.isStartUp = true;
 	}
 }
 
@@ -35,12 +38,16 @@ GameTime::SetTimeScale(float scale, Object* other)
 {
 	if (scale > 2.0f)
 	{
-		_timeScales[other] = 2.0f;
+		_timeScales[other].timeScale = 2.0f;
+		return;
 	}
-	else
+	else if(scale < 0.0f)
 	{
-		_timeScales[other] = 0.0f;
+		_timeScales[other].timeScale = 0.0f;
+		return;
 	}
+	_timeScales[other].timeScale = scale;
+	_timeScales[other].isStartUp = true;
 }
 
 const float& 
@@ -52,7 +59,12 @@ GameTime::GetTimeScale()
 const float& 
 GameTime::GetTimeScale(Object* other)
 {
-	return _timeScales[other];
+	if (!_timeScales[other].isStartUp)
+	{
+		_timeScales[other].isStartUp = true;
+		_timeScales[other].timeScale = 1.0f;
+	}
+	return _timeScales[other].timeScale;
 }
 void 
 GameTime::BeginUpdate()
@@ -63,8 +75,6 @@ void
 GameTime::EndUpdate()
 {
 	Times t = _time.GetTimes();
-
-
 }
 
 const float& 

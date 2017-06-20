@@ -196,6 +196,20 @@ DInput::RightTriger()
 }
 
 bool 
+DInput::Neautral()
+{
+	if (Left())
+	{
+		return false;
+	}
+	if (Right())
+	{
+		return false;
+	}
+	return true;
+}
+
+bool 
 DInput::Nosedive()
 {
 	if (_pad.y - _history[0].y > 300)

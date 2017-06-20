@@ -7,6 +7,12 @@
 class GameTime
 {
 private:
+	struct TimeData
+	{
+		bool isStartUp;		//‰Šú‰»‚Ìˆ×
+		float timeScale;
+	};
+private:
 	GameTime();
 	GameTime(GameTime&);
 	GameTime& operator = (GameTime&);
@@ -19,7 +25,7 @@ private:
 	float _deltaTime;
 
 	//ƒLƒƒƒ‰–‚ÌŠÔ
-	std::map<Object*, float> _timeScales;
+	std::map<Object*, TimeData> _timeScales;
 
 public:
 	~GameTime();

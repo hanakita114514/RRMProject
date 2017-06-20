@@ -26,14 +26,14 @@ void Comet::Create(Vector2 vec, Vector2 pos, Object *owner)
 	if (bCnt != 12)
 	{
 		//Šî€‚Æ‚È‚é‰~‚Ì’†SÀ•W‚Æ”¼Œa‚ğİ’è‚·‚é-----------------
-		_circle.center.x = _pos.x;
-		_circle.center.y = _pos.y;
+		_circle.pos.x = _pos.x;
+		_circle.pos.y = _pos.y;
 		_circle.radius = 48;
 		//-------------------------------------------------------
 
 		//‰~‚ÌÀ•W‚ğİ’è‚·‚é-------------------------------------
-		_circle.pos = _circle.center;
-		_circle.pos.y = _circle.center.y - _circle.radius;
+		_circle.pos = _circle.pos;
+		_circle.pos.y = _circle.pos.y - _circle.radius;
 		//-------------------------------------------------------
 
 		_vec.x = cos(60 * RAD)* -2;
