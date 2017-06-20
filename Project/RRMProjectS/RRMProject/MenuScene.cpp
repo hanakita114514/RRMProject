@@ -46,8 +46,14 @@ MenuScene::MenuScene()
 	_logoIdx = 0;
 	_stageId = 0;
 
+	_toolIdx = 0;
+	_weaponIdx = 0;
+
 	_freamCnt = 0;
 	_velocity = {};
+
+	GameMain::Instance().EqiupDataCopy(_data);
+
 }
 
 
@@ -133,23 +139,8 @@ MenuScene::GameStart()
 
 		if (_logoIdx == 1)
 		{
-			if (IsStickRight())	//右にスティックが倒されたか？
-			{
-				_stageId++;
-				if (_stageId >= (int)Stage::stageMax)
-				{
-					_stageId = 0;
-				}
-			}
-
-			if (IsStickLeft())		//左にスティックが倒されたか？
-			{
-				_stageId--;
-				if (_stageId < 0)
-				{
-					_stageId = (int)Stage::stageMax - 1;
-				}
-			}
+			_stageId = RightMove(_stageId, (int)Stage::stageMax);
+			_stageId = LeftMove(_stageId, (int)Stage::stageMax);
 		}
 
 		if (Exit())
@@ -199,6 +190,12 @@ MenuScene::GameStart()
 
 }
 
+
+void
+MenuScene::StageSelect()
+{
+
+}
 void
 MenuScene::Configuration()
 {
@@ -214,6 +211,7 @@ MenuScene::Configuration()
 			_arrow.SetPos(_logoDefaultPos[_logoIdx]);
 			Fade::Instance().PauseEnd();
 		}
+
 	}
 	Draw();
 
@@ -224,8 +222,6 @@ MenuScene::Configuration()
 	{
 		RRMLib::DrawGraph((int)_logo[i].rc.pos.x, (int)_logo[i].rc.pos.y, _logo[i].image);
 	}
-
-
 }
 
 void MenuScene::Draw()
@@ -288,7 +284,6 @@ bool MenuScene::Update()
 {
 	_dinput->Update();
 	(this->*_update)();
-
 	return true;
 }
 
@@ -351,16 +346,9 @@ MenuScene::UpMove()
 {
 	if (IsStickUp())
 	{
-		_logoIdx--;
-		if (_logoIdx < 0)
-		{
-			_logoIdx = (int)(LogoIdx::logoMax) - 1;
-			_velocity = _logoDefaultPos[_logoIdx] - _logoDefaultPos[_logoIdx - 1];
-		}
-		else
-		{
-			_velocity = _logoDefaultPos[_logoIdx] - _logoDefaultPos[_logoIdx + 1];
-		}
+		_logoIdx = (_logoIdx + 1) % (int)LogoIdx::logoMax;
+		_velocity = _logoDefaultPos[_logoIdx] - 
+									_logoDefaultPos[((_logoIdx + ((int)LogoIdx::logoMax - 1)) % (int)LogoIdx::logoMax)];
 	}
 	_arrow.Move(_velocity);
 
@@ -372,16 +360,8 @@ MenuScene::DownMove()
 {
 	if (IsStickDown())
 	{
-		_logoIdx++;
-		if (_logoIdx >= (int)(LogoIdx::logoMax))
-		{
-			_logoIdx = 0;
-			_velocity = _logoDefaultPos[_logoIdx] - _logoDefaultPos[_logoIdx + 1];
-		}
-		else
-		{
-			_velocity = _logoDefaultPos[_logoIdx] - _logoDefaultPos[_logoIdx - 1];
-		}
+		_logoIdx = (_logoIdx + 1) % (int)LogoIdx::logoMax;
+		_velocity = _logoDefaultPos[_logoIdx] - _logoDefaultPos[((_logoIdx + 1) % (int)LogoIdx::logoMax)];
 	}
 	_arrow.Move(_velocity);
 
@@ -398,4 +378,42 @@ MenuScene::Exit()
 	}
 
 	return false;
+}
+
+int MenuScene::RightMove(int& idx, int idxMax)
+{
+	if (IsStickRight())
+	{
+		idx = (idx + 1) % idxMax;
+	}
+
+	return idx;
+}
+
+int MenuScene::LeftMove(int idx, int idxMax)
+{
+	if (IsStickLeft())
+	{
+			idx = ((idx + (idxMax - 1)) % idxMax);
+	}
+
+	return idx;
+}
+
+void
+MenuScene::TypeOfWeapons()
+{
+
+}
+
+void
+MenuScene::WeaponSelect()
+{
+
+}
+
+void
+MenuScene::ToolSelect()
+{
+
 }

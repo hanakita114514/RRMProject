@@ -2,21 +2,23 @@
 
 class File;
 
+
+
+struct EquipmentInfometion
+{
+	unsigned int tool[3];				//現在装備している飛び道具
+	unsigned int weapon[2];				//現在装備している武器の情報
+	int chooseToolNum;			
+	int chooseWeaponNum;		
+};
+
 //セーブデータ構造体
 typedef struct SAVE_DATA
 {
 	int stageProgress;			//ステージの進行状況
-	unsigned int  tool[3];		//現在装備している飛び道具
-	unsigned int weapon[2];		//現在装備している近接武器
-	int chooseToolNum;			//選択することができる飛び道具の数
-	int chooseWeaponNum;		//選択することができる武器の数
+	EquipmentInfometion equipData;
 }SaveData;
 
-struct CharacterData
-{
-	unsigned int tool[3];
-	unsigned int weapon[2];
-};
 
 enum class FileType
 {

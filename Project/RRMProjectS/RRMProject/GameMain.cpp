@@ -14,7 +14,7 @@
 #include "GameScene.h"
 #include "MenuScene.h"
 #include <RRMLib.h>
-
+#include <string.h>
 
 GameMain::GameMain()
 {
@@ -152,17 +152,16 @@ GameMain::DataUpdate(SaveData& data)
 }
 
 void
-GameMain::CharacterDataUpdate(const CharacterData& data)
+GameMain::eqiupDataUpdata(const EquipmentInfometion& data)
 {
-	*_data.tool = *data.tool;
-	*_data.weapon = *data.weapon;
-
+	memcpy(_data.equipData.tool, data.tool, sizeof(data.tool));
+	memcpy(_data.equipData.weapon, data.weapon, sizeof(data.weapon));
 	_dataManager.Save(_data);
 }
 
 void
-GameMain::CharacterDataCopy(CharacterData& data)
+GameMain::EqiupDataCopy(EquipmentInfometion& data)
 {
-	*data.tool = *_data.tool;
-	*data.weapon = *_data.weapon;
+	memcpy(data.tool, _data.equipData.tool, sizeof(data.tool));
+	memcpy(data.weapon, _data.equipData.weapon, sizeof(data.weapon));
 }
