@@ -30,7 +30,6 @@ private:
 	bool ret;
 	int _freamCnt;
 
-
 	HPBar _hpbar;
 
 	void Jump();
@@ -44,8 +43,8 @@ public:
 	Egg(int* handle, const Position& pos);
 	~Egg();
 
-	void Initialize();			//初期化
-	void Update();				//更新
+	void Initialize();								//初期化
+	void Update();									//更新
 	void Draw(const Vector2& offset);				//描画
 	void Anim();
 	void Move();
@@ -56,7 +55,7 @@ public:
 
 	void(Egg::*_state)();
 
-	void Shot(BulletType type,int count = 0);	//攻撃
+	void Shot(BulletType type,int count = 0);		//攻撃
 
 	void ShotAngleCalc(Vector2 shootPos);
 

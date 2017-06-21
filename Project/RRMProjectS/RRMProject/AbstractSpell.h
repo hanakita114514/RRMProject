@@ -5,6 +5,8 @@
 
 enum class SpellType
 {
+	none,
+
 	Comet,
 	CircleShot,
 	TestSpell

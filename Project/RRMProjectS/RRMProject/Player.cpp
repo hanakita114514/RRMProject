@@ -3,12 +3,13 @@
 #include "BulletManager.h"
 #include "NormalBullet.h"
 #include "GameMain.h"
-#include"SinBullet.h"
+#include "SinBullet.h"
 #include "HomingBullet.h"
 #include "Lazer.h"
 #include "Block.h"
 #include "GameTime.h"
 #include "Enemy.h"
+#include "EffectManager.h"
 
 const float GRAVITY = 0.75f;
 const float jump_power = 20;
@@ -20,7 +21,7 @@ const int armor_life = 200.0f;				//アーマーの耐久値
 
 
 Player::Player(int padType, Camera& camera) 
-	: _input(padType), _hp(100), _pp(3), _camera(camera)
+	: _input(padType), _hp(100), _pp(3), _camera(camera) , _armor(armor_life)
 {
 	_update = &Player::AliveUpdate;
 
@@ -44,10 +45,7 @@ Player::Player(int padType, Camera& camera)
 	_nosedive = 1;
 
 	_speed = 6.0f;
-
 	_ps = PlayerState::neutral;
-
-	_state = &Player::NeutralState;
 	_isdir = &Player::DirRight;
 
 	_tool[0] = BulletType::normal;
@@ -58,6 +56,10 @@ Player::Player(int padType, Camera& camera)
 	_avoidTime = 15.0f;
 
 	_armor = armor_life;
+
+	_attackTime = 0;
+
+	_attack = &Player::FirstAttack;
 }
 
 
@@ -131,19 +133,6 @@ Player::Jump()
 		_secondJump = false;
 		_nosedive = 1;
 	}
-
-}
-
-void
-Player::AttackState()
-{
-	_ps = PlayerState::attack;
-}
-
-void
-Player::NeutralState()
-{
-	_ps = PlayerState::neutral;
 }
 
 void 
@@ -214,7 +203,7 @@ void Player::AvoidanceUpdate()
 	}
 }
 
-void Player::ShootState()
+void Player::Shoot()
 {
 	Vector2 end = Vector2(1280, 720);
 	_ps = PlayerState::shoot;
@@ -222,10 +211,46 @@ void Player::ShootState()
 		bullet->SetPos(_shootPos);
 }
 
+void 
+Player::FirstAttack()
+{
+	_hitBox.FirstAttack(_attackTime, _rc, _dir);
+
+	--_attackTime;
+
+	if (_attackTime <= 0)
+	{
+		_update = &Player::AliveUpdate;
+		_hitBox.Clear();
+	}
+}
+void 
+Player::SecondAttack()
+{
+
+}
+void 
+Player::UpAttack()
+{
+
+}
+
+void 
+Player::DonwAttack()
+{
+
+}
+
+void
+Player::AttackUpdate()
+{
+	(this->*_attack)();
+}
+
 void
 Player::AliveUpdate()
 {
-	_state = &Player::NeutralState;
+	_ps = PlayerState::neutral;
 
 	_vel.x = 0;
 
@@ -235,7 +260,10 @@ Player::AliveUpdate()
 	
 	if (_input.Attack())
 	{
-
+		_update = &Player::AttackUpdate;
+		_attack = &Player::FirstAttack;
+		_attackTime = 10.f;
+		return;
 	}
 
 	//回避
@@ -248,6 +276,9 @@ Player::AliveUpdate()
 			_update = &Player::AvoidanceUpdate;
 			_avoidTime = 17.0f;
 			_nosedive = 1;
+			_secondJump = true;
+			_isAirJump = true;
+			EffectManager::Instance().Create(EffectType::erasure, _rc.Center(), Vector2(1.0f, 1.0f), 0.7f, false);
 			return;
 		}
 
@@ -264,7 +295,7 @@ Player::AliveUpdate()
 	//ショット
 	if (_input.Shoot())
 	{
-		_state = &Player::ShootState;
+		Shoot();
 	}
 
 	//消化
@@ -277,15 +308,13 @@ Player::AliveUpdate()
 	ToolSwitch();
 
 #ifdef DEBUG
-	if (CheckHitKey(KEY_INPUT_Z)
-	{
-		_state = &Player::ShootState;
-	}
+	//if (CheckHitKey(KEY_INPUT_Z)
+	//{
+	//	_state = &Player::ShootState;
+	//}
 #endif // DEBUG
 
 	HitGround();
-
-	(this->*_state)();
 
 	// 時間が止まってるときは動かさない
 	if (GameTime::Instance().GetTimeScale() != 0)
@@ -300,7 +329,8 @@ Player::AliveUpdate()
 void 
 Player::DamageUpdate()
 {
-	_vel.y += GRAVITY * GameTime::Instance().GetTimeScale() * GameTime::Instance().GetTimeScale();
+	_ps = PlayerState::damage;
+		_vel.y += GRAVITY * GameTime::Instance().GetTimeScale() * GameTime::Instance().GetTimeScale();
 	// 時間が止まってるときは動かさない
 	if (GameTime::Instance().GetTimeScale() != 0)
 	{
@@ -315,10 +345,6 @@ Player::DamageUpdate()
 		_update = &Player::InvincibleUpdate;
 		_invincibleTime = 60.0f;
 	}
-	//if (_damageTime <= 0.0f)
-	//{
-	//	_update = &Player::AliveUpdate;
-	//}
 }
 
 void 
@@ -330,10 +356,16 @@ void
 Player::Update()
 {
 	_input.Update();
-	_sd.Update();
-	_pp.Update();
 
-	(this->*_update)();
+	if (!_hitStop.IsHitStop())
+	{
+		_sd.Update();
+		_pp.Update();
+		_armor.AutomaticRecovery();
+
+		(this->*_update)();
+	}
+	_hitStop.Update();
 
 
 	//移動制限
@@ -395,12 +427,16 @@ Player::Draw()
 			RRMLib::DrawGraph((int)drawPos.x, (int)drawPos.y, _handleMap[PlayerState::neutral]);
 		}
 		break;
+	case Player::PlayerState::damage:
+		RRMLib::DrawGraph((int)drawPos.x, (int)drawPos.y, _handleMap[PlayerState::neutral]);
+		break;
 	default:
 		break;
 	}
 
 	RRMLib::DrawLine((int)(_rc.Left() + (_rc.w / 2)), (int)(_rc.Top()),
 					(int)(_rc.Left() + (_rc.w / 2)), (int)(_rc.Bottom()), 0xff0000);
+	_hitBox.Draw();
 
 #ifdef DEBUG
 	_rc.DrawBox();
@@ -556,7 +592,7 @@ Player::SlowMotion()
 void
 Player::HitGround()
 {
-	if (_hitGround == true)
+	if (_hitGround)
 	{
 		_vel.y = 0;
 
@@ -593,11 +629,7 @@ Player::WeaponSwitch()
 bool 
 Player::IsAvoidance()
 {
-	if (_update == &Player::AvoidanceUpdate)
-	{
-		return true;
-	}
-	return false;
+	return _update == &Player::AvoidanceUpdate;
 }
 
 bool 
@@ -630,12 +662,13 @@ Player::DistanceAttenuation()
 void
 Player::Damage(float power)
 {
-	_armor -= power;
-	if (_armor <= 0)
+	_armor.Damage(power);
+	_hp.Damage(power);
+	if (_armor.IsBroken())
 	{
+		_armor.Recovery();
 		_vel.x = _dir.x * 10.0f * -1.0f;
 		_vel.y = -8.0f;
 		_update = &Player::DamageUpdate;
-		_armor = armor_life;
 	}
 }

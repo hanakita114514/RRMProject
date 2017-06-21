@@ -35,6 +35,12 @@ void Object::Hit(Bullet* other)
 
 }
 
+void 
+Object::HitStop(float time)
+{
+	_hitStop.HitStopTime(time);
+}
+
 void
 Object::Weakening()
 {

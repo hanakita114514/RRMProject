@@ -14,14 +14,13 @@ SoundManager::~SoundManager()
 void
 SoundManager::Play(SoundType st)
 {
-	//PlaySoundMem(_soundMap[st], DX_PLAYTYPE_BACK, true);
+	RRMLib::PlaySoundMem(_soundMap[st]);
 }
 
 void
 SoundManager::Play(SEType se)
 {
-	//PlaySoundMem(_seMap[se], DX_PLAYTYPE_BACK, true);
-
+	RRMLib::PlaySoundMem(_seMap[se]);
 }
 
 void
@@ -29,6 +28,6 @@ SoundManager::Stop()
 {
 	for (auto s : _soundMap)
 	{
-		//StopSoundMem(s.second);
+		RRMLib::StopSound(s.second);
 	}
 }

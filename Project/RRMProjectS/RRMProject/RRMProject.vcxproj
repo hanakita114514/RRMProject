@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AbstractSpell.cpp" />
+    <ClCompile Include="Armor.cpp" />
     <ClCompile Include="Arrow.cpp" />
     <ClCompile Include="BackgroundRendar.cpp" />
     <ClCompile Include="BezierBullet.cpp" />
@@ -50,6 +51,7 @@
     <ClCompile Include="Fade.cpp" />
     <ClCompile Include="File.cpp" />
     <ClCompile Include="Food.cpp" />
+    <ClCompile Include="FPS.cpp" />
     <ClCompile Include="GameMain.cpp" />
     <ClCompile Include="GameoverScene.cpp" />
     <ClCompile Include="GameScene.cpp" />
@@ -57,7 +59,9 @@
     <ClCompile Include="GeneralEffect.cpp" />
     <ClCompile Include="GraphicLoad.cpp" />
     <ClCompile Include="Hamburger.cpp" />
+    <ClCompile Include="HitBox.cpp" />
     <ClCompile Include="HitPoint.cpp" />
+    <ClCompile Include="HitStop.cpp" />
     <ClCompile Include="HomingBullet.cpp" />
     <ClCompile Include="HPBar.cpp" />
     <ClCompile Include="Lazer.cpp" />
@@ -69,6 +73,7 @@
     <ClCompile Include="NormalBullet.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerHitBox.cpp" />
     <ClCompile Include="PowerPoint.cpp" />
     <ClCompile Include="Rect.cpp" />
     <ClCompile Include="RectObj.cpp" />
@@ -93,6 +98,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AbstractSpell.h" />
+    <ClInclude Include="Armor.h" />
     <ClInclude Include="Arrow.h" />
     <ClInclude Include="BackgroundRendar.h" />
     <ClInclude Include="BezierBullet.h" />
@@ -124,6 +130,7 @@
     <ClInclude Include="Fade.h" />
     <ClInclude Include="File.h" />
     <ClInclude Include="Food.h" />
+    <ClInclude Include="FPS.h" />
     <ClInclude Include="GameMain.h" />
     <ClInclude Include="GameoverScene.h" />
     <ClInclude Include="GameScene.h" />
@@ -131,7 +138,9 @@
     <ClInclude Include="GeneralEffect.h" />
     <ClInclude Include="GraphicLoad.h" />
     <ClInclude Include="Hamburger.h" />
+    <ClInclude Include="HitBox.h" />
     <ClInclude Include="HitPoint.h" />
+    <ClInclude Include="HitStop.h" />
     <ClInclude Include="HomingBullet.h" />
     <ClInclude Include="HPBar.h" />
     <ClInclude Include="Lazer.h" />
@@ -144,6 +153,7 @@
     <ClInclude Include="NormalBullet.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayerHitBox.h" />
     <ClInclude Include="PowerPoint.h" />
     <ClInclude Include="Rect.h" />
     <ClInclude Include="RectObj.h" />

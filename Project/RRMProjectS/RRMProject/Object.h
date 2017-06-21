@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Vector2.h"
+#include "HitStop.h"
 
 class Player;
 class Enemy;
@@ -26,6 +27,8 @@ protected:
 	int _handle;		//画像ハンドル
 	bool _deleteFlag;	//オンになったら消す
 
+	HitStop _hitStop;
+
 public:
 	Object();
 	virtual ~Object();
@@ -41,6 +44,8 @@ public:
 	virtual void Hit(Block* other);
 	virtual void Hit(Bullet* other);
 
+	//ヒットストップ
+	virtual void HitStop(float time);
 	//弱体化
 	virtual void Weakening();
 };

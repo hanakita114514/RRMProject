@@ -19,6 +19,7 @@ GameScene::GameScene() : _player(0,_camera), _camera(_player.GetRect().pos)
 	BulletManager::Instance();
 	MapManager::Instance().Initialize();
 	Fade::Instance().FadeOut(5.0f);
+	_logoState = LogoIdx::GameStart;
 
 	_camera.Init();
 }

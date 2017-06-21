@@ -6,12 +6,12 @@
 #include "HitPoint.h"
 #include "PowerPoint.h"
 #include "Circle.h"
-
 #include "SlowDown.h"
 #include "MultihitProtect.h"
 #include "Camera.h"
-
+#include "Armor.h"
 #include "Bullet.h"
+#include "PlayerHitBox.h"
 
 #include <map>
 
@@ -28,6 +28,7 @@ private:
 		shoot,
 		avoidance,
 		invincible,
+		damage,
 	};
 	std::map<PlayerState, int> _handleMap;
 
@@ -40,6 +41,8 @@ private:
 	DInput _input;			//インプット
 	Digestion _dig;			//消化
 	SlowDown _sd;			//遅くする
+	Armor _armor;			//アーマー
+	PlayerHitBox _hitBox;
 
 	PlayerState _ps;		//プレイヤーの状態
 
@@ -51,14 +54,12 @@ private:
 
 	Camera& _camera;
 
-	float _armor;
-
 	int _nosedive;
 	int _toolIdx;
 
 	float _avoidTime;		//回避時間
-
 	float _invincibleTime;	//無敵時間
+	float _attackTime;		//攻撃時間
 
 	bool _isJump;
 	bool _hitGround;
@@ -70,17 +71,21 @@ private:
 	void Jump();
 	void Move();
 
+	void(Player::*_attack)();
+	void FirstAttack();
+	void SecondAttack();
+	void UpAttack();
+	void DonwAttack();
+
 	void (Player::*_update)();
+	void AttackUpdate();
 	void AliveUpdate();
 	void AvoidanceUpdate();
 	void DamageUpdate();
 	void DyingUpdate();
 	void InvincibleUpdate();
 
-	void (Player::*_state)();
-	void AttackState();
-	void NeutralState();
-	void ShootState();
+	void Shoot();
 
 	void (Player::*_isdir)();
 	void DirRight();
@@ -120,5 +125,7 @@ public:
 	bool IsHitGround() { return _hitGround; }
 	bool IsAvoidance();
 	bool IsDamage();
+
+	PlayerHitBox& GetHitBox() { return _hitBox; }
 };
 

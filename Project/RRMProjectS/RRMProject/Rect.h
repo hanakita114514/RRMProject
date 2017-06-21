@@ -47,6 +47,7 @@ struct Rect
 	float Right() { return pos.x + w; }
 	float Left() { return pos.x; }
 	Position Center() { return Position(pos.x + w / 2, pos.y + h / 2); }
+	Position TopCenter() { return Position(pos.x + w / 2, pos.y); }
 
 	void DrawBox();
 	void DrawGraph(int handle);
