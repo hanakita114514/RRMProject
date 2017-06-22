@@ -5,6 +5,7 @@
 GameTime::GameTime()
 {
 	_deltaTime = 1.0f;
+	_timeScale = 1.0f;
 }
 
 GameTime::~GameTime()
@@ -63,6 +64,7 @@ GameTime::GetTimeScale(Object* other)
 	{
 		_timeScales[other].isStartUp = true;
 		_timeScales[other].timeScale = 1.0f;
+		_timeScales[other].stopTime = 0.0f;
 	}
 	return _timeScales[other].timeScale;
 }

@@ -31,7 +31,7 @@ void NormalBullet::Update()
 
 
 
-	if (_life == 0 || _circle.pos.x < 0)
+	if (_life <= 0.0f || _circle.pos.x < 0)
 	{
 		_isAlive = false;
 	}

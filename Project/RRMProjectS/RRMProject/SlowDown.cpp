@@ -22,7 +22,6 @@ SlowDown::Update()
 	//スローモーション状態ではないとき
 	if (!_isSlow)
 	{
-		GameTime::Instance().SetTimeScale(1.0f);
 		return;
 	}
 
@@ -33,6 +32,7 @@ SlowDown::Update()
 	{
 		_time = 0;
 		_isSlow = false;
+		GameTime::Instance().SetTimeScale(1.0f);
 	}
 	++_time;
 }

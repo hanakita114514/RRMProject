@@ -11,6 +11,7 @@ private:
 	{
 		bool isStartUp;		//‰Šú‰»‚Ìˆ×
 		float timeScale;
+		float stopTime;		//~‚Ü‚éŠÔ
 	};
 private:
 	GameTime();

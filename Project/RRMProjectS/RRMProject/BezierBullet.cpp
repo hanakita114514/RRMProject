@@ -35,7 +35,7 @@ void BezierBullet::Initialize(Vector2 vec, ObjectType type)
 void BezierBullet::Update()
 {
 
-	_life -= REDUCE_LIFE * GameTime::Instance().GetTimeScale();
+	_life -= REDUCE_LIFE * GameTime::Instance().GetTimeScale(_owner);
 
 	if (_life <= 0)
 	{
@@ -71,8 +71,8 @@ void BezierBullet::BezierCurve()
 	Vector2 normal = Normalize(_nextPos,_circle.pos);
 
 	//単位ベクトルに弾のスピードをかける
-	normal.x *= BULLET_SPEED * GameTime::Instance().GetTimeScale();
-	normal.y *= BULLET_SPEED * GameTime::Instance().GetTimeScale();
+	normal.x *= BULLET_SPEED * GameTime::Instance().GetTimeScale(_owner);
+	normal.y *= BULLET_SPEED * GameTime::Instance().GetTimeScale(_owner);
 
 	//求めた結果を移動量に代入
 	_vel = normal;

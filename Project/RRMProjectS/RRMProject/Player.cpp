@@ -335,9 +335,9 @@ Player::DamageUpdate()
 	if (GameTime::Instance().GetTimeScale() != 0)
 	{
 		_rc.pos.y += _vel.y;
+		_rc.pos.x += _vel.x;
 	}
 
-	_rc.pos.x += _vel.x;
 
 	DistanceAttenuation();
 	if (_vel.x == 0)
