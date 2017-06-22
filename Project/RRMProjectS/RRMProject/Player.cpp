@@ -79,14 +79,14 @@ Player::Move()
 	if (_input.Left())
 	{
 		//_vel.x = std::fmaxf(-10.0f, _vel.x - 1);
-		_vel.x = -_speed * GameTime::Instance().GetTimeScale();
+		_vel.x = -_speed * GameTime::Instance().GetTimeScale(this);
 		_dir.x = -1;
 		_isdir = &Player::DirLeft;
 	}
 	if (_input.Right())
 	{
 		//_vel.x = std::fminf(10.0f, _vel.x + 1);
-		_vel.x = _speed * GameTime::Instance().GetTimeScale();
+		_vel.x = _speed * GameTime::Instance().GetTimeScale(this);
 		_dir.x = 1;
 		_isdir = &Player::DirRight;
 	}
@@ -103,7 +103,7 @@ Player::Jump()
 	//’nãƒWƒƒƒ“ƒv
 	if (_input.Jump() && _hitGround)
 	{
-		_vel.y = -jump_power * GameTime::Instance().GetTimeScale();
+		_vel.y = -jump_power * GameTime::Instance().GetTimeScale(this);
 		_isJump = true;
 		_hitGround = false;
 		_nosedive = 1;
@@ -128,7 +128,7 @@ Player::Jump()
 
 	if (_secondJump && _input.Jump() && _isAirJump)
 	{
-		_vel.y = -jump_power * GameTime::Instance().GetTimeScale();
+		_vel.y = -jump_power * GameTime::Instance().GetTimeScale(this);
 		_isJump = true;
 		_secondJump = false;
 		_nosedive = 1;
@@ -150,7 +150,7 @@ Player::InvincibleUpdate()
 
 
 	// ŽžŠÔ‚ªŽ~‚Ü‚Á‚Ä‚é‚Æ‚«‚Í“®‚©‚³‚È‚¢
-	if (GameTime::Instance().GetTimeScale() != 0)
+	if (GameTime::Instance().GetTimeScale(this) != 0)
 	{
 		_rc.pos.y += _vel.y;
 	}
@@ -165,7 +165,7 @@ Player::InvincibleUpdate()
 
 void Player::AvoidanceUpdate()
 {
-	_avoidTime -= 1.0f * GameTime::Instance().GetTimeScale();
+	_avoidTime -= 1.0f * GameTime::Instance().GetTimeScale(this);
 
 	_nosedive = 1;
 
@@ -190,8 +190,8 @@ void Player::AvoidanceUpdate()
 
 	Vector2 v = Normalize(_vel);
 
-	_rc.pos.x += v.x * 23.0f * GameTime::Instance().GetTimeScale();
-	_rc.pos.y += v.y * 23.0f * GameTime::Instance().GetTimeScale();
+	_rc.pos.x += v.x * 23.0f * GameTime::Instance().GetTimeScale(this);
+	_rc.pos.y += v.y * 23.0f * GameTime::Instance().GetTimeScale(this);
 
 	if (_hitGround == true)
 	{
@@ -317,7 +317,7 @@ Player::AliveUpdate()
 	HitGround();
 
 	// ŽžŠÔ‚ªŽ~‚Ü‚Á‚Ä‚é‚Æ‚«‚Í“®‚©‚³‚È‚¢
-	if (GameTime::Instance().GetTimeScale() != 0)
+	if (GameTime::Instance().GetTimeScale(this) != 0)
 	{
 		_rc.pos.y += _vel.y;
 	}
@@ -330,9 +330,9 @@ void
 Player::DamageUpdate()
 {
 	_ps = PlayerState::damage;
-		_vel.y += GRAVITY * GameTime::Instance().GetTimeScale() * GameTime::Instance().GetTimeScale();
+		_vel.y += GRAVITY * GameTime::Instance().GetTimeScale(this) * GameTime::Instance().GetTimeScale(this);
 	// ŽžŠÔ‚ªŽ~‚Ü‚Á‚Ä‚é‚Æ‚«‚Í“®‚©‚³‚È‚¢
-	if (GameTime::Instance().GetTimeScale() != 0)
+	if (GameTime::Instance().GetTimeScale(this) != 0)
 	{
 		_rc.pos.y += _vel.y;
 		_rc.pos.x += _vel.x;
@@ -577,7 +577,8 @@ void Player::Hit(Bullet* other)
 		}
 		if (_update == &Player::AvoidanceUpdate)
 		{
-			_sd.SlowMotion(3);
+			_sd.SlowMotion(5, this);
+			_sd.SlowMotion(60, other->GetOwner());
 			return;
 		}
 	}
@@ -603,7 +604,7 @@ Player::HitGround()
 	}
 	else
 	{
-		_vel.y += GRAVITY * GameTime::Instance().GetTimeScale() * GameTime::Instance().GetTimeScale() * _nosedive;
+		_vel.y += GRAVITY * GameTime::Instance().GetTimeScale(this) * GameTime::Instance().GetTimeScale(this) * _nosedive;
 	}
 }
 

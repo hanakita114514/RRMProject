@@ -3,16 +3,17 @@
 #include <map>
 #include "Object.h"
 
+struct TimeData
+{
+	bool isStartUp;		//初期化の為
+	float timeScale;
+	float stopTime;		//止まる時間
+	bool isSlow;		//スローモーションか？
+};
+
 //ゲーム全体の時間を管理
 class GameTime
 {
-private:
-	struct TimeData
-	{
-		bool isStartUp;		//初期化の為
-		float timeScale;
-		float stopTime;		//止まる時間
-	};
 private:
 	GameTime();
 	GameTime(GameTime&);
@@ -47,6 +48,9 @@ public:
 	const float& GetTimeScale(Object* other);
 
 	const float& GetDeltaTime();
+
+	TimeData& GetTimeData(Object* other);
+	std::map<Object*, TimeData>& GetTimeScaleList();
 
 	//ループ始まる最初に呼ぶ
 	void BeginUpdate();

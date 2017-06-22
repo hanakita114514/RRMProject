@@ -60,8 +60,8 @@ SinBullet::Move()
 
 	}
 
-	_circle.pos.x += _vel.x * GameTime::Instance().GetTimeScale();
-	_circle.pos.y += _vel.y * GameTime::Instance().GetTimeScale();
+	_circle.pos.x += _vel.x * GameTime::Instance().GetTimeScale(_owner);
+	_circle.pos.y += _vel.y * GameTime::Instance().GetTimeScale(_owner);
 
 	if (_circle.pos.x < 0 || _circle.pos.x > 1280)
 	{
@@ -72,7 +72,7 @@ SinBullet::Move()
 void 
 SinBullet::LifeDecrease()
 {
-	_life -= REDUCE_LIFE * GameTime::Instance().GetTimeScale();
+	_life -= REDUCE_LIFE * GameTime::Instance().GetTimeScale(_owner);
 
 	if (_life < 0)
 	{

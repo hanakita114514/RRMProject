@@ -36,6 +36,7 @@ bool MapManager::Initialize()
 {
 	_mapErr = _map[_stageId].MapLoad();
 	EnemyManager::Instance().Create(EnemyType::egg, Position(1214, 0));
+	EnemyManager::Instance().Create(EnemyType::egg, Position(300, 0));
 
 	if (!_mapErr|| !_bgErr)	//ƒ}ƒbƒv‚à‚µ‚­‚Í”wŒi‚Å¸”s‚µ‚½‚©H
 	{

@@ -35,7 +35,7 @@ void
 DeffusionBullet::Update()
 {
 
-	_life -= REDUCE_LIFE * GameTime::Instance().GetTimeScale();
+	_life -= REDUCE_LIFE * GameTime::Instance().GetTimeScale(_owner);
 
 	if (_life <= 0)
 	{
@@ -53,7 +53,7 @@ DeffusionBullet::Draw(const Vector2& offset)
 void
 DeffusionBullet::Move()
 {
-	_circle.pos += _vel * GameTime::Instance().GetTimeScale();
+	_circle.pos += _vel * GameTime::Instance().GetTimeScale(_owner);
 }
 
 void

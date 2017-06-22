@@ -37,13 +37,13 @@ void Lazer::Initialize()
 void Lazer::Update()
 {
 
-	_life -= REDUCE_LIFE * GameTime::Instance().GetTimeScale();
+	_life -= REDUCE_LIFE * GameTime::Instance().GetTimeScale(_owner);
 
 	if (_life == 0)
 	{
 		_isAlive = false;
 	}
-	_circle.pos += _vel * GameTime::Instance().GetTimeScale();
+	_circle.pos += _vel * GameTime::Instance().GetTimeScale(_owner);
 }
 
 

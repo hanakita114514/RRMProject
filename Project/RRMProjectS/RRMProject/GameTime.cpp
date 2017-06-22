@@ -27,7 +27,7 @@ GameTime::SetTimeScale(float scale)
 	}
 	_timeScale = scale;
 
-	for (auto t : _timeScales)
+	for (auto& t : _timeScales)
 	{
 		t.second.timeScale = _timeScale;
 		t.second.isStartUp = true;
@@ -65,6 +65,7 @@ GameTime::GetTimeScale(Object* other)
 		_timeScales[other].isStartUp = true;
 		_timeScales[other].timeScale = 1.0f;
 		_timeScales[other].stopTime = 0.0f;
+		_timeScales[other].isSlow = false;
 	}
 	return _timeScales[other].timeScale;
 }
@@ -83,4 +84,16 @@ const float&
 GameTime::GetDeltaTime()
 {
 	return _deltaTime;
+}
+
+TimeData& 
+GameTime::GetTimeData(Object* other)
+{
+	return _timeScales[other];
+}
+
+std::map<Object*, TimeData>& 
+GameTime::GetTimeScaleList()
+{
+	return _timeScales;
 }

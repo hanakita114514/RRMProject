@@ -19,22 +19,41 @@ SlowDown::~SlowDown()
 void 
 SlowDown::Update()
 {
-	//スローモーション状態ではないとき
-	if (!_isSlow)
+	//if (_slowTime < _time)
+	//{
+	//	_time = 0;
+	//	_isSlow = false;
+	//	GameTime::Instance().SetTimeScale(1.0f);
+	//}
+	//++_time;
+
+	////スローモーション状態
+	//if (_isSlow)
+	//{
+	//	GameTime::Instance().SetTimeScale(_resio);
+	//	return;
+	//}
+
+
+	//GameTime::Instance().SetTimeScale(_resio);
+
+	for (auto& td : GameTime::Instance().GetTimeScaleList())
 	{
-		return;
+		if (!td.second.isSlow)
+		{
+			continue;
+		}
+
+		//GameTime::Instance().SetTimeScale(td.second.timeScale, td.first);
+
+		if (td.second.stopTime <= 0)
+		{
+			td.second.timeScale = 1.0f;
+			td.second.isSlow = false;
+		}
+
+		--td.second.stopTime;
 	}
-
-
-	GameTime::Instance().SetTimeScale(_resio);
-
-	if (_slowTime < _time)
-	{
-		_time = 0;
-		_isSlow = false;
-		GameTime::Instance().SetTimeScale(1.0f);
-	}
-	++_time;
 }
 
 void 
@@ -45,10 +64,26 @@ SlowDown::SlowMotion(int time)
 	_resio = 0.5f;
 }
 
+void 
+SlowDown::SlowMotion(int time, Object* other)
+{
+	TimeData& td = GameTime::Instance().GetTimeData(other);
+	td.isSlow = true;
+	td.stopTime = time;
+	td.timeScale = 0.5f;
+	td.isStartUp = true;
+}
+
 void
 SlowDown::TheWorld(int time)
 {
 	_isSlow = true;
 	_slowTime = time;
 	_resio = 0.0f;
+}
+
+void 
+SlowDown::TheWorld(int time, Object* other)
+{
+
 }

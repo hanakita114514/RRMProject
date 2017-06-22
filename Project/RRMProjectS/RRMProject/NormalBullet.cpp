@@ -38,9 +38,9 @@ void NormalBullet::Update()
 
 	if (_bs != BulletState::stop)
 	{
-		_life -= REDUCE_LIFE * GameTime::Instance().GetTimeScale();
-		_circle.pos.x += _vel.x * GameTime::Instance().GetTimeScale();
-		_circle.pos.y += _vel.y * GameTime::Instance().GetTimeScale();
+		_life -= REDUCE_LIFE * GameTime::Instance().GetTimeScale(_owner);
+		_circle.pos.x += _vel.x * GameTime::Instance().GetTimeScale(_owner);
+		_circle.pos.y += _vel.y * GameTime::Instance().GetTimeScale(_owner);
 	}
 }
 
