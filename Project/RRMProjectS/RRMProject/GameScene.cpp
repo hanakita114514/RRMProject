@@ -11,6 +11,7 @@
 #include "EffectManager.h"
 #include "GameMain.h"
 #include "ResultScene.h"
+#include "BlockManager.h"
 
 GameScene::GameScene() : _player(0,_camera), _camera(_player.GetRect().pos)
 {
@@ -18,6 +19,7 @@ GameScene::GameScene() : _player(0,_camera), _camera(_player.GetRect().pos)
 	EnemyManager::Instance();
 	BulletManager::Instance();
 	MapManager::Instance().Initialize();
+	BlockManager::Instance();
 	Fade::Instance().FadeOut(5.0f);
 	_logoState = LogoIdx::GameStart;
 
@@ -29,6 +31,7 @@ GameScene::GameScene(LogoIdx state) : _player(0, _camera), _camera(_player.GetRe
 	_col = new Collision();
 	EnemyManager::Instance();
 	BulletManager::Instance();
+	BlockManager::Instance();
 	MapManager::Instance().Initialize();
 	Fade::Instance().FadeOut(5.0f);
 	_logoState = state;
@@ -64,11 +67,12 @@ bool GameScene::Update()
 		ColProcess();
 	}
 		//•`‰æ--------------------------------------------------------------------
-		MapManager::Instance().Draw(_camera.GetOffset());
-		EnemyManager::Instance().Draw(_camera.GetOffset());
-		BulletManager::Instance().Draw(_camera.GetOffset());
-		_player.Draw();
-		EffectManager::Instance().Draw(_camera.GetOffset());
+	MapManager::Instance().Draw(_camera.GetOffset());
+	BlockManager::Instance().Draw(_camera.GetOffset());
+	EnemyManager::Instance().Draw(_camera.GetOffset());
+	BulletManager::Instance().Draw(_camera.GetOffset());
+	_player.Draw();
+	EffectManager::Instance().Draw(_camera.GetOffset());
 
 	StageClear();
 
@@ -79,7 +83,7 @@ void
 GameScene::PlayerColBlock()
 {
 	_player.SetHitGround(false);
-	for (auto& block : MapManager::Instance().GetList())
+	for (auto& block : BlockManager::Instance().GetBlockList())
 	{
 		Rect r = {};
 		r = block->GetRect();
@@ -98,7 +102,7 @@ GameScene::EnemyColBlock()
 
 	for (auto& enemy : EnemyManager::Instance().GetEnemyList())
 	{
-		for (auto& block : MapManager::Instance().GetList())
+		for (auto& block : BlockManager::Instance().GetBlockList())
 		{
 			Rect r = {};
 			r = block->GetRect();
@@ -174,7 +178,7 @@ GameScene::BulletColBlock()
 		{
 			continue;
 		}
-		for (auto& block : MapManager::Instance().GetList())
+		for (auto& block : BlockManager::Instance().GetBlockList())
 		{
 			hitFlag = _col->IsHit(block->GetRect(), bullet->GetCircle());
 			if (hitFlag == true && (block->GetObjType() != bullet->GetObjType()))

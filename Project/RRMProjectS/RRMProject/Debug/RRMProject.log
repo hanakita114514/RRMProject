@@ -1,7 +1,4 @@
-﻿  GameMain.cpp
-  Egg.cpp
-c:\users\1501343\desktop\卒制\trunk\project\rrmprojects\rrmproject\egg.cpp(203): warning C4244: '=': 'double' から 'float' への変換です。データが失われる可能性があります。
-c:\users\1501343\desktop\卒制\trunk\project\rrmprojects\rrmproject\egg.cpp(204): warning C4244: '=': 'double' から 'float' への変換です。データが失われる可能性があります。
-  コードを生成中...
+﻿  SlowDown.cpp
+c:\users\1501343\desktop\卒制\trunk\project\rrmprojects\rrmproject\slowdown.cpp(72): warning C4244: '=': 'int' から 'float' への変換です。データが失われる可能性があります。
   RRMProject.vcxproj -> C:\Users\1501343\Desktop\卒制\trunk\Project\RRMProjectS\Debug\RRMProject.exe
   RRMProject.vcxproj -> C:\Users\1501343\Desktop\卒制\trunk\Project\RRMProjectS\Debug\RRMProject.pdb (Full PDB)
