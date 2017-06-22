@@ -94,6 +94,9 @@ public:
 	//void DrawRectExtendGraph(float destLX, float destLY, float destRX, float destRY, int srcX, int srcY,
 	//	int width, int height, DrawingStructure ds, bool transFlag, bool turnFlag);
 
+	//‰æ‘œ‚Ì‰ñ“]•`‰æ
+	void DrawRotaGraph(float x, float y, double angle, int graphHandle, bool transFlag, bool turnFlag);
+
 	//‰æ‘œ‚Ìíœ
 	void DeleteGraph(int handle);
 };

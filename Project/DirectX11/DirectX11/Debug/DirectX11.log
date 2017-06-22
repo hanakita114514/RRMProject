@@ -95,10 +95,9 @@ c:\program files (x86)\microsoft directx sdk (june 2010)\include\xnamathmisc.inl
 c:\program files (x86)\microsoft directx sdk (june 2010)\include\xnamathmisc.inl(519): warning C4838: 'unsigned int' から 'INT' への変換には縮小変換が必要です
   c:\program files (x86)\microsoft directx sdk (june 2010)\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
 c:\users\1501343\desktop\卒制\trunk\project\directx11\directx11\xaudio.h(57): warning C4091: 'typedef ': 変数が何も宣言されていないときは、'XAudio::FrameHeader' の左辺を無視します。
-c:\users\1501343\desktop\卒制\trunk\project\directx11\directx11\main.cpp(562): warning C4244: '引数': 'int' から 'float' への変換です。データが失われる可能性があります。
-c:\users\1501343\desktop\卒制\trunk\project\directx11\directx11\main.cpp(534): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+c:\users\1501343\desktop\卒制\trunk\project\directx11\directx11\main.cpp(536): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\string.h(90): note: 'strcat' の宣言を確認してください
-c:\users\1501343\desktop\卒制\trunk\project\directx11\directx11\main.cpp(538): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+c:\users\1501343\desktop\卒制\trunk\project\directx11\directx11\main.cpp(540): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\string.h(90): note: 'strcat' の宣言を確認してください
   DirectX11.vcxproj -> C:\Users\1501343\Desktop\卒制\trunk\Project\DirectX11\Debug\DirectX11.exe
   DirectX11.vcxproj -> C:\Users\1501343\Desktop\卒制\trunk\Project\DirectX11\Debug\DirectX11.pdb (Full PDB)

@@ -505,6 +505,8 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nC
 
 	int x = 0;
 
+	const double PI = 3.141592f;
+
 	while (true)
 	{
 		if (ProcessMessage() != 0)
@@ -559,7 +561,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nC
 
 		for (int i = 0; i < 200; i++)
 		{
-			graphic.DrawGraph(x, 0, handle);
+			//graphic.DrawGraph(x, 0, handle);
 			//graphic.DrawExtendGraph(x, 0, 1000, 700, handle);
 			//graphic.DrawRectGraph(x, 0, 100, 100, 300, 300, handle, true, true);
 			//graphic.DrawRectExtendGraph(0, 0, 100, 100, 100, 200, 400, 400, ds, true, true);
@@ -571,6 +573,10 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nC
 
 		//graphic.DrawGraph(0 * 384, 0 * 216, dsBuf[0]);
 		//graphic.DrawGraph(1 * 384, 0 * 216, dsBuf[1]);
+
+		angle += 0.001f;
+
+		graphic.DrawRotaGraph(500, 100, angle, handle, true, false);
 
 		//GraphList::Instance().Add(graphic.DrawGraph(0, 0, handle));
 
