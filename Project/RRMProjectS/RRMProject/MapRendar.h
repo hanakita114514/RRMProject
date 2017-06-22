@@ -5,11 +5,6 @@
 
 const int MAP_ARRAY_SIZE_X = 40;
 const int MAP_ARRAY_SIZE_Y = 20;
-const int MAP_IMAGE_X_NUM = 8;
-const int MAP_IMAGE_Y_NUM = 16;
-const int MAP_IMAGE_ALL_NUM = 128;
-const float MAP_CHIP_SIZE_X = 32;
-const float MAP_CHIP_SIZE_Y = 32;
 const int MAP_CHIP_X_NUM = 16;
 const int MAP_CHIP_Y_NUM = 16;
 const int EDITER_CHIP_X_NUM = 16;
@@ -48,17 +43,15 @@ class MapRendar
 {
 private:
 
-	int _mapImage[MAP_IMAGE_X_NUM * MAP_IMAGE_Y_NUM];
 	int _checkArray[MAP_ARRAY_SIZE_Y];
 
 	FMFHEADER _header;
 	const char* _filePath;
 
-	std::vector<std::vector<unsigned int>> _mapList;
+	std::vector<std::vector<int>> _mapList;
 	std::vector<Block*> _blockList;
 
 	void NomalizeArray();			//îzóÒÇÃóvëfÇÃê≥ãKâª
-	void BlockInit();
 	int _checkNum;
 
 public:
@@ -69,6 +62,7 @@ public:
 
 	bool MapLoad();
 	void MapDraw(const Vector2& offset);
+	std::vector<std::vector<int>> GetMap() { return _mapList; }
 
 	std::vector<Block*>& GetBlockList() { return _blockList; }
 };

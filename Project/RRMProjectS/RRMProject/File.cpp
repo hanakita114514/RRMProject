@@ -63,7 +63,7 @@ void File::Finalize()
 	fclose(_filePointer);
 }
 
-void File::FileLoad(FMFHEADER& header, vector<vector<unsigned int>>& array)
+void File::FileLoad(FMFHEADER& header, vector<vector<int>>& array)
 {
 	int i, y, x;		//ƒ‹[ƒv—p•Ï”
 

@@ -2,6 +2,9 @@
 #include "File.h"
 #include <RRMLib.h>
 #include <string.h>
+#include "ThroughBlock.h"
+#include "NormalBlock.h"
+#include "BlockManager.h"
 
 MapRendar::MapRendar()
 {
@@ -15,7 +18,6 @@ MapRendar::~MapRendar()
 void
 MapRendar::Initialize(const char* mapFilePath)
 {
-	RRMLib::LoadDivGraph("Resource/img/MapChip1.png", MAP_IMAGE_ALL_NUM, MAP_IMAGE_X_NUM, MAP_IMAGE_Y_NUM, 32, 32, _mapImage);
 
 	for (int i = 0; i < MAP_ARRAY_SIZE_Y; i++)
 	{
@@ -39,7 +41,7 @@ bool MapRendar::MapLoad()
 
 	 NomalizeArray();
 
-	 BlockInit();
+	 BlockManager::Instance().BlockInit(_mapList, _header.dwHeight, _header.dwWidth);
 
 	 delete file;
 
@@ -67,26 +69,3 @@ void MapRendar::NomalizeArray()
 			}
 		}
 }
-
-void MapRendar::BlockInit()
-{
-	//_blockList‚Ì‰Šú‰»---------------------------------
-	unsigned int  y, x;
-	y = x = 0;
-		for (y = 0; y < _header.dwHeight; ++y)
-		{
-			for (x = 0; x < _header.dwWidth; ++x)
-			{
-				if (_mapList[y][x] != 0)
-				{
-					Block* b = new Block();
-					b->Initialize(Vector2(x * MAP_CHIP_SIZE_X, y * MAP_CHIP_SIZE_Y),
-											_mapImage[_mapList[y][x]],
-											Vector2(MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y));
-					_blockList.push_back(b);
-				}
-			}
-		}
-	//--------------------------------------------------
-}
-

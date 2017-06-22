@@ -384,7 +384,7 @@ int MenuScene::RightMove(int& idx, int idxMax)
 {
 	if (IsStickRight())
 	{
-		idx = (idx + 1) % idxMax;
+		idx = (idx + idxMax) % idxMax;
 	}
 
 	return idx;

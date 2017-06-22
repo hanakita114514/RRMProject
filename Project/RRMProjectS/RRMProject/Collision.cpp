@@ -4,7 +4,7 @@
 #include "Player.h"
 #include <math.h> 
 #include "Enemy.h"
-
+#include "Block.h"
 Collision::Collision()
 {
 	_move = none;
@@ -89,6 +89,36 @@ Collision::IsHit(Circle &c1, Circle &c2)
 	return hitFlag;
 }
 
+bool 
+Collision::IsHit(Rect &player, Block &block, Vector2 vec)
+{
+	bool hitFlag = false;
+	Rect b = {};
+	b.pos = block.GetRect().pos;
+	b.w = block.GetRect().w;
+	b.h = 10;
+
+	Rect a = {};
+	a.pos = player.pos;
+	a.pos.y = player.Bottom() ;
+	a.w = player.w;
+	a.h = 10;
+
+	if ((a.Right() > b.Left()) &&
+		(a.Left() < b.Right()) &&
+		(a.Bottom() > b.Top()) &&
+		(a.Top() < b.Bottom()))
+	{
+		if (vec.y < 0)
+		{
+			return false;
+		}
+		hitFlag = true;
+	}
+
+	return hitFlag;
+
+}
 //bool 
 //Collision::LineCross(Rect r1, Vector2 vec1, Rect r2,bool hitGround)
 //{
@@ -515,6 +545,7 @@ bool CircleColToRect(Rect &a, Circle &c)
 float DistanceCalcuration(Vector2 &v1, Vector2 &v2)
 {
 	float distance = 0;
+	float distance2 = 0;
 	float x, y;
 
 	x = abs(v1.x - v2.x);

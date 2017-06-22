@@ -12,8 +12,8 @@ MapData _fileName[(int)Stage::stageMax] =
 {
 	{ "Resource/data/map/map1.fmf","Resource/img/BackGround/mori.jpg" },
 	{ "Resource/data/map/map2.fmf","Resource/img/BackGround/mori.jpg" },
-	{ "Resource/data/map/map1.fmf","Resource/img/BackGround/mori.jpg" },
-	{ "Resource/data/map/map2.fmf","Resource/img/BackGround/mori.jpg" }
+	{ "Resource/data/map/map3.fmf","Resource/img/BackGround/mori.jpg" },
+	{ "Resource/data/map/map4.fmf","Resource/img/BackGround/mori.jpg" }
 };
 
 MapManager::MapManager()
@@ -30,7 +30,6 @@ MapManager::MapManager()
 
 MapManager::~MapManager()
 {
-	Delete();
 }
 
 bool MapManager::Initialize()
@@ -61,18 +60,6 @@ void MapManager::Draw(const Vector2& offset)
 	_map[_stageId].MapDraw(offset);
 }
 
-void 
-MapManager::Delete()
-{
-	auto itr = _list.begin();
-
-	for (; itr != _list.end();)
-	{
-		delete (*itr);
-		*itr = nullptr;
-		itr = _list.erase(itr);
-	}
-}
 
 bool
 MapManager::StageSelect(int stageId)

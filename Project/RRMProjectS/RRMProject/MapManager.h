@@ -55,7 +55,6 @@ public:
 	bool Initialize();
 	void Update();
 	void Draw(const Vector2& offset);
-	void Delete();
 	void Finalize();
 
 	EnemyFactory* GetEnemyFact() { return _fac; }

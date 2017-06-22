@@ -29,7 +29,7 @@ public:
 
 	void Finalize();
 
-	void FileLoad(FMFHEADER& header, vector<vector<unsigned int>>& array);
+	void FileLoad(FMFHEADER& header, vector<vector<int>>& array);
 
 	//全データ読み込み
 	void FileLoad(SaveData& data, int size);

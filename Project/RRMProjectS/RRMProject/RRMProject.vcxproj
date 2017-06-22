@@ -25,6 +25,7 @@
     <ClCompile Include="BackgroundRendar.cpp" />
     <ClCompile Include="BezierBullet.cpp" />
     <ClCompile Include="Block.cpp" />
+    <ClCompile Include="BlockManager.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="BulletFactory.cpp" />
     <ClCompile Include="BulletManager.cpp" />
@@ -70,6 +71,7 @@
     <ClCompile Include="Meat.cpp" />
     <ClCompile Include="MultihitProtect.cpp" />
     <ClCompile Include="Mushroom.cpp" />
+    <ClCompile Include="NormalBlock.cpp" />
     <ClCompile Include="NormalBullet.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -83,6 +85,7 @@
     <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="Spell.cpp" />
     <ClCompile Include="TestSpell.cpp" />
+    <ClCompile Include="ThroughBlock.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="UI.cpp" />
     <ClCompile Include="UIFactory.cpp" />
@@ -103,6 +106,7 @@
     <ClInclude Include="BackgroundRendar.h" />
     <ClInclude Include="BezierBullet.h" />
     <ClInclude Include="Block.h" />
+    <ClInclude Include="BlockManager.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="BulletFactory.h" />
     <ClInclude Include="BulletManager.h" />
@@ -150,6 +154,7 @@
     <ClInclude Include="Meat.h" />
     <ClInclude Include="MultihitProtect.h" />
     <ClInclude Include="Mushroom.h" />
+    <ClInclude Include="NormalBlock.h" />
     <ClInclude Include="NormalBullet.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Player.h" />
@@ -163,6 +168,7 @@
     <ClInclude Include="SoundManager.h" />
     <ClInclude Include="Spell.h" />
     <ClInclude Include="TestSpell.h" />
+    <ClInclude Include="ThroughBlock.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="UI.h" />
     <ClInclude Include="UIFactory.h" />
