@@ -18,7 +18,6 @@ const char* Stage[(int)Stage::stageMax] =
 	{"Stage4"}
 };
 
-
 MenuScene::MenuScene()
 {
 	_titleHandle = RRMLib::LoadGraph("Resource/img/title.png");
@@ -96,7 +95,7 @@ MenuScene::MenuUpdate()
 				_update = &MenuScene::GameStart;
 				_logoIdx = 0;
 				_arrow.SetPos(_logoDefaultPos[_logoIdx]);
-				Fade::Instance().PauseIn();
+				Fade::Instance().PauseIn(1, 50);
 			}
 			break;
 			case 1:
@@ -104,7 +103,7 @@ MenuScene::MenuUpdate()
 				_update = &MenuScene::Configuration;
 				_logoIdx = 0;
 				_arrow.SetPos(_logoDefaultPos[_logoIdx]);
-				Fade::Instance().PauseIn();
+				Fade::Instance().PauseIn(1,50);
 			}
 			break;
 			default:
@@ -112,17 +111,15 @@ MenuScene::MenuUpdate()
 			}
 		}
 		//---------------------------------------------------------------------------------
-
+		_arrow.Draw();
+		LogoMove();
 	}
 
 	if (Fade::Instance().IsFadeInEnd())
 	{
 		Fade::Instance().FadeOut(10.0f);
 	}
-	LogoMove();
-	Draw();
 
-	_arrow.Draw();
 	for (int i = 0; i <(int)(LogoIdx::logoMax); i++)
 	{
 		RRMLib::DrawGraph((int)_logo[i].rc.pos.x, (int)_logo[i].rc.pos.y, _logo[i].image);
@@ -136,12 +133,6 @@ MenuScene::GameStart()
 	{
 		UpMove();
 		DownMove();
-
-		if (_logoIdx == 1)
-		{
-			_stageId = RightMove(_stageId, (int)Stage::stageMax);
-			_stageId = LeftMove(_stageId, (int)Stage::stageMax);
-		}
 
 		if (Exit())
 		{
@@ -162,7 +153,8 @@ MenuScene::GameStart()
 			break;
 			case 1:
 			{
-				Fade::Instance().FadeIn(10.0);
+				_stageId = 0;
+				_update = &MenuScene::StageSelect;
 			}
 			break;
 			default:
@@ -171,6 +163,8 @@ MenuScene::GameStart()
 
 			_logoState = static_cast<LogoIdx>(_logoIdx);
 		}
+		_arrow.Draw();
+		LogoMove();
 
 		for (int i = 0; i < (int)(LogoIdx::logoMax); i++)
 		{
@@ -178,9 +172,7 @@ MenuScene::GameStart()
 		}
 	}
 
-	LogoMove();
 
-	_arrow.Draw();
 	//ƒQ[ƒ€ƒV[ƒ“‚Ö‚Ì‘JˆÚ
 	if (Fade::Instance().IsFadeInEnd())
 	{
@@ -190,10 +182,30 @@ MenuScene::GameStart()
 
 }
 
-
 void
 MenuScene::StageSelect()
 {
+	_stageId = RightMove(_stageId, (int)Stage::stageMax);
+	_stageId = LeftMove(_stageId, (int)Stage::stageMax);
+
+	if (Fade::Instance().IsWait())
+	{
+		if (_dinput->IsTriger(KeyType::keyB))
+		{
+			Fade::Instance().FadeIn(10.0);
+		}
+
+		if (Exit())
+		{
+			_update = &MenuScene::GameStart;
+		}
+	}
+
+	if (Fade::Instance().IsFadeInEnd())
+	{
+		MapManager::Instance().StageSelect(_stageId);
+		GameMain::Instance().ChangeScene(new GameScene(_logoState));
+	}
 
 }
 void
@@ -213,8 +225,6 @@ MenuScene::Configuration()
 		}
 
 	}
-	Draw();
-
 	_arrow.Draw();
 	LogoMove();
 
@@ -282,6 +292,7 @@ MenuScene::ImageShaker(Rect& rect)
 
 bool MenuScene::Update()
 {
+	Draw();
 	_dinput->Update();
 	(this->*_update)();
 	return true;

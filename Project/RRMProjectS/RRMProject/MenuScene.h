@@ -48,8 +48,6 @@ private:
 	bool right, left,up,down;			//現フレームのスティック情報
 
 	void (MenuScene::*_update)();
-
-
 	void TitleUpdate();
 	void MenuUpdate();
 	void StageSelect();

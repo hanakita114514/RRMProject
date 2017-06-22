@@ -20,10 +20,12 @@ Fade::Init()
 	_alpha = 0;
 	_fadeSpeed = 0;
 	_func = &Fade::Wait;
-	_handle = RRMLib::LoadGraph("Resource/img/BackGround/Fade.png");
+	_handle[0] = RRMLib::LoadGraph("Resource/img/BackGround/Fade.png");
+	_handle[1] = RRMLib::LoadGraph("Resource/img/BackGround/whiteFilter.png");
 	_isWait = false;
 	_isFadeInEnd = false;
 	_isFadeOutEnd = false;
+	_handleIdx = (int)FadeImage::black;
 }
 
 void
@@ -35,6 +37,7 @@ Fade::Wait()
 void 
 Fade::FadeIn()
 {
+	_handleIdx = (int)FadeImage::black;
 	_alpha += _fadeSpeed;
 	if (_alpha >= 255)
 	{
@@ -72,7 +75,7 @@ void
 Fade::Draw()
 {
 	RRMLib::SetBlendMode(RRM_BLENDMODE_ALPHA, (int)_alpha);
-	RRMLib::DrawGraph(0, 0, _handle);
+	RRMLib::DrawGraph(0, 0, _handle[_handleIdx]);
 	RRMLib::SetBlendMode(RRM_BLENDMODE_NONE, 0);
 }
 
@@ -104,11 +107,24 @@ Fade::PauseIn(const float& alpha)
 }
 
 void
+Fade::PauseIn(int handleIdx,const float& alpha)
+{
+	_func = &Fade::Pause;
+	_alpha = alpha;
+	_isFadeOutEnd = false;
+	_isFadeInEnd = false;
+	_isPause = false;
+	_handleIdx = handleIdx;
+}
+
+
+void
 Fade::PauseEnd()
 {
 	_func = &Fade::Wait;
 	_alpha = 0;
 	_isPause = false;
+	_handleIdx = (int)FadeImage::black;
 }
 
 

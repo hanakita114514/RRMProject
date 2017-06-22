@@ -1,5 +1,12 @@
 #pragma once
 
+enum class FadeImage
+{
+	black,
+	white,
+	max
+};
+
 class Fade
 {
 private:
@@ -13,10 +20,12 @@ private:
 	bool _isWait;
 	bool _isPause;
 
-	int _handle;
-
+	//int _handle;
+	int _handle[(int)FadeImage::max];
 	float _fadeSpeed;
 	float _alpha;
+
+	int _handleIdx;
 
 	void (Fade::*_func)();
 
@@ -41,11 +50,15 @@ public:
 	//フェードインを行う
 	// fadeSpeed フェードのスピードの設定
 	void FadeIn(const float& fadeSpeed);
+	//画像のハンドルを指定するタイプ
 	//フェードアウトを行う
 	// fadeSpeed フェードのスピードの設定
 	void FadeOut(const float& fadeSpeed);
 
 	void PauseIn(const float& alpha = 127);
+
+	//0を指定すると黒いフィルター、1を指定すると白いフィルターでフェードする
+	void PauseIn(int handleIdx, const float& alpha = 127);
 
 	void PauseEnd();
 
