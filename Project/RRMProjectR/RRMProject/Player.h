@@ -12,6 +12,7 @@
 #include "Armor.h"
 #include "Bullet.h"
 #include "PlayerHitBox.h"
+#include "PlayerHP.h"
 
 #include <map>
 
@@ -29,6 +30,7 @@ private:
 		avoidance,
 		invincible,
 		damage,
+		jump,
 	};
 	std::map<PlayerState, int> _handleMap;
 
@@ -42,7 +44,7 @@ private:
 	Digestion _dig;			//消化
 	SlowDown _sd;			//遅くする
 	Armor _armor;			//アーマー
-	PlayerHitBox _hitBox;
+	PlayerHitBox _hitBox;	//当たり判定
 
 	PlayerState _ps;		//プレイヤーの状態
 
@@ -53,6 +55,8 @@ private:
 	MultihitProtect _mhp;	//多段ヒットを防ぐ
 
 	Camera& _camera;
+
+	int _animFrame;
 
 	int _nosedive;
 	int _toolIdx;
@@ -90,6 +94,7 @@ private:
 	void (Player::*_isdir)();
 	void DirRight();
 	void DirLeft();
+	bool _turnFlag;
 
 	void HitGround();
 
@@ -127,5 +132,7 @@ public:
 	bool IsDamage();
 
 	PlayerHitBox& GetHitBox() { return _hitBox; }
+
+	HitPoint& GetHP() { return _hp; }
 };
 

@@ -74,6 +74,8 @@ bool GameScene::Update()
 	BulletManager::Instance().Draw(_camera.GetOffset());
 	_player.Draw();
 	EffectManager::Instance().Draw(_camera.GetOffset());
+	_statusUI.Draw();
+	_playerHP.Draw(_player.GetHP());
 
 	StageClear();
 

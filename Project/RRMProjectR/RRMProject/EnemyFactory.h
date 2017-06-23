@@ -1,12 +1,12 @@
 #pragma once
 
 #include "Enemy.h"
-#include <vector>
+#include <map>
 
 class EnemyFactory
 {
 private:
-	int _eggImg[3];
+	std::map<EnemyType, int> _imgMap;
 
 public:
 	EnemyFactory();

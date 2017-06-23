@@ -76,6 +76,7 @@
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerHitBox.cpp" />
+    <ClCompile Include="PlayerHP.cpp" />
     <ClCompile Include="PowerPoint.cpp" />
     <ClCompile Include="Rect.cpp" />
     <ClCompile Include="RectObj.cpp" />
@@ -84,6 +85,7 @@
     <ClCompile Include="SlowDown.cpp" />
     <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="Spell.cpp" />
+    <ClCompile Include="StatusUI.cpp" />
     <ClCompile Include="TestSpell.cpp" />
     <ClCompile Include="ThroughBlock.cpp" />
     <ClCompile Include="Timer.cpp" />
@@ -159,6 +161,7 @@
     <ClInclude Include="Object.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerHitBox.h" />
+    <ClInclude Include="PlayerHP.h" />
     <ClInclude Include="PowerPoint.h" />
     <ClInclude Include="Rect.h" />
     <ClInclude Include="RectObj.h" />
@@ -167,6 +170,7 @@
     <ClInclude Include="SlowDown.h" />
     <ClInclude Include="SoundManager.h" />
     <ClInclude Include="Spell.h" />
+    <ClInclude Include="StatusUI.h" />
     <ClInclude Include="TestSpell.h" />
     <ClInclude Include="ThroughBlock.h" />
     <ClInclude Include="Timer.h" />

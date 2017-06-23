@@ -28,6 +28,7 @@ GameMain::~GameMain()
 
 bool GameMain::Init()
 {
+	//MessageBox(nullptr, "フルスクリーンで起動しますか？", "RRMProject", MB_YESNO);
 
 	if(RRMLib::RRMLib_Init() == -1)
 	{
@@ -131,11 +132,6 @@ void GameMain::GameLoop()
 		fps.Draw();
 
 		RRMLib::ScreenFlip();
-
-		if (CheckHitKey(KEY_INPUT_ESCAPE))
-		{
-			break;
-		}
 
 	}
 }

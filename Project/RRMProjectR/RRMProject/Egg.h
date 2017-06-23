@@ -3,7 +3,7 @@
 #include "Circle.h"
 #include "BulletManager.h"
 #include "HPBar.h"
-const int IMAGE_NUM = 3;
+
 const float ANIM_SPEED = 0.5;
 
 enum ShootDir
@@ -19,8 +19,8 @@ class Egg : public Enemy
 {
 private:
 	int _shotCnt;				//発射カウント
-	int _img[IMAGE_NUM];		//画像ハンドル
-	int _animCnt;				//アニメーションカウント
+	float _animCnt;				//アニメーションカウント
+	Vector2 _uv;
 	int suffix;
 	int _junpCnt;
 	Vector2 _shootPos[ShootDir::MAX];
@@ -40,7 +40,7 @@ private:
 	void DyingUpdate();
 
 public:
-	Egg(int* handle, const Position& pos);
+	Egg(int handle, const Position& pos);
 	~Egg();
 
 	void Initialize();								//初期化

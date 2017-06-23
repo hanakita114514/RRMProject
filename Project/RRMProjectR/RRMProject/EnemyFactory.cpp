@@ -5,10 +5,7 @@
 
 EnemyFactory::EnemyFactory()
 {
-	_eggImg[0] = RRMLib::LoadGraph("Resource/img/Enemy/Tamaran1.bmp");
-	_eggImg[1] = RRMLib::LoadGraph("Resource/img/Enemy/Tamaran2.bmp");
-	_eggImg[2] = RRMLib::LoadGraph("Resource/img/Enemy/Tamaran3.bmp");
-
+	_imgMap[EnemyType::egg] = RRMLib::LoadGraph("Resource/img/Enemy/tamatama.png");
 }
 
 
@@ -25,7 +22,7 @@ EnemyFactory::Create(const EnemyType& et, const Position& pos)
 	{
 	case EnemyType::egg:
 	{
-		enemy = new Egg(_eggImg, pos);
+		enemy = new Egg(_imgMap[EnemyType::egg], pos);
 	}
 		break;
 	case EnemyType::mushroom:

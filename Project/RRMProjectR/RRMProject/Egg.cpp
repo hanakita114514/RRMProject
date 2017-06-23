@@ -10,12 +10,14 @@
 
 const float GRAVITY = 0.75f;
 
-Egg::Egg(int* handle, const Position& pos)
+const float ANIM_SIZE_X = 64.0f;
+const float ANIM_SIZE_Y = 64.0f;
+
+const int IMAGE_NUM = 3;
+
+Egg::Egg(int handle, const Position& pos)
 {
-	for (int i = 0; i < 3; i++)
-	{
-		_img[i] = handle[i];
-	}
+	_handle = handle;
 
 	_animCnt = 0;
 	_shotCnt = 0;
@@ -63,7 +65,7 @@ Egg::AliveUpdate()
 	if (_hitGround == true)
 	{
 		_vel.y = 0;
-		_animCnt++;
+		_animCnt += GameTime::Instance().GetTimeScale(this);
 		_junpCnt++;
 		_shotCnt++;
 	}
@@ -82,17 +84,18 @@ Egg::AliveUpdate()
 
 	if (r == 0)
 	{
-		_vel.x = -2;
+		//_vel.x = -2;
 	}
 	else
 	{
-		_vel.x = 2;
+		//_vel.x = 2;
 	}
 
 
 	(this->*_state)();
 
 	Move();
+	Anim();
 
 	if (_hp.GetHitPoint() <= 0)
 	{
@@ -122,12 +125,24 @@ void Egg::Draw(const Vector2& offset)
 		drawPos.y = _rc.pos.y - offset.y;
 
 		_hpbar.Draw(Position(drawPos.x + 16, drawPos.y - 16), _hp);
-		RRMLib::DrawGraph((int)drawPos.x, (int)drawPos.y, _img[0]);
+		//RRMLib::DrawGraph((int)drawPos.x, (int)drawPos.y, _handle);
+		RRMLib::DrawRectGraph(drawPos.x, drawPos.y, _uv.x, _uv.y, ANIM_SIZE_X, ANIM_SIZE_Y, _handle, true, false);
 	}
 }
 
 void Egg::Anim()
 {
+	static const Vector2 animUV[] =
+	{
+		Vector2(ANIM_SIZE_X * 0, 0),
+		Vector2(ANIM_SIZE_X * 1, 0),
+		Vector2(ANIM_SIZE_X * 2, 0),
+		Vector2(ANIM_SIZE_X * 3, 0),
+	};
+
+	int animFrame = (int)_animCnt * 0.2f;
+
+	_uv = animUV[animFrame % IMAGE_NUM];
 }
 
 void Egg::Move()

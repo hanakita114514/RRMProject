@@ -27,9 +27,9 @@ Player::Player(int padType, Camera& camera)
 
 	_handle = RRMLib::LoadGraph("Resource/img/player/player.png");
 
-	_handleMap[PlayerState::neutral] = RRMLib::LoadGraph("Resource/img/player/player.png");
+	_handleMap[PlayerState::neutral] = RRMLib::LoadGraph("Resource/img/player/Healer/$Healer_1.png");
 	_handleMap[PlayerState::attack] = RRMLib::LoadGraph("Resource/img/player/attack.png");
-	_handleMap[PlayerState::avoidance] = RRMLib::LoadGraph("Resource/img/player/avoidance.png");
+	_handleMap[PlayerState::avoidance] = RRMLib::LoadGraph("Resource/img/player/Healer/$Healer_4.png");
 
 
 	Rect rc = {};
@@ -60,6 +60,9 @@ Player::Player(int padType, Camera& camera)
 	_attackTime = 0;
 
 	_attack = &Player::FirstAttack;
+	_turnFlag = false;
+
+	_animFrame = 0;
 }
 
 
@@ -82,6 +85,7 @@ Player::Move()
 		_vel.x = -_speed * GameTime::Instance().GetTimeScale(this);
 		_dir.x = -1;
 		_isdir = &Player::DirLeft;
+		_ps = PlayerState::walk;
 	}
 	if (_input.Right())
 	{
@@ -89,6 +93,7 @@ Player::Move()
 		_vel.x = _speed * GameTime::Instance().GetTimeScale(this);
 		_dir.x = 1;
 		_isdir = &Player::DirRight;
+		_ps = PlayerState::walk;
 	}
 	if (_input.Nosedive())
 	{
@@ -389,6 +394,7 @@ Player::Update()
 		_rc.pos.y = 0 - 128;
 	}
 
+	_animFrame++;
 }
 
 void
@@ -404,10 +410,12 @@ Player::Draw()
 		break;
 
 	case Player::PlayerState::neutral:
-		RRMLib::DrawGraph((int)drawPos.x, (int)drawPos.y, _handleMap[PlayerState::neutral]);
+		//RRMLib::DrawGraph((int)drawPos.x, (int)drawPos.y, _handleMap[PlayerState::neutral]);
+		RRMLib::DrawRectGraph(drawPos.x, drawPos.y, ((_animFrame / 6) % 4) * 144, 0, 144, 96, _handleMap[PlayerState::neutral], true, _turnFlag);
 		break;
 
 	case Player::PlayerState::walk:
+		RRMLib::DrawRectGraph(drawPos.x, drawPos.y, ((_animFrame / 6) % 4) * 144, 96 * 2, 144, 96, _handleMap[PlayerState::neutral], true, _turnFlag);
 		break;
 
 	case Player::PlayerState::attack:
@@ -418,7 +426,8 @@ Player::Draw()
 		break;
 
 	case Player::PlayerState::avoidance:
-		RRMLib::DrawGraph((int)drawPos.x, (int)drawPos.y, _handleMap[PlayerState::avoidance]);
+		RRMLib::DrawRectGraph(drawPos.x, drawPos.y, ((_animFrame / 6) % 4) * 144, 96 * 1, 144, 96, _handleMap[PlayerState::avoidance], true, _turnFlag);
+		//RRMLib::DrawGraph((int)drawPos.x, (int)drawPos.y, _handleMap[PlayerState::avoidance]);
 		break;
 
 	case Player::PlayerState::invincible:
@@ -430,19 +439,21 @@ Player::Draw()
 	case Player::PlayerState::damage:
 		RRMLib::DrawGraph((int)drawPos.x, (int)drawPos.y, _handleMap[PlayerState::neutral]);
 		break;
+	case Player::PlayerState::jump:
+		RRMLib::DrawRectGraph(drawPos.x, drawPos.y, ((_animFrame / 6) % 4) * 144, 96 * 1, 144, 96, _handleMap[PlayerState::neutral], true, _turnFlag);
+		break;
 	default:
 		break;
 	}
 
-	RRMLib::DrawLine((int)(_rc.Left() + (_rc.w / 2)), (int)(_rc.Top()),
-					(int)(_rc.Left() + (_rc.w / 2)), (int)(_rc.Bottom()), 0xff0000);
+	//RRMLib::DrawLine((int)(_rc.Left() + (_rc.w / 2)), (int)(_rc.Top()),
+	//				(int)(_rc.Left() + (_rc.w / 2)), (int)(_rc.Bottom()), 0xff0000);
 	_hitBox.Draw();
 
 #ifdef DEBUG
 	_rc.DrawBox();
 
 #endif // DEBUG
-
 }
 
 ObjectType 
@@ -456,11 +467,13 @@ Player::DirRight()
 {
 	_shootPos = _rc.pos;
 	_shootPos.x += _rc.w;
+	_turnFlag = true;
 }
 
 void
 Player::DirLeft()
 {
+	_turnFlag = false;
 	_shootPos = _rc.pos;
 }
 
