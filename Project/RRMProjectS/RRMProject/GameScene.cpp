@@ -45,6 +45,7 @@ GameScene::~GameScene()
 	delete _col;
 	BulletManager::Instance().Delete();
 	EffectManager::Instance().Delete();
+	BlockManager::Instance().Delete();
 }
 
 bool GameScene::Update()
@@ -87,7 +88,15 @@ GameScene::PlayerColBlock()
 	{
 		Rect r = {};
 		r = block->GetRect();
-		if (_col->IsHit(_player.GetRect(), r))
+
+		if (block->GetBlockType() == BlockType::throughBlock1)
+		{
+			if (_col->IsHit(_player.GetRect(), *block, _player.GetVel()))
+			{
+				_player.Hit(block);
+			}
+		}
+		else if (_col->IsHit(_player.GetRect(), r))
 		{
 			_player.Hit(block);
 		}

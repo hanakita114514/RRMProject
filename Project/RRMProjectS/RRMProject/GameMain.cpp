@@ -16,6 +16,7 @@
 #include <RRMLib.h>
 #include <string.h>
 
+#include "FPS.h"
 GameMain::GameMain()
 {
 }
@@ -111,10 +112,13 @@ void GameMain::GameLoop()
 
 	DInput _dinput(DX_INPUT_PAD1);
 
+	FPS fps;
+
 	while (RRMLib::ProcessMessage() == 0 && loopOk)
 	{
 		RRMLib::ClearDrawScreen();
 
+		fps.Update();
 
 		//çXêV-----------------------
 		Fade::Instance().Update();
@@ -123,6 +127,8 @@ void GameMain::GameLoop()
 
 		//ï`âÊ-----------------------
 		Fade::Instance().Draw();
+
+		fps.Draw();
 
 		RRMLib::ScreenFlip();
 
@@ -152,6 +158,7 @@ GameMain::DataUpdate(SaveData& data)
 }
 
 void
+GameMain::CharacterDataUpdate(const CharacterData& data)
 GameMain::eqiupDataUpdata(const EquipmentInfometion& data)
 {
 	memcpy(_data.equipData.tool, data.tool, sizeof(data.tool));

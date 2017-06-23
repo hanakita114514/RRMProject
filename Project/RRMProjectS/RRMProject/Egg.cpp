@@ -5,6 +5,8 @@
 #include <math.h>
 #include "EffectManager.h"
 #include "Mathematics.h"
+#include <math.h>
+#include "GameTime.h"
 
 const float GRAVITY = 0.75f;
 
@@ -36,6 +38,8 @@ Egg::Egg(int* handle, const Position& pos)
 	_circle.radius = _rc.w / 2;
 
 	_isAlive = true;
+
+	srand(time(NULL));
 }
 
 Egg::~Egg()
@@ -68,21 +72,27 @@ Egg::AliveUpdate()
 		_vel.y += GRAVITY;
 	}
 
-	//if (CheckHitKey(KEY_INPUT_LEFT))
-	//{
-	//	_vel.x = -2;
-	//}
-	//else if (CheckHitKey(KEY_INPUT_RIGHT))
-	//{
-	//	_vel.x = 2;
-	//}
+	static int r = 0;
+
+	if (_freamCnt % 30 == 0)
+	{
+		r = rand() % 2;
+	}
+
+
+	if (r == 0)
+	{
+		_vel.x = -2;
+	}
+	else
+	{
+		_vel.x = 2;
+	}
 
 
 	(this->*_state)();
 
 	Move();
-
-	_vel.x = 0;
 
 	if (_hp.GetHitPoint() <= 0)
 	{
@@ -122,7 +132,7 @@ void Egg::Anim()
 
 void Egg::Move()
 {
-	_rc.pos += _vel;
+	_rc.pos += _vel * GameTime::Instance().GetTimeScale(this);
 }
 
 void Egg::Shot()
