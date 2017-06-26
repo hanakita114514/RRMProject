@@ -1,6 +1,4 @@
-﻿  Player.cpp
-c:\users\1501343\desktop\卒制\trunk\project\rrmprojectr\rrmproject\player.cpp(20): warning C4244: '初期化中': 'float' から 'int' への変換です。データが失われる可能性があります。
-c:\users\1501343\desktop\卒制\trunk\project\rrmprojectr\rrmproject\player.cpp(25): warning C4244: '引数': 'const int' から 'float' への変換です。データが失われる可能性があります。
-c:\users\1501343\desktop\卒制\trunk\project\rrmprojectr\rrmproject\player.cpp(58): warning C4244: '引数': 'const int' から 'float' への変換です。データが失われる可能性があります。
+﻿  Input.cpp
+     ライブラリ C:\Users\1501343\Desktop\卒制\trunk\Project\RRMProjectR\Debug\RRMProject.lib とオブジェクト C:\Users\1501343\Desktop\卒制\trunk\Project\RRMProjectR\Debug\RRMProject.exp を作成中
   RRMProject.vcxproj -> C:\Users\1501343\Desktop\卒制\trunk\Project\RRMProjectR\Debug\RRMProject.exe
   RRMProject.vcxproj -> C:\Users\1501343\Desktop\卒制\trunk\Project\RRMProjectR\Debug\RRMProject.pdb (Full PDB)

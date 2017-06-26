@@ -17,6 +17,8 @@
 #include <string.h>
 
 #include "FPS.h"
+#include "Keyboard.h"
+
 GameMain::GameMain()
 {
 }

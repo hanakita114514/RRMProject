@@ -13,6 +13,17 @@ const unsigned int PAD_MASK = 0x80;
 
 const unsigned int rep_interval = 15;
 
+const unsigned int PAD_A = 0;
+const unsigned int PAD_B = 1;
+const unsigned int PAD_X = 2;
+const unsigned int PAD_Y = 3;
+const unsigned int PAD_L = 4;
+const unsigned int PAD_R = 5;
+const unsigned int PAD_BACK = 6;
+const unsigned int PAD_START = 7;
+const unsigned int PAD_TUMB_LEFT = 8;
+const unsigned int PAD_TUMB_RIGHT = 9;
+
 DInput::DInput(int padType)
 {
 	_padType = padType;
@@ -40,6 +51,18 @@ DInput::DInput(int padType)
 	{
 		_triger[i] = false;
 	}
+
+	_keyType[KeyType::keyA]			= PAD_A;
+	_keyType[KeyType::keyB]			= PAD_B;
+	_keyType[KeyType::keyX]			= PAD_X;
+	_keyType[KeyType::keyY]			= PAD_Y;
+	_keyType[KeyType::keyL]			= PAD_L;
+	_keyType[KeyType::keyR]			= PAD_R;
+	_keyType[KeyType::keyBack]		= PAD_BACK;
+	_keyType[KeyType::keyStart]		= PAD_START;
+	_keyType[KeyType::keyTumbLeft]	= PAD_TUMB_LEFT;
+	_keyType[KeyType::keyTumbRight] = PAD_TUMB_RIGHT;
+
 }
 
 
@@ -50,7 +73,8 @@ DInput::~DInput()
 unsigned char
 DInput::GetKey(const unsigned char* pad, const KeyType& key)
 {
-	return pad[static_cast<unsigned int>(key)] & PAD_MASK;
+	//return pad[static_cast<unsigned int>(key)] & PAD_MASK;
+	return pad[_keyType[key]] & PAD_MASK;
 }
 
 void

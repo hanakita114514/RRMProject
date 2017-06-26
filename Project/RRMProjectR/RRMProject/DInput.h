@@ -6,7 +6,7 @@
 
 const int HISTORY_NUM = 64;
 
-enum class KeyType : unsigned int 
+enum class KeyType : unsigned int
 {
 	keyA,
 	keyB,
@@ -18,6 +18,8 @@ enum class KeyType : unsigned int
 	keyStart,
 	keyTumbLeft,
 	keyTumbRight,
+
+	keyMax,
 };
 
 enum TrigerType
@@ -34,6 +36,8 @@ private:
 	RRMLib::DJOYPAD_STATE _pad;
 	RRMLib::DJOYPAD_STATE _history[HISTORY_NUM];
 	bool _prevTriger[trigerMax],_triger[trigerMax];
+
+	std::map<KeyType, unsigned int> _keyType;
 
 	int _padType;
 	unsigned char GetKey(const unsigned char* pad, const KeyType& key);

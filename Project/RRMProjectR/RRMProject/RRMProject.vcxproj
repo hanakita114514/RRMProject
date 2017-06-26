@@ -65,6 +65,8 @@
     <ClCompile Include="HitStop.cpp" />
     <ClCompile Include="HomingBullet.cpp" />
     <ClCompile Include="HPBar.cpp" />
+    <ClCompile Include="Input.cpp" />
+    <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="Lazer.cpp" />
     <ClCompile Include="MapManager.cpp" />
     <ClCompile Include="MapRendar.cpp" />
@@ -149,6 +151,8 @@
     <ClInclude Include="HitStop.h" />
     <ClInclude Include="HomingBullet.h" />
     <ClInclude Include="HPBar.h" />
+    <ClInclude Include="Input.h" />
+    <ClInclude Include="Keyboard.h" />
     <ClInclude Include="Lazer.h" />
     <ClInclude Include="MapManager.h" />
     <ClInclude Include="MapRendar.h" />

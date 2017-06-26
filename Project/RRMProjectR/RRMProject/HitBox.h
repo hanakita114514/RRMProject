@@ -4,7 +4,7 @@
 
 struct HitBox
 {
-	Rect rc;				//攻撃判定
+	Rect rc;				//当たり判定
 	float power;			//攻撃力
 	float hitstop;			//ヒットストップ時間
 

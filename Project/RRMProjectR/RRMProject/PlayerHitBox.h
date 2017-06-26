@@ -7,7 +7,8 @@
 class PlayerHitBox
 {
 private:
-	std::vector<HitBox> _hitboxes;
+	std::vector<HitBox> _hitboxes; 
+	std::vector<HitBox> _damageBox;
 
 public:
 	PlayerHitBox();
