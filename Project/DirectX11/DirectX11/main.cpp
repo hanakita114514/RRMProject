@@ -21,6 +21,7 @@
 #include "Renderer.h"
 
 #include "GraphList.h"
+#include "Keyboard.h"
 
 struct MatrixForShader
 {
@@ -507,6 +508,10 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nC
 
 	const double PI = 3.141592f;
 
+	Keyboard key;
+	key.Init();
+	char keyBuf[256];
+
 	while (true)
 	{
 		if (ProcessMessage() != 0)
@@ -569,14 +574,17 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nC
 			//graphic.DrawRectExtendGraph(0, 0, 1000, 500, 100,300, 500,500, dsBuf[0],true,false);
 		}
 		//graphic.DrawExtendGraph(0, 0, 1000, 700, ds);
-		x++;
 
 		//graphic.DrawGraph(0 * 384, 0 * 216, dsBuf[0]);
 		//graphic.DrawGraph(1 * 384, 0 * 216, dsBuf[1]);
 
-		angle += 0.001f;
+		angle += 0.01f;
 
-		graphic.DrawRotaGraph(500, 100, angle, handle, true, false);
+		//graphic.DrawRotaGraph(500, 300, angle, handle, true, false);
+
+		graphic.DrawGraph(x, 0, handle);
+
+		gg.DrawBox(500, 300, 510, 310, 0xffffffff, true);
 
 		//GraphList::Instance().Add(graphic.DrawGraph(0, 0, handle));
 
@@ -606,6 +614,17 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nC
 		//graphic.DrawExtendGraph(0, 0, 1500, 700, handle);
 
 		//GraphList::Instance().Draw();
+
+		result = key.GetKeyState(keyBuf);
+
+		if (keyBuf[DIK_LEFT])
+		{
+			x--;
+		}
+		if (keyBuf[DIK_RIGHT])
+		{
+			x++;
+		}
 
 		dev.SwapChain()->Present(1, 0);
 	}

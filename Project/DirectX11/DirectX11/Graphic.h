@@ -95,7 +95,10 @@ public:
 	//	int width, int height, DrawingStructure ds, bool transFlag, bool turnFlag);
 
 	//‰æ‘œ‚Ì‰ñ“]•`‰æ
+	void DrawRotaGraphProt(float x, float y, double angle, int graphHandle, bool transFlag, bool turnFlag);
+
 	void DrawRotaGraph(float x, float y, double angle, int graphHandle, bool transFlag, bool turnFlag);
+
 
 	//‰æ‘œ‚Ìíœ
 	void DeleteGraph(int handle);

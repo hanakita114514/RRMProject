@@ -155,6 +155,7 @@
     <ClCompile Include="GeometryGraph.cpp" />
     <ClCompile Include="Graphic.cpp" />
     <ClCompile Include="GraphList.cpp" />
+    <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MediaControl.cpp" />
     <ClCompile Include="MediaPlayer.cpp" />
@@ -165,6 +166,7 @@
     <ClCompile Include="XAudio.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Keyboard.h" />
     <ClInclude Include="RRMCommon.h" />
     <ClInclude Include="DeviceDx11.h" />
     <ClInclude Include="DInput.h" />
