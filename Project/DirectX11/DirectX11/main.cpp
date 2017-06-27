@@ -22,6 +22,8 @@
 
 #include "GraphList.h"
 #include "Keyboard.h"
+#include "PMDLoader.h"
+#include "PMDMesh.h"
 
 struct MatrixForShader
 {
@@ -301,7 +303,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nC
 
 	//ResetDirect3D(WindowControl::Instance());
 
-	Graphic& graphic = Graphic::Instance();
+	Graphic graphic;
 	int handle = graphic.LoadGraph("rei.jpg");
 
 	//WindowControl::Instance().ChangeFullScreenMode(true);
@@ -492,7 +494,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nC
 	int m1handle = MediaControl::Instance().Load(L"Sound/y“Œ•û’n—ì“az­—‚³‚Æ‚è@3rd_eyeyŒ´‹Èz.mp3");
 	MediaControl::Instance().Play(m1handle);
 
-	GeometryGraph& gg = GeometryGraph::Instance();
+	GeometryGraph gg;
 
 
 	unsigned int red = GetColor(255, 0, 0);
@@ -511,6 +513,9 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nC
 	Keyboard key;
 	key.Init();
 	char keyBuf[256];
+
+	PMDLoader loader;
+	PMDMesh* reimu = loader.Load("Model/”—í—ì–²ver100/”—í—ì–²ver100.pmd");
 
 	while (true)
 	{
