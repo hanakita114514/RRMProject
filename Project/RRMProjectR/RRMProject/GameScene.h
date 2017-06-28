@@ -5,6 +5,7 @@
 #include "Camera.h"
 #include "StatusUI.h"
 #include "PlayerHP.h"
+#include "KeyConfig.h"
 
 class Collision;
 
@@ -33,7 +34,7 @@ private:
 
 public:
 	GameScene();
-	GameScene(LogoIdx state);
+	GameScene(LogoIdx state, KeyData& keyData);
 	~GameScene();
 
 	bool Update();

@@ -7,7 +7,7 @@
 class PlayerHitBox
 {
 private:
-	std::vector<HitBox> _hitboxes; 
+	std::vector<HitBox> _attackboxes; 
 	std::vector<HitBox> _damageBox;
 
 public:
@@ -15,6 +15,7 @@ public:
 	~PlayerHitBox();
 
 	void FirstAttack(float frame, const Rect& rc, const Vector2& dir);
+	void SecondAttack(float frame, const Rect& rc, const Vector2& dir);
 
 	//当たり判定の描画(デバッグ用)
 	void Draw();
@@ -22,6 +23,7 @@ public:
 	//攻撃判定を消す
 	void Clear();
 
-	std::vector<HitBox>& GetHitBoxes();
+	std::vector<HitBox>& GetAttackBoxes();
+	std::vector<HitBox>& GetDamageBoxes();
 };
 

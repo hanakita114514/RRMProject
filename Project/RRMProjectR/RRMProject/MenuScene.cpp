@@ -9,6 +9,7 @@
 #include "Circle.h"
 #include "Mathematics.h"
 #include <RRMLib.h>
+#include "SceneManager.h"
 
 
 const char* Stage[(int)Stage::stageMax] = 
@@ -181,7 +182,8 @@ MenuScene::GameStart()
 	if (Fade::Instance().IsFadeInEnd())
 	{
 		MapManager::Instance().StageSelect(_stageId);
-		GameMain::Instance().ChangeScene(new GameScene(_logoState));
+		SceneManager::Instance().ChangeScene(SceneType::game);
+		//GameMain::Instance().ChangeScene(new GameScene(_logoState));
 	}
 
 }
@@ -208,7 +210,8 @@ MenuScene::StageSelect()
 	if (Fade::Instance().IsFadeInEnd())
 	{
 		MapManager::Instance().StageSelect(_stageId);
-		GameMain::Instance().ChangeScene(new GameScene(_logoState));
+		SceneManager::Instance().ChangeScene(SceneType::game);
+		//GameMain::Instance().ChangeScene(new GameScene(_logoState));
 	}
 
 }

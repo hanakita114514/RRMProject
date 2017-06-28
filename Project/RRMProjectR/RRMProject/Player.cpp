@@ -10,6 +10,8 @@
 #include "GameTime.h"
 #include "Enemy.h"
 #include "EffectManager.h"
+#include "DInput.h"
+#include "Keyboard.h"
 
 const float GRAVITY = 0.75f;
 const float jump_power = 20;
@@ -20,16 +22,18 @@ const int stop_second = 30;					//時間を止める秒数
 const int armor_life = 200.0f;				//アーマーの耐久値
 
 
-Player::Player(int padType, Camera& camera) 
-	: _input(padType), _hp(100), _pp(3), _camera(camera) , _armor(armor_life)
+Player::Player(int padType, Camera& camera, InputMode mode) 
+	: _hp(100), _pp(3), _camera(camera) , _armor(armor_life)
 {
 	_update = &Player::AliveUpdate;
 
 	_handle = RRMLib::LoadGraph("Resource/img/player/player.png");
 
-	_handleMap[PlayerState::neutral] = RRMLib::LoadGraph("Resource/img/player/Healer/$Healer_1.png");
+	//_handleMap[PlayerState::neutral] = RRMLib::LoadGraph("Resource/img/player/Healer/$Healer_1.png");
+	_handleMap[PlayerState::neutral] = RRMLib::LoadGraph("Resource/img/player/player.png");
 	_handleMap[PlayerState::attack] = RRMLib::LoadGraph("Resource/img/player/attack.png");
-	_handleMap[PlayerState::avoidance] = RRMLib::LoadGraph("Resource/img/player/Healer/$Healer_4.png");
+	//_handleMap[PlayerState::avoidance] = RRMLib::LoadGraph("Resource/img/player/Healer/$Healer_4.png");
+	_handleMap[PlayerState::avoidance] = RRMLib::LoadGraph("Resource/img/player/avoidance.png");
 
 
 	Rect rc = {};
@@ -42,6 +46,7 @@ Player::Player(int padType, Camera& camera)
 	_isAirJump = false;
 	_isJump = false;
 	_secondJump = true;
+	_groundJump = true;
 	_nosedive = 1;
 
 	_speed = 6.0f;
@@ -63,6 +68,20 @@ Player::Player(int padType, Camera& camera)
 	_turnFlag = false;
 
 	_animFrame = 0;
+
+	_addAttackFlag = false;
+
+	switch (mode)
+	{
+	case InputMode::pad:
+		_input = new DInput(padType);
+		break;
+	case InputMode::keyboard:
+		_input = new Keyboard();
+		break;
+	default:
+		break;
+	}
 }
 
 
@@ -79,7 +98,7 @@ Player::Init()
 void
 Player::Move()
 {
-	if (_input.Left())
+	if (_input->Left())
 	{
 		//_vel.x = std::fmaxf(-10.0f, _vel.x - 1);
 		_vel.x = -_speed * GameTime::Instance().GetTimeScale(this);
@@ -87,7 +106,7 @@ Player::Move()
 		_isdir = &Player::DirLeft;
 		_ps = PlayerState::walk;
 	}
-	if (_input.Right())
+	if (_input->Right())
 	{
 		//_vel.x = std::fminf(10.0f, _vel.x + 1);
 		_vel.x = _speed * GameTime::Instance().GetTimeScale(this);
@@ -95,7 +114,7 @@ Player::Move()
 		_isdir = &Player::DirRight;
 		_ps = PlayerState::walk;
 	}
-	if (_input.Nosedive())
+	if (_input->Nosedive())
 	{
 		_nosedive = 3;
 	}
@@ -106,11 +125,12 @@ void
 Player::Jump()
 {
 	//地上ジャンプ
-	if (_input.Jump() && _hitGround)
+	if (_input->Jump() && _hitGround && _groundJump)
 	{
 		_vel.y = -jump_power * GameTime::Instance().GetTimeScale(this);
 		_isJump = true;
 		_hitGround = false;
+		_groundJump = false;
 		_nosedive = 1;
 	}
 
@@ -119,7 +139,7 @@ Player::Jump()
 		_isJump = false;
 	}
 
-	if (_input.IsRelease(KeyType::keyY))
+	if (_input->IsRelease(KeyType::keyY))
 	{
 		if (_isJump)
 		{
@@ -131,7 +151,7 @@ Player::Jump()
 		}
 	}
 
-	if (_secondJump && _input.Jump() && _isAirJump)
+	if (_secondJump && _input->Jump() && _isAirJump)
 	{
 		_vel.y = -jump_power * GameTime::Instance().GetTimeScale(this);
 		_isJump = true;
@@ -223,15 +243,44 @@ Player::FirstAttack()
 
 	--_attackTime;
 
+	if (_input->Attack())
+	{
+		_addAttackFlag = true;
+	}
+
+	if (_attackTime <= 0)
+	{
+		if (_addAttackFlag)
+		{
+			_update = &Player::SecondAttack;
+			_attackTime = 15;
+		}
+		else
+		{
+			_update = &Player::AliveUpdate;
+		}
+		_hitBox.Clear();
+		_mhp.Clear();
+		_addAttackFlag = false;
+	}
+}
+
+void 
+Player::SecondAttack()
+{
+
+	_hitBox.SecondAttack(_attackTime, _rc, _dir);
+
+	--_attackTime;
+
+
 	if (_attackTime <= 0)
 	{
 		_update = &Player::AliveUpdate;
 		_hitBox.Clear();
+		_mhp.Clear();
+		_addAttackFlag = false;
 	}
-}
-void 
-Player::SecondAttack()
-{
 
 }
 void 
@@ -263,7 +312,7 @@ Player::AliveUpdate()
 	Jump();
 	(this->*_isdir)();
 	
-	if (_input.Attack())
+	if (_input->Attack())
 	{
 		_update = &Player::AttackUpdate;
 		_attack = &Player::FirstAttack;
@@ -272,12 +321,12 @@ Player::AliveUpdate()
 	}
 
 	//回避
-	if (_input.Avoidance())
+	if (_input->Avoidance())
 	{
 		if (_pp.GetPowerPoint() > 0)
 		{
 			_pp.Use();
-			_vel = _input.Dir();
+			_vel = _input->Dir();
 			_update = &Player::AvoidanceUpdate;
 			_avoidTime = 17.0f;
 			_nosedive = 1;
@@ -291,26 +340,28 @@ Player::AliveUpdate()
 	}
 
 	//パリィ
-	if (_input.Parry())
+	if (_input->Parry())
 	{
 		_sd.TheWorld(stop_second);
 		_camera.Quake(Vector2(0, 7));
 	}
 
 	//ショット
-	if (_input.Shoot())
+	if (_input->Shoot())
 	{
 		Shoot();
 	}
 
 	//消化
-	if (_input.Digestion())
+	if (_input->Digestion())
 	{
 		_dig.Digest();
 	}
 
 	//飛び道具切り替え
 	ToolSwitch();
+
+	WeaponSwitch();
 
 #ifdef DEBUG
 	//if (CheckHitKey(KEY_INPUT_Z)
@@ -335,7 +386,7 @@ void
 Player::DamageUpdate()
 {
 	_ps = PlayerState::damage;
-		_vel.y += GRAVITY * GameTime::Instance().GetTimeScale(this) * GameTime::Instance().GetTimeScale(this);
+	_vel.y += GRAVITY * GameTime::Instance().GetTimeScale(this) * GameTime::Instance().GetTimeScale(this);
 	// 時間が止まってるときは動かさない
 	if (GameTime::Instance().GetTimeScale(this) != 0)
 	{
@@ -360,7 +411,7 @@ Player::DyingUpdate()
 void
 Player::Update()
 {
-	_input.Update();
+	_input->Update();
 
 	if (!_hitStop.IsHitStop())
 	{
@@ -410,12 +461,13 @@ Player::Draw()
 		break;
 
 	case Player::PlayerState::neutral:
-		//RRMLib::DrawGraph((int)drawPos.x, (int)drawPos.y, _handleMap[PlayerState::neutral]);
-		RRMLib::DrawRectGraph(drawPos.x, drawPos.y, ((_animFrame / 6) % 4) * 144, 0, 144, 96, _handleMap[PlayerState::neutral], true, _turnFlag);
+		RRMLib::DrawGraph((int)drawPos.x, (int)drawPos.y, _handleMap[PlayerState::neutral]);
+		//RRMLib::DrawRectGraph(drawPos.x, drawPos.y, ((_animFrame / 6) % 4) * 144, 0, 144, 96, _handleMap[PlayerState::neutral], true, _turnFlag);
 		break;
 
 	case Player::PlayerState::walk:
-		RRMLib::DrawRectGraph(drawPos.x, drawPos.y, ((_animFrame / 6) % 4) * 144, 96 * 2, 144, 96, _handleMap[PlayerState::neutral], true, _turnFlag);
+		//RRMLib::DrawRectGraph(drawPos.x, drawPos.y, ((_animFrame / 6) % 4) * 144, 96 * 2, 144, 96, _handleMap[PlayerState::neutral], true, _turnFlag);
+		RRMLib::DrawGraph((int)drawPos.x, (int)drawPos.y, _handleMap[PlayerState::neutral]);
 		break;
 
 	case Player::PlayerState::attack:
@@ -426,8 +478,8 @@ Player::Draw()
 		break;
 
 	case Player::PlayerState::avoidance:
-		RRMLib::DrawRectGraph(drawPos.x, drawPos.y, ((_animFrame / 6) % 4) * 144, 96 * 1, 144, 96, _handleMap[PlayerState::avoidance], true, _turnFlag);
-		//RRMLib::DrawGraph((int)drawPos.x, (int)drawPos.y, _handleMap[PlayerState::avoidance]);
+		//RRMLib::DrawRectGraph(drawPos.x, drawPos.y, ((_animFrame / 6) % 4) * 144, 96 * 1, 144, 96, _handleMap[PlayerState::avoidance], true, _turnFlag);
+		RRMLib::DrawGraph((int)drawPos.x, (int)drawPos.y, _handleMap[PlayerState::avoidance]);
 		break;
 
 	case Player::PlayerState::invincible:
@@ -479,57 +531,52 @@ Player::DirLeft()
 
 void Player::Hit(Enemy* other)
 {
-	//if(!_mhp.IsAlreadyHit((Object*)other))
-	//{
-	//	_mhp.Hit((Object*)other);
-	//}
-
 	float lenX = fabs(_rc.pos.x - other->GetRect().pos.x);
 	float lenY = fabs(_rc.pos.y - other->GetRect().pos.y);
 
-	if (_ps != PlayerState::avoidance) // 回避中ではなかったら処理をする
-	{
-		if (lenX < lenY) // Y軸に押し戻す
-		{
-			if (_vel.y > 0)		//落下している場合
-			{
-				if (_rc.pos.y < other->GetRect().pos.y && !_hitGround)
-				{
-					_rc.SetBottom(other->GetRect().Top());
-					_hitGround = true;
-					_vel.y = 0;
-				}
-			}
-			else				//飛んでいる場合
-			{
-				if (_rc.pos.y > other->GetRect().pos.y)
-				{
-					_rc.SetTop(other->GetRect().Bottom());
-					_vel.y = 0;
-				}
-			}
-		}
+	//if (_ps != PlayerState::avoidance) // 回避中ではなかったら処理をする
+	//{
+	//	if (lenX < lenY) // Y軸に押し戻す
+	//	{
+	//		if (_vel.y > 0)		//落下している場合
+	//		{
+	//			if (_rc.pos.y < other->GetRect().pos.y && !_hitGround)
+	//			{
+	//				_rc.SetBottom(other->GetRect().Top());
+	//				_hitGround = true;
+	//				_vel.y = 0;
+	//			}
+	//		}
+	//		else				//飛んでいる場合
+	//		{
+	//			if (_rc.pos.y > other->GetRect().pos.y)
+	//			{
+	//				_rc.SetTop(other->GetRect().Bottom());
+	//				_vel.y = 0;
+	//			}
+	//		}
+	//	}
 
-		if (lenY < lenX)	//X軸に押し戻す
-		{
-			if (_dir.x == 1)		//右移動
-			{
-				if (_rc.pos.x < other->GetRect().pos.x)
-				{
-					_rc.SetRight(other->GetRect().Left());
-					_vel.x = 0;
-				}
-			}
-			else				//左移動
-			{
-				if (_rc.pos.x > other->GetRect().pos.x)
-				{
-					_rc.SetLeft(other->GetRect().Right());
-					_vel.x = 0;
-				}
-			}
-		}
-	}
+	//	if (lenY < lenX)	//X軸に押し戻す
+	//	{
+	//		if (_dir.x == 1)		//右移動
+	//		{
+	//			if (_rc.pos.x < other->GetRect().pos.x)
+	//			{
+	//				_rc.SetRight(other->GetRect().Left());
+	//				_vel.x = 0;
+	//			}
+	//		}
+	//		else				//左移動
+	//		{
+	//			if (_rc.pos.x > other->GetRect().pos.x)
+	//			{
+	//				_rc.SetLeft(other->GetRect().Right());
+	//				_vel.x = 0;
+	//			}
+	//		}
+	//	}
+	//}
 }
 
 void Player::Hit(Block* other)
@@ -614,6 +661,10 @@ Player::HitGround()
 		_isJump = false;
 		_secondJump = true;
 		_nosedive = 1;
+		if (!_input->Jump())
+		{
+			_groundJump = true;
+		}
 	}
 	else
 	{
@@ -624,7 +675,7 @@ Player::HitGround()
 void
 Player::ToolSwitch()
 {
-	if (_input.ToolSwitch())
+	if (_input->ToolSwitch())
 	{
 		_toolIdx++;
 		_toolIdx = (_toolIdx + 1) % ToolMax;
@@ -634,9 +685,9 @@ Player::ToolSwitch()
 void
 Player::WeaponSwitch()
 {
-	if (_input.WeaponSwitch())
+	if (_input->WeaponSwitch())
 	{
-
+		_rc.pos = Vector2(0, 0);
 	}
 }
 

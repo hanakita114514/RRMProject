@@ -62,7 +62,7 @@ Egg::AliveUpdate()
 	_freamCnt++;
 	_shotPos = Vector2(_rc.Left(), _rc.Top());
 
-	if (_hitGround == true)
+	if (_hitGround)
 	{
 		_vel.y = 0;
 		_animCnt += GameTime::Instance().GetTimeScale(this);
@@ -74,24 +74,6 @@ Egg::AliveUpdate()
 		_vel.y += GRAVITY;
 	}
 
-	static int r = 0;
-
-	if (_freamCnt % 30 == 0)
-	{
-		r = rand() % 2;
-	}
-
-
-	if (r == 0)
-	{
-		//_vel.x = -2;
-	}
-	else
-	{
-		//_vel.x = 2;
-	}
-
-
 	(this->*_state)();
 
 	Move();
@@ -102,6 +84,37 @@ Egg::AliveUpdate()
 		_update = &Egg::DyingUpdate;
 		EffectManager::Instance().Create(EffectType::erasure, _rc.Center(), Vector2(1.5f, 1.5f), 1.3f);
 		_isAlive = false;
+	}
+
+	if (_isDamage)
+	{
+		_update = &Egg::DamageUpdate;
+	}
+}
+
+void 
+Egg::DamageUpdate()
+{
+	DistanceAttenuation();
+
+	if (_hitGround)
+	{
+		_vel.y = 0;
+		_animCnt += GameTime::Instance().GetTimeScale(this);
+		_junpCnt++;
+		_shotCnt++;
+	}
+	else
+	{
+		_vel.y += GRAVITY;
+	}
+
+	_rc.pos += _vel;
+
+	if (_vel.x == 0)
+	{
+		_isDamage = false;
+		_update = &Egg::AliveUpdate;
 	}
 }
 
@@ -118,7 +131,7 @@ void Egg::Update()
 
 void Egg::Draw(const Vector2& offset)
 {
-	if (_update == &Egg::AliveUpdate)
+	if (_update != &Egg::DyingUpdate)
 	{
 		Vector2 drawPos;
 		drawPos.x = _rc.pos.x - offset.x;

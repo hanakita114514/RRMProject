@@ -4,6 +4,7 @@
 #include "DInput.h"
 #include "GameMain.h"
 #include "GameScene.h"
+#include "SceneManager.h"
 
 TitleScene::TitleScene()
 {
@@ -34,7 +35,8 @@ bool TitleScene::Update()
 	}
 	if (Fade::Instance().IsFadeInEnd())
 	{
-		GameMain::Instance().ChangeScene(new GameScene());
+		SceneManager::Instance().ChangeScene(SceneType::menu);
+		//GameMain::Instance().ChangeScene(new GameScene());
 	}
 
 	return true;

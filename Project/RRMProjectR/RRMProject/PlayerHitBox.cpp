@@ -35,27 +35,67 @@ PlayerHitBox::FirstAttack(float frame, const Rect& rc, const Vector2& dir)
 		HitBox(20, 4, Rect(Position(rc.pos.x + ((dir.x == -1 ? 50 : rc.w) * dir.x), rc.pos.y - 16 * 4), 50 , 50)),
 	};
 
-	_hitboxes.clear();
-	_hitboxes.push_back(hitBox[(int)frame]);
+	_attackboxes.clear();
+	_attackboxes.push_back(hitBox[(int)frame]);
+}
+
+void 
+PlayerHitBox::SecondAttack(float frame, const Rect& rc, const Vector2& dir)
+{
+	const HitBox hitBox[] =
+	{
+		HitBox(20, 4, Rect(Position(rc.pos.x + ((dir.x == -1 ? 50 : rc.w) * dir.x), rc.pos.y), 50 , 50), Vector2( 5 * dir.x, 0)),
+		HitBox(20, 4, Rect(Position(rc.pos.x + ((dir.x == -1 ? 50 : rc.w) * dir.x + ((10 + 5) * dir.x)), rc.pos.y), 50 , 50),  Vector2(8 * dir.x, -5)),
+		HitBox(20, 4, Rect(Position(rc.pos.x + ((dir.x == -1 ? 50 : rc.w) * dir.x + ((10 + 10) * dir.x)), rc.pos.y ), 50 , 50),Vector2(8 * dir.x, -5)),
+		HitBox(20, 4, Rect(Position(rc.pos.x + ((dir.x == -1 ? 50 : rc.w) * dir.x + ((10 + 15) * dir.x)), rc.pos.y), 50 , 50), Vector2(8 * dir.x, -5)),
+		HitBox(20, 4, Rect(Position(rc.pos.x + ((dir.x == -1 ? 50 : rc.w) * dir.x + ((10 + 20) * dir.x)), rc.pos.y), 50 , 50), Vector2(8 * dir.x, -5)),
+		HitBox(20, 4, Rect(Position(rc.pos.x + ((dir.x == -1 ? 50 : rc.w) * dir.x + ((10 + 25) * dir.x)), rc.pos.y), 50 , 50), Vector2(8 * dir.x, -5)),
+		HitBox(20, 4, Rect(Position(rc.pos.x + ((dir.x == -1 ? 50 : rc.w) * dir.x + ((10 + 30) * dir.x)), rc.pos.y), 50 , 50), Vector2(8 * dir.x, -5)),
+		HitBox(20, 4, Rect(Position(rc.pos.x + ((dir.x == -1 ? 50 : rc.w) * dir.x + ((10 + 35) * dir.x)), rc.pos.y), 50 , 50), Vector2(8 * dir.x, -5)),
+		HitBox(20, 4, Rect(Position(rc.pos.x + ((dir.x == -1 ? 50 : rc.w) * dir.x + ((10 + 40) * dir.x)), rc.pos.y), 50 , 50), Vector2(8 * dir.x, -5)),
+		HitBox(20, 4, Rect(Position(rc.pos.x + ((dir.x == -1 ? 50 : rc.w) * dir.x + ((10 + 45) * dir.x)), rc.pos.y), 50 , 50), Vector2(8 * dir.x, -5)),
+		HitBox(20, 4, Rect(Position(rc.pos.x + ((dir.x == -1 ? 50 : rc.w) * dir.x + ((10 + 50) * dir.x)), rc.pos.y), 50 , 50), Vector2(8 * dir.x, -5)),
+		HitBox(20, 4, Rect(Position(rc.pos.x + ((dir.x == -1 ? 50 : rc.w) * dir.x + ((10 + 55) * dir.x)), rc.pos.y), 50 , 50), Vector2(8 * dir.x, -5)),
+		HitBox(20, 4, Rect(Position(rc.pos.x + ((dir.x == -1 ? 50 : rc.w) * dir.x + ((10 + 60) * dir.x)), rc.pos.y), 50 , 50), Vector2(8 * dir.x, -5)),
+		HitBox(20, 4, Rect(Position(rc.pos.x + ((dir.x == -1 ? 50 : rc.w) * dir.x + ((10 + 65) * dir.x)), rc.pos.y), 50 , 50), Vector2(8 * dir.x, -5)),
+		HitBox(20, 4, Rect(Position(rc.pos.x + ((dir.x == -1 ? 50 : rc.w) * dir.x + ((10 + 70) * dir.x)), rc.pos.y), 50 , 50), Vector2(8 * dir.x, -5)),
+		HitBox(20, 4, Rect(Position(rc.pos.x + ((dir.x == -1 ? 50 : rc.w) * dir.x + ((10 + 75) * dir.x)), rc.pos.y), 50 , 50), Vector2(8 * dir.x, -5)),
+		HitBox(20, 4, Rect(Position(rc.pos.x + ((dir.x == -1 ? 50 : rc.w) * dir.x + ((10 + 80) * dir.x)), rc.pos.y), 50 , 50), Vector2(8 * dir.x, -5)),
+	};
+
+	_attackboxes.clear();
+	_attackboxes.push_back(hitBox[(int)frame]);
 }
 
 void
 PlayerHitBox::Draw()
 {
-	for (auto h : _hitboxes)
+	for (auto& a : _attackboxes)
 	{
-		RRMLib::DrawBox(h.rc.Left(), h.rc.Top(), h.rc.Right(), h.rc.Bottom(), 0xffffffff, false);
+		RRMLib::DrawBox(a.rc.Left(), a.rc.Top(), a.rc.Right(), a.rc.Bottom(), 0xffffffff, false);
+	}
+	for (auto& d : _damageBox)
+	{
+		RRMLib::DrawBox(d.rc.Left(), d.rc.Top(), d.rc.Right(), d.rc.Bottom(), 0xffffffff, false);
+
 	}
 }
 
 void
 PlayerHitBox::Clear()
 {
-	_hitboxes.clear();
+	_attackboxes.clear();
+	_damageBox.clear();
+}
+
+std::vector<HitBox>&
+PlayerHitBox::GetAttackBoxes()
+{
+	return _attackboxes;
 }
 
 std::vector<HitBox>& 
-PlayerHitBox::GetHitBoxes()
+PlayerHitBox::GetDamageBoxes()
 {
-	return _hitboxes;
+	return _damageBox;
 }

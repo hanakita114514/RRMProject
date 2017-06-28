@@ -1,4 +1,4 @@
-﻿  Input.cpp
-     ライブラリ C:\Users\1501343\Desktop\卒制\trunk\Project\RRMProjectR\Debug\RRMProject.lib とオブジェクト C:\Users\1501343\Desktop\卒制\trunk\Project\RRMProjectR\Debug\RRMProject.exp を作成中
+﻿  Camera.cpp
+c:\users\1501343\desktop\卒制\trunk\project\rrmprojectr\rrmproject\camera.cpp(108): warning C4172: ローカル変数またはテンポラリのアドレスを返します: cameraRc
   RRMProject.vcxproj -> C:\Users\1501343\Desktop\卒制\trunk\Project\RRMProjectR\Debug\RRMProject.exe
   RRMProject.vcxproj -> C:\Users\1501343\Desktop\卒制\trunk\Project\RRMProjectR\Debug\RRMProject.pdb (Full PDB)

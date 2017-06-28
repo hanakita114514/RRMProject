@@ -2,17 +2,18 @@
 
 #include <vector>
 
+
+enum class LogoIdx
+{
+	GameStart,
+	StageSelect,
+
+	logoMax
+};
+
 class Scene
 {
 protected:
-
-	enum class LogoIdx
-	{
-		GameStart,
-		StageSelect,
-
-		logoMax
-	};
 
 	LogoIdx _logoState;
 

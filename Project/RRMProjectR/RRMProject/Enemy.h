@@ -5,6 +5,7 @@
 #include "MultihitProtect.h"
 #include "HitPoint.h"
 #include "AbstractSpell.h"
+#include "Camera.h"
 
 enum class EnemyType
 {
@@ -29,6 +30,10 @@ protected:
 	HitPoint _hp;
 	MultihitProtect _mhp;	//多段ヒットを防ぐ
 
+	void DistanceAttenuation();
+
+	bool _isDamage;			//ダメージ喰らってる状態か？
+
 private:
 
 public:
@@ -41,6 +46,8 @@ public:
 	virtual void Draw(const Vector2& offset) = 0;				//描画
 	virtual void Anim() = 0;				//アニメーション
 
+	virtual void ScreenLimit(Camera& camera);
+
 	ObjectType GetObjType();
 	Vector2 GetVel() { return _vel; }
 
@@ -51,6 +58,7 @@ public:
 	virtual void Hit(Block* other);
 	virtual void Hit(Player* other);
 	virtual void Hit(Bullet* other);
+	virtual void Damage(float power, const Vector2& vec);
 
 	bool IsHit() { return _hitGround; }
 };

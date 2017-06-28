@@ -1,20 +1,21 @@
 #pragma once
 
 #include "RectObj.h"
-#include "DInput.h"
 #include "Digestion.h"
 #include "HitPoint.h"
 #include "PowerPoint.h"
 #include "Circle.h"
 #include "SlowDown.h"
-#include "MultihitProtect.h"
 #include "Camera.h"
 #include "Armor.h"
 #include "Bullet.h"
 #include "PlayerHitBox.h"
 #include "PlayerHP.h"
+#include "Input.h"
+#include "MultihitProtect.h"
 
 #include <map>
+
 
 class Player : public RectObj
 {
@@ -40,19 +41,18 @@ private:
 
 	PowerPoint _pp;			//パワーポイント
 	Vector2 _vel;			//速度
-	DInput _input;			//インプット
+	Input* _input;			//インプット
 	Digestion _dig;			//消化
 	SlowDown _sd;			//遅くする
 	Armor _armor;			//アーマー
 	PlayerHitBox _hitBox;	//当たり判定
+	MultihitProtect _mhp;	//多段ヒットを防ぐ
 
 	PlayerState _ps;		//プレイヤーの状態
 
 	Vector2 _dir;			//向き（1…右向き、-1…左向き)
 	Vector2 _shootPos;		//弾の発射位置
 	BulletType _tool[ToolMax];
-
-	MultihitProtect _mhp;	//多段ヒットを防ぐ
 
 	Camera& _camera;
 
@@ -65,10 +65,13 @@ private:
 	float _invincibleTime;	//無敵時間
 	float _attackTime;		//攻撃時間
 
-	bool _isJump;
+	bool _isJump;		//ジャンプ中か?
+	bool _groundJump;	//地上ジャンプ
 	bool _hitGround;
-	bool _secondJump;
-	bool _isAirJump;
+	bool _secondJump;	//二段ジャンプが残っているか？
+	bool _isAirJump;	//空中ジャンプ中か？
+
+	bool _addAttackFlag;	//追加攻撃フラグ
 
 	float _speed;
 
@@ -106,7 +109,7 @@ private:
 
 
 public:
-	Player(int padType, Camera& camera);	//使うパッド番号を指定
+	Player(int padType, Camera& camera, InputMode mode);	//使うパッド番号を指定
 	~Player();
 
 	void Init();
@@ -131,7 +134,10 @@ public:
 	bool IsAvoidance();
 	bool IsDamage();
 
-	PlayerHitBox& GetHitBox() { return _hitBox; }
+	std::vector<HitBox>& GetAttackBoxes() { return _hitBox.GetAttackBoxes(); }
+	std::vector<HitBox>& GetDamageBoxes() { return _hitBox.GetDamageBoxes(); }
+	
+	MultihitProtect& GetHitProtect() { return _mhp; }
 
 	HitPoint& GetHP() { return _hp; }
 };

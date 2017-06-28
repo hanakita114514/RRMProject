@@ -5,8 +5,9 @@
 #include "Arrow.h"
 #include "Rect.h"
 #include "DataManager.h"
+
 #include "MenuInformation.h"
-#include <map>
+#include "Input.h"#include <map>
 
 class DInput;
 

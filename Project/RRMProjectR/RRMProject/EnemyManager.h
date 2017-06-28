@@ -22,7 +22,7 @@ public:
 		return instance;
 	}
 
-	void Update();						//更新
+	void Update(Camera& camera);						//更新
 	void Draw(const Vector2& offset);	//描画
 
 	void Create(const EnemyType& et, const Position& pos);

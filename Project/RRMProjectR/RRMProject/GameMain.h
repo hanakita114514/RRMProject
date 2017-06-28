@@ -1,5 +1,6 @@
 #pragma once
 #include "DataManager.h"
+#include "KeyConfig.h"
 
 class Scene;
 class Player;
@@ -14,12 +15,12 @@ private:
 	GameMain(const GameMain&);
 	GameMain& operator = (const GameMain&);
 
-	Scene* _scene;
 	Player* p1;
 
 	DataManager _dataManager;
 
 	SaveData _data;
+	KeyConfig _keyConfig;
 
 public:
 	~GameMain();
@@ -33,8 +34,6 @@ public:
 	bool Init();
 	void GameLoop();
 	void Terminate();
-
-	void ChangeScene(Scene* scene);
 
 	//すべてのデータの更新
 	void DataUpdate(SaveData& data);

@@ -3,24 +3,9 @@
 #include <RRMLib.h>
 #include "Vector2.h"
 #include <map>
+#include "Input.h"
 
 const int HISTORY_NUM = 64;
-
-enum class KeyType : unsigned int
-{
-	keyA,
-	keyB,
-	keyX,
-	keyY,
-	keyL,
-	keyR,
-	keyBack,
-	keyStart,
-	keyTumbLeft,
-	keyTumbRight,
-
-	keyMax,
-};
 
 enum TrigerType
 {
@@ -30,7 +15,7 @@ enum TrigerType
 };
 
 
-class DInput
+class DInput : public Input
 {
 private:
 	RRMLib::DJOYPAD_STATE _pad;

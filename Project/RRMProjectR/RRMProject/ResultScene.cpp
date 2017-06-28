@@ -5,6 +5,7 @@
 #include "MenuScene.h"
 #include "GameScene.h"
 #include "MapManager.h"
+#include "SceneManager.h"
 
 ResultScene::ResultScene()
 {
@@ -31,7 +32,7 @@ bool ResultScene::Update()
 
 	switch (_logoState)
 	{
-	case Scene::LogoIdx::GameStart:
+	case LogoIdx::GameStart:
 	{
 		int i = 0;
 		if (_dinput->IsTriger(KeyType::keyB))
@@ -43,16 +44,16 @@ bool ResultScene::Update()
 		{
 			if (!MapManager::Instance().NextStage())
 			{
-				GameMain::Instance().ChangeScene(new MenuScene());
+				SceneManager::Instance().ChangeScene(SceneType::menu);
 			}
 			else
 			{
-				GameMain::Instance().ChangeScene(new GameScene(_logoState));
+				SceneManager::Instance().ChangeScene(SceneType::game);
 			}
 		}
 	}
 		break;
-	case Scene::LogoIdx::StageSelect:
+	case LogoIdx::StageSelect:
 	{
 		if (_dinput->IsTriger(KeyType::keyStart))
 		{
@@ -61,7 +62,7 @@ bool ResultScene::Update()
 
 		if (Fade::Instance().IsFadeInEnd())
 		{
-			GameMain::Instance().ChangeScene(new MenuScene());
+			SceneManager::Instance().ChangeScene(SceneType::menu);
 		}
 
 	}

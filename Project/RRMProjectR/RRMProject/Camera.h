@@ -3,6 +3,12 @@
 #include "Vector2.h"
 #include "Rect.h"
 
+struct CameraRect
+{
+	Vector2 lpos;		//左上座標
+	Vector2 rpos;		//右下座標
+};
+
 //画面移動、揺らしなどを行う。
 class Camera
 {
@@ -29,5 +35,7 @@ public:
 	//マップの大きさを返す
 	const Rect& GetMapSize();
 
+	//カメラの見ている範囲を返す
+	const CameraRect& GetCameraRect();
 };
 

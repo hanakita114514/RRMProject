@@ -6,6 +6,7 @@
 #include "Fade.h"
 #include <math.h>
 #include "EffectManager.h"
+#include "SceneManager.h"
 
 OfficialScene::OfficialScene() : _hp(100)
 {
@@ -51,7 +52,7 @@ bool OfficialScene::Update()
 
 	if (Fade::Instance().IsFadeInEnd())
 	{
-		GameMain::Instance().ChangeScene(new TitleScene());
+		SceneManager::Instance().ChangeScene(SceneType::title);
 	}
 	if (Fade::Instance().IsWait())
 	{

@@ -67,6 +67,7 @@
     <ClCompile Include="HPBar.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="Keyboard.cpp" />
+    <ClCompile Include="KeyConfig.cpp" />
     <ClCompile Include="Lazer.cpp" />
     <ClCompile Include="MapManager.cpp" />
     <ClCompile Include="MapRendar.cpp" />
@@ -83,6 +84,7 @@
     <ClCompile Include="PowerPoint.cpp" />
     <ClCompile Include="Rect.cpp" />
     <ClCompile Include="RectObj.cpp" />
+    <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="ShootingStar.cpp" />
     <ClCompile Include="SinBullet.cpp" />
     <ClCompile Include="SlowDown.cpp" />
@@ -154,6 +156,7 @@
     <ClInclude Include="HPBar.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="Keyboard.h" />
+    <ClInclude Include="KeyConfig.h" />
     <ClInclude Include="Lazer.h" />
     <ClInclude Include="MapManager.h" />
     <ClInclude Include="MapRendar.h" />
@@ -171,6 +174,7 @@
     <ClInclude Include="PowerPoint.h" />
     <ClInclude Include="Rect.h" />
     <ClInclude Include="RectObj.h" />
+    <ClInclude Include="SceneManager.h" />
     <ClInclude Include="ShootingStar.h" />
     <ClInclude Include="SinBullet.h" />
     <ClInclude Include="SlowDown.h" />

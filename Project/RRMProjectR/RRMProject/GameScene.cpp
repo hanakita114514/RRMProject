@@ -9,11 +9,10 @@
 #include "MapRendar.h"
 #include "Fade.h"
 #include "EffectManager.h"
-#include "GameMain.h"
-#include "ResultScene.h"
 #include "BlockManager.h"
+#include "SceneManager.h"
 
-GameScene::GameScene() : _player(0,_camera), _camera(_player.GetRect().pos)
+GameScene::GameScene() : _player(0,_camera, InputMode::pad), _camera(_player.GetRect().pos)
 {
 	_col = new Collision();
 	EnemyManager::Instance();
@@ -26,7 +25,7 @@ GameScene::GameScene() : _player(0,_camera), _camera(_player.GetRect().pos)
 	_camera.Init();
 }
 
-GameScene::GameScene(LogoIdx state) : _player(0, _camera), _camera(_player.GetRect().pos)
+GameScene::GameScene(LogoIdx state, KeyData& keyData) : _player(0, _camera, keyData.mode), _camera(_player.GetRect().pos)
 {
 	_col = new Collision();
 	EnemyManager::Instance();
@@ -58,7 +57,7 @@ bool GameScene::Update()
 		{
 			_player.Update();
 			MapManager::Instance().Update();
-			EnemyManager::Instance().Update();
+			EnemyManager::Instance().Update(_camera);
 			BulletManager::Instance().Update();
 			EffectManager::Instance().Update();
 		}
@@ -142,11 +141,47 @@ void GameScene::PlayerColEnemy()
 		{
 			continue;
 		}
-		segmentHit = _col->LineCross(_player.GetRect(),_player.GetVel(), e->GetRect(),e->GetVel());
+		segmentHit = _col->LineCross(_player.GetRect(), _player.GetVel(), e->GetRect(), e->GetVel());
 		if (segmentHit || hitFlag)
 		{
 			_player.Hit(e);
 			break;
+		}
+	}
+
+	//ヒットボックスとの当たり判定
+	for (auto& e : EnemyManager::Instance().GetEnemyList())
+	{
+		if (e->IsDead())
+		{
+			continue;
+		}
+
+		//攻撃判定
+		for (auto& a : _player.GetAttackBoxes())
+		{
+			if (_player.GetHitProtect().IsAlreadyHit(e))
+			{
+				continue;
+			}
+			if (_col->IsHit(a.rc, e->GetRect()))
+			{
+				//ヒット
+				_player.GetHitProtect().Hit(e);
+				e->Damage(a.power, a.vec);
+				e->HitStop(a.hitstop);
+				_player.HitStop(a.hitstop);
+				_camera.Quake(Vector2(10, 5));
+			}
+		}
+
+		//喰らい判定
+		for (auto& d : _player.GetDamageBoxes())
+		{
+			if (_col->IsHit(d.rc, e->GetRect()))
+			{
+				//ヒット
+			}
 		}
 	}
 }
@@ -230,7 +265,6 @@ GameScene::BulletColEnemy()
 			}
 		}
 	}
-
 }
 
 void 
@@ -260,6 +294,7 @@ void GameScene::StageClear()
 
 	if (_sceneChangeFlag)
 	{
-		GameMain::Instance().ChangeScene(new ResultScene(_logoState));
+		SceneManager::Instance().LogoState(_logoState);
+		SceneManager::Instance().ChangeScene(SceneType::result);
 	}
 }

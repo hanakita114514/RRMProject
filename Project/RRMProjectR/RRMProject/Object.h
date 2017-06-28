@@ -48,5 +48,6 @@ public:
 	virtual void HitStop(float time);
 	//Žã‘Ì‰»
 	virtual void Weakening();
+
 };
 

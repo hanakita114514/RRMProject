@@ -15,6 +15,7 @@
 #include "MenuScene.h"
 #include <RRMLib.h>
 #include <string.h>
+#include "SceneManager.h"
 
 #include "FPS.h"
 #include "Keyboard.h"
@@ -50,7 +51,10 @@ bool GameMain::Init()
 	_dataManager.Load(_data);
 
 	Fade::Instance().Init();
-	_scene = new MenuScene();
+	//_scene = new MenuScene();
+
+	KeyData kd;
+	_keyConfig.Load(kd);
 
 	return true;
 }
@@ -126,7 +130,7 @@ void GameMain::GameLoop()
 		//XV-----------------------
 		Fade::Instance().Update();
 
-		loopOk = _scene->Update();
+		SceneManager::Instance().Update();
 
 		//•`‰æ-----------------------
 		Fade::Instance().Draw();
@@ -141,12 +145,6 @@ void GameMain::GameLoop()
 void GameMain::Terminate()
 {
 	RRMLib::RRMLib_End();
-}
-
-void GameMain::ChangeScene(Scene* scene)
-{
-	delete _scene;
-	_scene = scene;
 }
 
 void

@@ -38,6 +38,7 @@ private:
 
 	void AliveUpdate();
 	void DyingUpdate();
+	void DamageUpdate();
 
 public:
 	Egg(int handle, const Position& pos);

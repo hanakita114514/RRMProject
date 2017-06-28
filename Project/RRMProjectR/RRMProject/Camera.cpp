@@ -98,3 +98,12 @@ Camera::GetMapSize()
 {
 	return _mapRc;
 }
+
+const CameraRect& 
+Camera::GetCameraRect()
+{
+	CameraRect cameraRc = {};
+	cameraRc.lpos.x;
+
+	return cameraRc;
+}

@@ -9,6 +9,7 @@
 #define BYTE_SWAP_32(x)		((uint32_t)(BYTE1(x) << 24 | BYTE2(x) << 16 | BYTE3(x) << 8 | BYTE4(x)))
 
 using namespace std;
+
 File::File(const char* filePath)
 {
 	_fileName = filePath;

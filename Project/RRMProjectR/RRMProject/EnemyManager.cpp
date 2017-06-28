@@ -11,11 +11,12 @@ EnemyManager::~EnemyManager()
 	Delete();
 }
 
-void EnemyManager::Update()
+void EnemyManager::Update(Camera& camera)
 {
 	for (auto& e : _enemyList)
 	{
 		e->Update();
+		e->ScreenLimit(camera);
 	}
 
 	//íœƒ‹[ƒv

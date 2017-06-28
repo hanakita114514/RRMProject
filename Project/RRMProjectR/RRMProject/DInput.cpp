@@ -11,8 +11,6 @@ const unsigned int PAD_LEFT_UP = 31500;
 
 const unsigned int PAD_MASK = 0x80;
 
-const unsigned int rep_interval = 15;
-
 const unsigned int PAD_A = 0;
 const unsigned int PAD_B = 1;
 const unsigned int PAD_X = 2;
