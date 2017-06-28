@@ -4,6 +4,7 @@
 #include "File.h"
 #include <cassert>
 
+using namespace RRMLib;
 
 PMDLoader::PMDLoader()
 {

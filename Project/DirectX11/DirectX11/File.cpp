@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <cassert>
 
+using namespace RRMLib;
+
 File::File(const char* filePath, const char* mode)
 {
 	_fp = fopen(filePath, mode);

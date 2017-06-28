@@ -22,6 +22,10 @@ public:
 	GeometryGraph();
 	~GeometryGraph();
 
+	//‰Šú‰»‚ÉŒÄ‚Ô
+	bool Init();
+	void Terminate();
+
 	//” •`‰æ
 	void DrawBox(float lx, float ly, float rx, float ry, unsigned int color, bool fillFlag);
 	//ü•`‰æ

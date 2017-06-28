@@ -10,14 +10,33 @@
 
 Graphic::Graphic()
 {
-	HRESULT result = 
-		Graphic::CreateShader(_vs2d, _vs3d, _layout, _ps);
-	DrawingStructure ds;
-	_vb = CreateBuffer2DWrite(0, 0, 0, 0, ds);
 }
 
 
 Graphic::~Graphic()
+{
+	Terminate();
+}
+
+bool 
+Graphic::Init()
+{
+	HRESULT hr = S_OK;
+	hr = Graphic::CreateShader(_vs2d, _vs3d, _layout, _ps);
+
+	if (FAILED(hr))
+	{
+		return false;
+	}
+
+	DrawingStructure ds;
+	_vb = CreateBuffer2DWrite(0, 0, 0, 0, ds);
+
+	return true;
+}
+
+void 
+Graphic::Terminate()
 {
 	_vb->Release();
 	_vs2d->Release();

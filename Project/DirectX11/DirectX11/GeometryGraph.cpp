@@ -6,7 +6,17 @@
 #include "Vertex.h"
 #include <math.h>
 
-const double PI = 3.141592f;
+static const double PI = 3.141592f;
+
+GeometryGraph::GeometryGraph()
+{
+}
+
+
+GeometryGraph::~GeometryGraph()
+{
+	Terminate();
+}
 
 ID3D11Buffer* CreateVertexBufferBox()
 {
@@ -121,12 +131,21 @@ ID3D11Buffer* CreateVertexBufferCircle()
 	return vb;
 }
 
-GeometryGraph::GeometryGraph()
+
+
+bool 
+GeometryGraph::Init()
 {
 	DeviceDx11& dev = DeviceDx11::Instance();
 
-	HRESULT result = CreateShader(_vs2d, _vs3d, _layout, _ps);
-	
+	HRESULT hr = CreateShader(_vs2d, _vs3d, _layout, _ps);
+
+
+	if (FAILED(hr))
+	{
+		return false;
+	}
+
 	unsigned int color = 0xffffffff;
 	//カラー用コンスタントバッファの生成
 	D3D11_BUFFER_DESC colorBufferDesc = {};
@@ -138,8 +157,15 @@ GeometryGraph::GeometryGraph()
 	D3D11_SUBRESOURCE_DATA mbufsub = {};
 	mbufsub.pSysMem = &color;
 
-	result = dev.Device()->CreateBuffer(&colorBufferDesc, &mbufsub, &_colorBuf);
+	hr = dev.Device()->CreateBuffer(&colorBufferDesc, &mbufsub, &_colorBuf);
+
+	if (FAILED(hr))
+	{
+		return false;
+	}
+
 	dev.Context()->PSSetConstantBuffers(1, 1, &_colorBuf);
+
 
 	//箱頂点バッファの作成
 	_vbBox = CreateVertexBufferBox();
@@ -150,10 +176,12 @@ GeometryGraph::GeometryGraph()
 	//円用
 	_vbCircle = CreateVertexBufferCircle();
 
+	return true;
+
 }
 
-
-GeometryGraph::~GeometryGraph()
+void
+GeometryGraph::Terminate()
 {
 	_vbBox->Release();
 	_vbLine->Release();

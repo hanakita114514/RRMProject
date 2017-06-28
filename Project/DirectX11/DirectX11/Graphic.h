@@ -45,6 +45,10 @@ public:
 	Graphic();
 	~Graphic();
 
+	//初期化時に呼ぶ
+	bool Init();
+	void Terminate();
+
 	//画像を読み込む
 	//戻り値 失敗　-1 成功 それ以外の数値
 	int LoadTexture(std::string filePath);

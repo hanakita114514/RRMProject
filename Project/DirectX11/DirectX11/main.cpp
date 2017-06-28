@@ -304,6 +304,9 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nC
 	//ResetDirect3D(WindowControl::Instance());
 
 	Graphic graphic;
+	graphic.Init();
+	GeometryGraph gg;
+	gg.Init();
 	int handle = graphic.LoadGraph("rei.jpg");
 
 	//WindowControl::Instance().ChangeFullScreenMode(true);
@@ -494,7 +497,6 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nC
 	int m1handle = MediaControl::Instance().Load(L"Sound/y“Œ•û’n—ì“az­—‚³‚Æ‚è@3rd_eyeyŒ´‹Èz.mp3");
 	MediaControl::Instance().Play(m1handle);
 
-	GeometryGraph gg;
 
 
 	unsigned int red = GetColor(255, 0, 0);
