@@ -1,6 +1,9 @@
 #include "Fade.h"
 #include <RRMLib.h>
 
+//const float Y_ExtendLimit = 350;
+//const float X_ExtendLimit = 300;
+
 
 Fade::Fade()
 {
@@ -11,8 +14,8 @@ Fade::Fade()
 
 Fade::~Fade()
 {
-}
 
+}
 
 void 
 Fade::Init()
@@ -26,6 +29,10 @@ Fade::Init()
 	_isFadeInEnd = false;
 	_isFadeOutEnd = false;
 	_handleIdx = (int)FadeImage::black;
+	_extendPos[0] = Vector2(640, 350);
+	_extendPos[1] = Vector2(640, 370);
+
+	_extendX = _extendY = 0;
 }
 
 void
@@ -75,7 +82,20 @@ void
 Fade::Draw()
 {
 	RRMLib::SetBlendMode(RRM_BLENDMODE_ALPHA, (int)_alpha);
-	RRMLib::DrawGraph(0, 0, _handle[_handleIdx]);
+	switch (_handleIdx)
+	{
+	case (int)FadeImage::black:
+	{
+		RRMLib::DrawGraph(0, 0, _handle[_handleIdx]);
+	}
+	break;
+	case (int)FadeImage::white:
+	{
+		RRMLib::DrawExtendGraph(_extendPos[0].x - _extendX, _extendPos[0].y - _extendY,
+					_extendPos[1].x + _extendX, _extendPos[1].y + _extendY, _handle[_handleIdx]);
+	}
+	break;
+	}
 	RRMLib::SetBlendMode(RRM_BLENDMODE_NONE, 0);
 }
 
@@ -122,9 +142,7 @@ void
 Fade::PauseEnd()
 {
 	_func = &Fade::Wait;
-	_alpha = 0;
 	_isPause = false;
-	_handleIdx = (int)FadeImage::black;
 }
 
 

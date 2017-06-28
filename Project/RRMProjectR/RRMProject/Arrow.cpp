@@ -5,7 +5,7 @@
 
 Arrow::Arrow()
 {
-	_arrowHandle = GraphicLoad::Instance().LoadGraph("Resource/img/UI/Arrow_Smile.png");
+	_arrowHandle = GraphicLoad::Instance().LoadGraph("Resource/img/UI/RightArrow.png");
 	_width = ArrowWidth;
 	_height = ArrowHeight;
 }

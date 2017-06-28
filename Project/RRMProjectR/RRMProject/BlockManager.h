@@ -30,7 +30,7 @@ public:
 
 	void Delete();
 
-	void BlockInit(std::vector<std::vector<int>>map,int mapHeight, int mapWidth);
+	void BlockInit(std::vector<unsigned char> buf,int mapHeight, int mapWidth);
 
 	std::vector<Block*>& GetBlockList() { return _blockList; }
 };

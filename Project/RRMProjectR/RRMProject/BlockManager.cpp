@@ -30,47 +30,48 @@ BlockManager::Draw(const Vector2& offset)
 }
 
 void 
-BlockManager::BlockInit(std::vector<std::vector<int>>map,int mapHeight, int mapWidth)
+BlockManager::BlockInit(std::vector<unsigned char> buf,int mapHeight, int mapWidth)
 {
 	int y, x;
 	y = x = 0;
 	Block* b = nullptr;
-	for (y = 0; y < mapHeight; ++y)
+
+	int mapMax = mapHeight * mapWidth;
+
+	for (y;y < mapMax;++y)
 	{
-		for (x = 0; x < mapWidth; ++x)
+		if ((int)buf[y] != (int)BlockType::none)
 		{
-			if (map[y][x] != (int)BlockType::none)
+			switch ((int)buf[y])
 			{
-				switch (map[y][x])
-				{
-				case (int)BlockType::throughBlock1:
-				case (int)BlockType::throughBlock2:
-				case (int)BlockType::throughBlock3:
-				case (int)BlockType::throughBlock4:
-				case (int)BlockType::throughBlock5:
-				case (int)BlockType::throughBlock6:
-				{
-					b = new ThroughBlock();
-					b->Initialize(Vector2(x * MAP_CHIP_SIZE_X, y * MAP_CHIP_SIZE_Y),
-						_mapImage[map[y][x]],
-						Vector2(MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y),
-						BlockType::throughBlock1);
-				}
-				break;
-				default:
-				{
-					b = new NormalBlock();
-					b->Initialize(Vector2(x * MAP_CHIP_SIZE_X, y * MAP_CHIP_SIZE_Y),
-						_mapImage[map[y][x]],
-						Vector2(MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y),
-						BlockType::normalBlock);
-				}
-				}
-				_blockList.push_back(b);
+			case (int)BlockType::throughBlock1:
+			case (int)BlockType::throughBlock2:
+			case (int)BlockType::throughBlock3:
+			case (int)BlockType::throughBlock4:
+			case (int)BlockType::throughBlock5:
+			case (int)BlockType::throughBlock6:
+			{
+				b = new ThroughBlock();
+				b->Initialize(Vector2((y % mapWidth) * MAP_CHIP_SIZE_X, (y / mapWidth)* MAP_CHIP_SIZE_Y),
+					_mapImage[(int)buf[y]],
+					Vector2(MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y),
+					BlockType::throughBlock1);
 			}
+			break;
+			default:
+			{
+				b = new NormalBlock();
+				b->Initialize(Vector2((y % mapWidth) * MAP_CHIP_SIZE_X, (y / mapWidth)* MAP_CHIP_SIZE_Y),
+					_mapImage[(int)buf[y]],
+					Vector2(MAP_CHIP_SIZE_X, MAP_CHIP_SIZE_Y),
+					BlockType::normalBlock);
+			}
+			break;
+			}
+			_blockList.push_back(b);
+
 		}
 	}
-
 }
 
 void

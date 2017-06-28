@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <vector>
+#include <typeinfo>
 #include "MapRendar.h"
 #include "GameMain.h"
 
@@ -27,13 +28,9 @@ public:
 	bool Initialize();
 	bool Initialize(FILE_INIT_TYPE type);	//ファイルのモードを指定する
 
+	bool FileRead(void* buffer, int size, int num,int seek = 0);
+	bool FileWrite(void* buffer, int size, int num);
+
 	void Finalize();
 
-	void FileLoad(FMFHEADER& header, vector<vector<int>>& array);
-
-	//全データ読み込み
-	void FileLoad(SaveData& data, int size);
-
-	//全データ書き込み
-	void FileWrite(const SaveData& data);
 };

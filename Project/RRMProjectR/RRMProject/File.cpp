@@ -63,53 +63,31 @@ void File::Finalize()
 	fclose(_filePointer);
 }
 
-void File::FileLoad(FMFHEADER& header, vector<vector<int>>& array)
+bool
+File::FileRead(void* buffer, int size, int num,int seek)
 {
-	int i, y, x;		//ループ用変数
+	int err;
+	fseek(_filePointer, seek, SEEK_SET);
 
-	fseek(_filePointer, 0, SEEK_SET);
-
-	fread(&header, sizeof(header), 1, _filePointer);	//ヘッダ情報を書き込む
-
-	int layerSize = header.byLayerCount;				//レイヤーの数
-	int height = header.dwHeight;						//マップの高さ
-	int width = header.dwWidth;							//マップの幅
-	int size = header.dwSize;
-
-	array.resize(header.dwHeight);
-
-	for (i = 0; i < height; ++i)
+	err = fread(buffer, size, num, _filePointer);
+	if (err < num)
 	{
-		array[i].resize(header.dwWidth);
+		return false;
 	}
-
-	//マップ読み込みループ-----------------------------------------------------------------		
-	for (y = 0; y < height; ++y)
-		{
-			for (x = 0; x < width; ++x)
-			{
-				//マップ情報を読み込む
-				fread(&array[y][x], sizeof(unsigned char), 1, _filePointer);
-			}
-		}
-	
-	i = 0;
-	//--------------------------------------------------------------------------------------
-
+	return true;
 }
 
-
-void 
-File::FileLoad(SaveData& data, int size)
+bool
+File::FileWrite(void* buffer, int size, int num)
 {
 	fseek(_filePointer, 0, SEEK_SET);
 
-	fread(&data, sizeof(SaveData), 1, _filePointer);
+	int err;
+	err = fwrite(buffer, size, num, _filePointer);
 
-}
-
-void
-File::FileWrite(const SaveData& data)
-{
-	fwrite(&data, sizeof(SaveData), 1, _filePointer);
+	if (err < num)
+	{
+		return false;
+	}
+	return true;
 }

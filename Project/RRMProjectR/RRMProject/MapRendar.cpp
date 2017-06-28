@@ -37,11 +37,15 @@ bool MapRendar::MapLoad()
 		return false;
 	}
 
-	 file->FileLoad(_header,_mapList);
+	file->FileRead(&_header, sizeof(_header), 1);
+
+	_map.resize(_header.dwHeight * _header.dwWidth);
+
+	file->FileRead(&_map[0], _map.size(), 1, sizeof(_header));
 
 	 NomalizeArray();
 
-	 BlockManager::Instance().BlockInit(_mapList, _header.dwHeight, _header.dwWidth);
+	 BlockManager::Instance().BlockInit(_map, _header.dwHeight, _header.dwWidth);
 
 	 delete file;
 
@@ -60,12 +64,18 @@ void MapRendar::NomalizeArray()
 {
 	unsigned int  y, x;
 	 y = x = 0;
-		for (y = 0; y < _header.dwHeight; ++y)
-		{
-			for (x = 0; x < _header.dwWidth; ++x)
-			{
-				_checkNum = _mapList[y][x] / MAP_CHIP_X_NUM;
-				_mapList[y][x] = _mapList[y][x] - _checkArray[_checkNum];
-			}
-		}
+		//for (y = 0; y < _header.dwHeight; ++y)
+		//{
+		//	for (x = 0; x < _header.dwWidth; ++x)
+		//	{
+		//		_checkNum = _mapList[y][x] / MAP_CHIP_X_NUM;
+		//		_mapList[y][x] = _mapList[y][x] - _checkArray[_checkNum];
+		//	}
+		//}
+
+	 for (y; y < _header.dwSize; ++y)
+	 {
+		 _checkNum = _map[y] / MAP_CHIP_X_NUM;
+		 _map[y] = (int)(_map[y] - _checkArray[_checkNum]);
+	 }
 }

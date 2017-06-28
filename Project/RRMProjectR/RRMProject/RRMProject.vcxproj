@@ -71,6 +71,7 @@
     <ClCompile Include="MapManager.cpp" />
     <ClCompile Include="MapRendar.cpp" />
     <ClCompile Include="Meat.cpp" />
+    <ClCompile Include="MenuInformation.cpp" />
     <ClCompile Include="MultihitProtect.cpp" />
     <ClCompile Include="Mushroom.cpp" />
     <ClCompile Include="NormalBlock.cpp" />
@@ -158,6 +159,7 @@
     <ClInclude Include="MapRendar.h" />
     <ClInclude Include="Mathematics.h" />
     <ClInclude Include="Meat.h" />
+    <ClInclude Include="MenuInformation.h" />
     <ClInclude Include="MultihitProtect.h" />
     <ClInclude Include="Mushroom.h" />
     <ClInclude Include="NormalBlock.h" />

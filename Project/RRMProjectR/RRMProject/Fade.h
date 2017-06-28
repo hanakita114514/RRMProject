@@ -1,5 +1,5 @@
 #pragma once
-
+#include "Vector2.h"
 enum class FadeImage
 {
 	black,
@@ -24,6 +24,10 @@ private:
 	int _handle[(int)FadeImage::max];
 	float _fadeSpeed;
 	float _alpha;
+
+	Vector2 _extendPos[2];
+	float _extendX;
+	float _extendY;
 
 	int _handleIdx;
 

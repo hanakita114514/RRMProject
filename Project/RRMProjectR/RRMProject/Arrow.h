@@ -1,8 +1,8 @@
 #pragma once
 #include "UI.h"
 
-const int ArrowWidth = 64;
-const int ArrowHeight = 52;
+const int ArrowWidth = 32;
+const int ArrowHeight = 32;
 
 class Arrow : public UI
 {

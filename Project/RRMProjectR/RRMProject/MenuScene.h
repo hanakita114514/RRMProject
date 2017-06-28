@@ -5,7 +5,9 @@
 #include "Arrow.h"
 #include "Rect.h"
 #include "DataManager.h"
+#include "MenuInformation.h"
 #include <map>
+
 class DInput;
 
 //ƒƒSî•ñŠi”[—p\‘¢‘Ì
@@ -36,6 +38,8 @@ private:
 	int _weaponIdx;					//•Ší”z—ñ‚Ì“Y‚¦š
 	int _bg;						//”wŒi‚Ì‰æ‘œƒnƒ“ƒhƒ‹
 	float _freamCnt;
+
+	MenuInformation _menuInfo;
 
 	Arrow _arrow;				//–îˆó
 	Logo _logo[(int)(LogoIdx::logoMax)];			//ƒƒS‚Ì‰æ‘œƒnƒ“ƒhƒ‹

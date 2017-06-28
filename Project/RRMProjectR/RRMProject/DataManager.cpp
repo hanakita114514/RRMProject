@@ -16,7 +16,7 @@ DataManager::Save(SaveData& data)
 {
 	File* file = new File("Resource/data/save/saveData.rrm");
 	file->Initialize(FILE_INIT_TYPE::FILE_WRITE);
-	file->FileWrite(data);
+	file->FileWrite(&data,sizeof(SaveData),1);
 }
 
 void
@@ -25,7 +25,7 @@ DataManager::Load(SaveData& data)
 	File* file = new File( "Resource/data/save/saveData.rrm");
 	if (_err = file->Initialize(FILE_INIT_TYPE::FILE_READ))
 	{
-		file->FileLoad(data, sizeof(SaveData));
+		file->FileRead(&data,sizeof(SaveData),1);
 	}
 	else
 	{

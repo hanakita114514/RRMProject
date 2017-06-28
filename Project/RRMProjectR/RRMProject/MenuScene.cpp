@@ -10,6 +10,7 @@
 #include "Mathematics.h"
 #include <RRMLib.h>
 
+
 const char* Stage[(int)Stage::stageMax] = 
 {
 	{"Stage1"},
@@ -20,7 +21,7 @@ const char* Stage[(int)Stage::stageMax] =
 
 MenuScene::MenuScene()
 {
-	_titleHandle = RRMLib::LoadGraph("Resource/img/title.png");
+	_titleHandle = RRMLib::LoadGraph("Resource/img//logo/title.png");
 	_update = &MenuScene::TitleUpdate;
 	_dinput = new DInput(0);
 	for (int i = 0; i < (int)(LogoIdx::logoMax); i++)
@@ -35,6 +36,8 @@ MenuScene::MenuScene()
 	}
 
 	_arrow.SetPos(_logo[0].rc.pos);
+
+	_menuInfo.Init();
 
 	_bg = RRMLib::LoadGraph("Resource/img/BackGround/mori.jpg");
 
@@ -64,7 +67,7 @@ MenuScene::~MenuScene()
 void 
 MenuScene::TitleUpdate()
 {
-	RRMLib::DrawGraph(0, 0, _titleHandle);
+	RRMLib::DrawExtendGraph(340, 260, 940, 460, _titleHandle);
 	if (_dinput->Start())
 	{
 		Fade::Instance().FadeIn(5.0f);
@@ -95,7 +98,7 @@ MenuScene::MenuUpdate()
 				_update = &MenuScene::GameStart;
 				_logoIdx = 0;
 				_arrow.SetPos(_logoDefaultPos[_logoIdx]);
-				Fade::Instance().PauseIn(1, 50);
+				_menuInfo.Enlargement(40,127);
 			}
 			break;
 			case 1:
@@ -103,7 +106,7 @@ MenuScene::MenuUpdate()
 				_update = &MenuScene::Configuration;
 				_logoIdx = 0;
 				_arrow.SetPos(_logoDefaultPos[_logoIdx]);
-				Fade::Instance().PauseIn(1,50);
+				_menuInfo.Enlargement(40,127);
 			}
 			break;
 			default:
@@ -112,6 +115,10 @@ MenuScene::MenuUpdate()
 		}
 		//---------------------------------------------------------------------------------
 		_arrow.Draw();
+		for (int i = 0; i < (int)(LogoIdx::logoMax); i++)
+		{
+			RRMLib::DrawGraph((int)_logo[i].rc.pos.x, (int)_logo[i].rc.pos.y, _logo[i].image);
+		}
 		LogoMove();
 	}
 
@@ -120,16 +127,13 @@ MenuScene::MenuUpdate()
 		Fade::Instance().FadeOut(10.0f);
 	}
 
-	for (int i = 0; i <(int)(LogoIdx::logoMax); i++)
-	{
-		RRMLib::DrawGraph((int)_logo[i].rc.pos.x, (int)_logo[i].rc.pos.y, _logo[i].image);
-	}
+	
 }
 
 void 
 MenuScene::GameStart()
 {
-	if (Fade::Instance().IsWait())
+	if (_menuInfo.IsWait())
 	{
 		UpMove();
 		DownMove();
@@ -139,7 +143,7 @@ MenuScene::GameStart()
 			_update = &MenuScene::MenuUpdate;
 			_logoIdx = 0;
 			_arrow.SetPos(_logoDefaultPos[_logoIdx]);
-			Fade::Instance().PauseEnd();
+			_menuInfo.Reduction(50);
 		}
 		else if (_dinput->IsTriger(KeyType::keyB))
 		{
@@ -188,7 +192,7 @@ MenuScene::StageSelect()
 	_stageId = RightMove(_stageId, (int)Stage::stageMax);
 	_stageId = LeftMove(_stageId, (int)Stage::stageMax);
 
-	if (Fade::Instance().IsWait())
+	if (_menuInfo.IsWait())
 	{
 		if (_dinput->IsTriger(KeyType::keyB))
 		{
@@ -211,7 +215,7 @@ MenuScene::StageSelect()
 void
 MenuScene::Configuration()
 {
-	if (Fade::Instance().IsWait())
+	if (_menuInfo.IsWait())
 	{
 		UpMove();
 		DownMove();
@@ -221,22 +225,23 @@ MenuScene::Configuration()
 			_update = &MenuScene::MenuUpdate;
 			_logoIdx = 0;
 			_arrow.SetPos(_logoDefaultPos[_logoIdx]);
-			Fade::Instance().PauseEnd();
+			_menuInfo.Reduction(50);
 		}
 
-	}
-	_arrow.Draw();
-	LogoMove();
+		_arrow.Draw();
+		LogoMove();
 
-	for (int i = 0; i < (int)(LogoIdx::logoMax); i++)
-	{
-		RRMLib::DrawGraph((int)_logo[i].rc.pos.x, (int)_logo[i].rc.pos.y, _logo[i].image);
+		for (int i = 0; i < (int)(LogoIdx::logoMax); i++)
+		{
+			RRMLib::DrawGraph((int)_logo[i].rc.pos.x, (int)_logo[i].rc.pos.y, _logo[i].image);
+		}
 	}
 }
 
 void MenuScene::Draw()
 {
 	RRMLib::DrawGraph(0, 0, _bg);
+	_menuInfo.Draw();
 }
 
 void
@@ -292,8 +297,10 @@ MenuScene::ImageShaker(Rect& rect)
 
 bool MenuScene::Update()
 {
-	Draw();
 	_dinput->Update();
+
+	Draw();
+	_menuInfo.Update();
 	(this->*_update)();
 	return true;
 }

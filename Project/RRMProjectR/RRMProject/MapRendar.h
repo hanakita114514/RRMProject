@@ -49,6 +49,7 @@ private:
 	const char* _filePath;
 
 	std::vector<std::vector<int>> _mapList;
+	std::vector<unsigned char> _map;
 	std::vector<Block*> _blockList;
 
 	void NomalizeArray();			//”z—ñ‚Ì—v‘f‚Ì³‹K‰»
