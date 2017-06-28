@@ -152,12 +152,16 @@
   <ItemGroup>
     <ClCompile Include="DeviceDx11.cpp" />
     <ClCompile Include="DInput.cpp" />
+    <ClCompile Include="File.cpp" />
     <ClCompile Include="GeometryGraph.cpp" />
     <ClCompile Include="Graphic.cpp" />
     <ClCompile Include="GraphList.cpp" />
+    <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MediaControl.cpp" />
     <ClCompile Include="MediaPlayer.cpp" />
+    <ClCompile Include="PMDLoader.cpp" />
+    <ClCompile Include="PMDMesh.cpp" />
     <ClCompile Include="ReadMP3.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="SoundManager.cpp" />
@@ -165,6 +169,10 @@
     <ClCompile Include="XAudio.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="File.h" />
+    <ClInclude Include="Keyboard.h" />
+    <ClInclude Include="PMDLoader.h" />
+    <ClInclude Include="PMDMesh.h" />
     <ClInclude Include="RRMCommon.h" />
     <ClInclude Include="DeviceDx11.h" />
     <ClInclude Include="DInput.h" />

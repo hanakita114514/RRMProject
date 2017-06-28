@@ -194,7 +194,7 @@ DInput::GetJoyState(DIJOYSTATE& js)
 {
 	HRESULT    hr = S_OK;
 
-	if (nullptr == g_lpDIDevice)
+	if (g_lpDIDevice == nullptr)
 	{
 		return false;
 	}

@@ -14,9 +14,15 @@
 #include "GeometryGraph.h"
 #include "Renderer.h"
 #include "GraphList.h"
+#include "Keyboard.h"
 
 //ƒCƒ“ƒvƒbƒg
-RRMLib::DInput dinput;
+static RRMLib::DInput dinput;
+static RRMLib::Keyboard keyboard;
+
+//ƒOƒ‰ƒtƒBƒbƒNŠÖŒW
+static Graphic graphic;
+static GeometryGraph geometryGraph;
 
 namespace RRMLib
 {
@@ -58,13 +64,29 @@ namespace RRMLib
 			return -1;
 		}
 
+		//ƒCƒ“ƒvƒbƒg‚Ì‰Šú‰»
 		bool ret = dinput.Init();
 		//if (!ret)
 		//{
 		//	return -1;
 		//}
 
+		keyboard.Init();
+
+		//‰¹ŠyŠÖŒW‚Ì‰Šú‰»
 		XAudio::Instance().Init();
+
+		//‰æ‘œŠÖŒW‚Ì‰Šú‰»
+		ret = graphic.Init();
+		if (!ret)
+		{
+			return -1;
+		}
+		ret = geometryGraph.Init();
+		if (!ret)
+		{
+			return -1;
+		}
 
 		return 0;
 	}
@@ -133,6 +155,12 @@ namespace RRMLib
 
 		result = InitDirect3D(WindowControl::Instance());
 
+		graphic.Terminate();
+		geometryGraph.Terminate();
+
+		graphic.Init();
+		geometryGraph.Init();
+
 		ShowWindow(hwnd, SW_SHOW);
 	}
 
@@ -164,7 +192,7 @@ namespace RRMLib
 	//‰æ‘œ‚Ì“Ç‚İ‚İ
 	int LoadGraph(std::string filePath)
 	{
-		int handle = Graphic::Instance().LoadGraph(filePath);
+		int handle = graphic.LoadGraph(filePath);
 
 		return handle;
 	}
@@ -172,21 +200,21 @@ namespace RRMLib
 	//‰æ‘œ‚Ì•ªŠ„“Ç‚İ‚İ
 	int LoadDivGraph(std::string filePath, int allNum, int xNum, int yNum, int width, int height, int* handleBuf)
 	{
-		int ret = Graphic::Instance().LoadDivGraph(filePath, allNum, xNum, yNum, width, height, handleBuf);
+		int ret = graphic.LoadDivGraph(filePath, allNum, xNum, yNum, width, height, handleBuf);
 		return ret;
 	}
 
 	//“Ç‚İ‚ñ‚¾‰æ‘œ‚ğíœ
 	void DeleteGraph(int handle)
 	{
-		Graphic::Instance().DeleteGraph(handle);
+		graphic.DeleteGraph(handle);
 	}
 
 	//‰æ‘œ‚ğ•`‰æ
-	void DrawGraph(int x, int y, int graphHandle)
+	void DrawGraph(float x, float y, int graphHandle)
 	{
 		Renderer::Instance().SetZBuffer(false);
-		Graphic::Instance().DrawGraph(x, y, graphHandle);
+		graphic.DrawGraph(x, y, graphHandle);
 	}
 	
 	//‰æ‘œ‚Ì‹éŒ`•`‰æ
@@ -194,7 +222,7 @@ namespace RRMLib
 		int width, int height, int graphHandle, bool transFlag, bool trunFlag)
 	{
 		Renderer::Instance().SetZBuffer(false);
-		Graphic::Instance().DrawRectGraph(destX, destY, srcX, srcY,
+		graphic.DrawRectGraph(destX, destY, srcX, srcY,
 			width, height, graphHandle, transFlag, trunFlag);
 	}
 
@@ -203,7 +231,7 @@ namespace RRMLib
 	void DrawExtendGraph(float lx, float ly, float rx, float ry, int handle)
 	{
 		Renderer::Instance().SetZBuffer(false);
-		Graphic::Instance().DrawExtendGraph(lx, ly, rx, ry, handle);
+		graphic.DrawExtendGraph(lx, ly, rx, ry, handle);
 	}
 
 	//‰æ‘œ‚ÌŠgk‹éŒ`•`‰æ
@@ -211,36 +239,43 @@ namespace RRMLib
 		int srcX, int srcY, int width, int height, int graphHandle, bool transFlag, bool turnFlag)
 	{
 		Renderer::Instance().SetZBuffer(false);
-		Graphic::Instance().DrawRectExtendGraph(destLX, destLY, destRX, destRY,
+		graphic.DrawRectExtendGraph(destLX, destLY, destRX, destRY,
 			srcX, srcY, width, height, graphHandle, transFlag, turnFlag);
+	}
+
+	//‰æ‘œ‚Ì‰ñ“]•`‰æ
+	void DrawRotaGraph(float x, float y, double angle, int graphHadle, bool transFlag, bool turnFlag)
+	{
+		Renderer::Instance().SetZBuffer(false);
+		graphic.DrawRotaGraph(x, y, angle, graphHadle, transFlag, turnFlag);
 	}
 
 	//‹éŒ`•`‰æ
 	void DrawBox(float lx, float ly, float rx, float ry, unsigned int color, bool fillFlag)
 	{
 		Renderer::Instance().SetZBuffer(false);
-		GeometryGraph::Instance().DrawBox(lx, ly, rx, ry, color, fillFlag);
+		geometryGraph.DrawBox(lx, ly, rx, ry, color, fillFlag);
 	}
 	
 	//ü•`‰æ
 	void DrawLine(float lx, float ly, float rx, float ry, unsigned int color)
 	{
 		Renderer::Instance().SetZBuffer(false);
-		GeometryGraph::Instance().DrawLine(lx, ly, rx, ry, color);
+		geometryGraph.DrawLine(lx, ly, rx, ry, color);
 	}
 
 	//“_•`‰æ
 	void DrawPoint(float x, float y, unsigned int color)
 	{
 		Renderer::Instance().SetZBuffer(false);
-		GeometryGraph::Instance().DrawPoint(x, y, color);
+		geometryGraph.DrawPoint(x, y, color);
 	}
 
 	//‰~•`‰æ
 	void DrawCircle(float x, float y, float r, unsigned int color, bool fillflag)
 	{
 		Renderer::Instance().SetZBuffer(false);
-		GeometryGraph::Instance().DrawCircle(x, y, r, color, fillflag);
+		geometryGraph.DrawCircle(x, y, r, color, fillflag);
 	}
 
 	//Fî•ñ‚ğæ“¾
@@ -300,6 +335,13 @@ namespace RRMLib
 			joystate->buttons[i] = js.rgbButtons[i];
 		}
 
+		return ret;
+	}
+
+	//ƒL[ƒ{[ƒh“ü—Í
+	bool GetKeyboardState(char* keyBuf)
+	{
+		bool ret = keyboard.GetKeyState(keyBuf);
 		return ret;
 	}
 

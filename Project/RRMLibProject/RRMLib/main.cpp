@@ -21,6 +21,9 @@
 #include "Renderer.h"
 
 #include "GraphList.h"
+#include "Keyboard.h"
+#include "PMDLoader.h"
+#include "PMDMesh.h"
 
 struct MatrixForShader
 {
@@ -300,7 +303,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nC
 
 	//ResetDirect3D(WindowControl::Instance());
 
-	Graphic& graphic = Graphic::Instance();
+	Graphic graphic;
 	int handle = graphic.LoadGraph("rei.jpg");
 
 	//WindowControl::Instance().ChangeFullScreenMode(true);
@@ -491,7 +494,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nC
 	int m1handle = MediaControl::Instance().Load(L"Sound/Åyìåï˚ínóÏìaÅzè≠èóÇ≥Ç∆ÇËÅ@3rd_eyeÅyå¥ã»Åz.mp3");
 	MediaControl::Instance().Play(m1handle);
 
-	GeometryGraph& gg = GeometryGraph::Instance();
+	GeometryGraph gg;
 
 
 	unsigned int red = GetColor(255, 0, 0);
@@ -504,6 +507,15 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nC
 	graphic.LoadDivGraph("rei.jpg", 25, 5, 5, 384, 216, dsBuf);
 
 	int x = 0;
+
+	const double PI = 3.141592f;
+
+	Keyboard key;
+	key.Init();
+	char keyBuf[256];
+
+	PMDLoader loader;
+	PMDMesh* reimu = loader.Load("Model/îéóÌóÏñ≤ver100/îéóÌóÏñ≤ver100.pmd");
 
 	while (true)
 	{
@@ -559,7 +571,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nC
 
 		for (int i = 0; i < 200; i++)
 		{
-			graphic.DrawGraph(x, 0, handle);
+			//graphic.DrawGraph(x, 0, handle);
 			//graphic.DrawExtendGraph(x, 0, 1000, 700, handle);
 			//graphic.DrawRectGraph(x, 0, 100, 100, 300, 300, handle, true, true);
 			//graphic.DrawRectExtendGraph(0, 0, 100, 100, 100, 200, 400, 400, ds, true, true);
@@ -567,10 +579,17 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nC
 			//graphic.DrawRectExtendGraph(0, 0, 1000, 500, 100,300, 500,500, dsBuf[0],true,false);
 		}
 		//graphic.DrawExtendGraph(0, 0, 1000, 700, ds);
-		x++;
 
 		//graphic.DrawGraph(0 * 384, 0 * 216, dsBuf[0]);
 		//graphic.DrawGraph(1 * 384, 0 * 216, dsBuf[1]);
+
+		angle += 0.01f;
+
+		//graphic.DrawRotaGraph(500, 300, angle, handle, true, false);
+
+		graphic.DrawGraph(x, 0, handle);
+
+		gg.DrawBox(500, 300, 510, 310, 0xffffffff, true);
 
 		//GraphList::Instance().Add(graphic.DrawGraph(0, 0, handle));
 
@@ -600,6 +619,17 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nC
 		//graphic.DrawExtendGraph(0, 0, 1500, 700, handle);
 
 		//GraphList::Instance().Draw();
+
+		result = key.GetKeyState(keyBuf);
+
+		if (keyBuf[DIK_LEFT])
+		{
+			x--;
+		}
+		if (keyBuf[DIK_RIGHT])
+		{
+			x++;
+		}
 
 		dev.SwapChain()->Present(1, 0);
 	}

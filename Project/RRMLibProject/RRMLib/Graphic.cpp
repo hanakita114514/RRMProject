@@ -6,17 +6,37 @@
 #include "WindowControl.h"
 #include "GraphList.h"
 #include "Renderer.h"
+#include <math.h>
 
 Graphic::Graphic()
 {
-	HRESULT result = 
-		Graphic::CreateShader(_vs2d, _vs3d, _layout, _ps);
-	DrawingStructure ds;
-	_vb = CreateBuffer2DWrite(0, 0, 0, 0, ds);
 }
 
 
 Graphic::~Graphic()
+{
+	Terminate();
+}
+
+bool 
+Graphic::Init()
+{
+	HRESULT hr = S_OK;
+	hr = Graphic::CreateShader(_vs2d, _vs3d, _layout, _ps);
+
+	if (FAILED(hr))
+	{
+		return false;
+	}
+
+	DrawingStructure ds;
+	_vb = CreateBuffer2DWrite(0, 0, 0, 0, ds);
+
+	return true;
+}
+
+void 
+Graphic::Terminate()
 {
 	_vb->Release();
 	_vs2d->Release();
@@ -1145,4 +1165,174 @@ Graphic::DeleteGraph(int handle)
 	ds->texture->Release();
 	delete(ds);
 	ds = nullptr;
+}
+
+void 
+Graphic::DrawRotaGraphProt(float x, float y, double angle, int graphHandle, bool transFlag, bool turnFlag)
+{
+	HRESULT result = S_OK;
+	DeviceDx11& dev = DeviceDx11::Instance();
+
+	DrawingStructure* ds = (DrawingStructure*)graphHandle;
+
+	Vertex2D vertex[4];
+
+	float fx = x - ds->vertex.width / 2;
+	float fy = y - ds->vertex.height / 2;
+
+	float rotaX = fx * cos(angle) - fy * sin(angle);
+	float rotaY = fx * sin(angle) - fy * cos(angle);
+
+	CrampForShader(rotaX, rotaY);
+
+	//左上
+	vertex[0].pos.x = rotaX;
+	vertex[0].pos.y = rotaY;
+	vertex[0].pos.z = 0;
+	vertex[0].uv.x = ds->vertex.luv.x;
+	vertex[0].uv.y = ds->vertex.luv.y;
+
+	fx = x + ds->vertex.width / 2;
+
+	rotaX = fx * cos(angle) - fy * sin(angle);
+	rotaY = fx * sin(angle) - fy * cos(angle);
+
+	CrampForShader(rotaX, rotaY);
+
+	//右上
+	vertex[1].pos.x = rotaX;
+	vertex[1].pos.y = rotaY;
+	vertex[1].pos.z = 0;
+	vertex[1].uv.x = ds->vertex.ruv.x;
+	vertex[1].uv.y = ds->vertex.luv.y;
+
+	fx = x - ds->vertex.width / 2;
+	fy = y + ds->vertex.height / 2;
+
+	rotaX = fx * cos(angle) - fy * sin(angle);
+	rotaY = fx * sin(angle) - fy * cos(angle);
+
+	CrampForShader(rotaX, rotaY);
+
+	//左下
+	vertex[2].pos.x = rotaX;
+	vertex[2].pos.y = rotaY;
+	vertex[2].pos.z = 0;
+	vertex[2].uv.x = ds->vertex.luv.x;
+	vertex[2].uv.y = ds->vertex.ruv.y;
+
+	fx = x + ds->vertex.width / 2;
+
+	rotaX = fx * cos(angle) - fy * sin(angle);
+	rotaY = fx * sin(angle) - fy * cos(angle);
+
+	CrampForShader(rotaX, rotaY);
+
+	//右下
+	vertex[3].pos.x = rotaX;
+	vertex[3].pos.y = rotaY;
+	vertex[3].pos.z = 0;
+	vertex[3].uv.x = ds->vertex.ruv.x;
+	vertex[3].uv.y = ds->vertex.ruv.y;
+
+	WindowControl& wc = WindowControl::Instance();
+
+	D3D11_MAPPED_SUBRESOURCE mappedsub = {};
+	result = dev.Context()->Map(_vb, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedsub);
+	memcpy(mappedsub.pData, vertex, sizeof(Vertex2D) * 4);
+	dev.Context()->Unmap(_vb, 0);
+
+	dev.Context()->IASetPrimitiveTopology((D3D11_PRIMITIVE_TOPOLOGY)ds->topology);
+	dev.Context()->VSSetShader(ds->vs, nullptr, 0);
+	dev.Context()->PSSetShader(ds->ps, nullptr, 0);
+	dev.Context()->IASetInputLayout(ds->layout);
+	dev.Context()->PSSetShaderResources(0, ds->texSlot, &ds->texture);
+	dev.Context()->IASetVertexBuffers(0, 1, &_vb, &ds->stride, &ds->offset);
+
+	dev.Context()->Draw(ds->drawNum, 0);
+}
+
+void 
+Graphic::DrawRotaGraph(float x, float y, double angle, int graphHandle, bool transFlag, bool turnFlag)
+{
+	HRESULT result = S_OK;
+	DeviceDx11& dev = DeviceDx11::Instance();
+
+	DrawingStructure* ds = (DrawingStructure*)graphHandle;
+
+	Vertex2D vertex[4];
+
+	float fx = 0 - (ds->vertex.width / 2);
+	float fy = 0 - (ds->vertex.height / 2);
+
+	float rotaX = fx * cos(angle) - fy * sin(angle) + x;
+	float rotaY = fx * sin(angle) + fy * cos(angle) + y;
+
+	CrampForShader(rotaX, rotaY);
+
+	//左上
+	vertex[0].pos.x = rotaX;
+	vertex[0].pos.y = rotaY;
+	vertex[0].pos.z = 0;
+	vertex[0].uv.x = ds->vertex.luv.x;
+	vertex[0].uv.y = ds->vertex.luv.y;
+
+	fx = 0 + (ds->vertex.width / 2);
+
+	rotaX = fx * cos(angle) - fy * sin(angle) + x;
+	rotaY = fx * sin(angle) + fy * cos(angle) + y;
+
+	CrampForShader(rotaX, rotaY);
+
+	//右上
+	vertex[1].pos.x = rotaX;
+	vertex[1].pos.y = rotaY;
+	vertex[1].pos.z = 0;
+	vertex[1].uv.x = ds->vertex.ruv.x;
+	vertex[1].uv.y = ds->vertex.luv.y;
+
+	fx = 0 - (ds->vertex.width / 2);
+	fy = 0 + (ds->vertex.height / 2);
+
+	rotaX = fx * cos(angle) - fy * sin(angle) + x;
+	rotaY = fx * sin(angle) + fy * cos(angle) + y;
+
+	CrampForShader(rotaX, rotaY);
+
+	//左下
+	vertex[2].pos.x = rotaX;
+	vertex[2].pos.y = rotaY;
+	vertex[2].pos.z = 0;
+	vertex[2].uv.x = ds->vertex.luv.x;
+	vertex[2].uv.y = ds->vertex.ruv.y;
+
+	fx = 0 + (ds->vertex.width / 2);
+
+	rotaX = fx * cos(angle) - fy * sin(angle) + x;
+	rotaY = fx * sin(angle) + fy * cos(angle) + y;
+
+	CrampForShader(rotaX, rotaY);
+
+	//右下
+	vertex[3].pos.x = rotaX;
+	vertex[3].pos.y = rotaY;
+	vertex[3].pos.z = 0;
+	vertex[3].uv.x = ds->vertex.ruv.x;
+	vertex[3].uv.y = ds->vertex.ruv.y;
+
+	WindowControl& wc = WindowControl::Instance();
+
+	D3D11_MAPPED_SUBRESOURCE mappedsub = {};
+	result = dev.Context()->Map(_vb, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedsub);
+	memcpy(mappedsub.pData, vertex, sizeof(Vertex2D) * 4);
+	dev.Context()->Unmap(_vb, 0);
+
+	dev.Context()->IASetPrimitiveTopology((D3D11_PRIMITIVE_TOPOLOGY)ds->topology);
+	dev.Context()->VSSetShader(ds->vs, nullptr, 0);
+	dev.Context()->PSSetShader(ds->ps, nullptr, 0);
+	dev.Context()->IASetInputLayout(ds->layout);
+	dev.Context()->PSSetShaderResources(0, ds->texSlot, &ds->texture);
+	dev.Context()->IASetVertexBuffers(0, 1, &_vb, &ds->stride, &ds->offset);
+
+	dev.Context()->Draw(ds->drawNum, 0);
 }

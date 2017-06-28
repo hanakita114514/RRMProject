@@ -147,6 +147,7 @@
     <ClInclude Include="GeometryGraph.h" />
     <ClInclude Include="Graphic.h" />
     <ClInclude Include="GraphList.h" />
+    <ClInclude Include="Keyboard.h" />
     <ClInclude Include="MediaControl.h" />
     <ClInclude Include="MediaPlayer.h" />
     <ClInclude Include="ReadMP3.h" />
@@ -164,6 +165,7 @@
     <ClCompile Include="GeometryGraph.cpp" />
     <ClCompile Include="Graphic.cpp" />
     <ClCompile Include="GraphList.cpp" />
+    <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="MediaControl.cpp" />
     <ClCompile Include="MediaPlayer.cpp" />
     <ClCompile Include="ReadMP3.cpp" />

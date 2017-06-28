@@ -23,9 +23,6 @@ private:
 
 	std::map<int, TexData> _texData;
 
-	Graphic();
-	Graphic(const Graphic&);
-	Graphic& operator=(const Graphic&);
 
 	//頂点バッファの生成
 	ID3D11Buffer* CreateBuffer2D(float x, float y, float width, float height);
@@ -45,13 +42,12 @@ private:
 	void CrampForShader(float& x, float& y);
 
 public:
+	Graphic();
 	~Graphic();
-	static Graphic& Instance()
-	{
-		static Graphic instance;
 
-		return instance;
-	}
+	//初期化時に呼ぶ
+	bool Init();
+	void Terminate();
 
 	//画像を読み込む
 	//戻り値 失敗　-1 成功 それ以外の数値
@@ -77,22 +73,20 @@ public:
 	// rx ry 右下座標
 	// handle 画像ハンドル
 	void DrawExtendGraph(float lx, float ly, float rx, float ry, int handle);
-	//void DrawExtendGraph(float lx, float ly, float rx, float ry, DrawingStructure ds);
 
 	// 画像の分割描画
 	void DrawRectGraph(float destX, float destY,int srcX, int srcY,
 		int width, int height, int graphHandle, bool transFlag, bool turnFlag);
 
-	//DivGraphで読み込んだ画像は使えません
-	//void DrawRectGraph(float destX, float destY, int srcX, int srcY,
-		//int width, int height, DrawingStructure ds, bool transFlag, bool turnFlag);
-
 	//画像の分割拡縮描画
 	void DrawRectExtendGraph(float destLX, float destLY, float destRX, float destRY, int srcX, int srcY,
 		int width, int height, int graphHandle, bool transFlag, bool turnFlag);
 
-	//void DrawRectExtendGraph(float destLX, float destLY, float destRX, float destRY, int srcX, int srcY,
-	//	int width, int height, DrawingStructure ds, bool transFlag, bool turnFlag);
+	//画像の回転描画
+	void DrawRotaGraphProt(float x, float y, double angle, int graphHandle, bool transFlag, bool turnFlag);
+
+	void DrawRotaGraph(float x, float y, double angle, int graphHandle, bool transFlag, bool turnFlag);
+
 
 	//画像の削除
 	void DeleteGraph(int handle);
