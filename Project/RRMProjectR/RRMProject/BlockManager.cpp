@@ -72,6 +72,7 @@ BlockManager::BlockInit(std::vector<unsigned char> buf,int mapHeight, int mapWid
 
 		}
 	}
+	int i = 0;
 }
 
 void

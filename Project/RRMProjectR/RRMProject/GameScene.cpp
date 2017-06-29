@@ -6,7 +6,7 @@
 #include "EnemyManager.h"
 #include "BulletManager.h"
 #include "EnemyFactory.h"
-#include "MapRendar.h"
+#include "MapRender.h"
 #include "Fade.h"
 #include "EffectManager.h"
 #include "BlockManager.h"
@@ -107,7 +107,7 @@ GameScene::PlayerColBlock()
 void 
 GameScene::EnemyColBlock()
 {
-	MapRendar* map = MapManager::Instance().GetMap(0);
+	MapRender* map = MapManager::Instance().GetMap(0);
 	bool hitFlag = false;
 
 	for (auto& enemy : EnemyManager::Instance().GetEnemyList())

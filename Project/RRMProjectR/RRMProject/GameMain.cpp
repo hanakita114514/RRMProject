@@ -9,7 +9,7 @@
 #include "MapManager.h"
 #include "EnemyManager.h"
 #include "Collision.h"
-#include "MapRendar.h"
+#include "MapRender.h"
 #include "EnemyFactory.h"
 #include "GameScene.h"
 #include "MenuScene.h"

@@ -3,7 +3,7 @@
 #include <string.h>
 #include <vector>
 #include <typeinfo>
-#include "MapRendar.h"
+#include "MapRender.h"
 #include "GameMain.h"
 
 class RectObj;

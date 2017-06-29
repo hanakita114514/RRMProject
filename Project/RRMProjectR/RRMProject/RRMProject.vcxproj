@@ -70,7 +70,7 @@
     <ClCompile Include="KeyConfig.cpp" />
     <ClCompile Include="Lazer.cpp" />
     <ClCompile Include="MapManager.cpp" />
-    <ClCompile Include="MapRendar.cpp" />
+    <ClCompile Include="MapRender.cpp" />
     <ClCompile Include="Meat.cpp" />
     <ClCompile Include="MenuInformation.cpp" />
     <ClCompile Include="MultihitProtect.cpp" />
@@ -159,7 +159,7 @@
     <ClInclude Include="KeyConfig.h" />
     <ClInclude Include="Lazer.h" />
     <ClInclude Include="MapManager.h" />
-    <ClInclude Include="MapRendar.h" />
+    <ClInclude Include="MapRender.h" />
     <ClInclude Include="Mathematics.h" />
     <ClInclude Include="Meat.h" />
     <ClInclude Include="MenuInformation.h" />

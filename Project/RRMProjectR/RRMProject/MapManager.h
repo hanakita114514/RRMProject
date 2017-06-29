@@ -1,7 +1,7 @@
 #pragma once
 #include "Block.h"
 #include <vector>
-#include "MapRendar.h"
+#include "MapRender.h"
 #include "BackgroundRendar.h"
 
 class EnemyFactory;
@@ -25,7 +25,7 @@ enum class Stage
 class MapManager
 {
 private:
-	MapRendar _map[(int)Stage::stageMax];
+	MapRender _map[(int)Stage::stageMax],*map;
 	BackgroundRendar _bg[(int)Stage::stageMax];
 	EnemyFactory* _fac;
 	Enemy* newEnemy;
@@ -34,14 +34,19 @@ private:
 	bool _bgErr;				//背景読み込みエラー用フラグ
 	bool createFlug;			//デバッグ用敵生成フラグ
 
+	int _checkArray[MAP_ARRAY_SIZE_Y];
+	int _checkNum;
+
 	int _stageId;				//ステージID
-	std::vector<Block*> _list;
+	std::vector<Block*> _list[(int)Stage::stageMax];
 
 
 	MapManager();
 	MapManager(const MapManager&);
 	MapManager& operator = (const MapManager&);
 
+	std::vector<unsigned char> _m[(int)Stage::stageMax];
+	FMFHEADER _header;
 
 public:
 	~MapManager();
@@ -58,11 +63,13 @@ public:
 	void Finalize();
 
 	EnemyFactory* GetEnemyFact() { return _fac; }
-	std::vector<Block*>& GetList() { return _list; }
-	MapRendar* GetMap(int id) { return &_map[id ]; }
+	std::vector<Block*>& GetList(int id) { return _list[id]; }
+	MapRender* GetMap(int id) { return &_map[id ]; }
 	int GetStageId()			{ return _stageId; }
 
 	bool StageSelect(int stageId);
 	bool NextStage();
+
+	void NormalizeArray(int idx);
 };
 
