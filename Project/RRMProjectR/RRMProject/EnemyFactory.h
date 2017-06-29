@@ -3,6 +3,20 @@
 #include "Enemy.h"
 #include <map>
 
+enum class EnemyType
+{
+	none,
+
+	egg,
+	mushroom,
+	sushi,
+	tomato,
+	hamburger,
+	meat,
+
+	num,
+};
+
 class EnemyFactory
 {
 private:

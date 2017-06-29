@@ -135,7 +135,7 @@ DInput::IsRelease(const KeyType& keyType)
 }
 
 bool 
-DInput::IsRepeat(const KeyType& keyType)
+DInput::IsRepeat(const KeyType& keyType, int intervalCnt)
 {
 	if (IsPress(keyType))
 	{
@@ -146,7 +146,7 @@ DInput::IsRepeat(const KeyType& keyType)
 		_repFrame[keyType] = 0;
 	}
 
-	if (_repFrame[keyType] > rep_interval)
+	if (_repFrame[keyType] > intervalCnt)
 	{
 		_repFrame[keyType] = 0;
 		return true;
@@ -246,13 +246,13 @@ DInput::Nosedive()
 }
 
 bool 
-DInput::Shoot()
+DInput::Shoot(int intervalCnt)
 {
 	if (IsTriger(KeyType::keyA))
 	{
 		return true;
 	}
-	if (IsRepeat(KeyType::keyA))
+	if (IsRepeat(KeyType::keyA, intervalCnt))
 	{
 		return true;
 	}

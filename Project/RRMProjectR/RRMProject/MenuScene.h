@@ -7,7 +7,8 @@
 #include "DataManager.h"
 
 #include "MenuInformation.h"
-#include "Input.h"#include <map>
+#include "Input.h"
+#include <map>
 
 class DInput;
 

@@ -91,6 +91,7 @@
     <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="Spell.cpp" />
     <ClCompile Include="StatusUI.cpp" />
+    <ClCompile Include="SushiMon.cpp" />
     <ClCompile Include="TestSpell.cpp" />
     <ClCompile Include="ThroughBlock.cpp" />
     <ClCompile Include="Timer.cpp" />
@@ -181,6 +182,7 @@
     <ClInclude Include="SoundManager.h" />
     <ClInclude Include="Spell.h" />
     <ClInclude Include="StatusUI.h" />
+    <ClInclude Include="SushiMon.h" />
     <ClInclude Include="TestSpell.h" />
     <ClInclude Include="ThroughBlock.h" />
     <ClInclude Include="Timer.h" />

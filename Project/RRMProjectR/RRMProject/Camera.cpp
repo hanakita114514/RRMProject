@@ -103,7 +103,20 @@ const CameraRect&
 Camera::GetCameraRect()
 {
 	CameraRect cameraRc = {};
-	cameraRc.lpos.x;
+
+	if (_rc.pos.x < _mapRc.pos.x)
+	{
+		_rc.pos.x = _mapRc.pos.x;
+	}
+	else if (_rc.Right() > _mapRc.Right())
+	{
+		_rc.pos.x = _mapRc.Right() - _rc.w;
+	}
+
+	cameraRc.lpos.x = _rc.pos.x;
+	cameraRc.rpos.x = _rc.Right();
+	cameraRc.lpos.y = _rc.Top();
+	cameraRc.rpos.y = _rc.Bottom();
 
 	return cameraRc;
 }

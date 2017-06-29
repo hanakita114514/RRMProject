@@ -1,4 +1,12 @@
-﻿  Camera.cpp
-c:\users\1501343\desktop\卒制\trunk\project\rrmprojectr\rrmproject\camera.cpp(108): warning C4172: ローカル変数またはテンポラリのアドレスを返します: cameraRc
+﻿  Player.cpp
+c:\users\1501343\desktop\卒制\trunk\project\rrmprojectr\rrmproject\player.cpp(22): warning C4244: '初期化中': 'float' から 'int' への変換です。データが失われる可能性があります。
+c:\users\1501343\desktop\卒制\trunk\project\rrmprojectr\rrmproject\player.cpp(27): warning C4244: '引数': 'const int' から 'float' への変換です。データが失われる可能性があります。
+c:\users\1501343\desktop\卒制\trunk\project\rrmprojectr\rrmproject\player.cpp(63): warning C4244: '引数': 'const int' から 'float' への変換です。データが失われる可能性があります。
+c:\users\1501343\desktop\卒制\trunk\project\rrmprojectr\rrmproject\player.cpp(471): warning C4244: '引数': 'int' から 'float' への変換です。データが失われる可能性があります。
+c:\users\1501343\desktop\卒制\trunk\project\rrmprojectr\rrmproject\player.cpp(477): warning C4244: '引数': 'int' から 'float' への変換です。データが失われる可能性があります。
+c:\users\1501343\desktop\卒制\trunk\project\rrmprojectr\rrmproject\player.cpp(484): warning C4244: '引数': 'int' から 'float' への変換です。データが失われる可能性があります。
+c:\users\1501343\desktop\卒制\trunk\project\rrmprojectr\rrmproject\player.cpp(489): warning C4244: '引数': 'int' から 'float' への変換です。データが失われる可能性があります。
+c:\users\1501343\desktop\卒制\trunk\project\rrmprojectr\rrmproject\player.cpp(495): warning C4244: '引数': 'int' から 'float' への変換です。データが失われる可能性があります。
+c:\users\1501343\desktop\卒制\trunk\project\rrmprojectr\rrmproject\player.cpp(499): warning C4244: '引数': 'int' から 'float' への変換です。データが失われる可能性があります。
   RRMProject.vcxproj -> C:\Users\1501343\Desktop\卒制\trunk\Project\RRMProjectR\Debug\RRMProject.exe
   RRMProject.vcxproj -> C:\Users\1501343\Desktop\卒制\trunk\Project\RRMProjectR\Debug\RRMProject.pdb (Full PDB)

@@ -28,7 +28,7 @@ public:
 	//ボタンを離したとき
 	bool IsRelease(const KeyType& inputType);
 	//ボタンのリピート
-	bool IsRepeat(const KeyType& inputType);
+	bool IsRepeat(const KeyType& keyType, int intervalCnt);
 
 	void KeySwap(const KeyType& key1, const KeyType& key2);
 
@@ -50,7 +50,7 @@ public:
 	bool Nosedive();
 
 	//攻撃
-	bool Shoot();		//遠距離攻撃
+	bool Shoot(int intervalCnt);		//遠距離攻撃
 	bool Attack();		//通常攻撃
 	bool Jump();
 	bool Digestion();	//消化

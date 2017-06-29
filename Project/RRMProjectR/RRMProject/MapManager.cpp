@@ -48,6 +48,7 @@ bool MapManager::Initialize()
 	//_mapErr = _map[1].MapLoad();
 	EnemyManager::Instance().Create(EnemyType::egg, Position(1214, 0));
 	EnemyManager::Instance().Create(EnemyType::egg, Position(300, 0));
+	EnemyManager::Instance().Create(EnemyType::sushi, Position(500, 0));
 
 	_mapErr = true;
 

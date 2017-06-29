@@ -104,7 +104,10 @@ Player::Move()
 		_vel.x = -_speed * GameTime::Instance().GetTimeScale(this);
 		_dir.x = -1;
 		_isdir = &Player::DirLeft;
-		_ps = PlayerState::walk;
+		if (_ps != PlayerState::invincible)
+		{
+			_ps = PlayerState::walk;
+		}
 	}
 	if (_input->Right())
 	{
@@ -112,7 +115,11 @@ Player::Move()
 		_vel.x = _speed * GameTime::Instance().GetTimeScale(this);
 		_dir.x = 1;
 		_isdir = &Player::DirRight;
-		_ps = PlayerState::walk;
+
+		if (_ps != PlayerState::invincible)
+		{
+			_ps = PlayerState::walk;
+		}
 	}
 	if (_input->Nosedive())
 	{
@@ -347,7 +354,7 @@ Player::AliveUpdate()
 	}
 
 	//ƒVƒ‡ƒbƒg
-	if (_input->Shoot())
+	if (_input->Shoot(5))
 	{
 		Shoot();
 	}

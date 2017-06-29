@@ -1,8 +1,6 @@
 #pragma once
 #include "Vector2.h"
 
-const unsigned int rep_interval = 15;
-
 enum class InputMode
 {
 	pad,
@@ -30,7 +28,6 @@ enum class KeyType : unsigned int
 class Input
 {
 protected:
-
 public:
 	Input();
 	~Input();
@@ -44,7 +41,7 @@ public:
 	//ボタンを離したとき
 	virtual bool IsRelease(const KeyType& keyType) = 0;
 	//ボタンのリピート
-	virtual bool IsRepeat(const KeyType& keyType) = 0;
+	virtual bool IsRepeat(const KeyType& keyType, int intervalCnt) = 0;
 
 	//操作関連　押されている時 true
 	//移動
@@ -64,7 +61,7 @@ public:
 	virtual bool Nosedive() = 0;
 
 	//攻撃
-	virtual bool Shoot() = 0;		//遠距離攻撃
+	virtual bool Shoot(int intervalCnt) = 0;		//遠距離攻撃
 	virtual bool Attack() = 0;		//通常攻撃
 	virtual bool Jump() = 0;
 	virtual bool Digestion() = 0;	//消化
