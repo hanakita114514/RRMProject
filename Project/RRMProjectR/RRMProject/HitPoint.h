@@ -13,6 +13,7 @@ public:
 
 	//‰ñ•œ
 	void Recovery(float recval);
+	void FullRecovery();
 	//ƒ_ƒ[ƒW
 	void Damage(float damage);
 

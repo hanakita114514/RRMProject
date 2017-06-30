@@ -2,7 +2,6 @@
 #include "Enemy.h"
 #include "Circle.h"
 #include "BulletManager.h"
-#include "HPBar.h"
 
 const float ANIM_SPEED = 0.5;
 
@@ -30,7 +29,6 @@ private:
 	bool ret;
 	int _freamCnt;
 
-	HPBar _hpbar;
 
 	void Jump();
 

@@ -57,7 +57,7 @@ bool GameScene::Update()
 		{
 			_player.Update();
 			MapManager::Instance().Update();
-			EnemyManager::Instance().Update(_camera);
+			EnemyManager::Instance().Update();
 			BulletManager::Instance().Update();
 			EffectManager::Instance().Update();
 		}
@@ -65,8 +65,10 @@ bool GameScene::Update()
 
 		//“–‚½‚è”»’è
 		ColProcess();
+		EnemyManager::Instance().ScreenLimit(_camera);
 	}
-		//•`‰æ--------------------------------------------------------------------
+
+	//•`‰æ--------------------------------------------------------------------
 	MapManager::Instance().Draw(_camera.GetOffset());
 	BlockManager::Instance().Draw(_camera.GetOffset());
 	EnemyManager::Instance().Draw(_camera.GetOffset());

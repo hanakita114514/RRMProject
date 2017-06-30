@@ -11,12 +11,11 @@ EnemyManager::~EnemyManager()
 	Delete();
 }
 
-void EnemyManager::Update(Camera& camera)
+void EnemyManager::Update()
 {
 	for (auto& e : _enemyList)
 	{
 		e->Update();
-		e->ScreenLimit(camera);
 	}
 
 	//íœƒ‹[ƒv
@@ -43,6 +42,15 @@ void EnemyManager::Draw(const Vector2& offset)
 	for (auto& e : _enemyList)
 	{
 		e->Draw(offset);
+	}
+}
+
+void 
+EnemyManager::ScreenLimit(Camera& camera)
+{
+	for (auto& e : _enemyList)
+	{
+		e->ScreenLimit(camera);
 	}
 }
 

@@ -22,8 +22,9 @@ public:
 		return instance;
 	}
 
-	void Update(Camera& camera);						//更新
+	void Update();						//更新
 	void Draw(const Vector2& offset);	//描画
+	void ScreenLimit(Camera& camera);
 
 	void Create(const EnemyType& et, const Position& pos);
 	void Delete();

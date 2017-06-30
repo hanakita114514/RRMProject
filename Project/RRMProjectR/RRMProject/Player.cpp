@@ -299,6 +299,7 @@ void
 Player::AttackUpdate()
 {
 	(this->*_attack)();
+	_ps = PlayerState::attack;
 }
 
 void
@@ -421,6 +422,13 @@ Player::Update()
 
 		(this->*_update)();
 	}
+	if (_ps == PlayerState::attack)
+	{
+		if (_input->Attack())
+		{
+			_addAttackFlag = true;
+		}
+	}
 	_hitStop.Update();
 
 
@@ -471,6 +479,7 @@ Player::Draw()
 		break;
 
 	case Player::PlayerState::attack:
+		RRMLib::DrawGraph((int)drawPos.x, (int)drawPos.y, _handleMap[PlayerState::attack]);
 		break;
 
 	case Player::PlayerState::shoot:
@@ -517,8 +526,8 @@ Player::GetObjType()
 void
 Player::DirRight()
 {
-	_shootPos = _rc.pos;
-	_shootPos.x += _rc.w;
+	_shootPos = _rc.Center();
+	_shootPos.x += _rc.w / 2;
 	_turnFlag = true;
 }
 
@@ -526,7 +535,8 @@ void
 Player::DirLeft()
 {
 	_turnFlag = false;
-	_shootPos = _rc.pos;
+	_shootPos = _rc.Center();
+	_shootPos.x -= _rc.w / 2;
 }
 
 void Player::Hit(Enemy* other)

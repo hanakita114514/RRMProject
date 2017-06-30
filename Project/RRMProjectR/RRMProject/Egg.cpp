@@ -7,8 +7,6 @@
 #include <math.h>
 #include "GameTime.h"
 
-const float GRAVITY = 0.75f;
-
 const float ANIM_SIZE_X = 64.0f;
 const float ANIM_SIZE_Y = 64.0f;
 
@@ -68,10 +66,7 @@ Egg::AliveUpdate()
 		_junpCnt++;
 		_shotCnt++;
 	}
-	else
-	{
-		_vel.y += GRAVITY;
-	}
+	Gravity();
 
 	(this->*_state)();
 
@@ -103,10 +98,8 @@ Egg::DamageUpdate()
 		_junpCnt++;
 		_shotCnt++;
 	}
-	else
-	{
-		_vel.y += GRAVITY;
-	}
+
+	Gravity();
 
 	_rc.pos += _vel;
 
@@ -136,7 +129,7 @@ void Egg::Draw(const Vector2& offset)
 		drawPos.x = _rc.pos.x - offset.x;
 		drawPos.y = _rc.pos.y - offset.y;
 
-		_hpbar.Draw(Position(drawPos.x + 16, drawPos.y - 16), _hp);
+		_hpbar.Draw(Position(drawPos.x + _rc.w / 4, drawPos.y - _rc.h / 4), _hp);
 		//RRMLib::DrawGraph((int)drawPos.x, (int)drawPos.y, _handle);
 		RRMLib::DrawRectGraph(drawPos.x, drawPos.y, _uv.x, _uv.y, ANIM_SIZE_X, ANIM_SIZE_Y, _handle, true, false);
 	}

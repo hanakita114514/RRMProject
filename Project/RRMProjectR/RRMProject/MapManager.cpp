@@ -11,10 +11,10 @@ const int MAP_CHIP_X_NUM_EMPTY = 16;
 
 MapData _fileName[(int)Stage::stageMax] =
 {
-	{ "Resource/data/map/map1.fmf","Resource/img/BackGround/mori.jpg" },
-	{ "Resource/data/map/map2.fmf","Resource/img/BackGround/mori.jpg" },
-	{ "Resource/data/map/map3.fmf","Resource/img/BackGround/mori.jpg" },
-	{ "Resource/data/map/map4.fmf","Resource/img/BackGround/mori.jpg" }
+	{ "Resource/data/map/map1.fmf","Resource/img/BackGround/Bg_Grassland.jpg" },
+	{ "Resource/data/map/map2.fmf","Resource/img/BackGround/Bg_Grassland.jpg" },
+	{ "Resource/data/map/map3.fmf","Resource/img/BackGround/Bg_Grassland.jpg" },
+	{ "Resource/data/map/map4.fmf","Resource/img/BackGround/Bg_Grassland.jpg" }
 };
 
 MapManager::MapManager()

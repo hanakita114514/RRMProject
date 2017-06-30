@@ -1,11 +1,14 @@
 #pragma once
 
 #include "Enemy.h"
+#include "Collision.h"
 
 class SushiMon : public Enemy
 {
 private:
+	Rect _checkRc;				//‘«Œ³Šm”F
 
+	Collision _col;
 
 	void (SushiMon::*_update)();
 
@@ -21,5 +24,7 @@ public:
 	void Update();
 	void Draw(const Vector2& offset);
 	void Anim();
+
+	EnemyType GetEnemyType();
 };
 

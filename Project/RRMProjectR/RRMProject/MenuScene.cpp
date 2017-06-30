@@ -22,7 +22,7 @@ const char* Stage[(int)Stage::stageMax] =
 
 MenuScene::MenuScene()
 {
-	_titleHandle = RRMLib::LoadGraph("Resource/img//logo/title.png");
+	_titleHandle = RRMLib::LoadGraph("Resource/img//logo/gameStart.png");
 	_update = &MenuScene::TitleUpdate;
 	_dinput = new DInput(0);
 	for (int i = 0; i < (int)(LogoIdx::logoMax); i++)
@@ -40,7 +40,7 @@ MenuScene::MenuScene()
 
 	_menuInfo.Init();
 
-	_bg = RRMLib::LoadGraph("Resource/img/BackGround/mori.jpg");
+	_bg = RRMLib::LoadGraph("Resource/img/BackGround/Bg_Grassland.jpg");
 
 	right = false;
 	left = false;

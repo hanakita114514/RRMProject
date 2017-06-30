@@ -31,6 +31,12 @@ HitPoint::Recovery(float recval)
 	}
 }
 
+void
+HitPoint::FullRecovery()
+{
+	_hp = _maxHp;
+}
+
 void 
 HitPoint::Damage(float damage)
 {
