@@ -2,7 +2,6 @@
 #include <RRMLib.h>
 #include "GameMain.h"
 #include "MapManager.h"
-#include <math.h>
 #include "EffectManager.h"
 #include "Mathematics.h"
 #include <math.h>
@@ -181,10 +180,9 @@ void Egg::Jump()
 
 void Egg::Wait()
 {
-	
 	if (_hitGround)
 	{
-		Spell* spell = _absSpell->GetSpell(SpellType::CircleShot);
+		Spell* spell = _absSpell->GetSpell(SpellType::Comet);
 		spell->Create(Vector2(-1, 0), _rc.pos, this);
 	}
 

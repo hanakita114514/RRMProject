@@ -28,7 +28,7 @@ public:
 	bool Initialize();
 	bool Initialize(FILE_INIT_TYPE type);	//ファイルのモードを指定する
 
-	bool FileRead(void* buffer, int size, int num,int seek = 0);
+	bool FileRead(void* buffer, int size, int num,int seek = 0,void* buf2 = NULL);
 	bool FileWrite(void* buffer, int size, int num);
 
 	void Finalize();

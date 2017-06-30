@@ -18,7 +18,6 @@ File::File(const char* filePath)
 
 File::~File()
 {
-	Finalize();
 }
 
 bool File::Initialize()
@@ -61,17 +60,17 @@ bool File::Initialize(FILE_INIT_TYPE type)
 
 void File::Finalize()
 {
-	fclose(_filePointer);
 }
 
 bool
-File::FileRead(void* buffer, int size, int num,int seek)
+File::FileRead(void* buffer, int size, int num,int seek,void* buf2)
 {
 	int err;
 
 	_err = fopen_s(&_filePointer, _fileName, "rb");
 	if (_err != 0)			//オープンに失敗したか？
 	{
+		fclose(_filePointer);
 		return false;
 	}
 
@@ -80,8 +79,18 @@ File::FileRead(void* buffer, int size, int num,int seek)
 	err = fread(buffer, size, num, _filePointer);
 	if (err < num)
 	{
+		fclose(_filePointer);
 		return false;
 	}
+	if (buf2 == NULL)
+	{
+		fclose(_filePointer);
+		return true;
+	}
+
+	fread(buf2, size, num, _filePointer);
+
+	fclose(_filePointer);
 	return true;
 }
 
@@ -89,10 +98,6 @@ bool
 File::FileWrite(void* buffer, int size, int num)
 {
 	_err = fopen_s(&_filePointer, _fileName, "wb");
-	if (_err != 0)			//オープンに失敗したか？
-	{
-		return false;
-	}
 
 	fseek(_filePointer, 0, SEEK_SET);
 
@@ -101,7 +106,9 @@ File::FileWrite(void* buffer, int size, int num)
 
 	if (err < num)
 	{
+		fclose(_filePointer);
 		return false;
 	}
+	fclose(_filePointer);
 	return true;
 }

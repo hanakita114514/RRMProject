@@ -7,16 +7,15 @@ enum class EnemyType
 {
 	none,
 
-	egg,
 	mushroom,
 	sushi,
+	egg,
 	tomato,
 	hamburger,
 	meat,
 
 	num,
 };
-
 class EnemyFactory
 {
 private:

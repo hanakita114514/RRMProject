@@ -76,7 +76,7 @@ Keyboard::IsRelease(const KeyType& inputType)
 
 //ボタンのリピート
 bool 
-Keyboard::IsRepeat(const KeyType& inputType, int intervalCnt)
+Keyboard::IsRepeat(const KeyType& inputType)
 {
 	if (IsPress(inputType))
 	{
@@ -87,7 +87,7 @@ Keyboard::IsRepeat(const KeyType& inputType, int intervalCnt)
 		_repFrame[inputType] = 0;
 	}
 
-	if (_repFrame[inputType] > intervalCnt)
+	if (_repFrame[inputType] > rep_interval)
 	{
 		_repFrame[inputType] = 0;
 		return true;
@@ -183,13 +183,13 @@ Keyboard::Nosedive()
 }
 
 bool 
-Keyboard::Shoot(int intervalCnt)
+Keyboard::Shoot()
 {
 	if (IsTriger(KeyType::keyA))
 	{
 		return true;
 	}
-	if (IsRepeat(KeyType::keyA, intervalCnt))
+	if (IsRepeat(KeyType::keyA))
 	{
 		return true;
 	}

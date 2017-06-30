@@ -270,6 +270,9 @@
     <ClCompile Include="Arrow.cpp">
       <Filter>ソース ファイル\UI</Filter>
     </ClCompile>
+    <ClCompile Include="HitStop.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
     <ClCompile Include="FPS.cpp">
       <Filter>ソース ファイル\UI</Filter>
     </ClCompile>
@@ -289,6 +292,9 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="ThroughBlock.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="StatusUI.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Keyboard.cpp">
@@ -319,13 +325,7 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="SushiMon.cpp">
-      <Filter>ソース ファイル\Object\Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="HitStop.cpp">
-      <Filter>ソース ファイル\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="StatusUI.cpp">
-      <Filter>ソース ファイル\UI</Filter>
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -542,6 +542,9 @@
     <ClInclude Include="Mathematics.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="HitStop.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
     <ClInclude Include="FPS.h">
       <Filter>ソース ファイル\UI</Filter>
     </ClInclude>
@@ -561,6 +564,9 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="ThroughBlock.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="StatusUI.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Keyboard.h">
@@ -591,13 +597,7 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="SushiMon.h">
-      <Filter>ソース ファイル\Object\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="HitStop.h">
-      <Filter>ソース ファイル\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="StatusUI.h">
-      <Filter>ソース ファイル\UI</Filter>
+      <Filter>ソース ファイル</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

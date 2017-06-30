@@ -25,7 +25,7 @@ enum class Stage
 class MapManager
 {
 private:
-	MapRender _map[(int)Stage::stageMax],*map;
+	MapRender *map;
 	BackgroundRendar _bg[(int)Stage::stageMax];
 	EnemyFactory* _fac;
 	Enemy* newEnemy;
@@ -46,7 +46,8 @@ private:
 	MapManager& operator = (const MapManager&);
 
 	std::vector<unsigned char> _m[(int)Stage::stageMax];
-	FMFHEADER _header;
+	std::vector<unsigned char> _enemy[(int)Stage::stageMax];
+	FMFHEADER _header[(int)Stage::stageMax];
 
 public:
 	~MapManager();
@@ -64,12 +65,13 @@ public:
 
 	EnemyFactory* GetEnemyFact() { return _fac; }
 	std::vector<Block*>& GetList(int id) { return _list[id]; }
-	MapRender* GetMap(int id) { return &_map[id ]; }
+	MapRender* GetMap(int id) { return &map[id ]; }
 	int GetStageId()			{ return _stageId; }
 
 	bool StageSelect(int stageId);
 	bool NextStage();
 
 	void NormalizeArray(int idx);
+	void EnemyCreate(int idx);
 };
 

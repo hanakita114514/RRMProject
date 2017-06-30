@@ -21,6 +21,7 @@ void EnemyManager::Update(Camera& camera)
 
 	//削除ループ
 	//不要なもの削除ループ
+	
 	std::vector<Enemy*>::iterator it = _enemyList.begin();
 	for (; it != _enemyList.end();)
 	{

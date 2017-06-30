@@ -51,7 +51,6 @@ private:
 	std::vector<unsigned char> _map;
 	std::vector<Block*> _blockList;
 
-	void NomalizeArray();			//”z—ñ‚Ì—v‘f‚Ì³‹K‰»
 	int _checkNum;
 
 public:
@@ -60,8 +59,6 @@ public:
 
 	void Initialize(const char* mapFilePath);
 
-	bool MapLoad();
-	void MapDraw(const Vector2& offset);
 
 	void MapDraw(std::vector<Block*> &block, const Vector2 &offset);
 	std::vector<std::vector<int>> GetMap() { return _mapList; }

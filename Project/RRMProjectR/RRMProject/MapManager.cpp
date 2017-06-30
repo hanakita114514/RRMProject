@@ -2,15 +2,12 @@
 #include "BackgroundRendar.h"
 #include "EnemyFactory.h"
 #include "EnemyManager.h"
-#include "GameMain.h"
 #include "Enemy.h"
-#include "Collision.h"
-#include "Player.h"
-#include "EnemyManager.h"
 #include "File.h"
 #include "BlockManager.h"
 
 const int MAP_CHIP_X_NUM = 8;
+const int MAP_CHIP_X_NUM_EMPTY = 16;
 
 MapData _fileName[(int)Stage::stageMax] =
 {
@@ -37,35 +34,33 @@ MapManager::MapManager()
 	{
 		_checkArray[i] = MAP_IMAGE_X_NUM * i;
 	}
-}
-
-MapManager::~MapManager()
-{
-}
-
-bool MapManager::Initialize()
-{
-	//_mapErr = _map[1].MapLoad();
-	EnemyManager::Instance().Create(EnemyType::egg, Position(1214, 0));
-	EnemyManager::Instance().Create(EnemyType::egg, Position(300, 0));
-	EnemyManager::Instance().Create(EnemyType::sushi, Position(500, 0));
-
-	_mapErr = true;
 
 	for (int i = 0; i < (int)Stage::stageMax; i++)
 	{
 		File* file = new File(_fileName[i].mapName);
-		file->FileRead(&_header, sizeof(_header), 1);
-		_m[i].resize(_header.dwHeight * _header.dwWidth);
-		file->FileRead(&_m[i][0], _m[i].size(), 1,sizeof(_header));
+		file->FileRead(&_header[i], sizeof(_header), 1);
+		_m[i].resize(_header[i].dwHeight * _header[i].dwWidth);
+		_enemy[i].resize(_header[i].dwHeight * _header[i].dwWidth);
+		file->FileRead(&_m[i][0], _m[i].size(), 1, sizeof(_header[i]),&_enemy[i][0]);
 
 		NormalizeArray(i);
-
-		file->Finalize();
 	}
+}
 
-	BlockManager::Instance().BlockInit(_m[_stageId], _header.dwHeight, _header.dwWidth);
+MapManager::~MapManager()
+{
+	delete map;
+}
+
+bool MapManager::Initialize()
+{
+	/*EnemyManager::Instance().Create(EnemyType::egg, Position(1214, 0));
+	EnemyManager::Instance().Create(EnemyType::egg, Position(300, 0));	
+	EnemyManager::Instance().Create(EnemyType::sushi, Position(640, 0));*/
+
+	BlockManager::Instance().BlockInit(_m[_stageId], _header[_stageId].dwHeight, _header[_stageId].dwWidth);
 	_list[_stageId] = BlockManager::Instance().GetBlockList();
+	EnemyCreate(_stageId);
 
 	if (!_mapErr|| !_bgErr)	//ƒ}ƒbƒv‚à‚µ‚­‚Í”wŒi‚ÅŽ¸”s‚µ‚½‚©H
 	{
@@ -81,15 +76,12 @@ void MapManager::Finalize()
 
 void MapManager::Update()
 {
-	//_list = _map[1].GetBlockList();
 }
 
 void MapManager::Draw(const Vector2& offset)
 {
 	_bg[_stageId].Draw();
-	map->MapDraw(_list[_stageId], offset);
 }
-
 
 bool
 MapManager::StageSelect(int stageId)
@@ -100,7 +92,8 @@ MapManager::StageSelect(int stageId)
 	{
 		return false;
 	}
-	 _map[_stageId];
+	BlockManager::Instance().BlockInit(_m[_stageId], _header[stageId].dwHeight, _header[stageId].dwWidth);
+	_list[_stageId] = BlockManager::Instance().GetBlockList();
 
 	 return true;
 }
@@ -114,7 +107,8 @@ MapManager::NextStage()
 	{
 		return false;
 	}
-	_map[_stageId];
+	BlockManager::Instance().BlockInit(_m[_stageId], _header[_stageId].dwHeight, _header[_stageId].dwWidth);
+	_list[_stageId] = BlockManager::Instance().GetBlockList();
 
 	return true;
 }
@@ -123,10 +117,70 @@ void MapManager::NormalizeArray(int idx)
 	unsigned int  y, x;
 	y = x = 0;
 
-	for (y; y < _header.dwHeight * _header.dwWidth; ++y)
+	for (y; y < _header[idx].dwHeight * _header[idx].dwWidth; ++y)
 	{
-		_checkNum = _m[idx][y] / MAP_CHIP_X_NUM;
-		_m[idx][y] = (int)(_m[idx][y] - _checkArray[_checkNum]);
+		if (_m[idx][y] == '0')
+		{
+			continue;
+		}
+		_checkNum = (int)(_m[idx][y]) / MAP_CHIP_X_NUM_EMPTY;
+		_m[idx][y] = (int)(_m[idx][y]) - _checkArray[_checkNum];
 	}
 }
 
+void
+MapManager::EnemyCreate(int idx)
+{
+	EnemyType type;
+	Vector2 enemySize = {};
+
+	for (int i = 0; i < _header[idx].dwHeight * _header[idx].dwWidth; ++i)
+	{
+		switch (_enemy[idx][i])
+		{
+		case (int)EnemyType::egg:
+		{
+			type = EnemyType::egg;
+			enemySize = Vector2(64, 64);
+			break;
+		}
+		case (int)EnemyType::mushroom:
+		{
+			type = EnemyType::mushroom;
+			enemySize = Vector2(64, 64);
+			break;
+		}
+		case (int)EnemyType::meat:
+		{
+			/*type = EnemyType::meat;
+			enemySize = Vector2(64, 32);
+			break;*/
+			continue;
+		}
+		case (int)EnemyType::sushi:
+		{
+			type = EnemyType::sushi;
+			enemySize = Vector2(64, 32);
+			break;
+		}
+		case (int)EnemyType::tomato:
+		{
+			type = EnemyType::tomato;
+			enemySize = Vector2(64, 64);
+			break;
+		}
+		case (int)EnemyType::hamburger:
+		{
+			type = EnemyType::hamburger;
+			enemySize = Vector2(64, 64);
+			break;
+		}
+		default:
+		{
+			continue;
+		}
+		}
+		EnemyManager::Instance().Create(type, Vector2(i % _header[idx].dwWidth  / 2 * enemySize.x,
+							i / _header[idx].dwWidth / 2 * enemySize.y));
+	}
+}
