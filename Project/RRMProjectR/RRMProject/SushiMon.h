@@ -6,13 +6,15 @@
 class SushiMon : public Enemy
 {
 private:
-	Rect _checkRc;				//‘«Œ³Šm”F
-
 	Collision _col;
+
+	float _warryTime;
 
 	void (SushiMon::*_update)();
 
 	void AliveUpdate();
+	void WorryUpdate();
+	void FallUpdate();
 	void DyingUpdate();
 	void DamageUpdate();
 public:

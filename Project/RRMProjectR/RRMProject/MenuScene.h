@@ -10,7 +10,7 @@
 #include "Input.h"
 #include <map>
 
-class DInput;
+class Input;
 
 //ƒƒSî•ñŠi”[—p\‘¢‘Ì
 class MenuScene : public Scene
@@ -45,7 +45,7 @@ private:
 
 	Arrow _arrow;				//–îˆó
 	Logo _logo[(int)(LogoIdx::logoMax)];			//ƒƒS‚Ì‰æ‘œƒnƒ“ƒhƒ‹
-	DInput* _dinput;
+	Input* _input;
 	Vector2 _logoDefaultPos[(int)(LogoIdx::logoMax)];
 	Vector2 _velocity;								//–îˆó‚ÌˆÚ“®—Ê
 	EquipmentInfometion _data;

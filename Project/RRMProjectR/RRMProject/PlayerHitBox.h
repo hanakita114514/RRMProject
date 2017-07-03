@@ -16,6 +16,9 @@ public:
 
 	void FirstAttack(float frame, const Rect& rc, const Vector2& dir);
 	void SecondAttack(float frame, const Rect& rc, const Vector2& dir);
+	void ThirdAttack(float frame, const Rect&rc, const Vector2& dir);
+
+	void UpAttack(float frame, const Rect& rc, const Vector2& dir);
 
 	//当たり判定の描画(デバッグ用)
 	void Draw();

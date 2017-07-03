@@ -76,7 +76,7 @@ Keyboard::IsRelease(const KeyType& inputType)
 
 //ボタンのリピート
 bool 
-Keyboard::IsRepeat(const KeyType& inputType)
+Keyboard::IsRepeat(const KeyType& inputType, int repCnt)
 {
 	if (IsPress(inputType))
 	{
@@ -183,13 +183,13 @@ Keyboard::Nosedive()
 }
 
 bool 
-Keyboard::Shoot()
+Keyboard::Shoot(int repCnt)
 {
 	if (IsTriger(KeyType::keyA))
 	{
 		return true;
 	}
-	if (IsRepeat(KeyType::keyA))
+	if (IsRepeat(KeyType::keyA, repCnt))
 	{
 		return true;
 	}
@@ -205,6 +205,21 @@ Keyboard::Attack()
 		return true;
 	}
 	return false;
+}
+
+bool 
+Keyboard::UpAttack()
+{
+	if (!Up())
+	{
+		return false;
+	}
+	if (!Attack())
+	{
+		return false;
+	}
+
+	return true;
 }
 
 bool 

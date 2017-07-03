@@ -1,5 +1,4 @@
 #include "MenuScene.h"
-#include "DInput.h"
 #include "Fade.h"
 #include "GameMain.h"
 #include "GameScene.h"
@@ -10,6 +9,7 @@
 #include "Mathematics.h"
 #include <RRMLib.h>
 #include "SceneManager.h"
+#include "InputFactory.h"
 
 
 const char* Stage[(int)Stage::stageMax] = 
@@ -24,7 +24,8 @@ MenuScene::MenuScene()
 {
 	_titleHandle = RRMLib::LoadGraph("Resource/img//logo/gameStart.png");
 	_update = &MenuScene::TitleUpdate;
-	_dinput = new DInput(0);
+	_input = InputFactory::Create(InputMode::pad, 0);
+
 	for (int i = 0; i < (int)(LogoIdx::logoMax); i++)
 	{
 		_logo[i].image = RRMLib::LoadGraph("Resource/img/UI/Arrow_Smile.png");
@@ -62,14 +63,14 @@ MenuScene::MenuScene()
 
 MenuScene::~MenuScene()
 {
-	delete _dinput;
+	delete _input;
 }
 
 void 
 MenuScene::TitleUpdate()
 {
 	RRMLib::DrawExtendGraph(340, 260, 940, 460, _titleHandle);
-	if (_dinput->Start())
+	if (_input->Start())
 	{
 		Fade::Instance().FadeIn(5.0f);
 	}
@@ -89,7 +90,7 @@ MenuScene::MenuUpdate()
 		DownMove();
 
 		//Bボタン（決定ボタン）がおされたのなら---------------------------------------
-		if (_dinput->IsTriger(KeyType::keyB))
+		if (_input->IsTriger(KeyType::keyB))
 		{
 			switch (_logoIdx)
 			{
@@ -118,7 +119,7 @@ MenuScene::MenuUpdate()
 		_arrow.Draw();
 		for (int i = 0; i < (int)(LogoIdx::logoMax); i++)
 		{
-			RRMLib::DrawGraph((int)_logo[i].rc.pos.x, (int)_logo[i].rc.pos.y, _logo[i].image);
+			RRMLib::DrawGraph(_logo[i].rc.pos.x, _logo[i].rc.pos.y, _logo[i].image);
 		}
 		LogoMove();
 	}
@@ -146,7 +147,7 @@ MenuScene::GameStart()
 			_arrow.SetPos(_logoDefaultPos[_logoIdx]);
 			_menuInfo.Reduction(50);
 		}
-		else if (_dinput->IsTriger(KeyType::keyB))
+		else if (_input->IsTriger(KeyType::keyB))
 		{
 			switch (_logoIdx)
 			{
@@ -173,7 +174,7 @@ MenuScene::GameStart()
 
 		for (int i = 0; i < (int)(LogoIdx::logoMax); i++)
 		{
-			RRMLib::DrawGraph((int)_logo[i].rc.pos.x, (int)_logo[i].rc.pos.y, _logo[i].image);
+			RRMLib::DrawGraph(_logo[i].rc.pos.x, _logo[i].rc.pos.y, _logo[i].image);
 		}
 	}
 
@@ -196,7 +197,7 @@ MenuScene::StageSelect()
 
 	if (_menuInfo.IsWait())
 	{
-		if (_dinput->IsTriger(KeyType::keyB))
+		if (_input->IsTriger(KeyType::keyB))
 		{
 			Fade::Instance().FadeIn(10.0);
 		}
@@ -236,7 +237,7 @@ MenuScene::Configuration()
 
 		for (int i = 0; i < (int)(LogoIdx::logoMax); i++)
 		{
-			RRMLib::DrawGraph((int)_logo[i].rc.pos.x, (int)_logo[i].rc.pos.y, _logo[i].image);
+			RRMLib::DrawGraph(_logo[i].rc.pos.x, _logo[i].rc.pos.y, _logo[i].image);
 		}
 	}
 }
@@ -300,7 +301,7 @@ MenuScene::ImageShaker(Rect& rect)
 
 bool MenuScene::Update()
 {
-	_dinput->Update();
+	_input->Update();
 
 	Draw();
 	_menuInfo.Update();
@@ -313,7 +314,7 @@ bool
 MenuScene::IsStickRight()
 {
 	prevRight = right;
-	right = _dinput->Right();
+	right = _input->Right();
 
 	if (right & (right ^ prevRight))
 	{
@@ -327,7 +328,7 @@ bool
 MenuScene::IsStickLeft()
 {
 	prevLeft = left;
-	left = _dinput->Left();
+	left = _input->Left();
 
 	if (left & (left ^ prevLeft))
 	{
@@ -340,7 +341,7 @@ bool
 MenuScene::IsStickUp()
 {
 	prevUp = up;
-	up = _dinput->Up();
+	up = _input->Up();
 
 	if (up & (up ^ prevUp))
 	{
@@ -353,7 +354,7 @@ bool
 MenuScene::IsStickDown()
 {
 	prevDown = down;
-	down = _dinput->Down();
+	down = _input->Down();
 
 	if (down & (down ^ prevDown))
 	{
@@ -392,7 +393,7 @@ MenuScene::DownMove()
 bool 
 MenuScene::Exit()
 {
-	if (_dinput->IsTriger(KeyType::keyA))
+	if (_input->IsTriger(KeyType::keyA))
 	{
 		_logoIdx = 0;
 		return true;

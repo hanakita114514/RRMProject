@@ -81,6 +81,7 @@ private:
 	void(Player::*_attack)();
 	void FirstAttack();
 	void SecondAttack();
+	void ThirdAttack();
 	void UpAttack();
 	void DonwAttack();
 

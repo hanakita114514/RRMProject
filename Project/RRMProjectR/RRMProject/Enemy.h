@@ -8,6 +8,7 @@
 #include "Camera.h"
 #include "HPBar.h"
 #include "HitBox.h"
+#include "EnemyHitBox.h"
 
 enum class EnemyType
 {
@@ -46,7 +47,8 @@ protected:
 	bool _isDamage;			//ダメージ喰らってる状態か？
 	float _animFrame;		//アニメーション用フレーム
 
-	HitBox _hitBox;			//攻撃判定
+	EnemyHitBox* _hitBox;
+	bool _footCheck;			//足元確認
 private:
 
 public:
@@ -77,6 +79,8 @@ public:
 
 	bool IsHit() { return _hitGround; }
 
-	HitBox& GetHitBox() { return _hitBox; }
+	EnemyHitBox*& GetHitBox() { return _hitBox; }
+
+	void SetFootHit(bool flag);
 };
 

@@ -5,13 +5,14 @@
 #include <math.h>
 #include "GameTime.h"
 
-static const double GRAVITY = 0.75f;
+static const float GRAVITY = 0.75f;
 
 Enemy::Enemy() : _hp(50.0f), _friction(0.2)
 {
 	_absSpell = new AbstractSpell();
 	_hitGround = false;
 	_isDamage = false;
+	_hitBox = nullptr;
 }
 
 
@@ -39,12 +40,16 @@ if (_rc.pos.x < camera.GetCameraRect().lpos.x)
 		_rc.pos.x = camera.GetCameraRect().lpos.x;
 		_vel.x *= -1;
 		_dir.x *= -1;
+		HitStop(5);
+		camera.Quake(Vector2(5, 0));
 	}
 	if (_rc.Right() > camera.GetCameraRect().rpos.x)
 	{
 		_rc.pos.x = camera.GetCameraRect().rpos.x - _rc.w;
 		_vel.x *= -1;
 		_dir.x *= -1;
+		HitStop(5);
+		camera.Quake(Vector2(5, 0));
 	}
 	if (_rc.Top() > camera.GetMapSize().pos.y + camera.GetMapSize().h)
 	{
@@ -66,10 +71,6 @@ Enemy::Gravity()
 void
 Enemy::Hit(Block* other)
 {
-	//_rc.SetBottom(other->GetRect().Top());
-	//_hitGround = true;
-	//_vel.y = 0;
-
 	float lenX = fabs(_rc.pos.x - other->GetRect().pos.x);
 	float lenY = fabs(_rc.pos.y - other->GetRect().pos.y);
 
@@ -103,6 +104,7 @@ Enemy::Hit(Block* other)
 				_rc.SetRight(other->GetRect().Left());
 				_vel.x *= -1;
 				_dir.x *= -1;
+				HitStop(5);
 			}
 		}
 		else				//¶ˆÚ“®
@@ -112,6 +114,7 @@ Enemy::Hit(Block* other)
 				_rc.SetLeft(other->GetRect().Right());
 				_vel.x *= -1;
 				_dir.x *= -1;
+				HitStop(5);
 			}
 		}
 	}
@@ -128,7 +131,7 @@ Enemy::Hit(Bullet* other)
 {
 	if (other->GetObjType() == ObjectType::player)
 	{
-		_hp.Damage((int)other->GetPower());
+		_hp.Damage(other->GetPower());
 	}
 
 }
@@ -168,4 +171,10 @@ EnemyType
 Enemy::GetEnemyType()
 {
 	return EnemyType::none;
+}
+
+void
+Enemy::SetFootHit(bool flag)
+{
+	_footCheck = flag;
 }

@@ -48,6 +48,7 @@
     <ClCompile Include="Egg.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyFactory.cpp" />
+    <ClCompile Include="EnemyHitBox.cpp" />
     <ClCompile Include="EnemyManager.cpp" />
     <ClCompile Include="Fade.cpp" />
     <ClCompile Include="File.cpp" />
@@ -92,6 +93,7 @@
     <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="Spell.cpp" />
     <ClCompile Include="StatusUI.cpp" />
+    <ClCompile Include="SushiHitBox.cpp" />
     <ClCompile Include="SushiMon.cpp" />
     <ClCompile Include="TestSpell.cpp" />
     <ClCompile Include="ThroughBlock.cpp" />
@@ -139,6 +141,7 @@
     <ClInclude Include="Egg.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyFactory.h" />
+    <ClInclude Include="EnemyHitBox.h" />
     <ClInclude Include="EnemyManager.h" />
     <ClInclude Include="Fade.h" />
     <ClInclude Include="File.h" />
@@ -184,6 +187,7 @@
     <ClInclude Include="SoundManager.h" />
     <ClInclude Include="Spell.h" />
     <ClInclude Include="StatusUI.h" />
+    <ClInclude Include="SushiHitBox.h" />
     <ClInclude Include="SushiMon.h" />
     <ClInclude Include="TestSpell.h" />
     <ClInclude Include="ThroughBlock.h" />

@@ -2,6 +2,7 @@
 #include <RRMLib.h>
 #include "GameTime.h"
 #include "EffectManager.h"
+#include "SushiHitBox.h"
 
 static const int MAX_HP = 200;
 
@@ -20,15 +21,21 @@ SushiMon::SushiMon(int handle , const Position& pos)
 
 	_dir = Vector2(-1, 0);
 	_uv = Vector2(0, 0);
+	_vel.x = _dir.x * 2;
 
-	_update = &SushiMon::AliveUpdate;
+	_update = &SushiMon::FallUpdate;
 
 	_animFrame = 0;
+
+	_hitBox = new SushiHitBox();
+	_footCheck = true;
+	_warryTime = 0.0f;
 }
 
 
 SushiMon::~SushiMon()
 {
+	delete _hitBox;
 }
 
 void 
@@ -42,8 +49,17 @@ SushiMon::AliveUpdate()
 {
 	Gravity();
 	_rc.pos += _vel;
+	_hitBox->Foot(0, _rc, _dir);
 
-	DistanceAttenuation();
+	if (!_footCheck)
+	{
+		_update = &SushiMon::WorryUpdate;
+		_warryTime = 10;
+	}
+	if (_isDamage)
+	{
+		_update = &SushiMon::DamageUpdate;
+	}
 
 	if (_hp.GetHitPoint() <= 0)
 	{
@@ -60,9 +76,44 @@ SushiMon::DyingUpdate()
 }
 
 void 
+SushiMon::WorryUpdate()
+{
+	--_warryTime;
+
+	if (_warryTime <= 0)
+	{
+		_update = &SushiMon::FallUpdate;
+		_vel.y = -15;
+		_vel.x = _dir.x * 8;
+	}
+}
+
+void 
+SushiMon::FallUpdate()
+{
+	Gravity();
+	_rc.pos += _vel;
+	if (_hitGround)
+	{
+		_update = &SushiMon::AliveUpdate;
+		_footCheck = true;
+	}
+}
+
+void 
 SushiMon::DamageUpdate()
 {
+	Gravity();
+	_rc.pos += _vel;
 
+	DistanceAttenuation();
+
+	if (_vel.x == 0)
+	{
+		_isDamage = false;
+		_update = &SushiMon::AliveUpdate;
+		_vel.x = _dir.x * 2;
+	}
 }
 
 void 
@@ -81,6 +132,11 @@ SushiMon::Draw(const Vector2& offset)
 
 	RRMLib::DrawRectGraph(drawPos.x, drawPos.y, _uv.x, _uv.y, _rc.w, _rc.h, _handle, true, _dir.x > 0);
 	_hpbar.Draw(Vector2(drawPos.x + _rc.w / 4, drawPos.y - _rc.h / 4), _hp);
+
+	for (auto& s : _hitBox->GetSearchRects())
+	{
+		s.DrawBox();
+	}
 }
 
 void 
@@ -97,4 +153,10 @@ SushiMon::Anim()
 	int idx = (int)(_animFrame * 0.1f) % IMG_MAX;
 
 	_uv = uv[idx];
+}
+
+EnemyType 
+SushiMon::GetEnemyType()
+{
+	return EnemyType::sushi;
 }

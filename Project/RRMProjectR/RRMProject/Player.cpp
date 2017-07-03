@@ -70,7 +70,7 @@ Player::Player(int padType, Camera& camera, InputMode mode)
 
 	_addAttackFlag = false;
 
-	_input = InputFactory::Create(InputMode::pad, padType);
+	_input = InputFactory::Create(mode, padType);
 }
 
 
@@ -262,6 +262,36 @@ Player::SecondAttack()
 
 	--_attackTime;
 
+	if (_input->Attack())
+	{
+		_addAttackFlag = true;
+	}
+
+	if (_attackTime <= 0)
+	{
+		if (_addAttackFlag)
+		{
+			_update = &Player::ThirdAttack;
+			_attackTime = 30;
+		}
+		else
+		{
+			_update = &Player::AliveUpdate;
+		}
+		_hitBox.Clear();
+		_mhp.Clear();
+		_addAttackFlag = false;
+	}
+
+}
+
+void 
+Player::ThirdAttack()
+{
+	_hitBox.ThirdAttack(_attackTime, _rc, _dir);
+
+	--_attackTime;
+
 
 	if (_attackTime <= 0)
 	{
@@ -270,12 +300,27 @@ Player::SecondAttack()
 		_mhp.Clear();
 		_addAttackFlag = false;
 	}
-
 }
+
 void 
 Player::UpAttack()
 {
+	_hitBox.UpAttack(_attackTime, _rc, _dir);
 
+	_rc.pos += _vel;
+
+	HitGround();
+
+	--_attackTime;
+
+
+	if (_attackTime <= 0)
+	{
+		_update = &Player::AliveUpdate;
+		_hitBox.Clear();
+		_mhp.Clear();
+		_addAttackFlag = false;
+	}
 }
 
 void 
@@ -301,6 +346,15 @@ Player::AliveUpdate()
 	Move();
 	Jump();
 	(this->*_isdir)();
+
+	if (_input->UpAttack() && _hitGround)
+	{
+		_update = &Player::AttackUpdate;
+		_attack = &Player::UpAttack;
+		_vel.y = -10.0f;
+		_attackTime = 10.f;
+		return;
+	}
 	
 	if (_input->Attack())
 	{
@@ -326,9 +380,7 @@ Player::AliveUpdate()
 			return;
 		}
 
-		//_sd.SlowMotion(60.0f);
 	}
-
 	//パリィ
 	if (_input->Parry())
 	{
@@ -337,7 +389,7 @@ Player::AliveUpdate()
 	}
 
 	//ショット
-	if (_input->Shoot())
+	if (_input->Shoot(3))
 	{
 		Shoot();
 	}
@@ -458,36 +510,36 @@ Player::Draw()
 		break;
 
 	case Player::PlayerState::neutral:
-		RRMLib::DrawGraph((int)drawPos.x, (int)drawPos.y, _handleMap[PlayerState::neutral]);
+		RRMLib::DrawGraph(drawPos.x, drawPos.y, _handleMap[PlayerState::neutral]);
 		//RRMLib::DrawRectGraph(drawPos.x, drawPos.y, ((_animFrame / 6) % 4) * 144, 0, 144, 96, _handleMap[PlayerState::neutral], true, _turnFlag);
 		break;
 
 	case Player::PlayerState::walk:
 		//RRMLib::DrawRectGraph(drawPos.x, drawPos.y, ((_animFrame / 6) % 4) * 144, 96 * 2, 144, 96, _handleMap[PlayerState::neutral], true, _turnFlag);
-		RRMLib::DrawGraph((int)drawPos.x, (int)drawPos.y, _handleMap[PlayerState::neutral]);
+		RRMLib::DrawGraph(drawPos.x, drawPos.y, _handleMap[PlayerState::neutral]);
 		break;
 
 	case Player::PlayerState::attack:
-		RRMLib::DrawGraph((int)drawPos.x, (int)drawPos.y, _handleMap[PlayerState::attack]);
+		RRMLib::DrawGraph(drawPos.x, drawPos.y, _handleMap[PlayerState::attack]);
 		break;
 
 	case Player::PlayerState::shoot:
-		RRMLib::DrawGraph((int)drawPos.x, (int)drawPos.y, _handleMap[PlayerState::attack]);
+		RRMLib::DrawGraph(drawPos.x, drawPos.y, _handleMap[PlayerState::attack]);
 		break;
 
 	case Player::PlayerState::avoidance:
 		//RRMLib::DrawRectGraph(drawPos.x, drawPos.y, ((_animFrame / 6) % 4) * 144, 96 * 1, 144, 96, _handleMap[PlayerState::avoidance], true, _turnFlag);
-		RRMLib::DrawGraph((int)drawPos.x, (int)drawPos.y, _handleMap[PlayerState::avoidance]);
+		RRMLib::DrawGraph(drawPos.x, drawPos.y, _handleMap[PlayerState::avoidance]);
 		break;
 
 	case Player::PlayerState::invincible:
 		if (((int)_invincibleTime / 3) % 2 == 0)
 		{
-			RRMLib::DrawGraph((int)drawPos.x, (int)drawPos.y, _handleMap[PlayerState::neutral]);
+			RRMLib::DrawGraph(drawPos.x, drawPos.y, _handleMap[PlayerState::neutral]);
 		}
 		break;
 	case Player::PlayerState::damage:
-		RRMLib::DrawGraph((int)drawPos.x, (int)drawPos.y, _handleMap[PlayerState::neutral]);
+		RRMLib::DrawGraph(drawPos.x, drawPos.y, _handleMap[PlayerState::neutral]);
 		break;
 	case Player::PlayerState::jump:
 		RRMLib::DrawRectGraph(drawPos.x, drawPos.y, ((_animFrame / 6) % 4) * 144, 96 * 1, 144, 96, _handleMap[PlayerState::neutral], true, _turnFlag);
@@ -530,52 +582,7 @@ Player::DirLeft()
 
 void Player::Hit(Enemy* other)
 {
-	float lenX = fabs(_rc.pos.x - other->GetRect().pos.x);
-	float lenY = fabs(_rc.pos.y - other->GetRect().pos.y);
 
-	//if (_ps != PlayerState::avoidance) // 回避中ではなかったら処理をする
-	//{
-	//	if (lenX < lenY) // Y軸に押し戻す
-	//	{
-	//		if (_vel.y > 0)		//落下している場合
-	//		{
-	//			if (_rc.pos.y < other->GetRect().pos.y && !_hitGround)
-	//			{
-	//				_rc.SetBottom(other->GetRect().Top());
-	//				_hitGround = true;
-	//				_vel.y = 0;
-	//			}
-	//		}
-	//		else				//飛んでいる場合
-	//		{
-	//			if (_rc.pos.y > other->GetRect().pos.y)
-	//			{
-	//				_rc.SetTop(other->GetRect().Bottom());
-	//				_vel.y = 0;
-	//			}
-	//		}
-	//	}
-
-	//	if (lenY < lenX)	//X軸に押し戻す
-	//	{
-	//		if (_dir.x == 1)		//右移動
-	//		{
-	//			if (_rc.pos.x < other->GetRect().pos.x)
-	//			{
-	//				_rc.SetRight(other->GetRect().Left());
-	//				_vel.x = 0;
-	//			}
-	//		}
-	//		else				//左移動
-	//		{
-	//			if (_rc.pos.x > other->GetRect().pos.x)
-	//			{
-	//				_rc.SetLeft(other->GetRect().Right());
-	//				_vel.x = 0;
-	//			}
-	//		}
-	//	}
-	//}
 }
 
 void Player::Hit(Block* other)

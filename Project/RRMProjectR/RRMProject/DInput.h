@@ -42,7 +42,7 @@ public:
 	//ボタンを離したとき
 	bool IsRelease(const KeyType& keyType);
 	//ボタンのリピート
-	bool IsRepeat(const KeyType& keyType);
+	bool IsRepeat(const KeyType& keyType, int repCnt);
 
 
 	//操作関連　押されている時 true
@@ -63,8 +63,11 @@ public:
 	bool Nosedive();
 
 	//攻撃
-	bool Shoot();		//遠距離攻撃
+	bool Shoot(int repCnt);	//遠距離攻撃
+
 	bool Attack();		//通常攻撃
+	bool UpAttack();
+
 	bool Jump();
 	bool Digestion();	//消化
 

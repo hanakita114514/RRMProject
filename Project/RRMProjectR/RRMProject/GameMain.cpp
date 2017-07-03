@@ -67,7 +67,7 @@ InputTest(DInput& input)
 	{
 		DxLib::DrawFormatString(0, 0, 0xffffffff, "UŒ‚");
 	}
-	if (input.Shoot())
+	if (input.Shoot(3))
 	{
 		DxLib::DrawFormatString(0, 15, 0xffffffff, "‰““Š");
 	}

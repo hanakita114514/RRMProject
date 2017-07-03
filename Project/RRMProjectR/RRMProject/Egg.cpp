@@ -38,7 +38,6 @@ Egg::Egg(int handle, const Position& pos)
 
 	_isAlive = true;
 
-	srand(time(NULL));
 }
 
 Egg::~Egg()
@@ -118,7 +117,11 @@ Egg::DyingUpdate()
 
 void Egg::Update()
 {
-	(this->*_update)();
+	if (!_hitStop.IsHitStop())
+	{
+		(this->*_update)();
+	}
+	_hitStop.Update();
 }
 
 void Egg::Draw(const Vector2& offset)

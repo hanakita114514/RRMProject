@@ -109,11 +109,13 @@ GameScene::PlayerColBlock()
 void 
 GameScene::EnemyColBlock()
 {
-	MapRender* map = MapManager::Instance().GetMap(0);
 	bool hitFlag = false;
+
 
 	for (auto& enemy : EnemyManager::Instance().GetEnemyList())
 	{
+		enemy->SetHitGround(false);
+
 		for (auto& block : BlockManager::Instance().GetBlockList())
 		{
 			Rect r = {};
@@ -122,14 +124,28 @@ GameScene::EnemyColBlock()
 			if (hitFlag == true)
 			{
 				enemy->Hit(block);
-				break;
 			}
 		}
-		if (hitFlag == false)
-		{
-			enemy->SetHitGround(false);
-		}
+	}
 
+	//’n–Ê’T‚µ
+	for (auto& enemy : EnemyManager::Instance().GetEnemyList())
+	{
+		if (enemy->GetHitBox() == nullptr)
+		{
+			continue;
+		}
+		enemy->SetFootHit(false);
+		for (auto& block : BlockManager::Instance().GetBlockList())
+		{
+			for (auto& searchRc : enemy->GetHitBox()->GetSearchRects())
+			{
+				if (_col->IsHit(searchRc, block->GetRect()))
+				{
+					enemy->SetFootHit(true);
+				}
+			}
+		}
 	}
 }
 
