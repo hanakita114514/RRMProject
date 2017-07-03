@@ -10,8 +10,7 @@
 #include "GameTime.h"
 #include "Enemy.h"
 #include "EffectManager.h"
-#include "DInput.h"
-#include "Keyboard.h"
+#include "InputFactory.h"
 
 const float GRAVITY = 0.75f;
 const float jump_power = 20;
@@ -71,17 +70,7 @@ Player::Player(int padType, Camera& camera, InputMode mode)
 
 	_addAttackFlag = false;
 
-	switch (mode)
-	{
-	case InputMode::pad:
-		_input = new DInput(padType);
-		break;
-	case InputMode::keyboard:
-		_input = new Keyboard();
-		break;
-	default:
-		break;
-	}
+	_input = InputFactory::Create(InputMode::pad, padType);
 }
 
 

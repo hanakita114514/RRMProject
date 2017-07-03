@@ -66,6 +66,7 @@
     <ClCompile Include="HomingBullet.cpp" />
     <ClCompile Include="HPBar.cpp" />
     <ClCompile Include="Input.cpp" />
+    <ClCompile Include="InputFactory.cpp" />
     <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="KeyConfig.cpp" />
     <ClCompile Include="Lazer.cpp" />
@@ -156,6 +157,7 @@
     <ClInclude Include="HomingBullet.h" />
     <ClInclude Include="HPBar.h" />
     <ClInclude Include="Input.h" />
+    <ClInclude Include="InputFactory.h" />
     <ClInclude Include="Keyboard.h" />
     <ClInclude Include="KeyConfig.h" />
     <ClInclude Include="Lazer.h" />
