@@ -75,8 +75,7 @@ bool GameScene::Update()
 	BulletManager::Instance().Draw(_camera.GetOffset());
 	_player.Draw();
 	EffectManager::Instance().Draw(_camera.GetOffset());
-	_statusUI.Draw();
-	_playerHP.Draw(_player.GetHP());
+	//_statusUI.Draw();
 
 	StageClear();
 
@@ -128,7 +127,6 @@ GameScene::EnemyColBlock()
 		}
 	}
 
-	//’n–Ê’T‚µ
 	for (auto& enemy : EnemyManager::Instance().GetEnemyList())
 	{
 		if (enemy->GetHitBox() == nullptr)
@@ -138,11 +136,13 @@ GameScene::EnemyColBlock()
 		enemy->SetFootHit(false);
 		for (auto& block : BlockManager::Instance().GetBlockList())
 		{
-			for (auto& searchRc : enemy->GetHitBox()->GetSearchRects())
+			//’n–Ê’T‚µ
+			for (auto& footRc : enemy->GetHitBox()->GetFootRects())
 			{
-				if (_col->IsHit(searchRc, block->GetRect()))
+				if (_col->IsHit(footRc, block->GetRect()))
 				{
 					enemy->SetFootHit(true);
+					break;
 				}
 			}
 		}
@@ -190,6 +190,7 @@ void GameScene::PlayerColEnemy()
 				e->HitStop(a.hitstop);
 				_player.HitStop(a.hitstop);
 				_camera.Quake(Vector2(10, 5));
+				EffectManager::Instance().Create(EffectType::slash,e->GetRect().Center());
 			}
 		}
 
@@ -199,6 +200,36 @@ void GameScene::PlayerColEnemy()
 			if (_col->IsHit(d.rc, e->GetRect()))
 			{
 				//ƒqƒbƒg
+			}
+		}
+	}
+
+	for (auto& enemy : EnemyManager::Instance().GetEnemyList())
+	{
+		if (enemy->GetHitBox() == nullptr)
+		{
+			continue;
+		}
+		//ƒvƒŒƒCƒ„[’T‚µ
+		for (auto& searchRc : enemy->GetHitBox()->GetSearchRects())
+		{
+			if (_col->IsHit(searchRc, _player.GetRect()))
+			{
+				enemy->SearchHit();
+			}
+		}
+
+		if (enemy->GetHitProtect().IsAlreadyHit(&_player))
+		{
+			continue;
+		}
+		//UŒ‚”»’è
+		for (auto& attackBox : enemy->GetHitBox()->GetAttackBoxes())
+		{
+			if (_col->IsHit(attackBox.rc, _player.GetRect()))
+			{
+				_player.Damage(attackBox.power, attackBox);
+				enemy->GetHitProtect().Hit(&_player);
 			}
 		}
 	}

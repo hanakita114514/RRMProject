@@ -4,15 +4,20 @@
 class Mushroom : public Enemy
 {
 private:
+
+	void (Mushroom::*_update)();
+	void AliveUpdate();
+	void DyingUpdate();
+
+	void Anim();
+
 public:
-	Mushroom();
-	Mushroom(int handle);
+	Mushroom(int handle, const Position& pos);
 	~Mushroom();
 
 	void Initialize();
 	void Update();
 	void Draw(const Vector2& offset);
 
-	void Anim();
 };
 

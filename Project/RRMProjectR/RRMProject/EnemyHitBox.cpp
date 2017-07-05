@@ -45,3 +45,17 @@ EnemyHitBox::Attack(float frame, const Rect& rc, const Vector2& dir)
 {
 
 }
+
+void 
+EnemyHitBox::Clear()
+{
+	_attackBox.clear();
+	_footRect.clear();
+	_searchRect.clear();
+}
+
+void 
+EnemyHitBox::SearchClear()
+{
+	_searchRect.clear();
+}

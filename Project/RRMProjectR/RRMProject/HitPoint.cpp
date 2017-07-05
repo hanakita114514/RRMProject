@@ -46,11 +46,7 @@ HitPoint::Damage(float damage)
 bool 
 HitPoint::IsDead()
 {
-	if (_hp <= 0)
-	{
-		return false;
-	}
-	return false;
+	return _hp <= 0;
 }
 
 bool 

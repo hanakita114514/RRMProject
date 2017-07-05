@@ -30,6 +30,8 @@ SushiMon::SushiMon(int handle , const Position& pos)
 	_hitBox = new SushiHitBox();
 	_footCheck = true;
 	_warryTime = 0.0f;
+	_chargeTime = 0.0f;
+	_searchTime = 0.0f;
 }
 
 
@@ -50,12 +52,20 @@ SushiMon::AliveUpdate()
 	Gravity();
 	_rc.pos += _vel;
 	_hitBox->Foot(0, _rc, _dir);
+	_hitBox->Search(0, _rc, _dir);
 
 	if (!_footCheck)
 	{
 		_update = &SushiMon::WorryUpdate;
-		_warryTime = 10;
+		_warryTime = 5;
 	}
+
+	if (_isSearch)
+	{
+		_update = &SushiMon::SearchUpdate;
+		_searchTime = 20.f;
+	}
+
 	if (_isDamage)
 	{
 		_update = &SushiMon::DamageUpdate;
@@ -75,6 +85,58 @@ SushiMon::DyingUpdate()
 
 }
 
+void
+SushiMon::ChargeUpdate()
+{
+	--_chargeTime;
+
+	static int quake = 1;
+
+	_rc.pos.x = _rc.pos.x + (3 * quake);
+	quake *= -1;
+
+	if (_chargeTime < 0)
+	{
+		_update = &SushiMon::AttackUpdate;
+		_vel.x = _dir.x * 4.f;
+		_vel.y = -13;
+	}
+}
+
+void 
+SushiMon::SearchUpdate()
+{
+	Gravity();
+	_vel.x = _dir.x * 4.f;
+	_rc.pos += _vel;
+
+	--_searchTime;
+
+	if (_searchTime < 0 && _hitGround)
+	{
+		_update = &SushiMon::ChargeUpdate;
+		_chargeTime = 30.0f;
+		_hitBox->Foot(0, _rc, _dir);
+		_hitBox->Search(0, _rc, _dir);
+	}
+}
+
+void
+SushiMon::AttackUpdate()
+{
+	Gravity();
+	_rc.pos += _vel;
+	_hitBox->Attack(0, _rc, _dir);
+
+	if (_hitGround)
+	{
+		_update = &SushiMon::AliveUpdate;
+		_isSearch = false;
+		_hitBox->Clear();
+		_mhp.Clear();
+	}
+}
+
 void 
 SushiMon::WorryUpdate()
 {
@@ -83,8 +145,10 @@ SushiMon::WorryUpdate()
 	if (_warryTime <= 0)
 	{
 		_update = &SushiMon::FallUpdate;
-		_vel.y = -15;
-		_vel.x = _dir.x * 8;
+		_dir.x *= -1;
+		_vel.x = _dir.x * 2;
+		_hitBox->Foot(0, _rc, _dir);
+		_hitBox->Search(0, _rc, _dir);
 	}
 }
 
@@ -96,7 +160,6 @@ SushiMon::FallUpdate()
 	if (_hitGround)
 	{
 		_update = &SushiMon::AliveUpdate;
-		_footCheck = true;
 	}
 }
 
@@ -119,8 +182,12 @@ SushiMon::DamageUpdate()
 void 
 SushiMon::Update()
 {
-	Anim();
-	(this->*_update)();
+	if (!_hitStop.IsHitStop())
+	{
+		Anim();
+		(this->*_update)();
+	}
+	_hitStop.Update();
 }
 
 void 
@@ -133,10 +200,7 @@ SushiMon::Draw(const Vector2& offset)
 	RRMLib::DrawRectGraph(drawPos.x, drawPos.y, _uv.x, _uv.y, _rc.w, _rc.h, _handle, true, _dir.x > 0);
 	_hpbar.Draw(Vector2(drawPos.x + _rc.w / 4, drawPos.y - _rc.h / 4), _hp);
 
-	for (auto& s : _hitBox->GetSearchRects())
-	{
-		s.DrawBox();
-	}
+	ColDraw();
 }
 
 void 

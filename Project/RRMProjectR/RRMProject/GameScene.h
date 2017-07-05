@@ -4,7 +4,6 @@
 #include "Player.h"
 #include "Camera.h"
 #include "StatusUI.h"
-#include "PlayerHP.h"
 #include "KeyConfig.h"
 
 class Collision;
@@ -15,7 +14,6 @@ private:
 	bool _sceneChangeFlag;
 
 	Player _player;
-	PlayerHP _playerHP;
 	Collision* _col;
 	StatusUI _statusUI;
 	

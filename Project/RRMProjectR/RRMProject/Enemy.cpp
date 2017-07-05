@@ -13,6 +13,8 @@ Enemy::Enemy() : _hp(50.0f), _friction(0.2)
 	_hitGround = false;
 	_isDamage = false;
 	_hitBox = nullptr;
+	_isSearch = false;
+	_animFrame = 0;
 }
 
 
@@ -41,7 +43,7 @@ if (_rc.pos.x < camera.GetCameraRect().lpos.x)
 		_vel.x *= -1;
 		_dir.x *= -1;
 		HitStop(5);
-		camera.Quake(Vector2(5, 0));
+		//camera.Quake(Vector2(5, 0));
 	}
 	if (_rc.Right() > camera.GetCameraRect().rpos.x)
 	{
@@ -49,7 +51,7 @@ if (_rc.pos.x < camera.GetCameraRect().lpos.x)
 		_vel.x *= -1;
 		_dir.x *= -1;
 		HitStop(5);
-		camera.Quake(Vector2(5, 0));
+		//camera.Quake(Vector2(5, 0));
 	}
 	if (_rc.Top() > camera.GetMapSize().pos.y + camera.GetMapSize().h)
 	{
@@ -104,7 +106,10 @@ Enemy::Hit(Block* other)
 				_rc.SetRight(other->GetRect().Left());
 				_vel.x *= -1;
 				_dir.x *= -1;
-				HitStop(5);
+				if (_isDamage)
+				{
+					HitStop(5);
+				}
 			}
 		}
 		else				//¶ˆÚ“®
@@ -114,7 +119,10 @@ Enemy::Hit(Block* other)
 				_rc.SetLeft(other->GetRect().Right());
 				_vel.x *= -1;
 				_dir.x *= -1;
-				HitStop(5);
+				if (_isDamage)
+				{
+					HitStop(5);
+				}
 			}
 		}
 	}
@@ -177,4 +185,36 @@ void
 Enemy::SetFootHit(bool flag)
 {
 	_footCheck = flag;
+}
+
+void 
+Enemy::SearchHit()
+{
+	_isSearch = true;
+}
+
+void 
+Enemy::ColDraw()
+{
+	if (_hitBox)
+	{
+		for (auto& f : _hitBox->GetFootRects())
+		{
+			f.DrawBox();
+		}
+		for (auto& s : _hitBox->GetSearchRects())
+		{
+			s.DrawBox();
+		}
+		for (auto& a : _hitBox->GetAttackBoxes())
+		{
+			a.rc.DrawBox();
+		}
+	}
+}
+
+void 
+Enemy::SearchClear()
+{
+	_hitBox->SearchClear();
 }

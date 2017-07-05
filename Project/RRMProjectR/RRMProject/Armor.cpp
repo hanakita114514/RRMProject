@@ -49,6 +49,12 @@ Armor::Recovery(float recoval)
 	}
 }
 
+void 
+Armor::Break()
+{
+	_endurance = 0;
+}
+
 bool 
 Armor::IsBroken()
 {

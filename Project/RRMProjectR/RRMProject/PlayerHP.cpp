@@ -13,15 +13,39 @@ const float BAR_INIT_Y = 55.0f;
 PlayerHP::PlayerHP()
 {
 	_hpBarHandle = GraphicLoad::Instance().LoadGraph("Resource/img/UI/hebi_HPbar.png");
-	_gaugeHandle = GraphicLoad::Instance().LoadGraph("Resource/img/UI/hebi_HP.png");
+	_gaugeHandle[0] = GraphicLoad::Instance().LoadGraph("Resource/img/UI/hebi_HP.png");
+	_gaugeHandle[1] = GraphicLoad::Instance().LoadGraph("Resource/img/UI/hebi_HP2.png");
+	_gaugeHandle[2] = GraphicLoad::Instance().LoadGraph("Resource/img/UI/hebi_HP3.png");
 
 	_barPos.x = 30;
 	_barPos.y = WINDOW_HEIGHT - 120;
+
+	_offset = HPBAR_MAX;
+	_backOffset = HPBAR_MAX;
+	_offsetBuf = HPBAR_MAX;
 }
 
 
 PlayerHP::~PlayerHP()
 {
+}
+
+
+void 
+PlayerHP::Update()
+{
+	_backOffset -= 0.5f;
+	if (_offsetBuf >= _backOffset)
+	{
+		_backOffset = _offsetBuf;
+	}
+}
+
+void 
+PlayerHP::Commit()
+{
+	_backOffset = _offsetBuf;
+	_offsetBuf = _offset;
 }
 
 void
@@ -37,6 +61,10 @@ PlayerHP::Draw(HitPoint& hp)
 		offsetX = HPBAR_MAX;
 	}
 
-	RRMLib::DrawExtendGraph(_barPos.x + BAR_INIT_X, _barPos.y + BAR_INIT_Y, _barPos.x + BAR_INIT_X + offsetX, _barPos.y + BAR_INIT_Y + HPBAR_HEIGHT, _gaugeHandle);
+	_offset = offsetX;
+
+	RRMLib::DrawExtendGraph(_barPos.x + BAR_INIT_X, _barPos.y + BAR_INIT_Y, _barPos.x + BAR_INIT_X + HPBAR_MAX, _barPos.y + BAR_INIT_Y + HPBAR_HEIGHT, _gaugeHandle[2]);
+	RRMLib::DrawExtendGraph(_barPos.x + BAR_INIT_X, _barPos.y + BAR_INIT_Y, _barPos.x + BAR_INIT_X + _backOffset, _barPos.y + BAR_INIT_Y + HPBAR_HEIGHT, _gaugeHandle[1]);
+	RRMLib::DrawExtendGraph(_barPos.x + BAR_INIT_X, _barPos.y + BAR_INIT_Y, _barPos.x + BAR_INIT_X + offsetX, _barPos.y + BAR_INIT_Y + HPBAR_HEIGHT, _gaugeHandle[0]);
 	RRMLib::DrawGraph(_barPos.x, _barPos.y, _hpBarHandle);
 }

@@ -38,6 +38,9 @@ private:
 	void DyingUpdate();
 	void DamageUpdate();
 
+
+	void Anim();
+
 public:
 	Egg(int handle, const Position& pos);
 	~Egg();
@@ -45,7 +48,6 @@ public:
 	void Initialize();								//‰Šú‰»
 	void Update();									//XV
 	void Draw(const Vector2& offset);				//•`‰æ
-	void Anim();
 	void Move();
 
 	void Shot();

@@ -64,6 +64,9 @@
     <Filter Include="ソース ファイル\Data">
       <UniqueIdentifier>{db607ead-28df-4530-b3ea-112ca343d8de}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Object\Enemy\HitBox">
+      <UniqueIdentifier>{98910975-a4ac-4d5d-a53a-4c7407221b18}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameMain.cpp">
@@ -330,11 +333,11 @@
     <ClCompile Include="InputFactory.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="EnemyHitBox.cpp">
-      <Filter>ソース ファイル\Object\Player</Filter>
-    </ClCompile>
     <ClCompile Include="SushiHitBox.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\Object\Enemy\HitBox</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyHitBox.cpp">
+      <Filter>ソース ファイル\Object\Enemy\HitBox</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -611,11 +614,11 @@
     <ClInclude Include="InputFactory.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="EnemyHitBox.h">
-      <Filter>ソース ファイル\Object\Player</Filter>
-    </ClInclude>
     <ClInclude Include="SushiHitBox.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ソース ファイル\Object\Enemy\HitBox</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyHitBox.h">
+      <Filter>ソース ファイル\Object\Enemy\HitBox</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -22,7 +22,7 @@ const int armor_life = 200.0f;				//アーマーの耐久値
 
 
 Player::Player(int padType, Camera& camera, InputMode mode) 
-	: _hp(100), _pp(3), _camera(camera) , _armor(armor_life)
+	: _hp(1000), _pp(3), _camera(camera) , _armor(armor_life)
 {
 	_update = &Player::AliveUpdate;
 
@@ -346,6 +346,7 @@ Player::AliveUpdate()
 	Move();
 	Jump();
 	(this->*_isdir)();
+	//_hpbar.Commit();
 
 	if (_input->UpAttack() && _hitGround)
 	{
@@ -442,6 +443,7 @@ Player::DamageUpdate()
 	{
 		_update = &Player::InvincibleUpdate;
 		_invincibleTime = 60.0f;
+		_hpbar.Commit();
 	}
 }
 
@@ -470,6 +472,7 @@ Player::Update()
 			_addAttackFlag = true;
 		}
 	}
+	_hpbar.Update();
 	_hitStop.Update();
 
 
@@ -551,6 +554,7 @@ Player::Draw()
 	//RRMLib::DrawLine((int)(_rc.Left() + (_rc.w / 2)), (int)(_rc.Top()),
 	//				(int)(_rc.Left() + (_rc.w / 2)), (int)(_rc.Bottom()), 0xff0000);
 	_hitBox.Draw();
+	_hpbar.Draw(_hp);
 
 #ifdef DEBUG
 	_rc.DrawBox();
@@ -706,11 +710,7 @@ Player::IsAvoidance()
 bool 
 Player::IsDamage()
 {
-	if (_update == &Player::DamageUpdate)
-	{
-		return true;
-	}
-	return false;
+	return _update == &Player::DamageUpdate;
 }
 
 void 
@@ -735,6 +735,7 @@ Player::Damage(float power)
 {
 	_armor.Damage(power);
 	_hp.Damage(power);
+
 	if (_armor.IsBroken())
 	{
 		_armor.Recovery();
@@ -742,4 +743,20 @@ Player::Damage(float power)
 		_vel.y = -8.0f;
 		_update = &Player::DamageUpdate;
 	}
+}
+
+void 
+Player::Damage(float power, HitBox hitBox)
+{
+	_armor.Damage(power);
+	_hp.Damage(power);
+
+	_vel = hitBox.vec;
+	_update = &Player::DamageUpdate;
+}
+
+bool
+Player::IsDead()
+{
+	return _hp.IsDead();
 }

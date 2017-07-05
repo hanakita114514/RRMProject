@@ -30,7 +30,7 @@ EnemyFactory::Create(const EnemyType& et, const Position& pos)
 		break;
 	case EnemyType::mushroom:
 	{
-		enemy = new Egg(_imgMap[EnemyType::egg], pos);
+		enemy = new Mushroom(_imgMap[EnemyType::mushroom], pos);
 	}
 		break;
 	case EnemyType::meat:

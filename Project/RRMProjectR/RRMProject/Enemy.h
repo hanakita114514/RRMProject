@@ -49,6 +49,11 @@ protected:
 
 	EnemyHitBox* _hitBox;
 	bool _footCheck;			//足元確認
+	bool _isSearch;				//プレイヤーを見つけたか？
+
+	virtual void Anim() = 0;				//アニメーション
+
+	void ColDraw();				//当たり判定の描画
 private:
 
 public:
@@ -59,7 +64,6 @@ public:
 
 	virtual void Update() = 0;				//更新
 	virtual void Draw(const Vector2& offset) = 0;				//描画
-	virtual void Anim() = 0;				//アニメーション
 
 	virtual void ScreenLimit(Camera& camera);
 
@@ -80,7 +84,11 @@ public:
 	bool IsHit() { return _hitGround; }
 
 	EnemyHitBox*& GetHitBox() { return _hitBox; }
+	MultihitProtect& GetHitProtect() { return _mhp; }
 
 	void SetFootHit(bool flag);
+	void SearchHit();
+
+	void SearchClear();
 };
 

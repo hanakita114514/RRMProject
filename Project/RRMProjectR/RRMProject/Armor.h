@@ -22,6 +22,8 @@ public:
 	//ダメージ
 	void Damage(float damage);
 
+	void Break();
+
 	//アーマーが壊れたか？
 	bool IsBroken();
 

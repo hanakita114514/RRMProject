@@ -71,6 +71,7 @@ Egg::AliveUpdate()
 
 	Move();
 	Anim();
+	_hpbar.Commit();
 
 	if (_hp.GetHitPoint() <= 0)
 	{
@@ -106,6 +107,7 @@ Egg::DamageUpdate()
 	{
 		_isDamage = false;
 		_update = &Egg::AliveUpdate;
+		_hpbar.Commit();
 	}
 }
 
@@ -121,6 +123,7 @@ void Egg::Update()
 	{
 		(this->*_update)();
 	}
+	_hpbar.Update();
 	_hitStop.Update();
 }
 

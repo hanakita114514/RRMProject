@@ -20,6 +20,9 @@ public:
 	virtual void Foot(float frame, const Rect& rc, const Vector2& dir);
 	virtual void Attack(float frame, const Rect& rc, const Vector2& dir);
 
+	void Clear();
+	void SearchClear();
+
 	std::vector<Rect>& GetSearchRects();
 	std::vector<Rect>& GetFootRects();
 	std::vector<HitBox>& GetAttackBoxes();

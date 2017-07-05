@@ -22,7 +22,7 @@ const char* Stage[(int)Stage::stageMax] =
 
 MenuScene::MenuScene()
 {
-	_titleHandle = RRMLib::LoadGraph("Resource/img//logo/gameStart.png");
+	_titleHandle = RRMLib::LoadGraph("Resource/img//UI/GAME_START.png");
 	_update = &MenuScene::TitleUpdate;
 	_input = InputFactory::Create(InputMode::pad, 0);
 

@@ -13,6 +13,8 @@
 #include "PlayerHP.h"
 #include "Input.h"
 #include "MultihitProtect.h"
+#include "PlayerHP.h"
+
 
 #include <map>
 
@@ -38,6 +40,7 @@ private:
 	static const int ToolMax = 3;
 private:
 	HitPoint _hp;			//体力
+	PlayerHP _hpbar;		//体力バー
 
 	PowerPoint _pp;			//パワーポイント
 	Vector2 _vel;			//速度
@@ -130,10 +133,12 @@ public:
 	void Hit(Bullet* other);
 
 	void Damage(float power);
+	void Damage(float power, HitBox hitBox);
 
 	bool IsHitGround() { return _hitGround; }
 	bool IsAvoidance();
 	bool IsDamage();
+	bool IsDead();
 
 	std::vector<HitBox>& GetAttackBoxes() { return _hitBox.GetAttackBoxes(); }
 	std::vector<HitBox>& GetDamageBoxes() { return _hitBox.GetDamageBoxes(); }
