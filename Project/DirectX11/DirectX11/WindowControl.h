@@ -2,7 +2,6 @@
 
 #include <Windows.h>
 
-
 const int WINDOW_WIDTH = 640;
 const int WINDOW_HEIGHT = 480;
 
@@ -24,9 +23,9 @@ public:
 
 	static WindowControl& Instance()
 	{
-		static WindowControl instance;
+			static WindowControl instance;
 
-		return instance;
+			return instance;
 	}
 
 	void Init();
@@ -40,6 +39,5 @@ public:
 	int WindowHeight();
 
 	void ChangeFullScreenMode(bool fullScreen);
-	
-};
 
+};

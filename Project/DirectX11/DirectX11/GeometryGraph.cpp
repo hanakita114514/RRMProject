@@ -554,8 +554,6 @@ GeometryGraph::DrawCircle(float x, float y, float r, unsigned int color, bool fi
 	HRESULT result = S_OK;
 	DeviceDx11& dev = DeviceDx11::Instance();
 
-	ID3D11Buffer* vb;
-
 	const int divNum = 512;
 
 	Vertex2D vertices[divNum];
