@@ -143,7 +143,10 @@ namespace RRMLib
 	//ウィンドウサイズの変更
 	void SetWindowSize(int width, int height)
 	{
+		HWND& hwnd = WindowControl::Instance().WindowHandle();
 		ShowWindow(WindowControl::Instance().WindowHandle(), SW_HIDE);
+		//DestroyWindow(hwnd);
+
 
 		HRESULT result = S_OK;
 		WindowControl::Instance().Init();
@@ -151,9 +154,10 @@ namespace RRMLib
 		WindowControl::Instance().SetGraphMode(width, height);
 
 		dev.Init(WindowControl::Instance());
-		HWND& hwnd = WindowControl::Instance().WindowHandle();
 
 		result = InitDirect3D(WindowControl::Instance());
+
+		//MoveWindow(hwnd, 0, 0, width, height, false);
 
 		graphic.Terminate();
 		geometryGraph.Terminate();
