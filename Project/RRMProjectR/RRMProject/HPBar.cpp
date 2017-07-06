@@ -15,6 +15,11 @@ HPBar::HPBar()
 	_offset = HPBAR_MAX;
 	_backOffset = HPBAR_MAX;
 	_offsetBuf = HPBAR_MAX;
+
+	_commitFrame = 0;
+	
+	_isDone = false;
+	_isCommit = false;
 }
 
 
@@ -25,10 +30,13 @@ HPBar::~HPBar()
 void 
 HPBar::Update()
 {
+	++_commitFrame;
+	_isCommit = true;
 	_backOffset -= 0.2f;
 	if (_offsetBuf >= _backOffset)
 	{
 		_backOffset = _offsetBuf;
+		_isCommit = false;
 	}
 }
 
@@ -37,6 +45,21 @@ HPBar::Commit()
 {
 	_backOffset = _offsetBuf;
 	_offsetBuf = _offset;
+}
+
+void 
+HPBar::CommitPeriod()
+{
+	if (_commitFrame % 30 == 0)
+	{
+		_isDone = true;
+	}
+
+	if (_isDone && !_isCommit)
+	{
+		_isDone = false;
+		Commit();
+	}
 }
 
 void

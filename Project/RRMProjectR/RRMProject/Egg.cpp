@@ -71,7 +71,7 @@ Egg::AliveUpdate()
 
 	Move();
 	Anim();
-	_hpbar.Commit();
+	_hpbar.CommitPeriod();
 
 	if (_hp.GetHitPoint() <= 0)
 	{

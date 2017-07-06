@@ -1,7 +1,7 @@
 #include "PowerPoint.h"
 
 
-const unsigned int RECOVERY_TIME = 3;
+static const unsigned int RECOVERY_TIME = 3;
 
 PowerPoint::PowerPoint(int pp) : _pp(pp), _maxPP(pp), _recVal(1)
 {
@@ -75,9 +75,5 @@ PowerPoint::IsPPMax()
 bool 
 PowerPoint::IsAbsentPP()
 {
-	if (_pp <= 0)
-	{
-		return true;
-	}
-	return false;
+	return _pp <= 0;
 }

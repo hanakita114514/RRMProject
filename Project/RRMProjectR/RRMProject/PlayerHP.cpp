@@ -3,12 +3,12 @@
 #include "GraphicLoad.h"
 #include "common.h"
 
-const float HPBAR_MAX = 140.0f;
+static const float HPBAR_MAX = 140.0f;
 
-const float HPBAR_HEIGHT = 15.0f;
+static const float HPBAR_HEIGHT = 15.0f;
 
-const float BAR_INIT_X = 68.0f;
-const float BAR_INIT_Y = 55.0f;
+static const float BAR_INIT_X = 68.0f;
+static const float BAR_INIT_Y = 55.0f;
 
 PlayerHP::PlayerHP()
 {
@@ -17,12 +17,14 @@ PlayerHP::PlayerHP()
 	_gaugeHandle[1] = GraphicLoad::Instance().LoadGraph("Resource/img/UI/hebi_HP2.png");
 	_gaugeHandle[2] = GraphicLoad::Instance().LoadGraph("Resource/img/UI/hebi_HP3.png");
 
-	_barPos.x = 30;
-	_barPos.y = WINDOW_HEIGHT - 120;
+	_barPos.x = 0;
+	_barPos.y = -20;
 
 	_offset = HPBAR_MAX;
 	_backOffset = HPBAR_MAX;
 	_offsetBuf = HPBAR_MAX;
+
+	_commitFrame = 0;
 }
 
 
@@ -34,6 +36,7 @@ PlayerHP::~PlayerHP()
 void 
 PlayerHP::Update()
 {
+	++_commitFrame;
 	_backOffset -= 0.5f;
 	if (_offsetBuf >= _backOffset)
 	{
@@ -46,6 +49,15 @@ PlayerHP::Commit()
 {
 	_backOffset = _offsetBuf;
 	_offsetBuf = _offset;
+}
+
+void
+PlayerHP::CommitPeriod()
+{
+	if (_commitFrame % 30 == 0)
+	{
+		Commit();
+	}
 }
 
 void

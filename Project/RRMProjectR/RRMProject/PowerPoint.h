@@ -24,10 +24,10 @@ public:
 	int GetMaxPP();
 
 	void SetMaxPP(const int& maxpp);
-	
+
 	//PPが最大か？
 	bool IsPPMax();
-	//PPが0か？
+	//PPが使えない状態か？
 	bool IsAbsentPP();
 
 	

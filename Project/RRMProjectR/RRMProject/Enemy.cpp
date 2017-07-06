@@ -15,6 +15,7 @@ Enemy::Enemy() : _hp(50.0f), _friction(0.2)
 	_hitBox = nullptr;
 	_isSearch = false;
 	_animFrame = 0;
+	_targetPos = Position(0, 0);
 }
 
 
@@ -188,9 +189,10 @@ Enemy::SetFootHit(bool flag)
 }
 
 void 
-Enemy::SearchHit()
+Enemy::SearchHit(const Position& targetPos)
 {
 	_isSearch = true;
+	_targetPos = targetPos;
 }
 
 void 

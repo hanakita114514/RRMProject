@@ -12,28 +12,23 @@
 #include "EffectManager.h"
 #include "InputFactory.h"
 
-const float GRAVITY = 0.75f;
-const float jump_power = 20;
-const float fall_coefficient = 0.45f;
-const int slow_second = 60;					//ŽžŠÔ‚ª’x‚­‚È‚é•b”
-const int stop_second = 30;					//ŽžŠÔ‚ðŽ~‚ß‚é•b”
+static const float jump_power = 20;
+static const float GRAVITY = 0.75f;
+static const float fall_coefficient = 0.45f;
+static const int slow_second = 60;					//ŽžŠÔ‚ª’x‚­‚È‚é•b”
+static const int stop_second = 30;					//ŽžŠÔ‚ðŽ~‚ß‚é•b”
 
-const int armor_life = 200.0f;				//ƒA[ƒ}[‚Ì‘Ï‹v’l
+static const int armor_life = 200.0f;				//ƒA[ƒ}[‚Ì‘Ï‹v’l
 
 
 Player::Player(int padType, Camera& camera, InputMode mode) 
-	: _hp(1000), _pp(3), _camera(camera) , _armor(armor_life)
+	: _hp(1000), _pp(3), _camera(camera) , _armor(armor_life),
+	_jump(_input, _vel, _hitGround, this)
 {
-	_update = &Player::AliveUpdate;
 
-	_handle = RRMLib::LoadGraph("Resource/img/player/player.png");
+	Player::LoadResources();
 
-	//_handleMap[PlayerState::neutral] = RRMLib::LoadGraph("Resource/img/player/Healer/$Healer_1.png");
-	_handleMap[PlayerState::neutral] = RRMLib::LoadGraph("Resource/img/player/player.png");
-	_handleMap[PlayerState::attack] = RRMLib::LoadGraph("Resource/img/player/attack.png");
-	//_handleMap[PlayerState::avoidance] = RRMLib::LoadGraph("Resource/img/player/Healer/$Healer_4.png");
-	_handleMap[PlayerState::avoidance] = RRMLib::LoadGraph("Resource/img/player/avoidance.png");
-
+	Player::MapInit();
 
 	Rect rc = {};
 	_rc = rc;
@@ -50,7 +45,6 @@ Player::Player(int padType, Camera& camera, InputMode mode)
 
 	_speed = 6.0f;
 	_ps = PlayerState::neutral;
-	_isdir = &Player::DirRight;
 
 	_tool[0] = BulletType::normal;
 	_tool[1] = BulletType::deffusion;
@@ -63,7 +57,7 @@ Player::Player(int padType, Camera& camera, InputMode mode)
 
 	_attackTime = 0;
 
-	_attack = &Player::FirstAttack;
+
 	_turnFlag = false;
 
 	_animFrame = 0;
@@ -76,6 +70,39 @@ Player::Player(int padType, Camera& camera, InputMode mode)
 
 Player::~Player()
 {
+}
+
+void 
+Player::LoadResources()
+{
+	_handle = RRMLib::LoadGraph("Resource/img/player/player.png");
+
+	//_handleMap[PlayerState::neutral] = RRMLib::LoadGraph("Resource/img/player/Healer/$Healer_1.png");
+	_handleMap[PlayerState::neutral] = RRMLib::LoadGraph("Resource/img/player/player.png");
+	_handleMap[PlayerState::attack] = RRMLib::LoadGraph("Resource/img/player/attack.png");
+	//_handleMap[PlayerState::avoidance] = RRMLib::LoadGraph("Resource/img/player/Healer/$Healer_4.png");
+	_handleMap[PlayerState::avoidance] = RRMLib::LoadGraph("Resource/img/player/avoidance.png");
+}
+
+void 
+Player::MapInit()
+{
+	//UpdateŠÖ”‚ðƒ}ƒbƒv‚ÉŠi”[
+	_update[UpdateState::attack] = &Player::AttackUpdate;
+	_update[UpdateState::avoidance] = &Player::AvoidanceUpdate;
+	_update[UpdateState::damage] = &Player::DamageUpdate;
+	_update[UpdateState::invincible] = &Player::InvincibleUpdate;
+	_update[UpdateState::alive] = &Player::AliveUpdate;
+	_update[UpdateState::dying] = &Player::DyingUpdate;
+
+	//UŒ‚ƒXƒe[ƒgŠÖ”‚ðƒ}ƒbƒv‚ÉŠi”[
+	_attack[AttackState::first] = &Player::FirstAttack;
+	_attack[AttackState::second] = &Player::SecondAttack;
+	_attack[AttackState::third] = &Player::ThirdAttack;
+	_attack[AttackState::up] = &Player::UpAttack;
+
+	_us = UpdateState::alive;
+	_as = AttackState::first;
 }
 
 void
@@ -92,16 +119,22 @@ Player::Move()
 		//_vel.x = std::fmaxf(-10.0f, _vel.x - 1);
 		_vel.x = -_speed * GameTime::Instance().GetTimeScale(this);
 		_dir.x = -1;
-		_isdir = &Player::DirLeft;
-		_ps = PlayerState::walk;
+
+		if (_ps != PlayerState::invincible)
+		{
+			_ps = PlayerState::walk;
+		}
 	}
 	if (_input->Right())
 	{
 		//_vel.x = std::fminf(10.0f, _vel.x + 1);
 		_vel.x = _speed * GameTime::Instance().GetTimeScale(this);
 		_dir.x = 1;
-		_isdir = &Player::DirRight;
-		_ps = PlayerState::walk;
+
+		if (_ps != PlayerState::invincible)
+		{
+			_ps = PlayerState::walk;
+		}
 	}
 	if (_input->Nosedive())
 	{
@@ -113,38 +146,16 @@ Player::Move()
 void
 Player::Jump()
 {
-	//’nãƒWƒƒƒ“ƒv
-	if (_input->Jump() && _hitGround && _groundJump)
+
+	if (_jump.GroundJump())
 	{
-		_vel.y = -jump_power * GameTime::Instance().GetTimeScale(this);
-		_isJump = true;
-		_hitGround = false;
-		_groundJump = false;
 		_nosedive = 1;
 	}
 
-	if (_vel.y > 0)
-	{
-		_isJump = false;
-	}
+	_jump.Attenuation();
 
-	if (_input->IsRelease(KeyType::keyY))
+	if(_jump.AirJump())
 	{
-		if (_isJump)
-		{
-			_vel.y *= fall_coefficient;
-		}
-		if (!_hitGround)
-		{
-			_isAirJump = true;
-		}
-	}
-
-	if (_secondJump && _input->Jump() && _isAirJump)
-	{
-		_vel.y = -jump_power * GameTime::Instance().GetTimeScale(this);
-		_isJump = true;
-		_secondJump = false;
 		_nosedive = 1;
 	}
 }
@@ -173,7 +184,7 @@ Player::InvincibleUpdate()
 
 	if (_invincibleTime <= 0)
 	{
-		_update = &Player::AliveUpdate;
+		_us = UpdateState::alive;
 	}
 }
 
@@ -193,7 +204,7 @@ void Player::AvoidanceUpdate()
 
 	if (_avoidTime <= 0)
 	{
-		_update = &Player::AliveUpdate;
+		_us = UpdateState::alive;
 	}
 
 	//‚»‚Ìê‰ñ”ð
@@ -219,6 +230,16 @@ void Player::AvoidanceUpdate()
 
 void Player::Shoot()
 {
+	//‰EŒü‚«
+	if (_dir.x > 0)
+	{
+		DirRight();
+	}
+	else
+	{
+		DirLeft();
+	}
+
 	Vector2 end = Vector2(1280, 720);
 	_ps = PlayerState::shoot;
 		Bullet* bullet = BulletManager::Instance().Create(_tool[_toolIdx], _dir, ObjectType::player, _shootPos, this);
@@ -237,16 +258,22 @@ Player::FirstAttack()
 		_addAttackFlag = true;
 	}
 
+	if (Avoidance())
+	{
+		_as = AttackState::first;
+		_addAttackFlag = false;
+	}
+
 	if (_attackTime <= 0)
 	{
 		if (_addAttackFlag)
 		{
-			_update = &Player::SecondAttack;
+			_as = AttackState::second;
 			_attackTime = 15;
 		}
 		else
 		{
-			_update = &Player::AliveUpdate;
+			_us = UpdateState::alive;
 		}
 		_hitBox.Clear();
 		_mhp.Clear();
@@ -266,17 +293,23 @@ Player::SecondAttack()
 	{
 		_addAttackFlag = true;
 	}
+	
+	if (Avoidance())
+	{
+		_as = AttackState::first;
+		_addAttackFlag = false;
+	}
 
 	if (_attackTime <= 0)
 	{
 		if (_addAttackFlag)
 		{
-			_update = &Player::ThirdAttack;
+			_as = AttackState::third;
 			_attackTime = 30;
 		}
 		else
 		{
-			_update = &Player::AliveUpdate;
+			_us = UpdateState::alive;
 		}
 		_hitBox.Clear();
 		_mhp.Clear();
@@ -292,10 +325,15 @@ Player::ThirdAttack()
 
 	--_attackTime;
 
+	if (Avoidance())
+	{
+		_as = AttackState::first;
+		_addAttackFlag = false;
+	}
 
 	if (_attackTime <= 0)
 	{
-		_update = &Player::AliveUpdate;
+		_us = UpdateState::alive;
 		_hitBox.Clear();
 		_mhp.Clear();
 		_addAttackFlag = false;
@@ -316,7 +354,7 @@ Player::UpAttack()
 
 	if (_attackTime <= 0)
 	{
-		_update = &Player::AliveUpdate;
+		_us = UpdateState::alive;
 		_hitBox.Clear();
 		_mhp.Clear();
 		_addAttackFlag = false;
@@ -332,7 +370,7 @@ Player::DonwAttack()
 void
 Player::AttackUpdate()
 {
-	(this->*_attack)();
+	(this->*_attack[_as])();
 	_ps = PlayerState::attack;
 }
 
@@ -345,13 +383,14 @@ Player::AliveUpdate()
 
 	Move();
 	Jump();
-	(this->*_isdir)();
-	//_hpbar.Commit();
+
+	_hitBox.Clear();
+	_hpbar.CommitPeriod();
 
 	if (_input->UpAttack() && _hitGround)
 	{
-		_update = &Player::AttackUpdate;
-		_attack = &Player::UpAttack;
+		_us = UpdateState::attack;
+		_as = AttackState::up;
 		_vel.y = -10.0f;
 		_attackTime = 10.f;
 		return;
@@ -359,29 +398,18 @@ Player::AliveUpdate()
 	
 	if (_input->Attack())
 	{
-		_update = &Player::AttackUpdate;
-		_attack = &Player::FirstAttack;
+		_us = UpdateState::attack;
+		_as = AttackState::first;
 		_attackTime = 10.f;
 		return;
 	}
 
 	//‰ñ”ð
-	if (_input->Avoidance())
+	if (Avoidance())
 	{
-		if (_pp.GetPowerPoint() > 0)
-		{
-			_pp.Use();
-			_vel = _input->Dir();
-			_update = &Player::AvoidanceUpdate;
-			_avoidTime = 17.0f;
-			_nosedive = 1;
-			_secondJump = true;
-			_isAirJump = true;
-			EffectManager::Instance().Create(EffectType::erasure, _rc.Center(), Vector2(1.0f, 1.0f), 0.7f, false);
-			return;
-		}
-
+		return;
 	}
+
 	//ƒpƒŠƒB
 	if (_input->Parry())
 	{
@@ -441,7 +469,8 @@ Player::DamageUpdate()
 	DistanceAttenuation();
 	if (_vel.x == 0)
 	{
-		_update = &Player::InvincibleUpdate;
+		_us = UpdateState::invincible;
+		//_update = &Player::InvincibleUpdate;
 		_invincibleTime = 60.0f;
 		_hpbar.Commit();
 	}
@@ -463,7 +492,7 @@ Player::Update()
 		_pp.Update();
 		_armor.AutomaticRecovery();
 
-		(this->*_update)();
+		(this->*_update[_us])();
 	}
 	if (_ps == PlayerState::attack)
 	{
@@ -640,12 +669,14 @@ void Player::Hit(Bullet* other)
 {
 	if (other->GetObjType() == ObjectType::enemy)
 	{
-		if (_update == &Player::AliveUpdate)
+		//if (_update == &Player::AliveUpdate)
+		if(_us == UpdateState::alive)
 		{
 			Damage(other->GetPower());
 			return;
 		}
-		if (_update == &Player::AvoidanceUpdate)
+		if(_us == UpdateState::avoidance)
+		//if (_update == &Player::AvoidanceUpdate)
 		{
 			_sd.SlowMotion(5, this);
 			_sd.SlowMotion(60, other->GetOwner());
@@ -661,20 +692,20 @@ Player::SlowMotion()
 }
 
 void
+Player::SlowMotion(Object* other)
+{
+	_sd.SlowMotion(slow_second, other);
+}
+
+void
 Player::HitGround()
 {
 	if (_hitGround)
 	{
 		_vel.y = 0;
-
-		_isAirJump = false;
-		_isJump = false;
-		_secondJump = true;
 		_nosedive = 1;
-		if (!_input->Jump())
-		{
-			_groundJump = true;
-		}
+
+		_jump.HitGround();
 	}
 	else
 	{
@@ -704,13 +735,15 @@ Player::WeaponSwitch()
 bool 
 Player::IsAvoidance()
 {
-	return _update == &Player::AvoidanceUpdate;
+	//return _update == &Player::AvoidanceUpdate;
+	return _us == UpdateState::avoidance;
 }
 
 bool 
 Player::IsDamage()
 {
-	return _update == &Player::DamageUpdate;
+	//return _update == &Player::DamageUpdate;
+	return _us == UpdateState::damage;
 }
 
 void 
@@ -741,7 +774,7 @@ Player::Damage(float power)
 		_armor.Recovery();
 		_vel.x = _dir.x * 10.0f * -1.0f;
 		_vel.y = -8.0f;
-		_update = &Player::DamageUpdate;
+		_us = UpdateState::damage;
 	}
 }
 
@@ -752,11 +785,35 @@ Player::Damage(float power, HitBox hitBox)
 	_hp.Damage(power);
 
 	_vel = hitBox.vec;
-	_update = &Player::DamageUpdate;
+	_us = UpdateState::damage;
 }
 
 bool
 Player::IsDead()
 {
 	return _hp.IsDead();
+}
+
+bool 
+Player::Avoidance()
+{
+	if (_input->Avoidance())
+	{
+		if (!_pp.IsAbsentPP())
+		{
+			_pp.Use();
+			_vel = _input->Dir();
+			_us = UpdateState::avoidance;
+
+			_avoidTime = 17.0f;
+			_nosedive = 1;
+
+			_jump.RevivalAirJump();
+
+			EffectManager::Instance().Create(EffectType::erasure, _rc.Center(), Vector2(1.0f, 1.0f), 0.7f, false);
+			return true;
+		}
+	}
+
+	return false;
 }

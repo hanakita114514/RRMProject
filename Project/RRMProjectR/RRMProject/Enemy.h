@@ -54,6 +54,8 @@ protected:
 	virtual void Anim() = 0;				//アニメーション
 
 	void ColDraw();				//当たり判定の描画
+
+	Position _targetPos;		//見つけた敵のポジションを格納
 private:
 
 public:
@@ -87,7 +89,7 @@ public:
 	MultihitProtect& GetHitProtect() { return _mhp; }
 
 	void SetFootHit(bool flag);
-	void SearchHit();
+	void SearchHit(const Position& targetPos);
 
 	void SearchClear();
 };

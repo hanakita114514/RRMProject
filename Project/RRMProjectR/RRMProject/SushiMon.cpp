@@ -10,7 +10,7 @@ static const int IMG_MAX = 2;
 
 SushiMon::SushiMon(int handle , const Position& pos)
 {
-	_friction = 0.1f;
+	_friction = 0.05f;
 	_handle = handle;
 	_rc.pos = pos;
 	_hp.SetMaxHp(MAX_HP);
@@ -50,9 +50,13 @@ void
 SushiMon::AliveUpdate()
 {
 	Gravity();
+	_vel.x = _dir.x * 2 * GameTime::Instance().GetTimeScale(this);
+
 	_rc.pos += _vel;
 	_hitBox->Foot(0, _rc, _dir);
 	_hitBox->Search(0, _rc, _dir);
+
+	_hpbar.CommitPeriod();
 
 	if (!_footCheck)
 	{
@@ -64,6 +68,16 @@ SushiMon::AliveUpdate()
 	{
 		_update = &SushiMon::SearchUpdate;
 		_searchTime = 20.f;
+		_hitBox->SearchClear();
+		//‰EŒü‚«
+		if (_targetPos.x > _rc.pos.x)
+		{
+			_dir.x = 1;
+		}
+		else
+		{
+			_dir.x = -1;
+		}
 	}
 
 	if (_isDamage)
@@ -71,7 +85,7 @@ SushiMon::AliveUpdate()
 		_update = &SushiMon::DamageUpdate;
 	}
 
-	if (_hp.GetHitPoint() <= 0)
+	if (_hp.IsDead())
 	{
 		_update = &SushiMon::DyingUpdate;
 		EffectManager::Instance().Create(EffectType::erasure, _rc.Center(), Vector2(1.5f, 1.5f), 1.3f);
@@ -107,7 +121,7 @@ void
 SushiMon::SearchUpdate()
 {
 	Gravity();
-	_vel.x = _dir.x * 4.f;
+	_vel.x = _dir.x * 4.f * GameTime::Instance().GetTimeScale(this);
 	_rc.pos += _vel;
 
 	--_searchTime;
@@ -176,6 +190,7 @@ SushiMon::DamageUpdate()
 		_isDamage = false;
 		_update = &SushiMon::AliveUpdate;
 		_vel.x = _dir.x * 2;
+		_hpbar.Commit();
 	}
 }
 
@@ -187,6 +202,7 @@ SushiMon::Update()
 		Anim();
 		(this->*_update)();
 	}
+	_hpbar.Update();
 	_hitStop.Update();
 }
 
@@ -200,7 +216,7 @@ SushiMon::Draw(const Vector2& offset)
 	RRMLib::DrawRectGraph(drawPos.x, drawPos.y, _uv.x, _uv.y, _rc.w, _rc.h, _handle, true, _dir.x > 0);
 	_hpbar.Draw(Vector2(drawPos.x + _rc.w / 4, drawPos.y - _rc.h / 4), _hp);
 
-	ColDraw();
+	//ColDraw();
 }
 
 void 

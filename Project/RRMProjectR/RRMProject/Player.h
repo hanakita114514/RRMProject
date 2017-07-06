@@ -14,7 +14,7 @@
 #include "Input.h"
 #include "MultihitProtect.h"
 #include "PlayerHP.h"
-
+#include "Jump.h"
 
 #include <map>
 
@@ -22,7 +22,7 @@
 class Player : public RectObj
 {
 private:
-	enum class PlayerState
+	enum class PlayerState : unsigned int
 	{
 		none,
 
@@ -34,13 +34,41 @@ private:
 		invincible,
 		damage,
 		jump,
+		die,
 	};
+
+	enum class UpdateState : unsigned int
+	{
+		alive,
+		dying,
+		attack,
+		invincible,
+		damage,
+		avoidance,
+	};
+
+	enum class AttackState : unsigned int
+	{
+		first,
+		second,
+		third,
+		up,
+	};
+
+	enum class Dir : unsigned int
+	{
+		right,
+		left
+	};
+
 	std::map<PlayerState, int> _handleMap;
 
 	static const int ToolMax = 3;
 private:
 	HitPoint _hp;			//体力
 	PlayerHP _hpbar;		//体力バー
+
+	Jump _jump;
 
 	PowerPoint _pp;			//パワーポイント
 	Vector2 _vel;			//速度
@@ -51,6 +79,8 @@ private:
 	PlayerHitBox _hitBox;	//当たり判定
 	MultihitProtect _mhp;	//多段ヒットを防ぐ
 
+	UpdateState _us;		//アップデートステート
+	AttackState _as;		//アタックステート
 	PlayerState _ps;		//プレイヤーの状態
 
 	Vector2 _dir;			//向き（1…右向き、-1…左向き)
@@ -81,14 +111,16 @@ private:
 	void Jump();
 	void Move();
 
-	void(Player::*_attack)();
+	typedef void(Player::*_func)();
+
+	std::map<AttackState, _func> _attack;
 	void FirstAttack();
 	void SecondAttack();
 	void ThirdAttack();
 	void UpAttack();
 	void DonwAttack();
 
-	void (Player::*_update)();
+	std::map<UpdateState, _func> _update;
 	void AttackUpdate();
 	void AliveUpdate();
 	void AvoidanceUpdate();
@@ -98,9 +130,9 @@ private:
 
 	void Shoot();
 
-	void (Player::*_isdir)();
 	void DirRight();
 	void DirLeft();
+
 	bool _turnFlag;
 
 	void HitGround();
@@ -108,9 +140,17 @@ private:
 	void ToolSwitch();
 	void WeaponSwitch();
 
+	//戻り値 回避できたか？
+	bool Avoidance();
+
 	//距離減衰
 	void DistanceAttenuation();
 
+	//リソースの読み込み
+	void LoadResources();
+
+	//マップ初期化
+	void MapInit();
 
 public:
 	Player(int padType, Camera& camera, InputMode mode);	//使うパッド番号を指定
@@ -127,6 +167,7 @@ public:
 	Vector2& GetDir() { return _dir; }
 
 	void SlowMotion();
+	void SlowMotion(Object* other);
 
 	void Hit(Enemy* other);
 	void Hit(Block* other);
@@ -144,7 +185,5 @@ public:
 	std::vector<HitBox>& GetDamageBoxes() { return _hitBox.GetDamageBoxes(); }
 	
 	MultihitProtect& GetHitProtect() { return _mhp; }
-
-	HitPoint& GetHP() { return _hp; }
 };
 

@@ -14,6 +14,10 @@ private:
 	float _backOffset;
 	float _offsetBuf;
 
+	bool _isCommit;		//コミット中か？
+	bool _isDone;
+
+	int _commitFrame;
 public:
 	HPBar();
 	~HPBar();
@@ -21,5 +25,6 @@ public:
 	void Update();
 	void Draw(const Position& pos, HitPoint& hp);
 	void Commit();
+	void CommitPeriod();
 };
 

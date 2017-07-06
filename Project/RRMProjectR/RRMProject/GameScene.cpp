@@ -215,7 +215,7 @@ void GameScene::PlayerColEnemy()
 		{
 			if (_col->IsHit(searchRc, _player.GetRect()))
 			{
-				enemy->SearchHit();
+				enemy->SearchHit(_player.GetRect().pos);
 			}
 		}
 
@@ -228,8 +228,15 @@ void GameScene::PlayerColEnemy()
 		{
 			if (_col->IsHit(attackBox.rc, _player.GetRect()))
 			{
-				_player.Damage(attackBox.power, attackBox);
-				enemy->GetHitProtect().Hit(&_player);
+				if (_player.IsAvoidance())
+				{
+					_player.SlowMotion(enemy);
+				}
+				else
+				{
+					_player.Damage(attackBox.power, attackBox);
+					enemy->GetHitProtect().Hit(&_player);
+				}
 			}
 		}
 	}

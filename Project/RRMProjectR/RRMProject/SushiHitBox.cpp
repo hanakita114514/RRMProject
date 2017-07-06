@@ -78,7 +78,7 @@ SushiHitBox::Attack(float frame, const Rect& rc, const Vector2& dir)
 	}
 
 	hitBox.hitstop = 3.0f;
-	hitBox.power = 10.0f;
+	hitBox.power = 300.0f;
 	hitBox.rc = rect;
 	hitBox.vec = Vector2(dir.x * 10, -15.0f);
 

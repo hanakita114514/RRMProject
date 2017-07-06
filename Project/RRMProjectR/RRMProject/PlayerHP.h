@@ -16,12 +16,15 @@ private:
 	float _backOffset;
 	float _offsetBuf;
 
+	int _commitFrame;
+
 public:
 	PlayerHP();
 	~PlayerHP();
 
 	void Update();
 	void Commit();
+	void CommitPeriod();	 //コミット周期
 	void Draw(HitPoint& hp);
 };
 
