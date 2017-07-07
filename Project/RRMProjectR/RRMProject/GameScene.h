@@ -5,11 +5,23 @@
 #include "Camera.h"
 #include "StatusUI.h"
 #include "KeyConfig.h"
+#include "Result.h"
+
+#include <map>
 
 class Collision;
 
 class GameScene : public Scene
 {
+private:
+	enum SceneState
+	{
+		start,
+		game,
+		end,
+		result,
+	};
+
 private:
 	bool _sceneChangeFlag;
 
@@ -18,6 +30,18 @@ private:
 	StatusUI _statusUI;
 	
 	Camera _camera;
+
+	typedef void(GameScene::*_func)();
+
+	std::map<SceneState, _func> _update;
+	void StartUpdate();
+	void GameUpdate();
+	void EndUpdate();
+	void ResultUpdate();
+	SceneState _state;
+
+	Result _result;
+
 
 	void EnemyColBlock();
 	void PlayerColBlock();

@@ -15,6 +15,7 @@
 #include "MultihitProtect.h"
 #include "PlayerHP.h"
 #include "Jump.h"
+#include "PlayerDraw.h"
 
 #include <map>
 
@@ -22,21 +23,6 @@
 class Player : public RectObj
 {
 private:
-	enum class PlayerState : unsigned int
-	{
-		none,
-
-		neutral,
-		walk,
-		attack,
-		shoot,
-		avoidance,
-		invincible,
-		damage,
-		jump,
-		die,
-	};
-
 	enum class UpdateState : unsigned int
 	{
 		alive,
@@ -60,8 +46,6 @@ private:
 		right,
 		left
 	};
-
-	std::map<PlayerState, int> _handleMap;
 
 	static const int ToolMax = 3;
 private:
@@ -89,6 +73,8 @@ private:
 
 	Camera& _camera;
 
+	PlayerDraw _playerDraw;
+
 	int _animFrame;
 
 	int _nosedive;
@@ -98,11 +84,7 @@ private:
 	float _invincibleTime;	//無敵時間
 	float _attackTime;		//攻撃時間
 
-	bool _isJump;		//ジャンプ中か?
-	bool _groundJump;	//地上ジャンプ
 	bool _hitGround;
-	bool _secondJump;	//二段ジャンプが残っているか？
-	bool _isAirJump;	//空中ジャンプ中か？
 
 	bool _addAttackFlag;	//追加攻撃フラグ
 

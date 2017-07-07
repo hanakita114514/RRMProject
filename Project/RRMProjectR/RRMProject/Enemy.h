@@ -9,6 +9,7 @@
 #include "HPBar.h"
 #include "HitBox.h"
 #include "EnemyHitBox.h"
+#include "Armor.h"
 
 enum class EnemyType
 {
@@ -33,6 +34,7 @@ protected:
 	Vector2 _dir;
 	bool _isAlive;
 	Vector2 _uv;
+	Armor _armor;			//アーマー
 
 	AbstractSpell* _absSpell;		//スペルファクトリー
 

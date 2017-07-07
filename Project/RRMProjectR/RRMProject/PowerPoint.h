@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Timer.h"
+#include "Vector2.h"
 
 class PowerPoint
 {
@@ -11,6 +12,10 @@ private:
 	int _recVal;	//‰ñ•œ”
 
 	Timer _time;
+
+	int _handle;
+
+	Position _pos;
 
 public:
 	PowerPoint(int pp);
@@ -30,6 +35,6 @@ public:
 	//PP‚ªg‚¦‚È‚¢ó‘Ô‚©H
 	bool IsAbsentPP();
 
-	
+	void Draw();
 };
 

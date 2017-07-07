@@ -1,4 +1,3 @@
-#include <RRMLib.h>
 #include "Player.h"
 #include "BulletManager.h"
 #include "NormalBullet.h"
@@ -37,10 +36,7 @@ Player::Player(int padType, Camera& camera, InputMode mode)
 	_dir = Vector2(1, 0);
 
 	_hitGround = false;
-	_isAirJump = false;
-	_isJump = false;
-	_secondJump = true;
-	_groundJump = true;
+
 	_nosedive = 1;
 
 	_speed = 6.0f;
@@ -75,13 +71,13 @@ Player::~Player()
 void 
 Player::LoadResources()
 {
-	_handle = RRMLib::LoadGraph("Resource/img/player/player.png");
+	//_handle = RRMLib::LoadGraph("Resource/img/player/player.png");
 
 	//_handleMap[PlayerState::neutral] = RRMLib::LoadGraph("Resource/img/player/Healer/$Healer_1.png");
-	_handleMap[PlayerState::neutral] = RRMLib::LoadGraph("Resource/img/player/player.png");
-	_handleMap[PlayerState::attack] = RRMLib::LoadGraph("Resource/img/player/attack.png");
+	//_handleMap[PlayerState::neutral] = RRMLib::LoadGraph("Resource/img/player/player.png");
+	//_handleMap[PlayerState::attack] = RRMLib::LoadGraph("Resource/img/player/attack.png");
 	//_handleMap[PlayerState::avoidance] = RRMLib::LoadGraph("Resource/img/player/Healer/$Healer_4.png");
-	_handleMap[PlayerState::avoidance] = RRMLib::LoadGraph("Resource/img/player/avoidance.png");
+	//_handleMap[PlayerState::avoidance] = RRMLib::LoadGraph("Resource/img/player/avoidance.png");
 }
 
 void 
@@ -222,9 +218,7 @@ void Player::AvoidanceUpdate()
 	{
 		_vel.y = 0;
 
-		_isAirJump = false;
-		_isJump = false;
-		_secondJump = true;
+		_jump.HitGround();
 	}
 }
 
@@ -536,54 +530,14 @@ Player::Draw()
 	drawPos.x = _rc.pos.x - _camera.GetOffset().x;
 	drawPos.y = _rc.pos.y - _camera.GetOffset().y;
 
-	switch (_ps)
-	{
-	case Player::PlayerState::none:
-		break;
+	_playerDraw.Draw(drawPos, _ps);
 
-	case Player::PlayerState::neutral:
-		RRMLib::DrawGraph(drawPos.x, drawPos.y, _handleMap[PlayerState::neutral]);
-		//RRMLib::DrawRectGraph(drawPos.x, drawPos.y, ((_animFrame / 6) % 4) * 144, 0, 144, 96, _handleMap[PlayerState::neutral], true, _turnFlag);
-		break;
-
-	case Player::PlayerState::walk:
-		//RRMLib::DrawRectGraph(drawPos.x, drawPos.y, ((_animFrame / 6) % 4) * 144, 96 * 2, 144, 96, _handleMap[PlayerState::neutral], true, _turnFlag);
-		RRMLib::DrawGraph(drawPos.x, drawPos.y, _handleMap[PlayerState::neutral]);
-		break;
-
-	case Player::PlayerState::attack:
-		RRMLib::DrawGraph(drawPos.x, drawPos.y, _handleMap[PlayerState::attack]);
-		break;
-
-	case Player::PlayerState::shoot:
-		RRMLib::DrawGraph(drawPos.x, drawPos.y, _handleMap[PlayerState::attack]);
-		break;
-
-	case Player::PlayerState::avoidance:
-		//RRMLib::DrawRectGraph(drawPos.x, drawPos.y, ((_animFrame / 6) % 4) * 144, 96 * 1, 144, 96, _handleMap[PlayerState::avoidance], true, _turnFlag);
-		RRMLib::DrawGraph(drawPos.x, drawPos.y, _handleMap[PlayerState::avoidance]);
-		break;
-
-	case Player::PlayerState::invincible:
-		if (((int)_invincibleTime / 3) % 2 == 0)
-		{
-			RRMLib::DrawGraph(drawPos.x, drawPos.y, _handleMap[PlayerState::neutral]);
-		}
-		break;
-	case Player::PlayerState::damage:
-		RRMLib::DrawGraph(drawPos.x, drawPos.y, _handleMap[PlayerState::neutral]);
-		break;
-	case Player::PlayerState::jump:
-		RRMLib::DrawRectGraph(drawPos.x, drawPos.y, ((_animFrame / 6) % 4) * 144, 96 * 1, 144, 96, _handleMap[PlayerState::neutral], true, _turnFlag);
-		break;
-	default:
-		break;
-	}
 
 	//RRMLib::DrawLine((int)(_rc.Left() + (_rc.w / 2)), (int)(_rc.Top()),
 	//				(int)(_rc.Left() + (_rc.w / 2)), (int)(_rc.Bottom()), 0xff0000);
 	_hitBox.Draw();
 	_hpbar.Draw(_hp);
+	_pp.Draw();
 
 #ifdef DEBUG
 	_rc.DrawBox();
@@ -688,7 +642,7 @@ void Player::Hit(Bullet* other)
 void 
 Player::SlowMotion()
 {
-	_sd.SlowMotion(slow_second);
+	_sd.SlowMotion(5, this);
 }
 
 void

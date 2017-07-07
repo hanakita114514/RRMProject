@@ -1,11 +1,18 @@
 #include "PowerPoint.h"
-
+#include <RRMLib.h>
 
 static const unsigned int RECOVERY_TIME = 3;
+static const float IMG_W = 16.0f;
+static const float IMG_H = 16.0f;
+static const float OFFSET = IMG_W + 2.0f;
 
 PowerPoint::PowerPoint(int pp) : _pp(pp), _maxPP(pp), _recVal(1)
 {
 	_time.Start();
+
+	_handle = RRMLib::LoadGraph("Resource/img/Player/SKILL.png");
+
+	_pos = Position(50, 60);
 }
 
 
@@ -16,6 +23,11 @@ PowerPoint::~PowerPoint()
 void 
 PowerPoint::Update()
 {
+	if (IsPPMax())
+	{
+		_time.Reset();
+		return;
+	}
 	if (_time.GetTime().seconds >= RECOVERY_TIME)
 	{
 		_time.Reset();
@@ -76,4 +88,13 @@ bool
 PowerPoint::IsAbsentPP()
 {
 	return _pp <= 0;
+}
+
+void 
+PowerPoint::Draw()
+{
+	for (int i = 0; i < _pp; ++i)
+	{
+		RRMLib::DrawExtendGraph(_pos.x + i * OFFSET, _pos.y, _pos.x + IMG_W + i * OFFSET, _pos.y + IMG_H, _handle);
+	}
 }

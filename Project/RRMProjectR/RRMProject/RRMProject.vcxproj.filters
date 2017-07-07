@@ -67,6 +67,15 @@
     <Filter Include="ソース ファイル\Object\Enemy\HitBox">
       <UniqueIdentifier>{98910975-a4ac-4d5d-a53a-4c7407221b18}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Object\Enemy\Strategy">
+      <UniqueIdentifier>{9e291202-a426-45d9-a2ab-5cc56922415d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Jewel">
+      <UniqueIdentifier>{08bd626a-3871-47cf-bfb6-7db03086ec67}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Scene\Result">
+      <UniqueIdentifier>{03ff278f-0186-47f9-9db6-39159836e5c2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameMain.cpp">
@@ -330,9 +339,6 @@
     <ClCompile Include="SushiMon.cpp">
       <Filter>ソース ファイル\Object\Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="InputFactory.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="SushiHitBox.cpp">
       <Filter>ソース ファイル\Object\Enemy\HitBox</Filter>
     </ClCompile>
@@ -340,7 +346,25 @@
       <Filter>ソース ファイル\Object\Enemy\HitBox</Filter>
     </ClCompile>
     <ClCompile Include="Jump.cpp">
+      <Filter>ソース ファイル\Object\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="InputFactory.cpp">
+      <Filter>ソース ファイル\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerDraw.cpp">
+      <Filter>ソース ファイル\Object\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="SushiStrategy.cpp">
+      <Filter>ソース ファイル\Object\Enemy\Strategy</Filter>
+    </ClCompile>
+    <ClCompile Include="Jewel.cpp">
       <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Result.cpp">
+      <Filter>ソース ファイル\Scene\Result</Filter>
+    </ClCompile>
+    <ClCompile Include="EndCall.cpp">
+      <Filter>ソース ファイル\Scene\Result</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -614,17 +638,32 @@
     <ClInclude Include="SushiMon.h">
       <Filter>ソース ファイル\Object\Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="InputFactory.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="SushiHitBox.h">
       <Filter>ソース ファイル\Object\Enemy\HitBox</Filter>
     </ClInclude>
     <ClInclude Include="EnemyHitBox.h">
       <Filter>ソース ファイル\Object\Enemy\HitBox</Filter>
     </ClInclude>
+    <ClInclude Include="PlayerDraw.h">
+      <Filter>ソース ファイル\Object\Player</Filter>
+    </ClInclude>
     <ClInclude Include="Jump.h">
+      <Filter>ソース ファイル\Object\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="InputFactory.h">
+      <Filter>ソース ファイル\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="SushiStrategy.h">
+      <Filter>ソース ファイル\Object\Enemy\Strategy</Filter>
+    </ClInclude>
+    <ClInclude Include="Jewel.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Result.h">
+      <Filter>ソース ファイル\Scene\Result</Filter>
+    </ClInclude>
+    <ClInclude Include="EndCall.h">
+      <Filter>ソース ファイル\Scene\Result</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

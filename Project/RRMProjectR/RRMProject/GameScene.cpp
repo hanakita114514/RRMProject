@@ -22,6 +22,11 @@ GameScene::GameScene() : _player(0,_camera, InputMode::pad), _camera(_player.Get
 	Fade::Instance().FadeOut(5.0f);
 	_logoState = LogoIdx::GameStart;
 
+	_update[SceneState::start] = &GameScene::StartUpdate;
+	_update[SceneState::game] = &GameScene::GameUpdate;
+	_update[SceneState::end] = &GameScene::EndUpdate;
+	_state = SceneState::start;
+
 	_camera.Init();
 }
 
@@ -36,6 +41,11 @@ GameScene::GameScene(LogoIdx state, KeyData& keyData) : _player(0, _camera, keyD
 	_logoState = state;
 	_sceneChangeFlag = false;
 
+	_update[SceneState::start] = &GameScene::StartUpdate;
+	_update[SceneState::game] = &GameScene::GameUpdate;
+	_update[SceneState::end] = &GameScene::EndUpdate;
+	_state = SceneState::game;
+
 	_camera.Init();
 }
 
@@ -47,26 +57,32 @@ GameScene::~GameScene()
 	BlockManager::Instance().Delete();
 }
 
-bool GameScene::Update()
+void
+GameScene::StartUpdate()
 {
-	//更新--------------------------------------------------------------------
-
 	if (!_sceneChangeFlag && Fade::Instance().IsFadeOutEnd())
 	{
 		if (Fade::Instance().IsWait())
 		{
-			_player.Update();
-			MapManager::Instance().Update();
-			EnemyManager::Instance().Update();
-			BulletManager::Instance().Update();
-			EffectManager::Instance().Update();
+			_state = SceneState::game;
 		}
-		_camera.Update();
+	}
+}
+
+void
+GameScene::GameUpdate()
+{
+	//更新--------------------------------------------------------------------
+	_player.Update();
+	MapManager::Instance().Update();
+	EnemyManager::Instance().Update();
+	BulletManager::Instance().Update();
+	EffectManager::Instance().Update();
+	_camera.Update();
 
 		//当たり判定
-		ColProcess();
-		EnemyManager::Instance().ScreenLimit(_camera);
-	}
+	ColProcess();
+	EnemyManager::Instance().ScreenLimit(_camera);
 
 	//描画--------------------------------------------------------------------
 	MapManager::Instance().Draw(_camera.GetOffset());
@@ -77,7 +93,26 @@ bool GameScene::Update()
 	EffectManager::Instance().Draw(_camera.GetOffset());
 	//_statusUI.Draw();
 
+	_result.Update();
+
 	StageClear();
+}
+
+void
+GameScene::EndUpdate()
+{
+
+}
+
+void 
+GameScene::ResultUpdate()
+{
+
+}
+
+bool GameScene::Update()
+{
+	(this->*_update[_state])();
 
 	return true;
 }
@@ -231,11 +266,18 @@ void GameScene::PlayerColEnemy()
 				if (_player.IsAvoidance())
 				{
 					_player.SlowMotion(enemy);
+					_player.SlowMotion();
 				}
 				else
 				{
 					_player.Damage(attackBox.power, attackBox);
+					_player.HitStop(attackBox.hitstop);
+					enemy->HitStop(attackBox.hitstop);
 					enemy->GetHitProtect().Hit(&_player);
+					if (attackBox.power > 50)
+					{
+						_camera.Quake(Vector2(10, 0));
+					}
 				}
 			}
 		}

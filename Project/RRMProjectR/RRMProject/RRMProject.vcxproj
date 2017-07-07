@@ -46,6 +46,7 @@
     <ClCompile Include="EffectFactory.cpp" />
     <ClCompile Include="EffectManager.cpp" />
     <ClCompile Include="Egg.cpp" />
+    <ClCompile Include="EndCall.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyFactory.cpp" />
     <ClCompile Include="EnemyHitBox.cpp" />
@@ -68,6 +69,7 @@
     <ClCompile Include="HPBar.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="InputFactory.cpp" />
+    <ClCompile Include="Jewel.cpp" />
     <ClCompile Include="Jump.cpp" />
     <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="KeyConfig.cpp" />
@@ -82,11 +84,13 @@
     <ClCompile Include="NormalBullet.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerDraw.cpp" />
     <ClCompile Include="PlayerHitBox.cpp" />
     <ClCompile Include="PlayerHP.cpp" />
     <ClCompile Include="PowerPoint.cpp" />
     <ClCompile Include="Rect.cpp" />
     <ClCompile Include="RectObj.cpp" />
+    <ClCompile Include="Result.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="ShootingStar.cpp" />
     <ClCompile Include="SinBullet.cpp" />
@@ -96,6 +100,7 @@
     <ClCompile Include="StatusUI.cpp" />
     <ClCompile Include="SushiHitBox.cpp" />
     <ClCompile Include="SushiMon.cpp" />
+    <ClCompile Include="SushiStrategy.cpp" />
     <ClCompile Include="TestSpell.cpp" />
     <ClCompile Include="ThroughBlock.cpp" />
     <ClCompile Include="Timer.cpp" />
@@ -140,6 +145,7 @@
     <ClInclude Include="EffectFactory.h" />
     <ClInclude Include="EffectManager.h" />
     <ClInclude Include="Egg.h" />
+    <ClInclude Include="EndCall.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyFactory.h" />
     <ClInclude Include="EnemyHitBox.h" />
@@ -162,6 +168,7 @@
     <ClInclude Include="HPBar.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="InputFactory.h" />
+    <ClInclude Include="Jewel.h" />
     <ClInclude Include="Jump.h" />
     <ClInclude Include="Keyboard.h" />
     <ClInclude Include="KeyConfig.h" />
@@ -177,11 +184,13 @@
     <ClInclude Include="NormalBullet.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayerDraw.h" />
     <ClInclude Include="PlayerHitBox.h" />
     <ClInclude Include="PlayerHP.h" />
     <ClInclude Include="PowerPoint.h" />
     <ClInclude Include="Rect.h" />
     <ClInclude Include="RectObj.h" />
+    <ClInclude Include="Result.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="ShootingStar.h" />
     <ClInclude Include="SinBullet.h" />
@@ -191,6 +200,7 @@
     <ClInclude Include="StatusUI.h" />
     <ClInclude Include="SushiHitBox.h" />
     <ClInclude Include="SushiMon.h" />
+    <ClInclude Include="SushiStrategy.h" />
     <ClInclude Include="TestSpell.h" />
     <ClInclude Include="ThroughBlock.h" />
     <ClInclude Include="Timer.h" />

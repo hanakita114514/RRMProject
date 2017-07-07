@@ -6,8 +6,11 @@
 #include "GameTime.h"
 
 static const float GRAVITY = 0.75f;
+static const float LIFE = 50.0f;
+static const float FRICTION = 0.2f;
+static const float ARMOR_LIFE = 50.0f;
 
-Enemy::Enemy() : _hp(50.0f), _friction(0.2)
+Enemy::Enemy() : _hp(LIFE), _friction(FRICTION), _armor(ARMOR_LIFE)
 {
 	_absSpell = new AbstractSpell();
 	_hitGround = false;
@@ -149,6 +152,7 @@ void
 Enemy::Damage(float power, const Vector2& vec)
 {
 	_hp.Damage(power);
+	_armor.Damage(power);
 	_vel = vec;
 	_isDamage = true;
 }

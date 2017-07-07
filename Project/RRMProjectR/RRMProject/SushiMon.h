@@ -2,9 +2,22 @@
 
 #include "Enemy.h"
 #include "Collision.h"
+#include <map>
 
 class SushiMon : public Enemy
 {
+private:
+	enum class UpdateState
+	{
+		alive,
+		worry,
+		search,
+		attack,
+		fall,
+		dying,
+		damage,
+		charge,
+	};
 private:
 	Collision _col;
 
@@ -12,8 +25,9 @@ private:
 	float _chargeTime;
 	float _searchTime;
 
-	void (SushiMon::*_update)();
+	typedef void (SushiMon::*_func)();
 
+	std::map<UpdateState, _func> _update;
 	void AliveUpdate();
 	void WorryUpdate();
 	void SearchUpdate();
@@ -22,6 +36,7 @@ private:
 	void FallUpdate();
 	void DyingUpdate();
 	void DamageUpdate();
+	UpdateState _state;
 
 	void Anim();
 

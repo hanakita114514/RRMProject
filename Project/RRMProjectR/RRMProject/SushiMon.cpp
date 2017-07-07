@@ -23,7 +23,15 @@ SushiMon::SushiMon(int handle , const Position& pos)
 	_uv = Vector2(0, 0);
 	_vel.x = _dir.x * 2;
 
-	_update = &SushiMon::FallUpdate;
+	_update[UpdateState::fall] = &SushiMon::FallUpdate;
+	_update[UpdateState::alive] = &SushiMon::AliveUpdate;
+	_update[UpdateState::attack] = &SushiMon::AttackUpdate;
+	_update[UpdateState::damage] = &SushiMon::DamageUpdate;
+	_update[UpdateState::dying] = &SushiMon::DyingUpdate;
+	_update[UpdateState::search] = &SushiMon::SearchUpdate;
+	_update[UpdateState::worry] = &SushiMon::WorryUpdate;
+	_update[UpdateState::charge] = &SushiMon::ChargeUpdate;
+	_state = UpdateState::fall;
 
 	_animFrame = 0;
 
@@ -60,13 +68,15 @@ SushiMon::AliveUpdate()
 
 	if (!_footCheck)
 	{
-		_update = &SushiMon::WorryUpdate;
+		//_update = &SushiMon::WorryUpdate;
+		_state = UpdateState::worry;
 		_warryTime = 5;
 	}
 
 	if (_isSearch)
 	{
-		_update = &SushiMon::SearchUpdate;
+		_state = UpdateState::search;
+		//_update = &SushiMon::SearchUpdate;
 		_searchTime = 20.f;
 		_hitBox->SearchClear();
 		//‰EŒü‚«
@@ -82,12 +92,14 @@ SushiMon::AliveUpdate()
 
 	if (_isDamage)
 	{
-		_update = &SushiMon::DamageUpdate;
+		//_update = &SushiMon::DamageUpdate;
+		_state = UpdateState::damage;
 	}
 
 	if (_hp.IsDead())
 	{
-		_update = &SushiMon::DyingUpdate;
+		//_update = &SushiMon::DyingUpdate;
+		_state = UpdateState::dying;
 		EffectManager::Instance().Create(EffectType::erasure, _rc.Center(), Vector2(1.5f, 1.5f), 1.3f);
 		_isAlive = false;
 	}
@@ -111,7 +123,9 @@ SushiMon::ChargeUpdate()
 
 	if (_chargeTime < 0)
 	{
-		_update = &SushiMon::AttackUpdate;
+		//_update = &SushiMon::AttackUpdate;
+		_state = UpdateState::attack;
+
 		_vel.x = _dir.x * 4.f;
 		_vel.y = -13;
 	}
@@ -128,7 +142,8 @@ SushiMon::SearchUpdate()
 
 	if (_searchTime < 0 && _hitGround)
 	{
-		_update = &SushiMon::ChargeUpdate;
+		//_update = &SushiMon::ChargeUpdate;
+		_state = UpdateState::charge;
 		_chargeTime = 30.0f;
 		_hitBox->Foot(0, _rc, _dir);
 		_hitBox->Search(0, _rc, _dir);
@@ -144,7 +159,9 @@ SushiMon::AttackUpdate()
 
 	if (_hitGround)
 	{
-		_update = &SushiMon::AliveUpdate;
+		//_update = &SushiMon::AliveUpdate;
+		_state = UpdateState::alive;
+		
 		_isSearch = false;
 		_hitBox->Clear();
 		_mhp.Clear();
@@ -158,7 +175,9 @@ SushiMon::WorryUpdate()
 
 	if (_warryTime <= 0)
 	{
-		_update = &SushiMon::FallUpdate;
+		//_update = &SushiMon::FallUpdate;
+		_state = UpdateState::fall;
+
 		_dir.x *= -1;
 		_vel.x = _dir.x * 2;
 		_hitBox->Foot(0, _rc, _dir);
@@ -173,7 +192,8 @@ SushiMon::FallUpdate()
 	_rc.pos += _vel;
 	if (_hitGround)
 	{
-		_update = &SushiMon::AliveUpdate;
+		//_update = &SushiMon::AliveUpdate;
+		_state = UpdateState::alive;
 	}
 }
 
@@ -188,9 +208,11 @@ SushiMon::DamageUpdate()
 	if (_vel.x == 0)
 	{
 		_isDamage = false;
-		_update = &SushiMon::AliveUpdate;
+		//_update = &SushiMon::AliveUpdate;
+		_state = UpdateState::alive;
 		_vel.x = _dir.x * 2;
 		_hpbar.Commit();
+		_armor.Recovery();
 	}
 }
 
@@ -200,7 +222,10 @@ SushiMon::Update()
 	if (!_hitStop.IsHitStop())
 	{
 		Anim();
-		(this->*_update)();
+		(this->*_update[_state])();
+	}
+	if (_armor.IsBroken())
+	{
 	}
 	_hpbar.Update();
 	_hitStop.Update();
