@@ -366,6 +366,9 @@
     <ClCompile Include="EndCall.cpp">
       <Filter>ソース ファイル\Scene\Result</Filter>
     </ClCompile>
+    <ClCompile Include="Logo.cpp">
+      <Filter>ソース ファイル\Scene\Result</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common.h">
@@ -663,6 +666,9 @@
       <Filter>ソース ファイル\Scene\Result</Filter>
     </ClInclude>
     <ClInclude Include="EndCall.h">
+      <Filter>ソース ファイル\Scene\Result</Filter>
+    </ClInclude>
+    <ClInclude Include="Logo.h">
       <Filter>ソース ファイル\Scene\Result</Filter>
     </ClInclude>
   </ItemGroup>

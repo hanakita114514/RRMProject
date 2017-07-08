@@ -87,7 +87,7 @@ Keyboard::IsRepeat(const KeyType& inputType, int repCnt)
 		_repFrame[inputType] = 0;
 	}
 
-	if (_repFrame[inputType] > rep_interval)
+	if (_repFrame[inputType] > repCnt)
 	{
 		_repFrame[inputType] = 0;
 		return true;
@@ -189,8 +189,7 @@ Keyboard::Shoot(int repCnt)
 	{
 		return true;
 	}
-	if (IsRepeat(KeyType::keyA, repCnt))
-	{
+	if (IsRepeat(KeyType::keyA, repCnt))	{
 		return true;
 	}
 
