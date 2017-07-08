@@ -20,7 +20,7 @@ Fade::~Fade()
 void 
 Fade::Init()
 {
-	_alpha = 0;
+	_alpha = 255;
 	_fadeSpeed = 0;
 	_func = &Fade::Wait;
 	_handle[0] = RRMLib::LoadGraph("Resource/img/BackGround/Fade.png");
@@ -33,6 +33,7 @@ Fade::Init()
 	_extendPos[1] = Vector2(640, 370);
 
 	_extendX = _extendY = 0;
+	_speed = 1;
 }
 
 void
@@ -45,7 +46,7 @@ void
 Fade::FadeIn()
 {
 	_handleIdx = (int)FadeImage::black;
-	_alpha += _fadeSpeed;
+	_alpha += _fadeSpeed * _speed;
 	if (_alpha >= 255)
 	{
 		_alpha = 255;
@@ -57,7 +58,7 @@ Fade::FadeIn()
 void 
 Fade::FadeOut()
 {
-	_alpha -= _fadeSpeed;
+	_alpha -= _fadeSpeed * _speed;
 	if (_alpha <= 0)
 	{
 		_alpha = 0;
@@ -169,4 +170,10 @@ bool
 Fade::IsPause()
 {
 	return _isPause;
+}
+
+void
+Fade::ChangeFadeSpeed(float speed)
+{
+	_speed = speed;
 }

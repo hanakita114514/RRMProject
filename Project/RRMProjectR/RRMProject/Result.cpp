@@ -53,3 +53,9 @@ Result::Update()
 {
 	(this->*_update[_state])();
 }
+
+bool
+Result::IsEnd()
+{
+	return _state == State::end;
+}

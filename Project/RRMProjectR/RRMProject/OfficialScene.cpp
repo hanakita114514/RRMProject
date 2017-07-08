@@ -4,60 +4,82 @@
 #include <RRMLib.h>
 #include "common.h"
 #include "Fade.h"
-#include <math.h>
-#include "EffectManager.h"
 #include "SceneManager.h"
+#include "InputFactory.h"
 
-OfficialScene::OfficialScene() : _hp(100)
+static const float LOGO_W = 512.0f;
+static const float LOGO_H = 96.0f;
+
+static const float FADE_SPEED = 2.0f;
+
+OfficialScene::OfficialScene()
 {
-	EffectManager& em = EffectManager::Instance();
-	em.Create(EffectType::up, Position(400, 100),Vector2(1.0f,1.0f));
-	em.Create(EffectType::down, Position(100, 200), Vector2(3.0f, 1.0f));
-	//em.Create(EffectType::flash, Position(500, 300),Vector2(1.0f,1.0f));
-	em.Create(EffectType::explosion, Position(500, 300), Vector2(1.0f, 1.0f));
-	em.Create(EffectType::erasure, Position(1000, 100), Vector2(0.1f, 0.1f));
-	em.Create(EffectType::enemy_summons, Position(100, 300), Vector2(0.5f, 0.5f));
-	em.Create(EffectType::bullet_summons, Position(300, 500), Vector2(1.0f, 1.0f));
-	em.Create(EffectType::hit1, Position(700, 50), Vector2(1.0f, 1.0f));
+	_update[State::start] = &OfficialScene::StartUpdate;
+	_update[State::middle] = &OfficialScene::MiddleUpdate;
+	_update[State::end] = &OfficialScene::EndUpdate;
+	_state = State::start;
 
-	srand(time(NULL));
+	_logoHandle = RRMLib::LoadGraph("Resource/img/UI/Logo.PNG");
+
+	Fade::Instance().FadeOut(FADE_SPEED);
+
+	RRMLib::ChangeBackColor(255, 255, 255);
+
+	_frame = 0;
+
+	_input = InputFactory::Create(InputMode::pad, 0);
 }
 
 
 OfficialScene::~OfficialScene()
 {
+	delete _input;
+}
+
+
+void 
+OfficialScene::StartUpdate()
+{
+	if (Fade::Instance().IsFadeOutEnd())
+	{
+		_state = State::middle;
+		Fade::Instance().FadeIn(FADE_SPEED);
+	}
+}
+
+void 
+OfficialScene::MiddleUpdate()
+{
+	if (_frame >= 30)
+	{
+		_frame = 0;
+		_state = State::end;
+	}
+	++_frame;
+}
+void 
+OfficialScene::EndUpdate()
+{
+	if (Fade::Instance().IsFadeInEnd())
+	{
+		RRMLib::ChangeBackColor(0, 0, 0);
+		SceneManager::Instance().ChangeScene(SceneType::menu);
+		Fade::Instance().ChangeFadeSpeed(1.0f);
+	}
 }
 
 bool OfficialScene::Update()
 {
-	//----------XV----------------------------------------------------------------------------
-	EffectManager& em = EffectManager::Instance();
-
-	EffectType et = (EffectType)((rand() % ((unsigned int)EffectType::num - 1)) + 1);
-	Vector2 pos;
-	pos.x = rand() % WINDOW_WIDTH;
-	pos.y = rand() % WINDOW_HEIGHT;
-	int speed = rand() % 5 + 1;
-	em.Create(et, pos, Vector2(1.0f, 1.0f), speed);
-
-	_hp.Damage(1);
-
-	//----------•`‰æ----------------------------------------------------------------------------
-	//DrawFormatString(100, 100, 0xffffffff, "Official Scene");
-
- 	em.Update();
-	em.Draw(Vector2(0, 0));
-
-
-
-	if (Fade::Instance().IsFadeInEnd())
+	_input->Update();
+	if (_input->Start())
 	{
-		SceneManager::Instance().ChangeScene(SceneType::title);
+		Fade::Instance().ChangeFadeSpeed(3.0f);
 	}
-	if (Fade::Instance().IsWait())
-	{
-		Fade::Instance().FadeIn(5.0f);
-	}
+	RRMLib::DrawExtendGraph(WINDOW_WIDTH / 2 - LOGO_W / 2, WINDOW_HEIGHT / 2 - LOGO_H / 2,
+		WINDOW_WIDTH / 2 + LOGO_W / 2, WINDOW_HEIGHT / 2 + LOGO_H, _logoHandle);
+
+	(this->*_update[_state])();
+
 	return true;
 }
 

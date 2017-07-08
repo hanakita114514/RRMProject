@@ -40,18 +40,9 @@ bool GameMain::Init()
 	RRMLib::ChangeFullScreenMode(false);
 	RRMLib::SetWindowSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 
-	//if (RRMLib::RRMLib_Init() == -1)  //DXÉâÉCÉuÉâÉäèâä˙âª
-	//{
-	//	return false;
-	//}
-	//RRMLib::ChangeWindowMode(true);
-	//RRMLib::SetGraphMode(WINDOW_WIDTH, WINDOW_HEIGHT, COLOR_BIT);
-	//RRMLib::SetDrawScreen(DX_SCREEN_BACK);
-
 	_dataManager.Load(_data);
 
 	Fade::Instance().Init();
-	//_scene = new MenuScene();
 
 	KeyData kd;
 	_keyConfig.Load(kd);
@@ -116,8 +107,6 @@ InputTest(DInput& input)
 void GameMain::GameLoop()
 {
 	bool loopOk = true;
-
-	DInput _dinput(DX_INPUT_PAD1);
 
 	FPS fps;
 

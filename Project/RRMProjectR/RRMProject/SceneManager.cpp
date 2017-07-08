@@ -8,7 +8,7 @@
 
 SceneManager::SceneManager()
 {
-	_scene = new MenuScene();
+	_scene = new OfficialScene();
 }
 
 

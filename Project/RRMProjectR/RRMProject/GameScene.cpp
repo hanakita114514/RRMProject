@@ -11,6 +11,7 @@
 #include "EffectManager.h"
 #include "BlockManager.h"
 #include "SceneManager.h"
+#include "GameTime.h"
 
 GameScene::GameScene() : _player(0,_camera, InputMode::pad), _camera(_player.GetRect().pos)
 {
@@ -25,7 +26,11 @@ GameScene::GameScene() : _player(0,_camera, InputMode::pad), _camera(_player.Get
 	_update[SceneState::start] = &GameScene::StartUpdate;
 	_update[SceneState::game] = &GameScene::GameUpdate;
 	_update[SceneState::end] = &GameScene::EndUpdate;
+	_update[SceneState::result] = &GameScene::ResultUpdate;
+
 	_state = SceneState::start;
+
+	_endFrame = 0;
 
 	_camera.Init();
 }
@@ -44,7 +49,10 @@ GameScene::GameScene(LogoIdx state, KeyData& keyData) : _player(0, _camera, keyD
 	_update[SceneState::start] = &GameScene::StartUpdate;
 	_update[SceneState::game] = &GameScene::GameUpdate;
 	_update[SceneState::end] = &GameScene::EndUpdate;
+	_update[SceneState::result] = &GameScene::ResultUpdate;
 	_state = SceneState::game;
+
+	_endFrame = 0;
 
 	_camera.Init();
 }
@@ -74,6 +82,7 @@ GameScene::GameUpdate()
 {
 	//XV--------------------------------------------------------------------
 	_player.Update();
+	_player.SlowDownUpdate();
 	MapManager::Instance().Update();
 	EnemyManager::Instance().Update();
 	BulletManager::Instance().Update();
@@ -93,24 +102,64 @@ GameScene::GameUpdate()
 	EffectManager::Instance().Draw(_camera.GetOffset());
 	//_statusUI.Draw();
 
-	_result.Update();
+	if (EnemyManager::Instance().EnemyEradication())
+	{
+		GameTime::Instance().SetTimeScale(0.5f);
+		_state = SceneState::end;
+	}
 
-	StageClear();
 }
 
 void
 GameScene::EndUpdate()
 {
+	//XV--------------------------------------------------------------------
+	_player.Update();
+	MapManager::Instance().Update();
+	EnemyManager::Instance().Update();
+	BulletManager::Instance().Update();
+	EffectManager::Instance().Update();
+	_camera.Update();
+
+	//“–‚½‚è”»’è
+	ColProcess();
+	EnemyManager::Instance().ScreenLimit(_camera);
+
+	//•`‰æ--------------------------------------------------------------------
+	MapManager::Instance().Draw(_camera.GetOffset());
+	BlockManager::Instance().Draw(_camera.GetOffset());
+	EnemyManager::Instance().Draw(_camera.GetOffset());
+	BulletManager::Instance().Draw(_camera.GetOffset());
+	_player.Draw();
+	EffectManager::Instance().Draw(_camera.GetOffset());
+
+	if (_endFrame >= 90)
+	{
+		_endFrame = 0;
+		GameTime::Instance().SetTimeScale(1.0f);
+		_state = SceneState::result;
+	}
+
+	++_endFrame;
 
 }
 
 void 
 GameScene::ResultUpdate()
 {
+	//•`‰æ--------------------------------------------------------------------
+	MapManager::Instance().Draw(_camera.GetOffset());
+	BlockManager::Instance().Draw(_camera.GetOffset());
+	EnemyManager::Instance().Draw(_camera.GetOffset());
+	BulletManager::Instance().Draw(_camera.GetOffset());
+	_player.Draw();
+	EffectManager::Instance().Draw(_camera.GetOffset());
 
+	_result.Update();
 }
 
-bool GameScene::Update()
+bool 
+GameScene::Update()
 {
 	(this->*_update[_state])();
 
@@ -387,8 +436,6 @@ void GameScene::StageClear()
 	{
 		Fade::Instance().FadeIn(10.0);
 	}
-
-//	RRMLib::DrawFormatString(0, 0, 0xffffffff, "GameScene");
 
 	if (_sceneChangeFlag)
 	{

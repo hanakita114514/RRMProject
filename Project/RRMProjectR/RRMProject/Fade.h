@@ -29,6 +29,8 @@ private:
 	float _extendX;
 	float _extendY;
 
+	float _speed;
+
 	int _handleIdx;
 
 	void (Fade::*_func)();
@@ -77,5 +79,8 @@ public:
 
 	//ポーズ状態か？
 	bool IsPause();
+
+	//フェードスピードを変える
+	void ChangeFadeSpeed(float speed);
 };
 

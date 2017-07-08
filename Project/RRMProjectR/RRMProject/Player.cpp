@@ -482,7 +482,6 @@ Player::Update()
 
 	if (!_hitStop.IsHitStop())
 	{
-		_sd.Update();
 		_pp.Update();
 		_armor.AutomaticRecovery();
 
@@ -521,6 +520,12 @@ Player::Update()
 	}
 
 	_animFrame++;
+}
+
+void 
+Player::SlowDownUpdate()
+{
+	_sd.Update();
 }
 
 void

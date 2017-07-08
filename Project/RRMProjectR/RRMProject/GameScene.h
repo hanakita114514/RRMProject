@@ -42,6 +42,8 @@ private:
 
 	Result _result;
 
+	int _endFrame;
+
 
 	void EnemyColBlock();
 	void PlayerColBlock();

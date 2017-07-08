@@ -35,5 +35,7 @@ public:
 	~Result();
 
 	void Update();
+
+	bool IsEnd();
 };
 

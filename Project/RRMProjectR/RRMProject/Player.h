@@ -140,6 +140,7 @@ public:
 
 	void Init();
 	void Update();
+	void SlowDownUpdate();
 	void Draw();
 
 	void SetHitGround(bool isHit) { _hitGround = isHit; }
