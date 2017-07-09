@@ -20,6 +20,10 @@
 #include "FPS.h"
 #include "Keyboard.h"
 
+//ƒeƒXƒg
+#include "Number.h"
+#include "Timer.h"
+
 GameMain::GameMain()
 {
 }
@@ -109,6 +113,9 @@ void GameMain::GameLoop()
 	bool loopOk = true;
 
 	FPS fps;
+	Number number(Position(500,32), 48.f);
+	Timer timer(Position(500,300), 40.0f);
+	timer.Start();
 
 	while (RRMLib::ProcessMessage() == 0 && loopOk)
 	{
@@ -123,6 +130,9 @@ void GameMain::GameLoop()
 
 		//•`‰æ-----------------------
 		Fade::Instance().Draw();
+
+		number.Draw(114514810);
+		timer.Draw();
 
 		fps.Draw();
 

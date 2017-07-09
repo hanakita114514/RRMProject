@@ -83,6 +83,7 @@
     <ClCompile Include="Mushroom.cpp" />
     <ClCompile Include="NormalBlock.cpp" />
     <ClCompile Include="NormalBullet.cpp" />
+    <ClCompile Include="Number.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerDraw.cpp" />
@@ -184,6 +185,7 @@
     <ClInclude Include="Mushroom.h" />
     <ClInclude Include="NormalBlock.h" />
     <ClInclude Include="NormalBullet.h" />
+    <ClInclude Include="Number.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerDraw.h" />

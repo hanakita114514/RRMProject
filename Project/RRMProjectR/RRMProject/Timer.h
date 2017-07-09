@@ -1,6 +1,7 @@
 #pragma once
 
 #include <chrono>
+#include "Vector2.h"
 
 struct Times
 {
@@ -15,8 +16,16 @@ class Timer
 private:
 	std::chrono::system_clock::time_point _start;
 
+	int _handle;
+	int _koronHandle;
+
+	Position _pos;
+	float _size;
+	float _offset;
+
 public:
 	Timer();
+	Timer(const Position& pos, float size);
 	~Timer();
 
 	void Start();				//Œv‘ªŠJŽn

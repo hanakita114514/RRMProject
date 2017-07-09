@@ -1,9 +1,44 @@
 #include "Timer.h"
 #include <stdio.h>
+#include <RRMLib.h>
 
+static const float NUMBER_W = 84.4f;
+static const float NUMBER_H = 88.5f;
+static const float OFFSET = 32.0f;
+
+static const int NUM = 10;
+static const Vector2 UV[NUM]
+{
+	Vector2(NUMBER_W * 0, NUMBER_H * 0),
+	Vector2(NUMBER_W * 1, NUMBER_H * 0),
+	Vector2(NUMBER_W * 2, NUMBER_H * 0),
+	Vector2(NUMBER_W * 3, NUMBER_H * 0),
+	Vector2(NUMBER_W * 4, NUMBER_H * 0),
+	Vector2(NUMBER_W * 0, NUMBER_H * 1),
+	Vector2(NUMBER_W * 1, NUMBER_H * 1),
+	Vector2(NUMBER_W * 2, NUMBER_H * 1),
+	Vector2(NUMBER_W * 3, NUMBER_H * 1),
+	Vector2(NUMBER_W * 4, NUMBER_H * 1),
+};
 
 Timer::Timer()
 {
+	_handle = RRMLib::LoadGraph("Resource/img/UI/Number/Number.png");
+	_koronHandle = RRMLib::LoadGraph("Resource/img/UI/Number/koron.png");
+
+	_pos = Position(0,0);
+	_size = 0;
+	_offset = _size / 2;
+}
+
+Timer::Timer(const Position& pos, float size)
+{
+	_handle = RRMLib::LoadGraph("Resource/img/UI/Number/Number.png");
+	_koronHandle = RRMLib::LoadGraph("Resource/img/UI/Number/koron.png");
+
+	_pos = pos;
+	_size = size;
+	_offset = _size / 2;
 }
 
 
@@ -50,7 +85,7 @@ Timer::GetTime()
 
 	auto end = std::chrono::system_clock::now();
 	auto dur = end - _start;
-	ret.mimutes = std::chrono::duration_cast<std::chrono::minutes>(dur).count();
+	ret.mimutes = std::chrono::duration_cast<std::chrono::minutes>(dur).count() % 60;
 	ret.seconds = std::chrono::duration_cast<std::chrono::seconds>(dur).count() % 60;
 	ret.millisec = std::chrono::duration_cast<std::chrono::milliseconds>(dur).count() % 1000;
 
@@ -59,5 +94,55 @@ Timer::GetTime()
 void 
 Timer::Draw()
 {
+	Vector2 uv;
+	Times times = GetTime();
+	unsigned int idx;
+	unsigned int i = 0;
+
+	//•ª•`‰æ
+	uv = UV[(times.mimutes / 10) % 10];
+	RRMLib::DrawRectExtendGraph((_pos.x - _size / 2) + i * _offset, _pos.y - _size / 2,
+		(_pos.x + _size / 2) + i * _offset, _pos.y + _size / 2,
+		uv.x, uv.y, NUMBER_W, NUMBER_H, _handle, true, false);
+
+	++i;
+	uv = UV[(times.mimutes) % 10];
+	RRMLib::DrawRectExtendGraph((_pos.x - _size / 2) + i * _offset, _pos.y - _size / 2,
+		(_pos.x + _size / 2) + i * _offset, _pos.y + _size / 2,
+		uv.x, uv.y, NUMBER_W, NUMBER_H, _handle, true, false);
+
+	++i;
+	RRMLib::DrawExtendGraph((_pos.x - _size / 2) + i * _offset, _pos.y - _size / 2,
+		(_pos.x + _size / 2) + i * _offset, _pos.y + _size / 2, _koronHandle);
+
+	++i;
+	//•b•`‰æ
+	uv = UV[(times.seconds / 10) % 10];
+	RRMLib::DrawRectExtendGraph((_pos.x - _size / 2) + i * _offset, _pos.y - _size / 2,
+		(_pos.x + _size / 2) + i * _offset, _pos.y + _size / 2,
+		uv.x, uv.y, NUMBER_W, NUMBER_H, _handle, true, false);
+
+	++i;
+	uv = UV[(times.seconds) % 10];
+	RRMLib::DrawRectExtendGraph((_pos.x - _size / 2) + i * _offset, _pos.y - _size / 2,
+		(_pos.x + _size / 2) + i * _offset, _pos.y + _size / 2,
+		uv.x, uv.y, NUMBER_W, NUMBER_H, _handle, true, false);
+
+	++i;
+	RRMLib::DrawExtendGraph((_pos.x - _size / 2) + i * _offset, _pos.y - _size / 2,
+		(_pos.x + _size / 2) + i * _offset, _pos.y + _size / 2, _koronHandle);
+
+	//ƒ~ƒŠ•b•`‰æ
+	++i;
+	uv = UV[(times.millisec / 100) % 10];
+	RRMLib::DrawRectExtendGraph((_pos.x - _size / 2) + i * _offset, _pos.y - _size / 2,
+		(_pos.x + _size / 2) + i * _offset, _pos.y + _size / 2,
+		uv.x, uv.y, NUMBER_W, NUMBER_H, _handle, true, false);
+
+	++i;
+	uv = UV[(times.millisec / 10) % 10];
+	RRMLib::DrawRectExtendGraph((_pos.x - _size / 2) + i * _offset, _pos.y - _size / 2,
+		(_pos.x + _size / 2) + i * _offset, _pos.y + _size / 2,
+		uv.x, uv.y, NUMBER_W, NUMBER_H, _handle, true, false);
 
 }
