@@ -519,6 +519,9 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nC
 	PMDLoader loader;
 	PMDMesh* reimu = loader.Load("Model/”Ž—í—ì–²ver100/”Ž—í—ì–²ver100.pmd");
 
+	int filterHandle = graphic.LoadGraph("filter1.png");
+	Renderer::Instance().BackGroundColor(255, 255, 255);
+
 	while (true)
 	{
 		if (ProcessMessage() != 0)
@@ -589,9 +592,9 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nC
 
 		//graphic.DrawRotaGraph(500, 300, angle, handle, true, false);
 
-		graphic.DrawGraph(x, 0, handle);
+		//graphic.DrawGraph(x, 0, handle);
 
-		gg.DrawBox(500, 300, 510, 310, 0xffffffff, true);
+		//gg.DrawBox(500, 300, 510, 310, 0xffffffff, true);
 
 		//GraphList::Instance().Add(graphic.DrawGraph(0, 0, handle));
 
@@ -621,6 +624,9 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nC
 		//graphic.DrawExtendGraph(0, 0, 1500, 700, handle);
 
 		//GraphList::Instance().Draw();
+
+		Renderer::Instance().Test();
+		graphic.DrawGraph(0, 0, filterHandle);
 
 		result = key.GetKeyState(keyBuf);
 

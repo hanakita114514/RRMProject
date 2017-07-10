@@ -64,5 +64,7 @@ public:
 	//pal 0 ～ 255で指定
 	void AlphaBlend(int pal);
 
+	//アルファブレンドテスト
+	void Test();
 };
 

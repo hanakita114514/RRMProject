@@ -377,3 +377,30 @@ Renderer::AlphaBlend(int pal)
 	float blendFactor[] = { alpha, alpha, alpha, alpha };
 	dev.Context()->OMSetBlendState(_alphaBlend, blendFactor, 0xffffffff);
 }
+
+void 
+Renderer::Test()
+{
+	HRESULT result = S_OK;
+	DeviceDx11& dev = DeviceDx11::Instance();
+
+	//アルファブレンディングの設定
+	D3D11_BLEND_DESC blenddesc = {};
+	blenddesc.AlphaToCoverageEnable = false;
+	blenddesc.IndependentBlendEnable = false;
+
+	D3D11_RENDER_TARGET_BLEND_DESC& blrtdesc = blenddesc.RenderTarget[0];
+	blrtdesc.BlendEnable = true;
+	blrtdesc.SrcBlend = D3D11_BLEND_SRC_ALPHA;
+	blrtdesc.DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
+	blrtdesc.BlendOp = D3D11_BLEND_OP_ADD;
+	blrtdesc.SrcBlendAlpha = D3D11_BLEND_ONE;
+	blrtdesc.DestBlendAlpha = D3D11_BLEND_INV_BLEND_FACTOR;
+	blrtdesc.BlendOpAlpha = D3D11_BLEND_OP_ADD;
+	blrtdesc.RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+
+	result = dev.Device()->CreateBlendState(&blenddesc, &_alphaBlend);
+
+	float blendFactor[] = { 1.0f, 1.0f, 1.0f, 0.1f };
+	dev.Context()->OMSetBlendState(_alphaBlend, blendFactor, 0xffffffff);
+}
