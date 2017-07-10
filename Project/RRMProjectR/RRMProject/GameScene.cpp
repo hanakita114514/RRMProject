@@ -13,7 +13,7 @@
 #include "SceneManager.h"
 #include "GameTime.h"
 
-GameScene::GameScene() : _player(0,_camera, InputMode::pad), _camera(_player.GetRect().pos)
+GameScene::GameScene() : _player(0,_camera, InputMode::pad), _camera(_player.GetRect().pos), _time(Position(0, 0), 40.f)
 {
 	_col = new Collision();
 	EnemyManager::Instance();
@@ -35,7 +35,8 @@ GameScene::GameScene() : _player(0,_camera, InputMode::pad), _camera(_player.Get
 	_camera.Init();
 }
 
-GameScene::GameScene(LogoIdx state, KeyData& keyData) : _player(0, _camera, keyData.mode), _camera(_player.GetRect().pos)
+GameScene::GameScene(LogoIdx state, KeyData& keyData) : _player(0, _camera, keyData.mode), _camera(_player.GetRect().pos),
+_time(Position(720, 40.0f), 40.f)
 {
 	_col = new Collision();
 	EnemyManager::Instance();
@@ -50,7 +51,7 @@ GameScene::GameScene(LogoIdx state, KeyData& keyData) : _player(0, _camera, keyD
 	_update[SceneState::game] = &GameScene::GameUpdate;
 	_update[SceneState::end] = &GameScene::EndUpdate;
 	_update[SceneState::result] = &GameScene::ResultUpdate;
-	_state = SceneState::game;
+	_state = SceneState::start;
 
 	_endFrame = 0;
 
@@ -73,6 +74,7 @@ GameScene::StartUpdate()
 		if (Fade::Instance().IsWait())
 		{
 			_state = SceneState::game;
+			_time.Start();
 		}
 	}
 }
@@ -100,7 +102,8 @@ GameScene::GameUpdate()
 	BulletManager::Instance().Draw(_camera.GetOffset());
 	_player.Draw();
 	EffectManager::Instance().Draw(_camera.GetOffset());
-	//_statusUI.Draw();
+	_statusUI.Draw();
+	_time.Draw();
 
 	if (EnemyManager::Instance().EnemyEradication())
 	{
@@ -132,12 +135,14 @@ GameScene::EndUpdate()
 	BulletManager::Instance().Draw(_camera.GetOffset());
 	_player.Draw();
 	EffectManager::Instance().Draw(_camera.GetOffset());
+	_time.Draw();
 
 	if (_endFrame >= 90)
 	{
 		_endFrame = 0;
 		GameTime::Instance().SetTimeScale(1.0f);
 		_state = SceneState::result;
+		_time.Stop();
 	}
 
 	++_endFrame;
@@ -154,6 +159,7 @@ GameScene::ResultUpdate()
 	BulletManager::Instance().Draw(_camera.GetOffset());
 	_player.Draw();
 	EffectManager::Instance().Draw(_camera.GetOffset());
+	_time.Draw();
 
 	_result.Update();
 }

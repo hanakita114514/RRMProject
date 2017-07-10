@@ -25,20 +25,24 @@ Timer::Timer()
 {
 	_handle = RRMLib::LoadGraph("Resource/img/UI/Number/Number.png");
 	_koronHandle = RRMLib::LoadGraph("Resource/img/UI/Number/koron.png");
+	_timeHandle = RRMLib::LoadGraph("Resource/img/UI/time.png");
 
 	_pos = Position(0,0);
 	_size = 0;
 	_offset = _size / 2;
+	_isEnd = false;
 }
 
 Timer::Timer(const Position& pos, float size)
 {
 	_handle = RRMLib::LoadGraph("Resource/img/UI/Number/Number.png");
 	_koronHandle = RRMLib::LoadGraph("Resource/img/UI/Number/koron.png");
+	_timeHandle = RRMLib::LoadGraph("Resource/img/UI/time.png");
 
 	_pos = pos;
 	_size = size;
 	_offset = _size / 2;
+	_isEnd = false;
 }
 
 
@@ -51,12 +55,14 @@ void
 Timer::Start()
 {
 	_start = std::chrono::system_clock::now();
+	_isEnd = false;
 }
 
 void 
 Timer::Stop()
 {
-	
+	_isEnd = true;
+	_endTime = GetTime();
 }
 
 void 
@@ -95,11 +101,29 @@ void
 Timer::Draw()
 {
 	Vector2 uv;
-	Times times = GetTime();
+	Times times;
+	if (_isEnd)
+	{
+		times = _endTime;
+	}
+	else
+	{
+		times = GetTime();
+	}
 	unsigned int idx;
-	unsigned int i = 0;
+	float i = 0;
+
+
+	//Time•¶Žš•`‰æ
+	RRMLib::DrawExtendGraph((_pos.x - _size) + i * _offset - 5, _pos.y - _size / 2 - 3,
+		(_pos.x + _size) + i * _offset - 5, _pos.y + _size / 2 - 3, _timeHandle);
+
+	i+= 1.5f;
+	RRMLib::DrawExtendGraph((_pos.x - _size / 2) + i * _offset, _pos.y - _size / 2,
+		(_pos.x + _size / 2) + i * _offset, _pos.y + _size / 2, _koronHandle);
 
 	//•ª•`‰æ
+	i += 5;
 	uv = UV[(times.mimutes / 10) % 10];
 	RRMLib::DrawRectExtendGraph((_pos.x - _size / 2) + i * _offset, _pos.y - _size / 2,
 		(_pos.x + _size / 2) + i * _offset, _pos.y + _size / 2,

@@ -6,6 +6,7 @@
 #include "StatusUI.h"
 #include "KeyConfig.h"
 #include "Result.h"
+#include "Timer.h"
 
 #include <map>
 
@@ -43,6 +44,8 @@ private:
 	Result _result;
 
 	int _endFrame;
+
+	Timer _time;
 
 
 	void EnemyColBlock();

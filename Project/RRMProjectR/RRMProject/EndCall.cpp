@@ -57,7 +57,7 @@ EndCall::StartWaitUpdate()
 	RRMLib::SetBlendMode(RRM_BLENDMODE_NONE, 0);
 
 	_logo->Update();
-	if (_frame >= 30)
+	if (_frame >= 60)
 	{
 		_state = State::middle;
 		_frame = 0;

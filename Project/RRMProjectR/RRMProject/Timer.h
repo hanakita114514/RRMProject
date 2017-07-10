@@ -16,6 +16,10 @@ class Timer
 private:
 	std::chrono::system_clock::time_point _start;
 
+	Times _endTime;
+	bool _isEnd;
+
+	int _timeHandle;
 	int _handle;
 	int _koronHandle;
 

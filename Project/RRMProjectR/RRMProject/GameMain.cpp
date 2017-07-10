@@ -22,7 +22,6 @@
 
 //ƒeƒXƒg
 #include "Number.h"
-#include "Timer.h"
 
 GameMain::GameMain()
 {
@@ -114,8 +113,6 @@ void GameMain::GameLoop()
 
 	FPS fps;
 	Number number(Position(500,32), 48.f);
-	Timer timer(Position(500,300), 40.0f);
-	timer.Start();
 
 	while (RRMLib::ProcessMessage() == 0 && loopOk)
 	{
@@ -132,7 +129,6 @@ void GameMain::GameLoop()
 		Fade::Instance().Draw();
 
 		number.Draw(114514810);
-		timer.Draw();
 
 		fps.Draw();
 
