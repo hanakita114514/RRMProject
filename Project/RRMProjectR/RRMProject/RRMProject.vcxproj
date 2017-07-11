@@ -36,6 +36,7 @@
     <ClCompile Include="CircleShot.cpp" />
     <ClCompile Include="ClearScene.cpp" />
     <ClCompile Include="Collision.cpp" />
+    <ClCompile Include="Combo.cpp" />
     <ClCompile Include="Comet.cpp" />
     <ClCompile Include="DataManager.cpp" />
     <ClCompile Include="DeffusionBullet.cpp" />
@@ -67,6 +68,7 @@
     <ClCompile Include="HitStop.cpp" />
     <ClCompile Include="HomingBullet.cpp" />
     <ClCompile Include="HPBar.cpp" />
+    <ClCompile Include="InformationUI.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="InputFactory.cpp" />
     <ClCompile Include="Jewel.cpp" />
@@ -94,6 +96,7 @@
     <ClCompile Include="RectObj.cpp" />
     <ClCompile Include="Result.cpp" />
     <ClCompile Include="SceneManager.cpp" />
+    <ClCompile Include="Score.cpp" />
     <ClCompile Include="ShootingStar.cpp" />
     <ClCompile Include="SinBullet.cpp" />
     <ClCompile Include="SlowDown.cpp" />
@@ -136,6 +139,7 @@
     <ClInclude Include="CircleShot.h" />
     <ClInclude Include="ClearScene.h" />
     <ClInclude Include="Collision.h" />
+    <ClInclude Include="Combo.h" />
     <ClInclude Include="Comet.h" />
     <ClInclude Include="common.h" />
     <ClInclude Include="DataManager.h" />
@@ -168,6 +172,7 @@
     <ClInclude Include="HitStop.h" />
     <ClInclude Include="HomingBullet.h" />
     <ClInclude Include="HPBar.h" />
+    <ClInclude Include="InformationUI.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="InputFactory.h" />
     <ClInclude Include="Jewel.h" />
@@ -196,6 +201,7 @@
     <ClInclude Include="RectObj.h" />
     <ClInclude Include="Result.h" />
     <ClInclude Include="SceneManager.h" />
+    <ClInclude Include="Score.h" />
     <ClInclude Include="ShootingStar.h" />
     <ClInclude Include="SinBullet.h" />
     <ClInclude Include="SlowDown.h" />

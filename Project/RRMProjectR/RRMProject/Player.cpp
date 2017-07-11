@@ -541,13 +541,19 @@ Player::Draw()
 	//RRMLib::DrawLine((int)(_rc.Left() + (_rc.w / 2)), (int)(_rc.Top()),
 	//				(int)(_rc.Left() + (_rc.w / 2)), (int)(_rc.Bottom()), 0xff0000);
 	_hitBox.Draw();
-	_hpbar.Draw(_hp);
-	_pp.Draw();
+
 
 #ifdef DEBUG
 	_rc.DrawBox();
 
 #endif // DEBUG
+}
+
+void
+Player::UIDraw()
+{
+	_hpbar.Draw(_hp);
+	_pp.Draw();
 }
 
 ObjectType 

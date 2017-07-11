@@ -113,7 +113,6 @@ Timer::Draw()
 	unsigned int idx;
 	float i = 0;
 
-
 	//Time•¶Žš•`‰æ
 	RRMLib::DrawExtendGraph((_pos.x - _size) + i * _offset - 5, _pos.y - _size / 2 - 3,
 		(_pos.x + _size) + i * _offset - 5, _pos.y + _size / 2 - 3, _timeHandle);

@@ -35,7 +35,7 @@ GameScene::GameScene() : _player(0,_camera, InputMode::pad), _camera(_player.Get
 	_camera.Init();
 }
 
-GameScene::GameScene(LogoIdx state, KeyData& keyData) : _player(0, _camera, keyData.mode), _camera(_player.GetRect().pos),
+GameScene::GameScene(LogoIdx state, KeyData& keyData) : _player(0, _camera, InputMode::keyboard), _camera(_player.GetRect().pos),
 _time(Position(720, 40.0f), 40.f)
 {
 	_col = new Collision();
@@ -104,6 +104,12 @@ GameScene::GameUpdate()
 	EffectManager::Instance().Draw(_camera.GetOffset());
 	_statusUI.Draw();
 	_time.Draw();
+	_player.UIDraw();
+	_infoUI.Draw();
+	
+	_score.Add(1);
+	_score.Draw();
+
 
 	if (EnemyManager::Instance().EnemyEradication())
 	{
@@ -135,7 +141,11 @@ GameScene::EndUpdate()
 	BulletManager::Instance().Draw(_camera.GetOffset());
 	_player.Draw();
 	EffectManager::Instance().Draw(_camera.GetOffset());
+	_statusUI.Draw();
 	_time.Draw();
+	_player.UIDraw();
+	_infoUI.Draw();
+	_score.Draw();
 
 	if (_endFrame >= 90)
 	{
@@ -159,7 +169,6 @@ GameScene::ResultUpdate()
 	BulletManager::Instance().Draw(_camera.GetOffset());
 	_player.Draw();
 	EffectManager::Instance().Draw(_camera.GetOffset());
-	_time.Draw();
 
 	_result.Update();
 }
@@ -280,7 +289,7 @@ void GameScene::PlayerColEnemy()
 				e->HitStop(a.hitstop);
 				_player.HitStop(a.hitstop);
 				_camera.Quake(Vector2(10, 5));
-				EffectManager::Instance().Create(EffectType::slash,e->GetRect().Center());
+				EffectManager::Instance().Create(EffectType::slash2,e->GetRect().Center(), Vector2(0.5f, 0.5f), 0.2f);
 			}
 		}
 

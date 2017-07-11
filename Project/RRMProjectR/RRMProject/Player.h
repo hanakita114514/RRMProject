@@ -142,6 +142,7 @@ public:
 	void Update();
 	void SlowDownUpdate();
 	void Draw();
+	void UIDraw();
 
 	void SetHitGround(bool isHit) { _hitGround = isHit; }
 

@@ -18,6 +18,12 @@ EffectFactory::EffectFactory()
 	_effectImg[EffectType::slash] = RRMLib::LoadGraph("Resource/img/Effect/Srash.png");
 	_effectImg[EffectType::star] = RRMLib::LoadGraph("Resource/img/Effect/star.png");
 	_effectImg[EffectType::hit2] = RRMLib::LoadGraph("Resource/img/Effect/hit2.png");
+	_effectImg[EffectType::defeat] = RRMLib::LoadGraph("Resource/img/Effect/defeat.png");
+	_effectImg[EffectType::emergence] = RRMLib::LoadGraph("Resource/img/Effect/emergence.png");
+	_effectImg[EffectType::slash2] = RRMLib::LoadGraph("Resource/img/Effect/slash2.png");
+	_effectImg[EffectType::focusing] = RRMLib::LoadGraph("Resource/img/Effect/focusing.png");
+	_effectImg[EffectType::rotation] = RRMLib::LoadGraph("Resource/img/Effect/rotation.png");
+
 }
 
 
@@ -68,6 +74,16 @@ EffectFactory::Create(EffectType et, const Position& pos, const Vector2& size, f
 	case EffectType::hit2:
 		return new GeneralEffect(_effectImg[EffectType::hit2], pos, 1280, 1536, 6, 5, 1.0f, size, isLoop);
 		break;
+	case EffectType::rotation:
+		return new GeneralEffect(_effectImg[EffectType::rotation], pos, 1792, 2304, 9, 7, 1.0f, size, isLoop);
+	case EffectType::slash2:
+		return new GeneralEffect(_effectImg[EffectType::slash2], pos, 1280, 1536, 6, 5, 1.0f, size, isLoop);
+	case EffectType::focusing:
+		return new GeneralEffect(_effectImg[EffectType::focusing], pos, 1280, 1536, 6, 5, 1.0f, size, isLoop);
+	case EffectType::emergence:
+		return new GeneralEffect(_effectImg[EffectType::emergence], pos, 1280, 1536, 6, 5, 1.0f, size, isLoop);
+	case EffectType::defeat:
+		return new GeneralEffect(_effectImg[EffectType::defeat], pos, 1792, 2048, 8, 7, 1.0f, size, isLoop);
 	default:
 		return nullptr;
 		break;

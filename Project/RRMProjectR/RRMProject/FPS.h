@@ -11,9 +11,18 @@ private:
 	static const int FRAME_NUM = 60;
 	static const int FPs = 60;		//ê›íËÇµÇΩFPS
 
+	int _numHandle;
+	int _periodHandle;
+	int _fpsHandle;
+	int _koronHandle;
+
+	Position _pos;
+	float _size;
+	float _offset;
+
 	Timer _time;
 public:
-	FPS();
+	FPS(const Position& pos, float size);
 	~FPS();
 
 	void Update();

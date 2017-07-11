@@ -26,8 +26,9 @@ OfficialScene::OfficialScene()
 	RRMLib::ChangeBackColor(255, 255, 255);
 
 	_frame = 0;
+	_speed = 1;
 
-	_input = InputFactory::Create(InputMode::pad, 0);
+	_input = InputFactory::Create(InputMode::keyboard, 0);
 }
 
 
@@ -43,19 +44,19 @@ OfficialScene::StartUpdate()
 	if (Fade::Instance().IsFadeOutEnd())
 	{
 		_state = State::middle;
-		Fade::Instance().FadeIn(FADE_SPEED);
 	}
 }
 
 void 
 OfficialScene::MiddleUpdate()
 {
-	if (_frame >= 30)
+	if (_frame >= 60)
 	{
 		_frame = 0;
 		_state = State::end;
+		Fade::Instance().FadeIn(FADE_SPEED);
 	}
-	++_frame;
+	_frame += 1 * _speed;
 }
 void 
 OfficialScene::EndUpdate()
@@ -74,6 +75,7 @@ bool OfficialScene::Update()
 	if (_input->Start())
 	{
 		Fade::Instance().ChangeFadeSpeed(3.0f);
+		_speed = 3;
 	}
 	RRMLib::DrawExtendGraph(WINDOW_WIDTH / 2 - LOGO_W / 2, WINDOW_HEIGHT / 2 - LOGO_H / 2,
 		WINDOW_WIDTH / 2 + LOGO_W / 2, WINDOW_HEIGHT / 2 + LOGO_H, _logoHandle);

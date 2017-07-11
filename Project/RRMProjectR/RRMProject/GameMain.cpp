@@ -17,11 +17,6 @@
 #include <string.h>
 #include "SceneManager.h"
 
-#include "FPS.h"
-#include "Keyboard.h"
-
-//テスト
-#include "Number.h"
 
 GameMain::GameMain()
 {
@@ -111,14 +106,9 @@ void GameMain::GameLoop()
 {
 	bool loopOk = true;
 
-	FPS fps;
-	Number number(Position(500,32), 48.f);
-
 	while (RRMLib::ProcessMessage() == 0 && loopOk)
 	{
 		RRMLib::ClearDrawScreen();
-
-		fps.Update();
 
 		//更新-----------------------
 		Fade::Instance().Update();
@@ -127,10 +117,6 @@ void GameMain::GameLoop()
 
 		//描画-----------------------
 		Fade::Instance().Draw();
-
-		number.Draw(114514810);
-
-		fps.Draw();
 
 		RRMLib::ScreenFlip();
 

@@ -7,6 +7,8 @@
 #include "KeyConfig.h"
 #include "Result.h"
 #include "Timer.h"
+#include "InformationUI.h"
+#include "Score.h"
 
 #include <map>
 
@@ -47,6 +49,9 @@ private:
 
 	Timer _time;
 
+	Score _score;
+
+	InformationUI _infoUI;
 
 	void EnemyColBlock();
 	void PlayerColBlock();

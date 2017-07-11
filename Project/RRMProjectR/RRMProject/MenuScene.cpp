@@ -24,7 +24,7 @@ MenuScene::MenuScene()
 {
 	_titleHandle = RRMLib::LoadGraph("Resource/img//UI/GAME_START.png");
 	_update = &MenuScene::TitleUpdate;
-	_input = InputFactory::Create(InputMode::pad, 0);
+	_input = InputFactory::Create(InputMode::keyboard, 0);
 
 	for (int i = 0; i < (int)(LogoIdx::logoMax); i++)
 	{

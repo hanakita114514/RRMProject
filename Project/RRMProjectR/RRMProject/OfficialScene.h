@@ -27,6 +27,7 @@ private:
 
 	State _state;
 	int _frame;
+	int _speed;
 
 	Input* _input;
 

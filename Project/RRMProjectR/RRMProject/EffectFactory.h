@@ -21,6 +21,11 @@ enum class EffectType : unsigned int
 	slash,
 	star,
 	hit2,
+	rotation,
+	slash2,
+	focusing,
+	emergence,
+	defeat,
 
 	num,
 

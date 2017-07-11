@@ -25,11 +25,23 @@ Number::Number(const Position& pos, float size)
 	_pos = pos;
 	_size = size;
 	_offset = size / 2;
+	_height = NUMBER_H;
+	_width = NUMBER_W;
+}
+
+Number::Number(const Position& pos, float size, int handle, float width, float height)
+	: _width(width), _height(height)
+{
+	_pos = pos;
+	_size = size;
+	_offset = size / 2;
+	_handle = handle;
 }
 
 
 Number::~Number()
 {
+	RRMLib::DeleteGraph(_handle);
 }
 
 void
@@ -45,7 +57,7 @@ Number::Draw(long long num)
 		uv = UV[idx];
 		RRMLib::DrawRectExtendGraph((_pos.x - _size / 2) - i * _offset, (_pos.y - _size / 2),
 			(_pos.x + _size / 2) - i * _offset, _pos.y + _size / 2,
-			uv.x, uv.y, NUMBER_W, NUMBER_H, _handle, true, false);
+			uv.x, uv.y, _width, _height, _handle, true, false);
 
 		++i;
 		number /= 10;
@@ -55,5 +67,5 @@ Number::Draw(long long num)
 	//‰ºˆêŒ…
 	RRMLib::DrawRectExtendGraph((_pos.x - _size / 2) - i * _offset, (_pos.y - _size / 2),
 		(_pos.x + _size / 2) - i * _offset, _pos.y + _size / 2,
-		uv.x, uv.y, NUMBER_W, NUMBER_H, _handle, true, false);
+		uv.x, uv.y, _width, _height, _handle, true, false);
 }
