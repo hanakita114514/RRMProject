@@ -40,18 +40,16 @@ private:
 	int _weaponIdx;					//武器配列の添え字
 	int _bg;						//背景の画像ハンドル
 	float _freamCnt;
+	bool _isInput;
 
 	MenuInformation _menuInfo;
+	LOGO _logo;
 
 	Arrow _arrow;				//矢印
-	Logo _logo[(int)(LogoIdx::logoMax)];			//ロゴの画像ハンドル
 	Input* _input;
 	Vector2 _logoDefaultPos[(int)(LogoIdx::logoMax)];
 	Vector2 _velocity;								//矢印の移動量
 	EquipmentInfometion _data;
-
-	bool prevRight, prevLeft,prevUp,prevDown;	//前フレームのスティック情報
-	bool right, left,up,down;			//現フレームのスティック情報
 
 	void (MenuScene::*_update)();
 	void TitleUpdate();
@@ -84,10 +82,5 @@ public:
 	~MenuScene();
 
 	bool Update();
-
-	bool IsStickRight();
-	bool IsStickLeft();
-	bool IsStickUp();
-	bool IsStickDown();
 
 };

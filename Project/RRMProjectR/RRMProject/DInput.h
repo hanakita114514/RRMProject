@@ -14,6 +14,15 @@ enum TrigerType
 	trigerMax
 };
 
+enum class StickType
+{
+	up,
+	down,
+	left,
+	right,
+	max
+};
+
 
 class DInput : public Input
 {
@@ -29,6 +38,8 @@ private:
 
 	std::map<KeyType, int> _repFrame;
 
+	bool _prevStick[(int)StickType::max];
+	bool _stick[(int)StickType::max];
 public:
 	DInput(int padType);	//パッドの番号を1～4で指定
 	~DInput();
@@ -81,5 +92,13 @@ public:
 	bool Select();			//セレクトボタン
 
 	Vector2& Dir();			//向きを返す
+
+	bool RightStickTriger();
+	bool LeftStickTriger();
+	bool UpStickTriger();
+	bool DownStickTriger();
+
+	bool Decision();
+	bool Exit();
 };
 

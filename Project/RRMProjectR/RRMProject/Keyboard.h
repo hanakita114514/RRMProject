@@ -69,5 +69,13 @@ public:
 	bool Select();			//セレクトボタン
 
 	Vector2& Dir();			//向きを返す
+
+	bool RightStickTriger();
+	bool LeftStickTriger();
+	bool UpStickTriger();
+	bool DownStickTriger();
+
+	bool Decision();
+	bool Exit();
 };
 

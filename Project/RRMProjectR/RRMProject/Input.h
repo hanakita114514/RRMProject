@@ -83,5 +83,13 @@ public:
 	virtual bool Select() = 0;			//セレクトボタン
 
 	virtual Vector2& Dir() = 0;			//向きを返す
+
+	virtual bool RightStickTriger() = 0;
+	virtual bool LeftStickTriger() = 0;
+	virtual bool UpStickTriger() = 0;
+	virtual bool DownStickTriger() = 0;
+
+	virtual bool Decision() = 0;		//決定
+	virtual bool Exit() = 0;			//戻る
 };
 

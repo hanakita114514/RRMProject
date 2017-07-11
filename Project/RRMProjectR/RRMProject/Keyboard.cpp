@@ -312,3 +312,39 @@ Keyboard::Dir()
 
 	return _vec;
 }
+
+bool 
+Keyboard::RightStickTriger()
+{
+	return true;
+}
+
+bool 
+Keyboard::LeftStickTriger()
+{
+	return true;
+}
+
+bool 
+Keyboard::UpStickTriger()
+{
+	return true;
+}
+
+bool
+Keyboard::DownStickTriger()
+{
+	return true;
+}
+
+bool 
+Keyboard::Decision()
+{
+	return true;
+}
+
+bool 
+Keyboard::Exit()
+{
+	return true;
+}

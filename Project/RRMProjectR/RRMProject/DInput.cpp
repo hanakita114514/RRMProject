@@ -381,3 +381,75 @@ DInput::Dir()
 	v.y = _pad.y / 1000.0f;
 	return v;
 }
+
+bool
+DInput::RightStickTriger()
+{
+	_prevStick[(int)StickType::right] = _stick[(int)StickType::right];
+	_stick[(int)StickType::right] = Right();
+	if (_stick[(int)StickType::right] & (_stick[(int)StickType::right] ^ _prevStick[(int)StickType::right]))
+	{
+		return true;
+	}
+	return false;
+}
+
+bool
+DInput::LeftStickTriger()
+{
+	_prevStick[(int)StickType::left] = _stick[(int)StickType::left];
+	_stick[(int)StickType::left] = Left();
+	if (_stick[(int)StickType::left] & (_stick[(int)StickType::left] ^ _prevStick[(int)StickType::left]))
+	{
+		return true;
+	}
+	return false;
+
+}
+
+bool
+DInput::UpStickTriger()
+{
+	_prevStick[(int)StickType::up] = _stick[(int)StickType::up];
+	_stick[(int)StickType::up] = Up();
+	if (_stick[(int)StickType::up] & (_stick[(int)StickType::up] ^ _prevStick[(int)StickType::up]))
+	{
+		return true;
+	}
+	return false;
+
+}
+
+bool
+DInput::DownStickTriger()
+{
+	_prevStick[(int)StickType::down] = _stick[(int)StickType::down];
+	_stick[(int)StickType::down] = Down();
+	if (_stick[(int)StickType::down] & (_stick[(int)StickType::down] ^ _prevStick[(int)StickType::down]))
+	{
+		return true;
+	}
+	return false;
+
+}
+
+bool 
+DInput::Decision()
+{
+	if (IsTriger(KeyType::keyB))
+	{
+		return true;
+	}
+
+	return false;
+}
+
+bool 
+DInput::Exit()
+{
+	if (IsTriger(KeyType::keyA))
+	{
+		return true;
+	}
+	return false;
+}
