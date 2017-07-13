@@ -2,6 +2,8 @@
 
 #include <map>
 #include "EndCall.h"
+#include "Score.h"
+#include "Combo.h"
 
 class Logo;
 
@@ -30,8 +32,12 @@ private:
 
 	Logo* _logo;
 
+	Score& _score;
+	int _maxCombo;
+
+
 public:
-	Result();
+	Result(Score& score);
 	~Result();
 
 	void Update();

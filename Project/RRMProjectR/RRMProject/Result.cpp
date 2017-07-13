@@ -4,7 +4,7 @@
 #include "Logo.h"
 
 
-Result::Result()
+Result::Result(Score& score) : _score(score)
 {
 	_handle = RRMLib::LoadGraph("Resource/img/BackGround/fade.png");
 

@@ -18,9 +18,15 @@ void EnemyManager::Update()
 		e->Update();
 	}
 
+}
+
+int 
+EnemyManager::DeleteUpdate()
+{
 	//削除ループ
 	//不要なもの削除ループ
-	
+	int deleteNum = 0;
+
 	std::vector<Enemy*>::iterator it = _enemyList.begin();
 	for (; it != _enemyList.end();)
 	{
@@ -29,12 +35,15 @@ void EnemyManager::Update()
 			delete(*it);
 			*it = nullptr;
 			it = _enemyList.erase(it);
+			++deleteNum;
 		}
 		else
 		{
 			it++;
 		}
 	}
+
+	return deleteNum;
 }
 
 void EnemyManager::Draw(const Vector2& offset)

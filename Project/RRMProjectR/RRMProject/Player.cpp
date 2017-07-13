@@ -496,6 +496,7 @@ Player::Update()
 	}
 	_hpbar.Update();
 	_hitStop.Update();
+	_combo.Update();
 
 
 	//à⁄ìÆêßå¿
@@ -554,6 +555,7 @@ Player::UIDraw()
 {
 	_hpbar.Draw(_hp);
 	_pp.Draw();
+	_combo.Draw();
 }
 
 ObjectType 
@@ -736,6 +738,7 @@ Player::Damage(float power)
 
 	if (_armor.IsBroken())
 	{
+		_combo.Failure();
 		_armor.Recovery();
 		_vel.x = _dir.x * 10.0f * -1.0f;
 		_vel.y = -8.0f;
@@ -748,6 +751,7 @@ Player::Damage(float power, HitBox hitBox)
 {
 	_armor.Damage(power);
 	_hp.Damage(power);
+	_combo.Failure();
 
 	_vel = hitBox.vec;
 	_us = UpdateState::damage;

@@ -16,6 +16,7 @@
 #include "PlayerHP.h"
 #include "Jump.h"
 #include "PlayerDraw.h"
+#include "Combo.h"
 
 #include <map>
 
@@ -51,6 +52,8 @@ private:
 private:
 	HitPoint _hp;			//‘Ì—Í
 	PlayerHP _hpbar;		//‘Ì—Íƒo[
+
+	Combo _combo;
 
 	Jump _jump;
 
@@ -167,7 +170,9 @@ public:
 
 	std::vector<HitBox>& GetAttackBoxes() { return _hitBox.GetAttackBoxes(); }
 	std::vector<HitBox>& GetDamageBoxes() { return _hitBox.GetDamageBoxes(); }
-	
+
 	MultihitProtect& GetHitProtect() { return _mhp; }
+
+	Combo& GetCombo() { return _combo; }
 };
 

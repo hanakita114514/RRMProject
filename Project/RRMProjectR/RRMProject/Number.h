@@ -5,20 +5,22 @@
 class Number
 {
 private:
-	Position _pos;
 	float _size;
 
 	int _handle;
 	float _offset;
 
-	float _width;
-	float _height;
+	Vector2 UV(int idx);
+
+	const float NUMBER_W;
+	const float NUMBER_H;
 
 public:
-	Number(const Position& pos, float size);
-	Number(const Position& pos, float size, int handle, float width, float height);
+	Number(float size);
+	Number(float size, int handle, float width, float height);
 	~Number();
 
-	void Draw(long long num);
+	void Draw(long long num, const Position& pos);
+	void Draw(long long num, const Position& pos ,Vector2 extendSize);
 };
 

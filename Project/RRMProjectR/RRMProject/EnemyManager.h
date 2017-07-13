@@ -23,6 +23,11 @@ public:
 	}
 
 	void Update();						//更新
+
+	//死んだ敵を消す更新
+	//戻り値 削除した敵の数が返る
+	int DeleteUpdate();
+
 	void Draw(const Vector2& offset);	//描画
 	void ScreenLimit(Camera& camera);
 

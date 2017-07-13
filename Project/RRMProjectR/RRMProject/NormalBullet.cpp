@@ -17,12 +17,13 @@ NormalBullet::~NormalBullet()
 
 void NormalBullet::Initialize(Vector2 vec,ObjectType type)
 {
-	_life = 100.0f;
+	_life = 1000.0f;
 	_objType = type;
 	_isAlive = true;
 	_vel = vec;
 	_vel.x *= 5;
 	_freamCnt = 0;
+	_pow = 1.0f;
 }
 
 void NormalBullet::Update()

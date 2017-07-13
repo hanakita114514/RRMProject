@@ -28,7 +28,7 @@ OfficialScene::OfficialScene()
 	_frame = 0;
 	_speed = 1;
 
-	_input = InputFactory::Create(InputMode::keyboard, 0);
+	_input = InputFactory::Create(InputMode::pad, 0);
 }
 
 

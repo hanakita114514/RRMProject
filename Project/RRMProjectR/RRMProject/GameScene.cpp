@@ -14,6 +14,7 @@
 #include "GameTime.h"
 
 GameScene::GameScene() : _player(0,_camera, InputMode::pad), _camera(_player.GetRect().pos), _time(Position(0, 0), 40.f)
+, _result(_score)
 {
 	_col = new Collision();
 	EnemyManager::Instance();
@@ -35,8 +36,8 @@ GameScene::GameScene() : _player(0,_camera, InputMode::pad), _camera(_player.Get
 	_camera.Init();
 }
 
-GameScene::GameScene(LogoIdx state, KeyData& keyData) : _player(0, _camera, InputMode::keyboard), _camera(_player.GetRect().pos),
-_time(Position(720, 40.0f), 40.f)
+GameScene::GameScene(LogoIdx state, KeyData& keyData) : _player(0, _camera, InputMode::pad), _camera(_player.GetRect().pos),
+_time(Position(720, 40.0f), 40.f) , _result(_score)
 {
 	_col = new Collision();
 	EnemyManager::Instance();
@@ -89,6 +90,10 @@ GameScene::GameUpdate()
 	EnemyManager::Instance().Update();
 	BulletManager::Instance().Update();
 	EffectManager::Instance().Update();
+
+	int deadEnemy = EnemyManager::Instance().DeleteUpdate();
+	_score.Add(deadEnemy * _player.GetCombo().GetComboNum() * 100);
+
 	_camera.Update();
 
 		//“–‚½‚è”»’è
@@ -107,7 +112,6 @@ GameScene::GameUpdate()
 	_player.UIDraw();
 	_infoUI.Draw();
 	
-	_score.Add(1);
 	_score.Draw();
 
 
@@ -171,6 +175,11 @@ GameScene::ResultUpdate()
 	EffectManager::Instance().Draw(_camera.GetOffset());
 
 	_result.Update();
+
+	if (_result.IsEnd())
+	{
+
+	}
 }
 
 bool 
@@ -285,6 +294,7 @@ void GameScene::PlayerColEnemy()
 			{
 				//ƒqƒbƒg
 				_player.GetHitProtect().Hit(e);
+				_player.GetCombo().Hit();
 				e->Damage(a.power, a.vec);
 				e->HitStop(a.hitstop);
 				_player.HitStop(a.hitstop);
@@ -422,6 +432,7 @@ GameScene::BulletColEnemy()
 			{
 				(bullet)->Hit(enemy);
 				enemy->Hit(bullet);
+				_player.GetCombo().Hit();
 				bullet->Finalize();
 				break;
 			}
