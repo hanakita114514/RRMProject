@@ -54,6 +54,7 @@
     <ClCompile Include="EnemyManager.cpp" />
     <ClCompile Include="Fade.cpp" />
     <ClCompile Include="File.cpp" />
+    <ClCompile Include="Filter.cpp" />
     <ClCompile Include="Food.cpp" />
     <ClCompile Include="FPS.cpp" />
     <ClCompile Include="GameMain.cpp" />
@@ -158,6 +159,7 @@
     <ClInclude Include="EnemyManager.h" />
     <ClInclude Include="Fade.h" />
     <ClInclude Include="File.h" />
+    <ClInclude Include="Filter.h" />
     <ClInclude Include="Food.h" />
     <ClInclude Include="FPS.h" />
     <ClInclude Include="GameMain.h" />

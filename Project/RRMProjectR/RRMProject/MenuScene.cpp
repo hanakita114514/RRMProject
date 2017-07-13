@@ -10,7 +10,7 @@
 #include <RRMLib.h>
 #include "SceneManager.h"
 #include "InputFactory.h"
-
+#include "Filter.h"
 
 const char* Stage[(int)Stage::stageMax] = 
 {
@@ -26,8 +26,8 @@ MenuScene::MenuScene()
 	_input = InputFactory::Create(InputMode::pad, 0);
 
 	_menuInfo.Init();
-	_logo.image = RRMLib::LoadGraph("Resource/img/UI/startGame.png");
-	_logo.rc.pos = Vector2(640, 360);
+	_logo.image = RRMLib::LoadGraph("Resource/img/UI/Press_Start.png");
+	_logo.rc.pos = Vector2(WINDOW_WIDTH / 2 - 197, WINDOW_HEIGHT / 2 - 37);
 
 	_bg = RRMLib::LoadGraph("Resource/img/BackGround/Bg_Grassland.jpg");
 
@@ -38,6 +38,7 @@ MenuScene::MenuScene()
 
 	Fade::Instance().FadeOut(10);
 	_isInput = true;
+
 }
 
 
@@ -47,17 +48,11 @@ MenuScene::~MenuScene()
 }
 
 void 
-MenuScene::TitleUpdate()
-{
-}
-
-void 
 MenuScene::MenuUpdate()
 {
-	if (_input->Decision() && _isInput)
+	if (_input->IsTriger(KeyType::keyStart) && _isInput)
 	{
 		_menuInfo.ChangeState();
-		_menuInfo.Enlargement(200);
 		_isInput = false;
 	}
 
@@ -68,160 +63,13 @@ MenuScene::MenuUpdate()
 	}
 }
 
-void 
-MenuScene::GameStart()
-{
-	//if (_menuInfo.IsWait())
-	//{
-	//	UpMove();
-	//	DownMove();
-
-	//	if (Exit())
-	//	{
-	//		_update = &MenuScene::MenuUpdate;
-	//		_logoIdx = 0;
-	//		_arrow.SetPos(_logoDefaultPos[_logoIdx]);
-	//		_menuInfo.Reduction(50);
-	//	}
-	//	else if (_input->IsTriger(KeyType::keyB))
-	//	{
-	//		switch (_logoIdx)
-	//		{
-	//		case 0:
-	//		{
-	//			_stageId = 0;
-	//			Fade::Instance().FadeIn(10.0f);
-	//		}
-	//		break;
-	//		case 1:
-	//		{
-	//			_stageId = 0;
-	//			_update = &MenuScene::StageSelect;
-	//		}
-	//		break;
-	//		default:
-	//			break;
-	//		}
-
-	//		_logoState = static_cast<LogoIdx>(_logoIdx);
-	//	}
-	//	_arrow.Draw();
-	//	LogoMove();
-
-	//	for (int i = 0; i < (int)(LogoIdx::logoMax); i++)
-	//	{
-	//		RRMLib::DrawGraph(_logo[i].rc.pos.x, _logo[i].rc.pos.y, _logo[i].image);
-	//	}
-	//}
-
-
-	////ƒQ[ƒ€ƒV[ƒ“‚Ö‚Ì‘JˆÚ
-	//if (Fade::Instance().IsFadeInEnd())
-	//{
-	//	MapManager::Instance().StageSelect(_stageId);
-	//	SceneManager::Instance().ChangeScene(SceneType::game);
-	//	//GameMain::Instance().ChangeScene(new GameScene(_logoState));
-	//}
-
-}
-
-void
-MenuScene::StageSelect()
-{
-	//_stageId = RightMove(_stageId, (int)Stage::stageMax);
-	//_stageId = LeftMove(_stageId, (int)Stage::stageMax);
-
-	//if (_menuInfo.IsWait())
-	//{
-	//	if (_input->IsTriger(KeyType::keyB))
-	//	{
-	//		Fade::Instance().FadeIn(10.0);
-	//	}
-
-	//	if (Exit())
-	//	{
-	//		_update = &MenuScene::GameStart;
-	//	}
-	//}
-
-	//if (Fade::Instance().IsFadeInEnd())
-	//{
-	//	MapManager::Instance().StageSelect(_stageId);
-	//	SceneManager::Instance().ChangeScene(SceneType::game);
-	//	//GameMain::Instance().ChangeScene(new GameScene(_logoState));
-	//}
-
-}
-void
-MenuScene::Configuration()
-{
-	//if (_menuInfo.IsWait())
-	//{
-	//	UpMove();
-	//	DownMove();
-
-	//	if (Exit())
-	//	{
-	//		_update = &MenuScene::MenuUpdate;
-	//		_logoIdx = 0;
-	//		_arrow.SetPos(_logoDefaultPos[_logoIdx]);
-	//		_menuInfo.Reduction(50);
-	//	}
-
-	//	_arrow.Draw();
-	//	LogoMove();
-
-	//	for (int i = 0; i < (int)(LogoIdx::logoMax); i++)
-	//	{
-	//		RRMLib::DrawGraph(_logo[i].rc.pos.x, _logo[i].rc.pos.y, _logo[i].image);
-	//	}
-	//}
-}
 
 void MenuScene::Draw()
 {
-	RRMLib::DrawGraph(0, 0, _bg);
-	_menuInfo.Draw();
+	//RRMLib::DrawGraph(0, 0, _bg);
+	//_menuInfo.Draw();
 }
 
-void
-MenuScene::LogoMove()
-{
-	//switch (_logoIdx)
-	//{
-	//case static_cast<int>(LogoIdx::GameStart):
-	//{
-	//	for (int i = 0; i < (int)(LogoIdx::logoMax); i++)
-	//	{
-	//		if (i == static_cast<int>(LogoIdx::GameStart))
-	//		{
-	//			_logo[i].rc.pos = ImageShaker(_logo[i].rc);
-	//			continue;
-	//		}
-
-	//		_logo[i].rc.pos = _logoDefaultPos[i];
-	//		_logo[i].freamCnt = 0;
-	//	}
-	//}
-	//break;
-	//case static_cast<int>(LogoIdx::StageSelect) :
-	//{
-	//	for (int i = 0; i < (int)(LogoIdx::logoMax); i++)
-	//	{
-	//		if (i == static_cast<int>(LogoIdx::StageSelect))
-	//		{
-	//			_logo[i].rc.pos = ImageShaker(_logo[i].rc);
-	//			continue;
-	//		}
-	//		_logo[i].rc.pos = _logoDefaultPos[i];
-	//		_logo[i].freamCnt = 0;
-	//	}
-	//}
-	//break;
-	//default:
-	//	break;
-	//}
-}
 
 Vector2
 MenuScene::ImageShaker(Rect& rect)

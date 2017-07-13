@@ -3,6 +3,7 @@
 #include "Arrow.h"
 #include <map>
 
+
 enum class MenuState : unsigned int
 {
 
@@ -37,6 +38,7 @@ private:
 	int _stageId;
 	int _logoHandle[4][2];
 
+
 	Vector2 _extendPos[2];
 	Input* _input;
 	Arrow _arrow;
@@ -58,6 +60,7 @@ private:
 	void StageSelect();
 	void Configuration();
 	void None();
+
 
 	using MenuInfo = void (MenuInformation::*)();
 

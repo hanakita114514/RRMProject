@@ -52,27 +52,14 @@ private:
 	EquipmentInfometion _data;
 
 	void (MenuScene::*_update)();
-	void TitleUpdate();
 	void MenuUpdate();
-	void StageSelect();
-	void GameStart();
-	void Configuration();
 
 	void Draw();
-
-	void LogoMove();
-
-	void UpMove();
-	void DownMove();
-	int RightMove(int& idx, int idxMax);
-	int LeftMove(int idx, int idxMax);
 
 	void TypeOfWeapons();
 
 	void WeaponSelect();
 	void ToolSelect();
-
-	bool Exit();
 
 	Vector2 ImageShaker(Rect& rect);
 

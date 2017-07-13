@@ -8,13 +8,15 @@
 #include "SceneManager.h"
 #include "MapManager.h"
 #include "Logo.h"
+#include "Filter.h"
 
 const float Y_ExtendLimit = 350;
 const float X_ExtendLimit = 300;
+const float Y_Draw_Offset = 50;
 
 const char* filePath[] =
 {
-	"Resource/img/UI/GAME_START.png",
+	"Resource/img/UI/startGame.png",
 	"Resource/img/UI/setting.png",
 	"Resource/img/UI/Start3.png",
 	"Resource/img/UI/StageSelect.png",
@@ -71,6 +73,7 @@ MenuInformation::Init()
 	_arrow.SetPos(_logo[0].rc.pos);
 	_logoIdx = 0;
 	_stageId = 0;
+
 }
 
 void
@@ -79,7 +82,6 @@ MenuInformation::Update()
 	_input->Update();
 	(this->*_update)();
 	(this->*_menuStatePtr[(int)_state])();
-
 }
 
 void
@@ -170,14 +172,14 @@ MenuInformation::MainMenu()
 
 	if (_input->Exit())
 	{
-		Reduction(0);
+		_state = MenuState::none;
 	}
 
 	if (IsWait())
 	{
 		for (int i = 0; i < 2; i++)
 		{
-			RRMLib::DrawGraph(_logo[i].rc.pos.x, _logo[i].rc.pos.y, _logo[i].image);
+			RRMLib::DrawGraph(_logo[i].rc.pos.x, _logo[i].rc.pos.y - Y_Draw_Offset, _logo[i].image);
 		}
 		_arrow.Draw();
 	}
@@ -193,7 +195,7 @@ MenuInformation::GameStart()
 
 		for (int i = 0; i < 2; i++)
 		{
-			RRMLib::DrawGraph(_logo[i].rc.pos.x, _logo[i].rc.pos.y, _logo[i].image);
+			RRMLib::DrawGraph(_logo[i].rc.pos.x, _logo[i].rc.pos.y - Y_Draw_Offset , _logo[i].image);
 		}
 		_arrow.Draw();
 
@@ -264,7 +266,7 @@ MenuInformation::Configuration()
 
 	for (int i = 0; i < 2; i++)
 	{
-		RRMLib::DrawGraph(_logo[i].rc.pos.x, _logo[i].rc.pos.y, _logo[i].image);
+		RRMLib::DrawGraph(_logo[i].rc.pos.x, _logo[i].rc.pos.y - Y_Draw_Offset, _logo[i].image);
 	}
 	_arrow.Draw();
 
@@ -275,35 +277,35 @@ MenuInformation::Configuration()
 void
 MenuInformation::Enlargement(int extendRate, int alpha)
 {
-	_ExRate = extendRate;
-	_isEnlargement = true;
-	_isReduction = false;
-	_isWait = false;
-	_alpha = alpha;
-	_extendX = 0;
-	_extendY = 0;
+	//_ExRate = extendRate;
+	//_isEnlargement = true;
+	//_isReduction = false;
+	//_isWait = false;
+	//_alpha = alpha;
+	//_extendX = 0;
+	//_extendY = 0;
 
-	_update = &MenuInformation::Enlargement;
+	//_update = &MenuInformation::Enlargement;
 }
 
 void 
 MenuInformation::Reduction(int extendRate)
 {
-	_ExRate = extendRate;
-	_isEnlargement = false;
-	_isReduction = true;
-	_isWait = false;
+	//_ExRate = extendRate;
+	//_isEnlargement = false;
+	//_isReduction = true;
+	//_isWait = false;
 
-	_update = &MenuInformation::Reduction;
+	//_update = &MenuInformation::Reduction;
 }
 
 void
 MenuInformation::Draw()
 {
-	RRMLib::SetBlendMode(RRM_BLENDMODE_ALPHA, (int)_alpha);
-	RRMLib::DrawExtendGraph(_extendPos[0].x - _extendX, _extendPos[0].y - _extendY,
-							_extendPos[1].x + _extendX, _extendPos[1].y + _extendY,_handle);
-	RRMLib::SetBlendMode(RRM_BLENDMODE_NONE,0);
+	//RRMLib::SetBlendMode(RRM_BLENDMODE_ALPHA, (int)_alpha);
+	//RRMLib::DrawExtendGraph(_extendPos[0].x - _extendX, _extendPos[0].y - _extendY,
+	//						_extendPos[1].x + _extendX, _extendPos[1].y + _extendY,_handle);
+	//RRMLib::SetBlendMode(RRM_BLENDMODE_NONE,0);
 }
 
 void
