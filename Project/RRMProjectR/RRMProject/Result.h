@@ -4,16 +4,21 @@
 #include "EndCall.h"
 #include "Score.h"
 #include "Combo.h"
+#include "HitPoint.h"
+#include "Timer.h"
 
 class Logo;
+class ScoreCalc;
 
 class Result
 {
 private:
 	enum class State
 	{
+		init,
 		start,
 		middle,
+		life,
 		end,
 	};
 private:
@@ -22,8 +27,10 @@ private:
 	typedef void (Result::*_func)();
 	std::map<State, _func> _update;
 
+	void InitUpdate();
 	void StartUpdate();
 	void MiddleUpdate();
+	void LifeUpdate();
 	void EndUpdate();
 
 	State _state;
@@ -32,12 +39,23 @@ private:
 
 	Logo* _logo;
 
+	ScoreCalc* _lifeScore;
+	ScoreCalc* _timeScore;
+	ScoreCalc* _comboScore;
+
 	Score& _score;
+	HitPoint& _playerHP;
+	Timer& _time;
+	Combo& _combo;
+
 	int _maxCombo;
 
+	long long int _bonus;
+
+	void LifeEvaluation();
 
 public:
-	Result(Score& score);
+	Result(Score& score, HitPoint& playerHP, Timer& time, Combo& combo);
 	~Result();
 
 	void Update();

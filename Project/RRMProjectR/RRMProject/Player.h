@@ -172,6 +172,7 @@ public:
 	std::vector<HitBox>& GetDamageBoxes() { return _hitBox.GetDamageBoxes(); }
 
 	MultihitProtect& GetHitProtect() { return _mhp; }
+	HitPoint& GetHitPoint() { return _hp; }
 
 	Combo& GetCombo() { return _combo; }
 };

@@ -5,7 +5,6 @@
 #include "Camera.h"
 #include "StatusUI.h"
 #include "KeyConfig.h"
-#include "Result.h"
 #include "Timer.h"
 #include "InformationUI.h"
 #include "Score.h"
@@ -13,6 +12,8 @@
 #include <map>
 
 class Collision;
+class Input;
+class Result;
 
 class GameScene : public Scene
 {
@@ -31,6 +32,8 @@ private:
 	Player _player;
 	Collision* _col;
 	StatusUI _statusUI;
+
+	Input* _input;
 	
 	Camera _camera;
 
@@ -43,7 +46,7 @@ private:
 	void ResultUpdate();
 	SceneState _state;
 
-	Result _result;
+	Result* _result;
 
 	int _endFrame;
 

@@ -169,3 +169,77 @@ Timer::Draw()
 		uv.x, uv.y, NUMBER_W, NUMBER_H, _handle, true, false);
 
 }
+
+void 
+Timer::Draw(const Position& pos, float size)
+{
+	Vector2 uv;
+	Times times;
+	if (_isEnd)
+	{
+		times = _endTime;
+	}
+	else
+	{
+		times = GetTime();
+	}
+	unsigned int idx;
+	float i = 0;
+
+	float offset = size * 0.5;
+
+	////Time•¶Žš•`‰æ
+	//RRMLib::DrawExtendGraph((pos.x - size) + i * offset - 5, pos.y - size / 2 - 3,
+	//	(pos.x + size) + i * offset - 5, pos.y + size / 2 - 3, _timeHandle);
+
+	//i += 1.5f;
+	//RRMLib::DrawExtendGraph((pos.x - size / 2) + i * offset, pos.y - size / 2,
+	//	(pos.x + size / 2) + i * offset, pos.y + size / 2, _koronHandle);
+
+	//•ª•`‰æ
+	//i += 5;
+	uv = UV[(times.mimutes / 10) % 10];
+	RRMLib::DrawRectExtendGraph((pos.x - size / 2) + i * offset, pos.y - size / 2,
+		(pos.x + size / 2) + i * offset, pos.y + size / 2,
+		uv.x, uv.y, NUMBER_W, NUMBER_H, _handle, true, false);
+
+	++i;
+	uv = UV[(times.mimutes) % 10];
+	RRMLib::DrawRectExtendGraph((pos.x - size / 2) + i * offset, pos.y - size / 2,
+		(pos.x + size / 2) + i * offset, pos.y + size / 2,
+		uv.x, uv.y, NUMBER_W, NUMBER_H, _handle, true, false);
+
+	++i;
+	RRMLib::DrawExtendGraph((pos.x - size / 2) + i * offset, pos.y - size / 2,
+		(pos.x + size / 2) + i * offset, pos.y + size / 2, _koronHandle);
+
+	++i;
+	//•b•`‰æ
+	uv = UV[(times.seconds / 10) % 10];
+	RRMLib::DrawRectExtendGraph((pos.x - size / 2) + i * offset, pos.y - size / 2,
+		(pos.x + size / 2) + i * offset, pos.y + size / 2,
+		uv.x, uv.y, NUMBER_W, NUMBER_H, _handle, true, false);
+
+	++i;
+	uv = UV[(times.seconds) % 10];
+	RRMLib::DrawRectExtendGraph((pos.x - size / 2) + i * offset, pos.y - size / 2,
+		(pos.x + size / 2) + i * offset, pos.y + size / 2,
+		uv.x, uv.y, NUMBER_W, NUMBER_H, _handle, true, false);
+
+	++i;
+	RRMLib::DrawExtendGraph((pos.x - size / 2) + i * offset, pos.y - size / 2,
+		(pos.x + size / 2) + i * offset, pos.y + size / 2, _koronHandle);
+
+	//ƒ~ƒŠ•b•`‰æ
+	++i;
+	uv = UV[(times.millisec / 100) % 10];
+	RRMLib::DrawRectExtendGraph((pos.x - size / 2) + i * offset, pos.y - size / 2,
+		(pos.x + size / 2) + i * offset, pos.y + size / 2,
+		uv.x, uv.y, NUMBER_W, NUMBER_H, _handle, true, false);
+
+	++i;
+	uv = UV[(times.millisec / 10) % 10];
+	RRMLib::DrawRectExtendGraph((pos.x - size / 2) + i * offset, pos.y - size / 2,
+		(pos.x + size / 2) + i * offset, pos.y + size / 2,
+		uv.x, uv.y, NUMBER_W, NUMBER_H, _handle, true, false);
+}

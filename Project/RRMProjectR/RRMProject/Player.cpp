@@ -412,7 +412,7 @@ Player::AliveUpdate()
 	}
 
 	//ƒVƒ‡ƒbƒg
-	if (_input->Shoot(3))
+	if (_input->Shoot(30))
 	{
 		Shoot();
 	}

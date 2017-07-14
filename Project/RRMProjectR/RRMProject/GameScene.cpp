@@ -12,9 +12,11 @@
 #include "BlockManager.h"
 #include "SceneManager.h"
 #include "GameTime.h"
+#include "InputFactory.h"
+#include "Result.h"
+
 
 GameScene::GameScene() : _player(0,_camera, InputMode::pad), _camera(_player.GetRect().pos), _time(Position(0, 0), 40.f)
-, _result(_score)
 {
 	_col = new Collision();
 	EnemyManager::Instance();
@@ -34,10 +36,14 @@ GameScene::GameScene() : _player(0,_camera, InputMode::pad), _camera(_player.Get
 	_endFrame = 0;
 
 	_camera.Init();
+
+	_input = InputFactory::Create(InputMode::pad, 0);
+	_result = new  Result(_score, _player.GetHitPoint(), _time, _player.GetCombo());
+
 }
 
 GameScene::GameScene(LogoIdx state, KeyData& keyData) : _player(0, _camera, InputMode::pad), _camera(_player.GetRect().pos),
-_time(Position(720, 40.0f), 40.f) , _result(_score)
+_time(Position(720, 40.0f), 40.f)
 {
 	_col = new Collision();
 	EnemyManager::Instance();
@@ -57,6 +63,10 @@ _time(Position(720, 40.0f), 40.f) , _result(_score)
 	_endFrame = 0;
 
 	_camera.Init();
+
+	_input = InputFactory::Create(InputMode::pad, 0);
+
+	_result = new Result(_score, _player.GetHitPoint(), _time, _player.GetCombo());
 }
 
 GameScene::~GameScene()
@@ -174,17 +184,18 @@ GameScene::ResultUpdate()
 	_player.Draw();
 	EffectManager::Instance().Draw(_camera.GetOffset());
 
-	_result.Update();
+	_result->Update();
 
-	if (_result.IsEnd())
+	if (_result->IsEnd() && _input->Start())
 	{
-
+		StageClear();
 	}
 }
 
 bool 
 GameScene::Update()
 {
+	_input->Update();
 	(this->*_update[_state])();
 
 	return true;

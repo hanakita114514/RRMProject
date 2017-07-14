@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Vector2.h"
+#include <array>
 
 class Number
 {
@@ -10,6 +11,9 @@ private:
 	int _handle;
 	float _offset;
 
+	static const int NUM = 10;
+
+	std::array<Vector2, NUM> _uv;
 	Vector2 UV(int idx);
 
 	const float NUMBER_W;

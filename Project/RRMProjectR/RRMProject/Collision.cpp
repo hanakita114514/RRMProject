@@ -22,17 +22,24 @@ float DistanceCalcuration(Vector2 &v1, Vector2 &v2);
 
 bool Collision::IsHit(Rect &a, Rect &b)
 {
-	bool hitFlag = false;
+
+	//if ((a.Right() < b.Left()) ||
+	//	(a.Left() > b.Right()) ||
+	//	(a.Bottom() < b.Top()) ||
+	//	(a.Top() > b.Bottom()))
+	//{
+	//	return false;
+	//}
 
 	if ((a.Right() > b.Left()) &&
 		(a.Left() < b.Right()) &&
 		(a.Bottom() > b.Top()) &&
 		(a.Top() < b.Bottom()))
 	{
-		hitFlag = true;
+		return true;
 	}
 
-	return hitFlag;
+	return false;
 }
 
 bool

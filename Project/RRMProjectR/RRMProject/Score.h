@@ -20,5 +20,8 @@ public:
 
 	void Add(long long int score);
 	void Draw();
+
+	long long int GetScore() { return _score; }
+	long long int GetHeighScore() { return _heighScore; }
 };
 

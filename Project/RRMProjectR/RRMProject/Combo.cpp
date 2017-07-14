@@ -42,7 +42,7 @@ Combo::Update()
 		this->Failure();
 	}
 
-	if (_maxCombo > _comboNum)
+	if (_maxCombo < _comboNum)
 	{
 		_maxCombo = _comboNum;
 	}

@@ -43,5 +43,6 @@ public:
 	Times GetTime();				//計測時間(分、秒、ミリ秒分け)
 
 	void Draw();				//計測時間を表示
+	void Draw(const Position& pos, float size);				//計測時間を表示
 };
 

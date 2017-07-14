@@ -1,7 +1,6 @@
 #include "Number.h"
 #include <RRMLib.h>
 
-static const int NUM = 10;
 
 Number::Number(float size) :
 	NUMBER_W(84.4f), NUMBER_H(88.5f)
@@ -9,26 +8,8 @@ Number::Number(float size) :
 	_handle = RRMLib::LoadGraph("Resource/img/UI/Number/Number.png");
 	_size = size;
 	_offset = size / 2;
-}
 
-Number::Number(float size, int handle, float width, float height)
-	: NUMBER_W(width), NUMBER_H(height)
-{
-	_size = size;
-	_offset = size / 2;
-	_handle = handle;
-}
-
-
-Number::~Number()
-{
-	RRMLib::DeleteGraph(_handle);
-}
-
-Vector2 
-Number::UV(int idx)
-{
-	const Vector2 UV[NUM]
+	std::array<Vector2, NUM> UV
 	{
 		Vector2(NUMBER_W * 0, NUMBER_H * 0),
 		Vector2(NUMBER_W * 1, NUMBER_H * 0),
@@ -42,7 +23,42 @@ Number::UV(int idx)
 		Vector2(NUMBER_W * 4, NUMBER_H * 1),
 	};
 
-	return UV[idx];
+	_uv = UV;
+}
+
+Number::Number(float size, int handle, float width, float height)
+	: NUMBER_W(width), NUMBER_H(height)
+{
+	_size = size;
+	_offset = size / 2;
+	_handle = handle;
+
+	std::array<Vector2, NUM> UV
+	{
+		Vector2(NUMBER_W * 0, NUMBER_H * 0),
+		Vector2(NUMBER_W * 1, NUMBER_H * 0),
+		Vector2(NUMBER_W * 2, NUMBER_H * 0),
+		Vector2(NUMBER_W * 3, NUMBER_H * 0),
+		Vector2(NUMBER_W * 4, NUMBER_H * 0),
+		Vector2(NUMBER_W * 0, NUMBER_H * 1),
+		Vector2(NUMBER_W * 1, NUMBER_H * 1),
+		Vector2(NUMBER_W * 2, NUMBER_H * 1),
+		Vector2(NUMBER_W * 3, NUMBER_H * 1),
+		Vector2(NUMBER_W * 4, NUMBER_H * 1),
+	};
+
+	_uv = UV;
+}
+
+
+Number::~Number()
+{
+}
+
+Vector2 
+Number::UV(int idx)
+{
+	return _uv[idx];
 }
 
 void

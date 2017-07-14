@@ -52,9 +52,9 @@
     <ClCompile Include="EnemyFactory.cpp" />
     <ClCompile Include="EnemyHitBox.cpp" />
     <ClCompile Include="EnemyManager.cpp" />
+    <ClCompile Include="EvaluationLogo.cpp" />
     <ClCompile Include="Fade.cpp" />
     <ClCompile Include="File.cpp" />
-    <ClCompile Include="Filter.cpp" />
     <ClCompile Include="Food.cpp" />
     <ClCompile Include="FPS.cpp" />
     <ClCompile Include="GameMain.cpp" />
@@ -98,6 +98,7 @@
     <ClCompile Include="Result.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Score.cpp" />
+    <ClCompile Include="ScoreCalc.cpp" />
     <ClCompile Include="ShootingStar.cpp" />
     <ClCompile Include="SinBullet.cpp" />
     <ClCompile Include="SlowDown.cpp" />
@@ -157,9 +158,9 @@
     <ClInclude Include="EnemyFactory.h" />
     <ClInclude Include="EnemyHitBox.h" />
     <ClInclude Include="EnemyManager.h" />
+    <ClInclude Include="EvaluationLogo.h" />
     <ClInclude Include="Fade.h" />
     <ClInclude Include="File.h" />
-    <ClInclude Include="Filter.h" />
     <ClInclude Include="Food.h" />
     <ClInclude Include="FPS.h" />
     <ClInclude Include="GameMain.h" />
@@ -204,6 +205,7 @@
     <ClInclude Include="Result.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Score.h" />
+    <ClInclude Include="ScoreCalc.h" />
     <ClInclude Include="ShootingStar.h" />
     <ClInclude Include="SinBullet.h" />
     <ClInclude Include="SlowDown.h" />
