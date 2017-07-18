@@ -92,6 +92,7 @@ public:
 
 	void SetFootHit(bool flag);
 	void SearchHit(const Position& targetPos);
+	void SearchFailed();
 
 	void SearchClear();
 };

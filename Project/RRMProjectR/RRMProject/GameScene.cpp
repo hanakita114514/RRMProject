@@ -333,6 +333,7 @@ void GameScene::PlayerColEnemy()
 		//ƒvƒŒƒCƒ„[’T‚µ
 		for (auto& searchRc : enemy->GetHitBox()->GetSearchRects())
 		{
+			enemy->SearchFailed();
 			if (_col->IsHit(searchRc, _player.GetRect()))
 			{
 				enemy->SearchHit(_player.GetRect().pos);

@@ -6,6 +6,7 @@
 #include "Mathematics.h"
 #include <math.h>
 #include "GameTime.h"
+#include "EggHitBox.h"
 
 const float ANIM_SIZE_X = 64.0f;
 const float ANIM_SIZE_Y = 64.0f;
@@ -19,7 +20,6 @@ Egg::Egg(int handle, const Position& pos)
 	_animCnt = 0;
 	_shotCnt = 0;
 
-	_state = &Egg::Wait;
 	_update = &Egg::AliveUpdate;
 	_freamCnt = 0;
 
@@ -28,7 +28,6 @@ Egg::Egg(int handle, const Position& pos)
 	_rc.w = 64;
 	_rc.h = 64;
 	_rc.pos = pos;
-	_junpCnt = 0;
 	_vel = Vector2(0, 0);
 	_dir = Vector2(-1, 0);
 
@@ -38,6 +37,28 @@ Egg::Egg(int handle, const Position& pos)
 
 	_isAlive = true;
 
+	_isSearch = false;
+
+	_hitBox = new EggHitBox();
+	_searchTime = 0.0f;
+
+	_stateUpdate[(int)EggState::wait] = &Egg::Wait;
+	_stateUpdate[(int)EggState::shot] = &Egg::Shot;
+	_stateUpdate[(int)EggState::jump] = &Egg::Jump;
+	_stateUpdate[(int)EggState::coolTime] = &Egg::CoolTime;
+
+	_state = EggState::wait;
+
+	_shotCnt = 0;
+
+	r = {};
+
+	r.w = 300;
+	r.h = 64;
+
+	r.pos = Vector2(_rc.Center().x - (300 / 2), _rc.pos.y);
+
+	_territory = r;
 }
 
 Egg::~Egg()
@@ -56,21 +77,25 @@ Egg::AliveUpdate()
 	_circle.pos = _rc.Center();
 
 	_freamCnt++;
+	_searchTime--;
 	_shotPos = Vector2(_rc.Left(), _rc.Top());
+	_hitBox->Search(0, _rc, _dir);
 
 	if (_hitGround)
 	{
-		_vel.y = 0;
 		_animCnt += GameTime::Instance().GetTimeScale(this);
-		_junpCnt++;
 		_shotCnt++;
 	}
 	Gravity();
 
-	(this->*_state)();
+	if (!_isSearch)
+	{
+		Move();
+	}
 
-	Move();
 	Anim();
+
+	(this->*_stateUpdate[(int)_state])();
 	_hpbar.CommitPeriod();
 
 	if (_hp.GetHitPoint() <= 0)
@@ -84,6 +109,8 @@ Egg::AliveUpdate()
 	{
 		_update = &Egg::DamageUpdate;
 	}
+
+	_vel.x = 0;
 }
 
 void 
@@ -95,7 +122,6 @@ Egg::DamageUpdate()
 	{
 		_vel.y = 0;
 		_animCnt += GameTime::Instance().GetTimeScale(this);
-		_junpCnt++;
 		_shotCnt++;
 	}
 
@@ -123,6 +149,7 @@ void Egg::Update()
 	{
 		(this->*_update)();
 	}
+
 	_hpbar.Update();
 	_hitStop.Update();
 }
@@ -158,34 +185,72 @@ void Egg::Anim()
 
 void Egg::Move()
 {
-	_rc.pos += _vel * GameTime::Instance().GetTimeScale(this);
+	if (_rc.Left() <= _territory.Left() || _rc.Right() >= _territory.Right())
+	{
+		_dir.x *= -1;
+	}
+
+	_vel.x = 2;
+	if (_state == EggState::wait || _state == EggState::coolTime)
+	{
+		_vel.x *= _dir.x;
+		_rc.pos += _vel * GameTime::Instance().GetTimeScale(this);
+	}
 }
 
 void Egg::Shot()
 {
-		Shot(BulletType::circleBullet,1);
-		_state = &Egg::Wait;
+	if (_hp.GetHitPoint() < _hp.GetMaxHP() / 2)
+	{
+		Spell* spell = _absSpell->GetSpell(SpellType::CircleShot);
+		spell->Create(_dir, _rc.pos, this);
+	}
+	else
+	{
+		Spell* spell = _absSpell->GetSpell(SpellType::TestSpell);
+		spell->Create(_dir, _rc.pos, this);
+	}
+
+	_state = EggState::coolTime;
+	_searchTime = 60.0f;
+	_isSearch = false;
+
 }
 
 void Egg::Jump()
 {
-	if ((_junpCnt % 30 == 0 && _junpCnt != 0) && _hitGround)
-	{
-		_vel.y = -10;
-		_hitGround = false;
-		_junpCnt++;
-	}
+
 }
 
 void Egg::Wait()
 {
-	if (_hitGround)
+	if (_isSearch)
 	{
-		Spell* spell = _absSpell->GetSpell(SpellType::Comet);
-		spell->Create(Vector2(-1, 0), _rc.pos, this);
+		_shotCnt++;
+	}
+	else
+	{
+		_shotCnt = 0;
+		Move();
 	}
 
-	int i = 0;
+	if (_shotCnt % 10 == 0 && _shotCnt !=0)
+	{
+		_state = EggState::shot;
+		_hitBox->SearchClear();
+	}
+}
+
+void 
+Egg::CoolTime()
+{
+	_searchTime -= 1;
+	if (_searchTime < 0.0f)
+	{
+		_state = EggState::wait;
+	}
+
+	Move();
 }
 
 void Egg::Shot(BulletType type, int count)	//UŒ‚

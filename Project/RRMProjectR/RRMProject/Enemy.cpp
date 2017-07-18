@@ -199,6 +199,12 @@ Enemy::SearchHit(const Position& targetPos)
 	_targetPos = targetPos;
 }
 
+void
+Enemy::SearchFailed()
+{
+	_isSearch = false;
+}
+
 void 
 Enemy::ColDraw()
 {

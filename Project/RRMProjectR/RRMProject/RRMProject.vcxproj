@@ -47,6 +47,7 @@
     <ClCompile Include="EffectFactory.cpp" />
     <ClCompile Include="EffectManager.cpp" />
     <ClCompile Include="Egg.cpp" />
+    <ClCompile Include="EggHitBox.cpp" />
     <ClCompile Include="EndCall.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyFactory.cpp" />
@@ -153,6 +154,7 @@
     <ClInclude Include="EffectFactory.h" />
     <ClInclude Include="EffectManager.h" />
     <ClInclude Include="Egg.h" />
+    <ClInclude Include="EggHitBox.h" />
     <ClInclude Include="EndCall.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyFactory.h" />

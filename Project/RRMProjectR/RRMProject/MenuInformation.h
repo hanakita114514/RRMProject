@@ -3,10 +3,8 @@
 #include "Arrow.h"
 #include <map>
 
-
 enum class MenuState : unsigned int
 {
-
 	mainMenu,
 	gameStart,
 	stageSelect,
@@ -20,7 +18,6 @@ struct LOGO
 {
 	int image;
 	Rect rc;
-	float freamCnt;
 };
 
 class Input;
@@ -48,7 +45,6 @@ private:
 	bool _isReduction;					//èkè¨íÜ
 	bool _isWait;						//ë“ã@íÜ
 	MenuState _state;
-	MenuState _signal;
 
 	void (MenuInformation::*_update)();
 	void Enlargement();

@@ -11,6 +11,9 @@
 #include <map>
 
 class Input;
+const int StarDust_Anim_Max = 10;
+const int StarDust_Image_X = 1280;
+const int StarDust_Image_Y = 960;
 
 //ƒƒSî•ñŠi”[—p\‘¢‘Ì
 class MenuScene : public Scene
@@ -39,9 +42,12 @@ private:
 	int _toolIdx;					//”ò‚Ñ“¹‹ï”z—ñ‚Ì“Y‚¦š
 	int _weaponIdx;					//•Ší”z—ñ‚Ì“Y‚¦š
 	int _bg;						//”wŒi‚Ì‰æ‘œƒnƒ“ƒhƒ‹
-	float _freamCnt;
 	bool _isInput;
+	float _animCnt;
+	int _frame;
 
+
+	Vector2 _animUV[StarDust_Anim_Max];
 	MenuInformation _menuInfo;
 	LOGO _logo;
 
