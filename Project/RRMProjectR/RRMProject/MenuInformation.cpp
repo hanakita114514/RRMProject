@@ -13,6 +13,7 @@
 const float Y_ExtendLimit = 350;
 const float X_ExtendLimit = 300;
 const float Y_Draw_Offset = 50;
+const int Number_Size = 64;
 
 const char* filePath[] =
 {
@@ -20,11 +21,10 @@ const char* filePath[] =
 	"Resource/img/UI/setting.png",
 	"Resource/img/UI/Start3.png",
 	"Resource/img/UI/StageSelect.png",
-	"Resource/img/UI/stage.png"
-	"Resource/img/UI/stageNumber.png",
+	"Resource/img/UI/stage.png",
+	"Resource/img/UI/Number/stageNumber.png",
 	"Resource/img/UI/A.png",
 	"Resource/img/UI/B.png",
-	"Resource/img/UI/C.png"
 };
 
 MenuInformation::MenuInformation()
@@ -74,6 +74,10 @@ MenuInformation::Init()
 	_logoIdx = 0;
 	_stageId = 0;
 
+	for (int i = 0; i < 10; i++)
+	{
+		_numberUV[i] = Vector2(64 * i, 0);
+	}
 }
 
 void
@@ -206,6 +210,7 @@ MenuInformation::GameStart()
 			case 0:
 			{
 				Fade::Instance().FadeIn(10.0);
+				SceneManager::Instance().LogoState(LogoIdx::GameStart);
 			}
 			break;
 			case 1:
@@ -235,16 +240,23 @@ MenuInformation::StageSelect()
 {
 	if (_input->Decision())
 	{
-
+		Fade::Instance().FadeIn(10.0);
+		SceneManager::Instance().LogoState(LogoIdx::StageSelect);
 	}
 
 	if (_input->Exit())
 	{
 		_state = MenuState::gameStart;
 		_logoIdx = 0;
+		_stageId = 0;
 		_arrow.SetPos(_logo[_logoIdx].rc.pos);
 		HandleSet(_state);
 	}
+
+
+	RRMLib::DrawGraph(_logo[0].rc.pos.x, _logo[0].rc.pos.y - Y_Draw_Offset, _logo[0].image);
+	RRMLib::DrawRectGraph(_logo[0].rc.pos.x + 300, _logo[0].rc.pos.y, _numberUV[_stageId].x, _numberUV[_stageId].y,
+		Number_Size, Number_Size, _logo[1].image, true, false);
 
 	RightMove();
 	LeftMove();
@@ -263,6 +275,9 @@ MenuInformation::Configuration()
 		_logoIdx = 0;
 		_arrow.SetPos(_logo[_logoIdx].rc.pos);
 	}
+	if (_input->Decision())
+	{
+	}
 
 	for (int i = 0; i < 2; i++)
 	{
@@ -277,47 +292,34 @@ MenuInformation::Configuration()
 void
 MenuInformation::Enlargement(int extendRate, int alpha)
 {
-	//_ExRate = extendRate;
-	//_isEnlargement = true;
-	//_isReduction = false;
-	//_isWait = false;
-	//_alpha = alpha;
-	//_extendX = 0;
-	//_extendY = 0;
-
-	//_update = &MenuInformation::Enlargement;
 }
 
 void 
 MenuInformation::Reduction(int extendRate)
 {
-	//_ExRate = extendRate;
-	//_isEnlargement = false;
-	//_isReduction = true;
-	//_isWait = false;
-
-	//_update = &MenuInformation::Reduction;
 }
 
 void
 MenuInformation::Draw()
 {
-	//RRMLib::SetBlendMode(RRM_BLENDMODE_ALPHA, (int)_alpha);
-	//RRMLib::DrawExtendGraph(_extendPos[0].x - _extendX, _extendPos[0].y - _extendY,
-	//						_extendPos[1].x + _extendX, _extendPos[1].y + _extendY,_handle);
-	//RRMLib::SetBlendMode(RRM_BLENDMODE_NONE,0);
 }
 
 void
 MenuInformation::RightMove()
 {
-	_stageId = (_stageId + 1 )% 4;
+	if (_input->RightStickTriger())
+	{
+		_stageId = (_stageId + 1) % 4;
+	}
 }
 
 void
 MenuInformation::LeftMove()
 {
-	_stageId = (_stageId + 4 - 1) % 4;
+	if (_input->LeftStickTriger())
+	{
+		_stageId = (_stageId + 4 - 1) % 4;
+	}
 }
 
 void

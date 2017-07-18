@@ -37,6 +37,7 @@ private:
 
 
 	Vector2 _extendPos[2];
+	Vector2 _numberUV[10];
 	Input* _input;
 	Arrow _arrow;
 	LOGO _logo[2];

@@ -11,7 +11,7 @@ Meat::Meat(int handle)
 	_handle = handle;
 
 	_update = &Meat::AlliveUpdate;
-	_state = &Meat::Wait;
+	_meatState = State::wait;
 }
 
 Meat::~Meat()
@@ -27,7 +27,7 @@ void Meat::Initialize()
 void Meat::Update()
 {
 	(this->*_update)();
-	(this->*_state)();
+	(this->*_state[(int)_meatState])();
 }
 
 void Meat::AlliveUpdate()
@@ -47,12 +47,12 @@ void Meat::Wait()
 
 void Meat::Damage()
 {
-	_state = &Meat::Wait;
+	_meatState = State::wait;
 }
 
 void Meat::Shot()
 {
-	_state = &Meat::Wait;
+	_meatState = State::wait;
 }
 
 void Meat::Anim()
