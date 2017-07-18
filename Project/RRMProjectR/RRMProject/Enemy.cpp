@@ -153,7 +153,7 @@ Enemy::Damage(float power, const Vector2& vec)
 {
 	_hp.Damage(power);
 	_armor.Damage(power);
-	_vel = vec;
+	_vel += vec;
 	_isDamage = true;
 }
 

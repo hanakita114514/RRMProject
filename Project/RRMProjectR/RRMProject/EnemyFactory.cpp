@@ -3,12 +3,14 @@
 #include "Mushroom.h"
 #include"SushiMon.h"
 #include <RRMLib.h>
+#include "Hamburger.h"
 
 EnemyFactory::EnemyFactory()
 {
 	_imgMap[EnemyType::egg] = RRMLib::LoadGraph("Resource/img/Enemy/tamatama.png");
 	_imgMap[EnemyType::sushi] = RRMLib::LoadGraph("Resource/img/Enemy/eggDragon.png");
 	_imgMap[EnemyType::mushroom] = RRMLib::LoadGraph("Resource/img/Enemy/mush.png");
+	_imgMap[EnemyType::hamburger] = RRMLib::LoadGraph("Resource/img/Enemy/kingBurger.png");
 }
 
 
@@ -48,7 +50,7 @@ EnemyFactory::Create(const EnemyType& et, const Position& pos)
 	break;
 	case EnemyType::hamburger:
 	{
-
+		return new Hamburger(_imgMap[EnemyType::hamburger], pos);
 	}
 	break;
 	default:
