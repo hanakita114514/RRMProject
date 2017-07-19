@@ -94,6 +94,8 @@
     <ClCompile Include="PlayerHitBox.cpp" />
     <ClCompile Include="PlayerHP.cpp" />
     <ClCompile Include="PowerPoint.cpp" />
+    <ClCompile Include="RainBullet.cpp" />
+    <ClCompile Include="RainSpell.cpp" />
     <ClCompile Include="Rect.cpp" />
     <ClCompile Include="RectObj.cpp" />
     <ClCompile Include="Result.cpp" />
@@ -202,6 +204,8 @@
     <ClInclude Include="PlayerHitBox.h" />
     <ClInclude Include="PlayerHP.h" />
     <ClInclude Include="PowerPoint.h" />
+    <ClInclude Include="RainBullet.h" />
+    <ClInclude Include="RainSpell.h" />
     <ClInclude Include="Rect.h" />
     <ClInclude Include="RectObj.h" />
     <ClInclude Include="Result.h" />

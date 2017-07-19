@@ -42,8 +42,7 @@ void Comet::Create(Vector2 vec, Vector2 pos, Object *owner)
 		_circle.pos.x += cos((360 / BULLET_MAX) * (bCnt % BULLET_MAX) * RAD) * _circle.radius;
 		_circle.pos.y += sin((360 / BULLET_MAX) * (bCnt % BULLET_MAX) * RAD) * _circle.radius;
 
-		bullet = bm.Create(BulletType::normal, _vec, ObjectType::enemy, Vector2(0, 0), owner);
-		bullet->SetPos(_circle.pos);
+		bullet = bm.Create(BulletType::normal, _circle.pos, _vec, ObjectType::enemy, Vector2(0, 0), owner);
 		bullet->Stop();
 
 		if (firstBullet == nullptr)
@@ -63,7 +62,7 @@ void Comet::Create(Vector2 vec, Vector2 pos, Object *owner)
 
 	if (bCnt == 12)
 	{
-		_freamCnt++;
+		_frameCnt++;
 		firstBullet = nullptr;
 		for (auto a : list)
 		{
@@ -71,11 +70,11 @@ void Comet::Create(Vector2 vec, Vector2 pos, Object *owner)
 		}
 	}
 
-	if (_freamCnt > 30)
+	if (_frameCnt > 30)
 	{
 		Shot();
 		DeleteList();
 		bCnt = 0;
-		_freamCnt = 0;
+		_frameCnt = 0;
 	}
 }

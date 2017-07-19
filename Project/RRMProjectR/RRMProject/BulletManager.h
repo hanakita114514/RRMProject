@@ -30,7 +30,7 @@ public:
 	void Update();
 	void Draw(const Vector2& offset);
 
-	Bullet* Create(const BulletType& bulletID, Vector2 vec, ObjectType type, Vector2 entry, Object* owner);
+	Bullet* Create(const BulletType& bulletID, const Position& pos, Vector2 vec, ObjectType type, Vector2 entry, Object* owner);
 
 	void Delete();
 

@@ -32,5 +32,5 @@ ShootingStar::Create(Vector2 vec, Vector2 pos, Object* owner)
 
 
 
-	bullet = bm.Create(BulletType::normal, vec, owner->GetObjType(), Vector2(0, 0), owner);
+	bullet = bm.Create(BulletType::normal, _pos ,vec, owner->GetObjType(), Vector2(0, 0), owner);
 }

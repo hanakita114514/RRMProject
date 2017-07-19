@@ -19,8 +19,9 @@ Lazer::~Lazer()
 
 }
 
-void Lazer::Initialize(Vector2 vec, ObjectType type)
+void Lazer::Initialize(const Position& pos, Vector2 vec, ObjectType type)
 {
+	_circle.pos = pos;
 	_isAlive = true;
 	_vel = Vector2(5.0, 0);
 	_vel.x = _vel.x *vec.x;

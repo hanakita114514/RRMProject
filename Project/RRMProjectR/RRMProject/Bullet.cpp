@@ -2,9 +2,8 @@
 #include <RRMLib.h>
 #include "EffectManager.h"
 #include "Player.h"
-#include "GameTime.h"
 
-Bullet::Bullet()
+Bullet::Bullet() : _life(LIFE_DEF), _gameTime(GameTime::Instance())
 {
 	_circle.radius = BULLET_RADIUS;
 	_pow = 5.0f;
@@ -14,9 +13,15 @@ Bullet::~Bullet()
 {
 }
 
-void Bullet::Initialize(Vector2 vec, ObjectType type)
+void Bullet::Initialize(const Position& pos, Vector2 vec, ObjectType type)
 {
 
+}
+
+void 
+Bullet::LifeDecrease()
+{
+	_life -= _gameTime.GetTimeScale(this);
 }
 
 BulletType
@@ -53,11 +58,18 @@ void Bullet::Hit(Enemy* other)
 void Bullet::Hit(Block* other)
 {
 	Destory();
+	Finalize();
 }
 
-void Bullet::Hit(Bullet* other)
+void 
+Bullet::Hit(Bullet* other)
 {
+}
 
+void
+Bullet::HitGround()
+{
+	_isHitGround = true;
 }
 
 Object*

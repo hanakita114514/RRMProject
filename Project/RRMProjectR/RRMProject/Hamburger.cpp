@@ -1,5 +1,6 @@
 #include "Hamburger.h"
 #include <RRMLib.h>
+#include "AbstractSpell.h"
 
 static const int IMG_NUM = 9;
 static const float IMG_W = 64.f;
@@ -30,6 +31,8 @@ Hamburger::Hamburger(int handle, const Position& pos)
 	_stateUpdate[State::shock_wave] = &Hamburger::ShockWave;
 	_stateUpdate[State::summon] = &Hamburger::Summon;
 	_stateUpdate[State::wait] = &Hamburger::Wait;
+
+	_spell = _absSpell->GetSpell(SpellType::RainSpell);
 }
 
 Hamburger::~Hamburger()
@@ -133,11 +136,14 @@ Hamburger::Summon()
 void 
 Hamburger::Update()
 {
-	Gravity();
 	Anim();
 	_rc.pos += _vel;
+	Gravity();
+	Enemy::DistanceAttenuation();
 
 	(this->*_disUpdate[_dis])();
+
+	_spell->Create(Vector2(0, 0), Position(0, 0), this);
 
 }
 

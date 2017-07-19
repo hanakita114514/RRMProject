@@ -2,6 +2,7 @@
 #include "CircleShot.h"
 #include "TestSpell.h"
 #include "Comet.h"
+#include "RainSpell.h"
 
 enum class SpellType
 {
@@ -9,19 +10,22 @@ enum class SpellType
 
 	Comet,
 	CircleShot,
-	TestSpell
+	TestSpell,
+	RainSpell,
 };
 
 class AbstractSpell
 {
-	Comet* comet;
-	TestSpell* testSpell;
-	CircleShot* circleShot;
+private:
+	Comet* _comet;
+	TestSpell* _testSpell;
+	CircleShot* _circleShot;
+	RainSpell* _rainSpell;
+
 public:
 	AbstractSpell();
 	~AbstractSpell();
 
 	Spell* GetSpell(SpellType type);
-
 };
 

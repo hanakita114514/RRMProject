@@ -17,8 +17,9 @@ CircleBullet::~CircleBullet()
 }
 
 void
-CircleBullet::Initialize(Vector2 vec, ObjectType type)
+CircleBullet::Initialize(const Position& pos, Vector2 vec, ObjectType type)
 {
+	_circle.pos = pos;
 	_life = 100.0f;
 	_vel = vec * 5;
 	_objType = type;

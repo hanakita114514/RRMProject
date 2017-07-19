@@ -263,24 +263,21 @@ void Egg::Shot(BulletType type, int count)	//UŒ‚
 	{
 	case BulletType::normal:
 	{
-		bullet = bm.Create(type, _dir, ObjectType::enemy, _rc.pos, this);
-		bullet->SetPos(_rc.pos);
+		bullet = bm.Create(type, _rc.pos, _dir, ObjectType::enemy, _rc.pos, this);
 	}
 	case BulletType::homing:
 	{
-		bullet = bm.Create(type, _dir, ObjectType::enemy, _rc.pos, this);
-		bullet->SetPos(_rc.pos);
+		bullet = bm.Create(type, _rc.pos, _dir, ObjectType::enemy, _rc.pos, this);
 		break;
 	}
 	case BulletType::sinBullet:
 	{
-		bullet = bm.Create(type, _dir, ObjectType::enemy, _rc.pos, this);
-		bullet->SetPos(_rc.pos);
+		bullet = bm.Create(type, _rc.pos, _dir, ObjectType::enemy, _rc.pos, this);
 		break;
 	}
 	case BulletType::deffusion:
 	{
-			bullet = bm.Create(type, _dir, ObjectType::enemy, _rc.pos, this);
+			bullet = bm.Create(type, _rc.pos, _dir, ObjectType::enemy, _rc.pos, this);
 			bullet->SetPos(_rc.pos);
 			if (cnt != 0)
 			{
@@ -294,7 +291,7 @@ void Egg::Shot(BulletType type, int count)	//UŒ‚
 	}
 	case BulletType::bezier:
 	{
-		bullet = bm.Create(type, _dir, ObjectType::enemy, _rc.pos, this);
+		bullet = bm.Create(type, _rc.pos, _dir, ObjectType::enemy, _rc.pos, this);
 		bullet->SetPos(_rc.pos);
 		break;
 	}
@@ -305,7 +302,7 @@ void Egg::Shot(BulletType type, int count)	//UŒ‚
 		--cnt;
 
 		ShotAngleCalc(_shotPos);
-		bullet = bm.Create(type, _shootVec, ObjectType::enemy, _rc.pos, this);
+		bullet = bm.Create(type, _rc.pos, _shootVec, ObjectType::enemy, _rc.pos, this);
 		bullet->SetPos(_shotPos);
 
 		if (cnt != 0)

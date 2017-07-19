@@ -36,7 +36,7 @@ void BulletManager::Draw(const Vector2& offset)
 }
 
 Bullet* 
-BulletManager::Create(const BulletType& bulletID, Vector2 vec, ObjectType type, Vector2 entry, Object* owner)
+BulletManager::Create(const BulletType& bulletID, const Position& pos, Vector2 vec, ObjectType type, Vector2 entry, Object* owner)
 {
 	//Žg‚¦‚é’e‚ÌŒŸõ
 	for (auto b : _bulletList)
@@ -44,13 +44,13 @@ BulletManager::Create(const BulletType& bulletID, Vector2 vec, ObjectType type, 
 		if (b->GetID() == bulletID && !b->IsAlive())
 		{
 			b->SetOwner(owner);
-			b->Initialize(vec, type);
+			b->Initialize(pos, vec, type);
 			return b;
 		}
 	}
 
 	//Žg‚¦‚é’e‚ª‚È‚¢ê‡V‚½‚É¶¬
-	Bullet* newBullet = _fac.Create(bulletID, vec, type, entry);
+	Bullet* newBullet = _fac.Create(bulletID, pos ,vec, type, entry);
 	newBullet->SetOwner(owner);
 	_bulletList.push_back(newBullet);
 

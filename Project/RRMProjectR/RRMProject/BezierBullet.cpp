@@ -17,8 +17,9 @@ BezierBullet::~BezierBullet()
 {
 }
 
-void BezierBullet::Initialize(Vector2 vec, ObjectType type)
+void BezierBullet::Initialize(const Position& pos, Vector2 vec, ObjectType type)
 {
+	_circle.pos = pos;
 	_life = 100.0f;
 	_objType = type;
 	_isAlive = true;

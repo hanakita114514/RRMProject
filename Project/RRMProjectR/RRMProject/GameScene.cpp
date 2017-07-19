@@ -406,17 +406,17 @@ GameScene::BulletColBlock()
 		{
 			continue;
 		}
-		if (bullet->GetObjType() == ObjectType::enemy)
-		{
-			continue;
-		}
+		//if (bullet->GetObjType() == ObjectType::enemy)
+		//{
+		//	continue;
+		//}
 		for (auto& block : BlockManager::Instance().GetBlockList())
 		{
 			hitFlag = _col->IsHit(block->GetRect(), bullet->GetCircle());
-			if (hitFlag == true && (block->GetObjType() != bullet->GetObjType()))
+
+			if (hitFlag)
 			{
 				(bullet)->Hit(block);
-				bullet->Finalize();
 				break;
 			}
 		}

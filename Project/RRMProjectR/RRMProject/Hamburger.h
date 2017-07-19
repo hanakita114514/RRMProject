@@ -2,6 +2,7 @@
 
 #include "Enemy.h"
 #include <map>
+#include "Spell.h"
 
 class Hamburger :public Enemy
 {
@@ -44,6 +45,8 @@ private:
 	void Aplysia();		//ã‹ó‚©‚ç’e–‹‚ğ~‚ç‚¹‚é
 	void NormalBullet();
 	void Summon();		//“G¢Š«
+
+	Spell* _spell;
 
 public:
 	Hamburger(int _handle, const Position& pos);

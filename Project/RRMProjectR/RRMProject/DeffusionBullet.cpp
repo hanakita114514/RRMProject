@@ -19,8 +19,9 @@ DeffusionBullet::~DeffusionBullet()
 }
 
 void
-DeffusionBullet::Initialize(Vector2 vec, ObjectType type)
+DeffusionBullet::Initialize(const Position& pos, Vector2 vec, ObjectType type)
 {
+	_circle.pos = pos;
 	_vec = vec;
 	_objType = type;
 	_isAlive = true;

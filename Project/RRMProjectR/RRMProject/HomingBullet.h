@@ -15,7 +15,7 @@ public:
 	HomingBullet(int handle,Vector2 vec);
 	~HomingBullet(); 
 
-	void Initialize(Vector2 vec, ObjectType type);
+	void Initialize(const Position& pos, Vector2 vec, ObjectType type);
 	void Update();
 	void Draw(const Vector2& offset);
 

@@ -236,8 +236,8 @@ void Player::Shoot()
 
 	Vector2 end = Vector2(1280, 720);
 	_ps = PlayerState::shoot;
-		Bullet* bullet = BulletManager::Instance().Create(_tool[_toolIdx], _dir, ObjectType::player, _shootPos, this);
-		bullet->SetPos(_shootPos);
+	BulletManager::Instance().Create(_tool[_toolIdx], _shootPos, _dir, ObjectType::player, _shootPos, this);
+
 }
 
 void 
@@ -429,10 +429,7 @@ Player::AliveUpdate()
 	WeaponSwitch();
 
 #ifdef DEBUG
-	//if (CheckHitKey(KEY_INPUT_Z)
-	//{
-	//	_state = &Player::ShootState;
-	//}
+
 #endif // DEBUG
 
 	HitGround();
@@ -464,7 +461,6 @@ Player::DamageUpdate()
 	if (_vel.x == 0)
 	{
 		_us = UpdateState::invincible;
-		//_update = &Player::InvincibleUpdate;
 		_invincibleTime = 60.0f;
 		_hpbar.Commit();
 	}
@@ -540,6 +536,7 @@ Player::Draw()
 
 	//RRMLib::DrawLine((int)(_rc.Left() + (_rc.w / 2)), (int)(_rc.Top()),
 	//				(int)(_rc.Left() + (_rc.w / 2)), (int)(_rc.Bottom()), 0xff0000);
+
 	_hitBox.Draw();
 
 
@@ -635,14 +632,13 @@ void Player::Hit(Bullet* other)
 {
 	if (other->GetObjType() == ObjectType::enemy)
 	{
-		//if (_update == &Player::AliveUpdate)
 		if(_us == UpdateState::alive)
 		{
 			Damage(other->GetPower());
+			other->Finalize();
 			return;
 		}
 		if(_us == UpdateState::avoidance)
-		//if (_update == &Player::AvoidanceUpdate)
 		{
 			_sd.SlowMotion(5, this);
 			_sd.SlowMotion(60, other->GetOwner());

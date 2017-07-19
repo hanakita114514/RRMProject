@@ -23,8 +23,9 @@ HomingBullet::~HomingBullet()
 }
 
 void
-HomingBullet::Initialize(Vector2 vec,ObjectType type)
+HomingBullet::Initialize(const Position& pos, Vector2 vec, ObjectType type)
 {
+	_circle.pos = pos;
 	_life = 300.0f;
 	_objType = type;
 	_isAlive = true;

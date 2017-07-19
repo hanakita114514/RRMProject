@@ -5,11 +5,11 @@
 
 Spell::Spell()
 {
-	_freamCnt = 0;
+	_frameCnt = 0;
 	firstBullet = nullptr;
 	bCnt = 0;
 	_shotFlag = false;
-
+	_isEnd = false;
 }
 
 
@@ -45,3 +45,8 @@ void Spell::Shot()
 	}
 }
 
+void
+Spell::Update()
+{
+
+}

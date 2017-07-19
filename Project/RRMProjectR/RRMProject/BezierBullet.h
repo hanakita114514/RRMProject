@@ -31,7 +31,7 @@ private:
 	void BezierCurve();
 public:
 
-	void Initialize(Vector2 vec, ObjectType type);
+	void Initialize(const Position& pos, Vector2 vec, ObjectType type);
 	void Update();
 	void Draw(const Vector2& offset);
 

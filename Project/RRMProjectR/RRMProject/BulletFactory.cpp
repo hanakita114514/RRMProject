@@ -7,6 +7,7 @@
 #include "BezierBullet.h"
 #include "DeffusionBullet.h"
 #include "CircleBullet.h"
+#include "RainBullet.h"
 
 BulletFactory::BulletFactory()
 {
@@ -20,7 +21,7 @@ BulletFactory::~BulletFactory()
 }
 
 Bullet*
-BulletFactory::Create(const BulletType& bulletID, Vector2 vec,ObjectType type,Vector2 entry)
+BulletFactory::Create(const BulletType& bulletID, const Position& pos, Vector2 vec,ObjectType type,Vector2 entry)
 {
 	Bullet* newBullet = nullptr;
 
@@ -29,43 +30,57 @@ BulletFactory::Create(const BulletType& bulletID, Vector2 vec,ObjectType type,Ve
 	case BulletType::normal:
 	{
 		newBullet = new NormalBullet(_handle);
-		newBullet->Initialize(vec, type);
+		newBullet->Initialize(pos, vec, type);
+		newBullet->SetPos(pos);
 		break;
 	}
 	case BulletType::homing:
 	{
 		newBullet = new HomingBullet(_handle,vec);
-		newBullet->Initialize(vec, type);
+		newBullet->Initialize(pos, vec, type);
+		newBullet->SetPos(pos);
 		break;
 	}
 	case BulletType::sinBullet:
 	{
 		newBullet = new SinBullet(_handle);
-		newBullet->Initialize(vec,type);
+		newBullet->Initialize(pos, vec,type);
+		newBullet->SetPos(pos);
 		break;
 	}
 	case BulletType::lazer:
 	{
 		newBullet = new Lazer();
-		newBullet->Initialize(vec, type);
+		newBullet->Initialize(pos, vec, type);
+		newBullet->SetPos(pos);
 		break;
 	}
 	case BulletType::bezier:
 	{
 		newBullet = new BezierBullet(_handle,entry);
-		newBullet->Initialize(vec, type);
+		newBullet->Initialize(pos, vec, type);
+		newBullet->SetPos(pos);
 		break;
 	}
 	case BulletType::deffusion:
 	{
 		newBullet = new DeffusionBullet(_handle);
-		newBullet->Initialize(vec, type);
+		newBullet->Initialize(pos, vec, type);
+		newBullet->SetPos(pos);
 		break;
 	}
 	case BulletType::circleBullet:
 	{
 		newBullet = new CircleBullet(_handle);
-		newBullet->Initialize(vec, type);
+		newBullet->Initialize(pos, vec, type);
+		newBullet->SetPos(pos);
+		break;
+	}
+	case BulletType::rainBullet:
+	{
+		newBullet = new RainBullet(_handle);
+		newBullet->Initialize(pos, vec, type);
+		newBullet->SetPos(pos);
 		break;
 	}
 	default:

@@ -15,8 +15,9 @@ NormalBullet::~NormalBullet()
 {
 }
 
-void NormalBullet::Initialize(Vector2 vec,ObjectType type)
+void NormalBullet::Initialize(const Position& pos, Vector2 vec, ObjectType type)
 {
+	_circle.pos = pos;
 	_life = 1000.0f;
 	_objType = type;
 	_isAlive = true;

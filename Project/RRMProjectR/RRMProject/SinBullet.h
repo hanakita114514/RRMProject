@@ -11,7 +11,7 @@ public:
 	SinBullet(int handle);
 	~SinBullet();
 
-	virtual void Initialize(Vector2 vec,ObjectType type);				//‰Šú‰»
+	virtual void Initialize(const Position& pos, Vector2 vec, ObjectType type);				//‰Šú‰»
 	void Update();					//XV
 	void Draw(const Vector2& offset);					//•`‰æ
 

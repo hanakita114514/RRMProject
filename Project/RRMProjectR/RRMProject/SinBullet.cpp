@@ -21,8 +21,9 @@ SinBullet::~SinBullet()
 }
 
 void
-SinBullet::Initialize(Vector2 vec,ObjectType type)
+SinBullet::Initialize(const Position& pos, Vector2 vec, ObjectType type)
 {
+	_circle.pos = pos;
 	_isAlive = true;
 	_vel = vec;
 	_vel.x *= 5;

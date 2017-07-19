@@ -1,20 +1,20 @@
 #include "AbstractSpell.h"
 
-
-
 AbstractSpell::AbstractSpell()
 {
-	comet = new Comet();
-	circleShot = new CircleShot();
-	testSpell = new TestSpell();
+	_comet = new Comet();
+	_circleShot = new CircleShot();
+	_testSpell = new TestSpell();
+	_rainSpell = new RainSpell();
 }
 
 
 AbstractSpell::~AbstractSpell()
 {
-	delete comet;
-	delete circleShot;
-	delete testSpell;
+	delete _comet;
+	delete _circleShot;
+	delete _testSpell;
+	delete _rainSpell;
 }
 
 Spell*
@@ -24,17 +24,21 @@ AbstractSpell::GetSpell(SpellType type)
 	{
 	case SpellType::Comet:
 	{
-		return comet;
+		return _comet;
 	}
 		break;
 	case SpellType::CircleShot:
 	{
-		return circleShot;
+		return _circleShot;
 	}
 		break;
 	case SpellType::TestSpell:
 	{
-		return testSpell;
+		return _testSpell;
+	}
+	case SpellType::RainSpell:
+	{
+		return _rainSpell;
 	}
 		break;
 	default:

@@ -2,8 +2,10 @@
 
 #include "Vector2.h"
 #include "CircleObj.h"
+#include "GameTime.h"
 
 const int LIFE_DEF = 20;
+
 //弾の画像サイズは24*24
 //弾自体のサイズは24*24にしてあります
 const float BULLET_RADIUS = 24 / 2;		//半径
@@ -18,6 +20,7 @@ enum class BulletType
 	bezier,					//ベジェ曲線弾
 	deffusion,				//拡散
 	circleBullet,			//放射状に飛ぶ
+	rainBullet,				//雨のように落ちる
 	//ここに追加
 
 	num,
@@ -34,6 +37,8 @@ protected:
 	float _pow;					//攻撃力
 
 	Object* _owner;
+
+	bool _isHitGround;
 protected:
 	enum class BulletState
 	{
@@ -47,9 +52,11 @@ public:
 	Bullet();
 	virtual ~Bullet();
 
+	GameTime& _gameTime;
+
 	BulletType GetID();						//IDの取得
 	bool IsAlive();						//生きているか？
-	virtual void Initialize(Vector2 vec, ObjectType type);				//初期化
+	virtual void Initialize(const Position& pos, Vector2 vec, ObjectType type);				//初期化
 	virtual void Update() = 0;						//更新
 	virtual void Draw(const Vector2& offset) = 0;						//描画
 	virtual void Finalize();
@@ -59,7 +66,10 @@ public:
 	Object* GetOwner();
 	void SetOwner(Object* obj);
 
-	inline void Destory() { _isAlive = false; }
+	void Destory() { _isAlive = false; }
+	void HitGround();
+
+	void LifeDecrease();	//ライフを減らす
 
 	void Hit(Player* otheer);
 	void Hit(Enemy* other);

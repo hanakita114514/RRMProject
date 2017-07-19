@@ -49,6 +49,7 @@ private:
 	};
 
 	static const int ToolMax = 3;
+
 private:
 	HitPoint _hp;			//体力
 	PlayerHP _hpbar;		//体力バー
@@ -136,7 +137,6 @@ private:
 
 	//マップ初期化
 	void MapInit();
-
 public:
 	Player(int padType, Camera& camera, InputMode mode);	//使うパッド番号を指定
 	~Player();

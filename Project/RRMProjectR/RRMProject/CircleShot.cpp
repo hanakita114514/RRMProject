@@ -18,9 +18,9 @@ void
 CircleShot::Create(Vector2 vec, Vector2 pos, Object *owner)
 {
 
-	_freamCnt++;
+	_frameCnt++;
 
-	if ((int)_freamCnt % 2 == 0)
+	if ((int)_frameCnt % 2 == 0)
 	{
 		_pos = pos;
 		_vec = vec;
@@ -42,8 +42,7 @@ CircleShot::Create(Vector2 vec, Vector2 pos, Object *owner)
 			circlePos.x += cos((60 * i) * RAD) * _circle.radius;
 			circlePos.y += sin((60 * i) * RAD) * _circle.radius;
 
-			bullet = bm.Create(BulletType::normal, _vec, ObjectType::enemy, Vector2(0, 0), owner);
-			bullet->SetPos(circlePos);
+			bullet = bm.Create(BulletType::normal, circlePos,_vec, ObjectType::enemy, Vector2(0, 0), owner);
 		}
 	}
 }
