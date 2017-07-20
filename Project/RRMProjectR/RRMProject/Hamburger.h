@@ -26,6 +26,13 @@ private:
 		summon,
 	};
 
+	enum class Update : unsigned int
+	{
+		alive,
+		damage,
+		dying,
+	};
+
 private:
 	typedef void (Hamburger::*_func)();
 
@@ -46,7 +53,15 @@ private:
 	void NormalBullet();
 	void Summon();		//ìGè¢ä´
 
+	std::map<Update, _func> _updateFunc;
+	Update _update;
+	void AliveUpdate();
+	void DamageUpdate();
+	void DyingUpdate();
+
 	Spell* _spell;
+
+	float _waitFrame;
 
 public:
 	Hamburger(int _handle, const Position& pos);

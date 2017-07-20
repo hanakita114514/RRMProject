@@ -4,6 +4,7 @@
 class RainSpell : public Spell
 {
 private:
+	int _offset;
 
 public:
 	RainSpell();

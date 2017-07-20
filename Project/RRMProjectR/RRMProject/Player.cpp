@@ -21,7 +21,7 @@ static const int armor_life = 200.0f;				//アーマーの耐久値
 
 
 Player::Player(int padType, Camera& camera, InputMode mode) 
-	: _hp(1000), _pp(3), _camera(camera) , _armor(armor_life),
+	: _hp(1000), _pp(4), _camera(camera) , _armor(armor_life),
 	_jump(_input, _vel, _hitGround, this)
 {
 
@@ -260,10 +260,11 @@ Player::FirstAttack()
 
 	if (_attackTime <= 0)
 	{
-		if (_addAttackFlag)
+		if (_addAttackFlag && !_pp.IsAbsentPP())
 		{
 			_as = AttackState::second;
 			_attackTime = 15;
+			_pp.Use();
 		}
 		else
 		{
@@ -296,10 +297,11 @@ Player::SecondAttack()
 
 	if (_attackTime <= 0)
 	{
-		if (_addAttackFlag)
+		if (_addAttackFlag && !_pp.IsAbsentPP())
 		{
 			_as = AttackState::third;
 			_attackTime = 30;
+			_pp.Use();
 		}
 		else
 		{
@@ -392,10 +394,15 @@ Player::AliveUpdate()
 	
 	if (_input->Attack())
 	{
-		_us = UpdateState::attack;
-		_as = AttackState::first;
-		_attackTime = 10.f;
-		return;
+		if (!_pp.IsAbsentPP())
+		{
+			_us = UpdateState::attack;
+			_as = AttackState::first;
+			_attackTime = 10.f;
+			_pp.Use();
+			_sd.SlowMotion(0.2);
+			return;
+		}
 	}
 
 	//回避

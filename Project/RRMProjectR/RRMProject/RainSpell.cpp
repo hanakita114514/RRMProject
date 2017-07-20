@@ -4,6 +4,8 @@
 
 RainSpell::RainSpell()
 {
+	_offset = 0;
+	_vec = Vector2(1, 0);
 }
 
 
@@ -16,10 +18,11 @@ RainSpell::Create(Vector2 vec, Vector2 pos, Object* owner)
 {
 	BulletManager& bm = BulletManager::Instance();
 
-	if (((int)_frameCnt % 20) == 0)
+	while (_offset <= WINDOW_WIDTH)
 	{
-		bm.Create(BulletType::rainBullet, Position((int)_frameCnt % WINDOW_WIDTH, 0), _vec, owner->GetObjType(), Vector2(0, 0), owner);
+		bm.Create(BulletType::rainBullet, Position(_offset, 0), _vec, owner->GetObjType(), Vector2(0, 0), owner);
+		_vec.x *= -1;
+		_offset += 150;
 	}
-
-	++_frameCnt;
+	_offset = 0;
 }

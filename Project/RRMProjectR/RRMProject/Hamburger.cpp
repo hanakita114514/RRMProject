@@ -22,7 +22,7 @@ Hamburger::Hamburger(int handle, const Position& pos)
 	_disUpdate[Distance::d_medium] = &Hamburger::MediumUpdate;
 	_disUpdate[Distance::d_far] = &Hamburger::FarUpdate;
 
-	_state = State::avoidance;
+	_state = State::aplysia;
 	_stateUpdate[State::aplysia] = &Hamburger::Aplysia;
 	_stateUpdate[State::avoidance] = &Hamburger::Avoidance;
 	_stateUpdate[State::jump_avoid] = &Hamburger::JumpAvoid;
@@ -32,7 +32,15 @@ Hamburger::Hamburger(int handle, const Position& pos)
 	_stateUpdate[State::summon] = &Hamburger::Summon;
 	_stateUpdate[State::wait] = &Hamburger::Wait;
 
+	_update = Update::alive;
+	_updateFunc[Update::alive] = &Hamburger::AliveUpdate;
+	_updateFunc[Update::damage] = &Hamburger::DamageUpdate;
+	_updateFunc[Update::dying] = &Hamburger::DyingUpdate;
+
+
 	_spell = _absSpell->GetSpell(SpellType::RainSpell);
+
+	_waitFrame = 0.f;
 }
 
 Hamburger::~Hamburger()
@@ -70,6 +78,11 @@ Hamburger::Anim()
 void 
 Hamburger::NearUpdate()
 {
+	_waitFrame++;
+	if (((int)_waitFrame % 120) == 0)
+	{
+		_state = State::aplysia;
+	}
 	(this->*_stateUpdate[_state])();
 }
 
@@ -106,7 +119,6 @@ Hamburger::MeleeAttack()
 void 
 Hamburger::Wait()
 {
-
 }
 
 void 
@@ -118,7 +130,9 @@ Hamburger::ShockWave()
 void 
 Hamburger::Aplysia()
 {
+	_spell->Create(Vector2(0, 0), Position(0, 0), this);
 
+	_state = State::wait;
 }
 
 void 
@@ -134,7 +148,7 @@ Hamburger::Summon()
 }
 
 void 
-Hamburger::Update()
+Hamburger::AliveUpdate()
 {
 	Anim();
 	_rc.pos += _vel;
@@ -142,8 +156,24 @@ Hamburger::Update()
 	Enemy::DistanceAttenuation();
 
 	(this->*_disUpdate[_dis])();
+}
 
-	_spell->Create(Vector2(0, 0), Position(0, 0), this);
+void 
+Hamburger::DamageUpdate()
+{
+
+}
+
+void 
+Hamburger::DyingUpdate()
+{
+
+}
+
+void 
+Hamburger::Update()
+{
+	(this->*_updateFunc[_update])();
 
 }
 

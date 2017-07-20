@@ -59,9 +59,13 @@ SlowDown::Update()
 void 
 SlowDown::SlowMotion(int time)
 {
-	_isSlow = true;
-	_slowTime = time;
-	_resio = 0.5f;
+	for (auto& td : GameTime::Instance().GetTimeScaleList())
+	{
+		td.second.isSlow = true;
+		td.second.isStartUp = true;
+		td.second.stopTime = time;
+		td.second.timeScale = 0.5f;
+	}
 }
 
 void 

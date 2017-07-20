@@ -1,7 +1,7 @@
 #include "PowerPoint.h"
 #include <RRMLib.h>
 
-static const unsigned int RECOVERY_TIME = 3;
+static const unsigned int RECOVERY_TIME = 1;
 static const float IMG_W = 16.0f;
 static const float IMG_H = 16.0f;
 static const float OFFSET = IMG_W + 2.0f;
