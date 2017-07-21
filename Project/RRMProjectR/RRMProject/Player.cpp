@@ -382,6 +382,7 @@ Player::AliveUpdate()
 
 	_hitBox.Clear();
 	_hpbar.CommitPeriod();
+	_hitBox.DamageBox(0, _rc, _dir);
 
 	if (_input->UpAttack() && _hitGround)
 	{

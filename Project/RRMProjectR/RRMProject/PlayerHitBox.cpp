@@ -128,6 +128,15 @@ PlayerHitBox::UpAttack(float frame, const Rect& rc, const Vector2& dir)
 }
 
 void
+PlayerHitBox::DamageBox(float frame, const Rect& rc, const Vector2& dir)
+{
+	HitBox hb = HitBox(0, 0, Rect(Position(rc.pos.x + 8, rc.pos.y + 8),48,48));
+
+	_damageBox.clear();
+	_damageBox.push_back(hb);
+}
+
+void
 PlayerHitBox::Draw()
 {
 	for (auto& a : _attackboxes)
@@ -137,7 +146,6 @@ PlayerHitBox::Draw()
 	for (auto& d : _damageBox)
 	{
 		RRMLib::DrawBox(d.rc.Left(), d.rc.Top(), d.rc.Right(), d.rc.Bottom(), 0xffffffff, false);
-
 	}
 }
 

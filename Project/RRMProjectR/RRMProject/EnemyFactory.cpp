@@ -15,9 +15,9 @@ EnemyFactory::EnemyFactory()
 	_imgMap[EnemyType::hamburger] = RRMLib::LoadGraph("Resource/img/Enemy/kingBurger.png");
 }
 
-
 EnemyFactory::~EnemyFactory()
 {
+
 }
 
 Enemy*

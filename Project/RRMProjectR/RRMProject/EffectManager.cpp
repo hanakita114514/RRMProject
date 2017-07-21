@@ -64,3 +64,4 @@ EffectManager::Delete()
 		itr = _effectList.erase(itr);
 	}
 }
+

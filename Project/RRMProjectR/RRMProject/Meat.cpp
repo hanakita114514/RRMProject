@@ -7,6 +7,9 @@
 const int ENEMY_SIZE_X = 64;
 const int ENEMY_SIZE_Y = 32;
 const int IMAGE_NUM = 4;
+const int DEFAULT_COOL_TIME = 60;
+const int MEAT_TERRITORY_X = 300;
+const int MEAT_TERRITORY_Y = 32;
 
 Meat::Meat()
 {
@@ -29,15 +32,19 @@ Meat::Meat(int handle, Vector2 pos)
 	rc.w = ENEMY_SIZE_X;
 
 	_rc = rc;
+	_vel = Vector2(0, 0);
 	_dir = Vector2(-1, 0);
+	_isAlive = true;
 
 	_hitBox = new MeatHitBox();
-	_territory.Set(300, 32, _rc.pos);
+	_territory.Set(MEAT_TERRITORY_X, MEAT_TERRITORY_Y, _rc.pos);
+
+	_coolCnt = 0;
+	_isPlayEffect = false;
 }
 
 Meat::~Meat()
 {
-	delete _hitBox;
 }
 
 void Meat::Initialize()
@@ -59,6 +66,15 @@ void Meat::AlliveUpdate()
 	{
 		_update = &Meat::DamageUpdate;
 	}
+
+	_hpbar.CommitPeriod();
+
+	if (_hp.GetHitPoint() <= 0)
+	{
+		_update = &Meat::DyingUpdate;
+		EffectManager::Instance().Create(EffectType::erasure, _rc.Center());
+		_isAlive = false;
+	}
 }
 
 void Meat::DamageUpdate()
@@ -77,9 +93,17 @@ void Meat::DamageUpdate()
 	if (_vel.x == 0)
 	{
 		_isDamage = false;
-		_territory.Set(300, 32, _rc.pos);
+		_territory.Set(MEAT_TERRITORY_X, MEAT_TERRITORY_Y, _rc.pos);
 		_update = &Meat::AlliveUpdate;
 	}
+
+	_hpbar.Commit();
+}
+
+void
+Meat::DyingUpdate()
+{
+
 }
 
 void Meat::Wait()
@@ -116,9 +140,25 @@ void Meat::Find()
 {
 	if (!_isSearch)
 	{
+		_meatState = State::coolTime;
+		_coolCnt = DEFAULT_COOL_TIME;
+	}
+}
+
+void Meat::CoolTime()
+{
+	if (!_isPlayEffect)
+	{
 		EffectManager::Instance().Create(EffectType::question, _rc.pos + Vector2(_rc.w / 2, _rc.h / 2 * -1),
-											Vector2(0.5, 0.5), 10.0f);
+			Vector2(0.5, 0.5), 10.0f);
+		_isPlayEffect = true;
+	}
+
+	--_coolCnt;
+	if (_coolCnt < 0)
+	{
 		_meatState = State::wait;
+		_isPlayEffect = false;
 	}
 }
 
@@ -147,6 +187,9 @@ void Meat::Move()
 
 void Meat::Draw(const Vector2& offset)
 {
-	RRMLib::DrawRectGraph(_rc.pos.x + offset.x, _rc.pos.y + offset.y, _uv.x, _uv.y,
+	float drawPosX = _rc.pos.x - offset.x;
+	float drawPosY = _rc.pos.y - offset.y;
+	RRMLib::DrawRectGraph(drawPosX, drawPosY, _uv.x, _uv.y,
 							ENEMY_SIZE_X, ENEMY_SIZE_Y, _handle, true, false);
+	_hpbar.Draw(Position(drawPosX + _rc.w / 4, drawPosY - _rc.h / 4), _hp);
 }
