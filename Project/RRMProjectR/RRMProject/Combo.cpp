@@ -18,7 +18,7 @@ Combo::Combo() :  _number(NUM_FONT_SIZE, RRMLib::LoadGraph("Resource/img/UI/Numb
 	_comboNum = 0;
 
 	_timeHandle = RRMLib::LoadGraph("Resource/img/UI/comboTime.png");
-	_comboHandle = RRMLib::LoadGraph("Resource/img/UI/combo.png");
+	_comboHandle = RRMLib::LoadGraph("Resource/img/UI/Logo/combo.png");
 
 	_pos = Position(100, 100);
 

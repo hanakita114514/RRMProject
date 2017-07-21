@@ -37,7 +37,7 @@ Timer::Timer(const Position& pos, float size)
 {
 	_handle = RRMLib::LoadGraph("Resource/img/UI/Number/Number.png");
 	_koronHandle = RRMLib::LoadGraph("Resource/img/UI/Number/koron.png");
-	_timeHandle = RRMLib::LoadGraph("Resource/img/UI/time.png");
+	_timeHandle = RRMLib::LoadGraph("Resource/img/UI/Logo/time.png");
 
 	_pos = pos;
 	_size = size;

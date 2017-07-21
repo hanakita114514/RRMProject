@@ -23,6 +23,12 @@ Keyboard::Keyboard()
 	_keyType[KeyType::leftTriger] = KEY_D;
 
 	_vec = Vector2(0, 0);
+
+	for (int i = 0; i < (int)KeyboardDir::max; i++)
+	{
+		_prevState[i] = false;
+		_nowState[i] = false;
+	}
 }
 
 
@@ -316,35 +322,75 @@ Keyboard::Dir()
 bool 
 Keyboard::RightStickTriger()
 {
-	return true;
+	_nowState[(int)KeyboardDir::right] = _prevState[(int)KeyboardDir::right];
+
+	_nowState[(int)KeyboardDir::right] = Right();
+
+	if (_nowState[(int)KeyboardDir::right] & (_nowState[(int)KeyboardDir::right] ^ _prevState[(int)KeyboardDir::right]))
+	{
+		return true;
+	}
+	return false;
 }
 
 bool 
 Keyboard::LeftStickTriger()
 {
-	return true;
+	_nowState[(int)KeyboardDir::left] = _prevState[(int)KeyboardDir::left];
+
+	_nowState[(int)KeyboardDir::left] = Left();
+
+	if (_nowState[(int)KeyboardDir::left] & (_nowState[(int)KeyboardDir::left] ^ _prevState[(int)KeyboardDir::left]))
+	{
+		return true;
+	}
+	return false;
 }
 
 bool 
 Keyboard::UpStickTriger()
 {
-	return true;
+	_nowState[(int)KeyboardDir::up] = _prevState[(int)KeyboardDir::up];
+
+	_nowState[(int)KeyboardDir::up] = Up();
+
+	if (_nowState[(int)KeyboardDir::up] & (_nowState[(int)KeyboardDir::up] ^ _prevState[(int)KeyboardDir::up]))
+	{
+		return true;
+	}
+	return false;
 }
 
 bool
 Keyboard::DownStickTriger()
 {
-	return true;
+	_nowState[(int)KeyboardDir::down] = _prevState[(int)KeyboardDir::down];
+
+	_nowState[(int)KeyboardDir::down] = Down();
+
+	if (_nowState[(int)KeyboardDir::down] & (_nowState[(int)KeyboardDir::down] ^ _prevState[(int)KeyboardDir::down]))
+	{
+		return true;
+	}
+	return false;
 }
 
 bool 
 Keyboard::Decision()
 {
-	return true;
+	if (IsTriger(KeyType::keyA))
+	{
+		return true;
+	}
+	return false;
 }
 
 bool 
 Keyboard::Exit()
 {
-	return true;
+	if (IsTriger(KeyType::keyB))
+	{
+		return true;
+	}
+	return false;
 }

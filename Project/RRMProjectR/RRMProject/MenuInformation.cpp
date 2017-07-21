@@ -17,14 +17,14 @@ const int Number_Size = 64;
 
 const char* filePath[] =
 {
-	"Resource/img/UI/startGame.png",
-	"Resource/img/UI/setting.png",
-	"Resource/img/UI/Start3.png",
-	"Resource/img/UI/StageSelect.png",
-	"Resource/img/UI/stage.png",
-	"Resource/img/UI/Number/stageNumber.png",
-	"Resource/img/UI/A.png",
-	"Resource/img/UI/B.png",
+	"Resource/img/UI/Logo/startGame.png",
+	"Resource/img/UI/Logo/setting.png",
+	"Resource/img/UI/Logo/Start3.png",
+	"Resource/img/UI/Logo/StageSelect.png",
+	"Resource/img/UI/Logo/stage.png",
+	"Resource/img/UI/Logo/Number/stageNumber.png",
+	"Resource/img/UI/Logo/A.png",
+	"Resource/img/UI/Logo/B.png",
 };
 
 MenuInformation::MenuInformation()

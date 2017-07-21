@@ -26,7 +26,7 @@ MenuScene::MenuScene()
 	_input = InputFactory::Create(InputMode::pad, 0);
 
 	_menuInfo.Init();
-	_logo.image = RRMLib::LoadGraph("Resource/img/UI/Press_Start.png");
+	_logo.image = RRMLib::LoadGraph("Resource/img/UI/Logo/Press_Start.png");
 	_logo.rc.pos = Vector2(WINDOW_WIDTH / 2 - 197, WINDOW_HEIGHT / 2 - 37);
 
 	_bg = RRMLib::LoadGraph("Resource/img/BackGround/StarDust.png");

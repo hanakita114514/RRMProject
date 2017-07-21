@@ -83,6 +83,7 @@ Egg::AliveUpdate()
 
 	if (_hitGround)
 	{
+		_vel.y = 0;
 		_animCnt += GameTime::Instance().GetTimeScale(this);
 		_shotCnt++;
 	}
@@ -120,7 +121,6 @@ Egg::DamageUpdate()
 
 	if (_hitGround)
 	{
-		_vel.y = 0;
 		_animCnt += GameTime::Instance().GetTimeScale(this);
 		_shotCnt++;
 	}
@@ -301,7 +301,6 @@ void Egg::Shot(BulletType type, int count)	//çUåÇ
 		_shotPos.y = _circle.pos.y - (_circle.radius * 2) * sin(RAD * (cnt * 90) + _freamCnt) / 2;
 		--cnt;
 
-		ShotAngleCalc(_shotPos);
 		bullet = bm.Create(type, _rc.pos, _shootVec, ObjectType::enemy, _rc.pos, this);
 		bullet->SetPos(_shotPos);
 
@@ -317,14 +316,6 @@ void Egg::Shot(BulletType type, int count)	//çUåÇ
 	default:
 		break;
 	}
-}
-
-void Egg::ShotAngleCalc(Vector2 shootPos)
-{
-	Vector2 vec = shootPos - _circle.pos;
-	float normal = sqrt(vec.x * vec.x + vec.y * vec.y);
-	
-	_shootVec = Vector2(vec.x / normal, vec.y / normal);
 }
 
 void 

@@ -68,7 +68,6 @@ EnemyManager::Create(const EnemyType& et, const Position& pos)
 {
 	Enemy* newEnemy = _fac.Create(et, pos);
 	_enemyList.push_back(newEnemy);
-
 }
 
 void

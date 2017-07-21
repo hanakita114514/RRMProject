@@ -1,13 +1,15 @@
 #pragma once
 #include "Enemy.h"
+#include "Territory.h"
+
+
 class Meat : public Enemy
 {
 private:
 	enum class State
 	{
 		wait,
-		damage,
-		shot,
+		find,
 		max
 	};
 	void(Meat::*_update)();
@@ -17,20 +19,23 @@ private:
 	State _meatState;
 
 	void Wait();
-	void Damage();
-	void Shot();
 
+	void Find();
+	void Move();
+
+	float _animCnt;
 	using MeatState = void(Meat::*)();
-	MeatState _state[(int)State::max] =
+	const MeatState _state[(int)State::max] =
 	{
 		&Meat::Wait,
-		&Meat::Damage,
-		&Meat::Shot
+		&Meat::Find
 	};
+
+	Territory _territory;
 
 public:
 	Meat();
-	Meat(int handle);
+	Meat(int handle,Vector2 pos);
 	~Meat();
 
 	void Initialize();

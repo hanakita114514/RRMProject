@@ -183,4 +183,6 @@ MapManager::EnemyCreate(int idx)
 		EnemyManager::Instance().Create(type, Vector2(i % _header[idx].dwWidth  / 2 * enemySize.x,
 							i / _header[idx].dwWidth / 2 * enemySize.y));
 	}
+
+	EnemyManager::Instance().Create(EnemyType::meat, Vector2(500, 400));
 }

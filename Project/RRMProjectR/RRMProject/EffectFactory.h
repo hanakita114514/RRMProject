@@ -26,6 +26,8 @@ enum class EffectType : unsigned int
 	focusing,
 	emergence,
 	defeat,
+	question,
+	exclamation,
 
 	num,
 

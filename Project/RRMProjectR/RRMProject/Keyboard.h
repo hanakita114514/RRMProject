@@ -3,6 +3,15 @@
 #include "Vector2.h"
 #include "Input.h"
 
+enum class KeyboardDir
+{
+	up,
+	right,
+	down,
+	left,
+	max
+};
+
 //キーボード操作
 class Keyboard : public Input
 {
@@ -13,6 +22,9 @@ private:
 
 	std::map<KeyType, int> _keyType;
 	std::map<KeyType, int> _repFrame;
+
+	bool _prevState[(int)KeyboardDir::max];
+	bool _nowState[(int)KeyboardDir::max];
 
 	Vector2 _vec;
 

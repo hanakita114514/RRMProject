@@ -11,7 +11,7 @@ _playerHP(playerHP), _time(time), _combo(combo)
 {
 	_handle = GraphicLoad::Instance().LoadGraph("Resource/img/BackGround/fade.png");
 
-	int logoHandle = GraphicLoad::Instance().LoadGraph("Resource/img/UI/Result2.png");
+	int logoHandle = GraphicLoad::Instance().LoadGraph("Resource/img/UI/Logo/Result2.png");
 
 	_update[State::init] = &Result::InitUpdate;
 	_update[State::start] = &Result::StartUpdate;
@@ -23,7 +23,7 @@ _playerHP(playerHP), _time(time), _combo(combo)
 	_logo = new Logo(logoHandle, Position(WINDOW_WIDTH / 2, 100));
 
 	int lifeHandle = GraphicLoad::Instance().LoadGraph("Resource/img/UI/Life.png");
-	int comboHandle = GraphicLoad::Instance().LoadGraph("Resource/img/UI/combo.png");
+	int comboHandle = GraphicLoad::Instance().LoadGraph("Resource/img/UI/Logo/combo.png");
 
 	int i = playerHP.GetHitPoint();
 	_lifeScore = new ScoreCalc(Position(300, 200), lifeHandle);

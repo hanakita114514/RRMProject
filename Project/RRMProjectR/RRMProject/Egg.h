@@ -68,8 +68,6 @@ public:
 
 	void Shot(BulletType type,int count = 0);		//UŒ‚
 
-	void ShotAngleCalc(Vector2 shootPos);
-
 	//ã‘Ì‰»
 	void Weakening();
 };

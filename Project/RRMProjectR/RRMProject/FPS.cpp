@@ -23,7 +23,7 @@ FPS::FPS(const Position& pos, float size) : _startTime(0), _count(0), _fps(0)
 {
 	_numHandle = RRMLib::LoadGraph("Resource/img/UI/Number/Number.png");
 	_periodHandle = RRMLib::LoadGraph("Resource/img/UI/period.png");
-	_fpsHandle = RRMLib::LoadGraph("Resource/img/UI/FPS.png");
+	_fpsHandle = RRMLib::LoadGraph("Resource/img/UI/Logo/FPS.png");
 	_koronHandle = RRMLib::LoadGraph("Resource/img/UI/koron2.png");
 
 	_pos = pos;

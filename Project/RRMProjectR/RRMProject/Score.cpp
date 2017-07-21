@@ -16,7 +16,7 @@ _heighNum(FONT_SIZE,
 	_score = 0;
 	_heighScore = 114514;
 	_slashHandle = RRMLib::LoadGraph("Resource/img/UI/Number/slash.png");
-	_scoreHandle = RRMLib::LoadGraph("Resource/img/UI/Score.png");
+	_scoreHandle = RRMLib::LoadGraph("Resource/img/UI/Logo/Score.png");
 	_koronHandle = RRMLib::LoadGraph("Resource/img/UI/score_koron.png");
 }
 

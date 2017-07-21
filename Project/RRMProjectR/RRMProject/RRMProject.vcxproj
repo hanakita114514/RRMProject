@@ -82,6 +82,7 @@
     <ClCompile Include="MapManager.cpp" />
     <ClCompile Include="MapRender.cpp" />
     <ClCompile Include="Meat.cpp" />
+    <ClCompile Include="MeatHitBox.cpp" />
     <ClCompile Include="MenuInformation.cpp" />
     <ClCompile Include="MultihitProtect.cpp" />
     <ClCompile Include="Mushroom.cpp" />
@@ -111,6 +112,7 @@
     <ClCompile Include="SushiHitBox.cpp" />
     <ClCompile Include="SushiMon.cpp" />
     <ClCompile Include="SushiStrategy.cpp" />
+    <ClCompile Include="Territory.cpp" />
     <ClCompile Include="TestSpell.cpp" />
     <ClCompile Include="ThroughBlock.cpp" />
     <ClCompile Include="Timer.cpp" />
@@ -192,6 +194,7 @@
     <ClInclude Include="MapRender.h" />
     <ClInclude Include="Mathematics.h" />
     <ClInclude Include="Meat.h" />
+    <ClInclude Include="MeatHitBox.h" />
     <ClInclude Include="MenuInformation.h" />
     <ClInclude Include="MultihitProtect.h" />
     <ClInclude Include="Mushroom.h" />
@@ -221,6 +224,7 @@
     <ClInclude Include="SushiHitBox.h" />
     <ClInclude Include="SushiMon.h" />
     <ClInclude Include="SushiStrategy.h" />
+    <ClInclude Include="Territory.h" />
     <ClInclude Include="TestSpell.h" />
     <ClInclude Include="ThroughBlock.h" />
     <ClInclude Include="Timer.h" />

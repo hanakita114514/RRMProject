@@ -4,7 +4,6 @@
 #include "GeneralEffect.h"
 #include <RRMLib.h>
 
-
 EffectFactory::EffectFactory()
 {
 	_effectImg[EffectType::up] = RRMLib::LoadGraph("Resource/img/Effect/UP.png");
@@ -23,7 +22,8 @@ EffectFactory::EffectFactory()
 	_effectImg[EffectType::slash2] = RRMLib::LoadGraph("Resource/img/Effect/slash2.png");
 	_effectImg[EffectType::focusing] = RRMLib::LoadGraph("Resource/img/Effect/focusing.png");
 	_effectImg[EffectType::rotation] = RRMLib::LoadGraph("Resource/img/Effect/rotation.png");
-
+	_effectImg[EffectType::question] = RRMLib::LoadGraph("Resource/img/Effect/question.png");
+	_effectImg[EffectType::exclamation] = RRMLib::LoadGraph("Resource/img/Effect/exclamation.png");
 }
 
 
@@ -76,14 +76,25 @@ EffectFactory::Create(EffectType et, const Position& pos, const Vector2& size, f
 		break;
 	case EffectType::rotation:
 		return new GeneralEffect(_effectImg[EffectType::rotation], pos, 1792, 2304, 9, 7, 1.0f, size, isLoop);
+		break;
 	case EffectType::slash2:
 		return new GeneralEffect(_effectImg[EffectType::slash2], pos, 1280, 1536, 6, 5, 1.0f, size, isLoop);
+		break;
 	case EffectType::focusing:
 		return new GeneralEffect(_effectImg[EffectType::focusing], pos, 1280, 1536, 6, 5, 1.0f, size, isLoop);
+		break;
 	case EffectType::emergence:
 		return new GeneralEffect(_effectImg[EffectType::emergence], pos, 1280, 1536, 6, 5, 1.0f, size, isLoop);
+		break;
 	case EffectType::defeat:
 		return new GeneralEffect(_effectImg[EffectType::defeat], pos, 1792, 2048, 8, 7, 1.0f, size, isLoop);
+		break;
+	case EffectType::question:
+		return new GeneralEffect(_effectImg[EffectType::question], pos, 1280, 1536, 6, 5, 1.0f, size, isLoop);
+		break;
+	case EffectType::exclamation:
+		return new GeneralEffect(_effectImg[EffectType::exclamation], pos, 1280, 768, 3, 5, 1.0f, size, isLoop);
+		break;
 	default:
 		return nullptr;
 		break;
