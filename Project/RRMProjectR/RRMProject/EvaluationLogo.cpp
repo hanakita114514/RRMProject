@@ -29,7 +29,7 @@ EvaluationLogo::StartDraw(int handle, const Position& pos)
 	_height -= SPEED;
 
 	RRMLib::DrawExtendGraph(pos.x - _width / 2, pos.y - _height / 2,
-		pos.x + _width / 2, pos.y + _height / 2, handle);
+		pos.x + _width / 2, pos.y + _height / 2, handle, true, false);
 
 	if (_width <= WIDTH && _height <= HEIGHT)
 	{
@@ -44,7 +44,7 @@ void
 EvaluationLogo::EndDraw(int handle, const Position& pos)
 {
 	RRMLib::DrawExtendGraph(pos.x - _width / 2, pos.y - _height / 2,
-		pos.x + _width / 2, pos.y + _height / 2, handle);
+		pos.x + _width / 2, pos.y + _height / 2, handle, true, false);
 }
 
 void

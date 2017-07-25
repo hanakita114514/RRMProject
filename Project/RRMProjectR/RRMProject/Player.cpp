@@ -10,6 +10,7 @@
 #include "Enemy.h"
 #include "EffectManager.h"
 #include "InputFactory.h"
+#include "GraphicLoad.h"
 
 static const float jump_power = 20;
 static const float GRAVITY = 0.75f;
@@ -22,7 +23,7 @@ static const int armor_life = 200.0f;				//アーマーの耐久値
 
 Player::Player(int padType, Camera& camera, InputMode mode) 
 	: _hp(1000), _pp(4), _camera(camera) , _armor(armor_life),
-	_jump(_input, _vel, _hitGround, this)
+	_jump(_input, _vel, _hitGround, this), _playerDraw(_rc, _dir)
 {
 
 	Player::LoadResources();
@@ -31,8 +32,8 @@ Player::Player(int padType, Camera& camera, InputMode mode)
 
 	Rect rc = {};
 	_rc = rc;
-	_rc.h = 64;
-	_rc.w = 64;
+	_rc.h = 128;
+	_rc.w = 96;
 	_dir = Vector2(1, 0);
 
 	_hitGround = false;
@@ -61,6 +62,8 @@ Player::Player(int padType, Camera& camera, InputMode mode)
 	_addAttackFlag = false;
 
 	_input = InputFactory::Create(mode, padType);
+
+	_weapon = Weapon::gladius;
 }
 
 
@@ -78,6 +81,8 @@ Player::LoadResources()
 	//_handleMap[PlayerState::attack] = RRMLib::LoadGraph("Resource/img/player/attack.png");
 	//_handleMap[PlayerState::avoidance] = RRMLib::LoadGraph("Resource/img/player/Healer/$Healer_4.png");
 	//_handleMap[PlayerState::avoidance] = RRMLib::LoadGraph("Resource/img/player/avoidance.png");
+
+	_weaponHandle[Weapon::gladius] = GraphicLoad::Instance().LoadGraph("Resource/img/player/weapon/gladius2.png");
 }
 
 void 
@@ -235,7 +240,7 @@ void Player::Shoot()
 	}
 
 	Vector2 end = Vector2(1280, 720);
-	_ps = PlayerState::shoot;
+	//_ps = PlayerState::shoot;
 	BulletManager::Instance().Create(_tool[_toolIdx], _shootPos, _dir, ObjectType::player, _shootPos, this);
 
 }
@@ -260,11 +265,10 @@ Player::FirstAttack()
 
 	if (_attackTime <= 0)
 	{
-		if (_addAttackFlag && !_pp.IsAbsentPP())
+		if (_addAttackFlag)
 		{
 			_as = AttackState::second;
 			_attackTime = 15;
-			_pp.Use();
 		}
 		else
 		{
@@ -297,11 +301,10 @@ Player::SecondAttack()
 
 	if (_attackTime <= 0)
 	{
-		if (_addAttackFlag && !_pp.IsAbsentPP())
+		if (_addAttackFlag)
 		{
 			_as = AttackState::third;
 			_attackTime = 30;
-			_pp.Use();
 		}
 		else
 		{
@@ -384,26 +387,20 @@ Player::AliveUpdate()
 	_hpbar.CommitPeriod();
 	_hitBox.DamageBox(0, _rc, _dir);
 
-	if (_input->UpAttack() && _hitGround)
+	if (_input->UpAttack())
 	{
 		_us = UpdateState::attack;
 		_as = AttackState::up;
-		_vel.y = -10.0f;
 		_attackTime = 10.f;
 		return;
 	}
 	
 	if (_input->Attack())
 	{
-		if (!_pp.IsAbsentPP())
-		{
-			_us = UpdateState::attack;
-			_as = AttackState::first;
-			_attackTime = 10.f;
-			_pp.Use();
-			_sd.SlowMotion(0.2);
-			return;
-		}
+		_us = UpdateState::attack;
+		_as = AttackState::first;
+		_attackTime = 10.f;
+		return;
 	}
 
 	//回避
@@ -435,6 +432,12 @@ Player::AliveUpdate()
 	ToolSwitch();
 
 	WeaponSwitch();
+
+
+	if (_vel.y > 1 || _vel.y < -1)
+	{
+		_ps = PlayerState::jump;
+	}
 
 #ifdef DEBUG
 
@@ -545,8 +548,7 @@ Player::Draw()
 	//RRMLib::DrawLine((int)(_rc.Left() + (_rc.w / 2)), (int)(_rc.Top()),
 	//				(int)(_rc.Left() + (_rc.w / 2)), (int)(_rc.Bottom()), 0xff0000);
 
-	_hitBox.Draw();
-
+	_hitBox.Draw(_weaponHandle[_weapon]);
 
 #ifdef DEBUG
 	_rc.DrawBox();

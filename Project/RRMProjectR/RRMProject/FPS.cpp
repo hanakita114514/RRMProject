@@ -72,11 +72,11 @@ FPS::Draw()
 
 	//FPS文字描画
 	RRMLib::DrawExtendGraph((_pos.x - _size) + i * _offset - 5, _pos.y - _size / 2,
-		(_pos.x + _size) + i * _offset - 5, _pos.y + _size / 2, _fpsHandle);
+		(_pos.x + _size) + i * _offset - 5, _pos.y + _size / 2, _fpsHandle, true, false);
 
 	i += 1.5f;
 	RRMLib::DrawExtendGraph((_pos.x - _size / 2) + i * _offset, _pos.y - _size / 2,
-		(_pos.x + _size / 2) + i * _offset, _pos.y + _size / 2, _koronHandle);
+		(_pos.x + _size / 2) + i * _offset, _pos.y + _size / 2, _koronHandle, true, false);
 
 	//十の位
 	i += 2.0f;
@@ -95,7 +95,7 @@ FPS::Draw()
 	//ピリオド
 	i += 0.5f;
 	RRMLib::DrawExtendGraph((_pos.x - _size / 2) + i * _offset, _pos.y - _size / 2 + periodOffsetY,
-		(_pos.x + _size / 2) + i * _offset, _pos.y + _size / 2 + periodOffsetY, _periodHandle);
+		(_pos.x + _size / 2) + i * _offset, _pos.y + _size / 2 + periodOffsetY, _periodHandle, true, false);
 
 	//小数点第一位
 	i += 0.8f;

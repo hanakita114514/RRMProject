@@ -29,5 +29,5 @@ bool BackgroundRendar::Initialize(const char* imageFilePath)
 
 void BackgroundRendar::Draw()
 {
-	RRMLib::DrawExtendGraph(0, 0, WINDOW_WIDTH + 1, WINDOW_HEIGHT + 1, _bgImage);
+	RRMLib::DrawExtendGraph(0, 0, WINDOW_WIDTH + 1, WINDOW_HEIGHT + 1, _bgImage, true, false);
 }

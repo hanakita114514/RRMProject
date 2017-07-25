@@ -183,7 +183,7 @@ MenuInformation::MainMenu()
 	{
 		for (int i = 0; i < 2; i++)
 		{
-			RRMLib::DrawGraph(_logo[i].rc.pos.x, _logo[i].rc.pos.y - Y_Draw_Offset, _logo[i].image);
+			RRMLib::DrawGraph(_logo[i].rc.pos.x, _logo[i].rc.pos.y - Y_Draw_Offset, _logo[i].image, true);
 		}
 		_arrow.Draw();
 	}
@@ -199,7 +199,7 @@ MenuInformation::GameStart()
 
 		for (int i = 0; i < 2; i++)
 		{
-			RRMLib::DrawGraph(_logo[i].rc.pos.x, _logo[i].rc.pos.y - Y_Draw_Offset , _logo[i].image);
+			RRMLib::DrawGraph(_logo[i].rc.pos.x, _logo[i].rc.pos.y - Y_Draw_Offset , _logo[i].image, true);
 		}
 		_arrow.Draw();
 
@@ -254,7 +254,7 @@ MenuInformation::StageSelect()
 	}
 
 
-	RRMLib::DrawGraph(_logo[0].rc.pos.x, _logo[0].rc.pos.y - Y_Draw_Offset, _logo[0].image);
+	RRMLib::DrawGraph(_logo[0].rc.pos.x, _logo[0].rc.pos.y - Y_Draw_Offset, _logo[0].image, true);
 	RRMLib::DrawRectGraph(_logo[0].rc.pos.x + 300, _logo[0].rc.pos.y, _numberUV[_stageId].x, _numberUV[_stageId].y,
 		Number_Size, Number_Size, _logo[1].image, true, false);
 
@@ -281,11 +281,11 @@ MenuInformation::Configuration()
 
 	for (int i = 0; i < 2; i++)
 	{
-		RRMLib::DrawGraph(_logo[i].rc.pos.x, _logo[i].rc.pos.y - Y_Draw_Offset, _logo[i].image);
+		RRMLib::DrawGraph(_logo[i].rc.pos.x, _logo[i].rc.pos.y - Y_Draw_Offset, _logo[i].image, true);
 	}
 	_arrow.Draw();
 
-	RRMLib::DrawGraph(400, 100, _logoHandle[(int)MenuState::mainMenu][1]);
+	RRMLib::DrawGraph(400, 100, _logoHandle[(int)MenuState::mainMenu][1],true);
 
 }
 

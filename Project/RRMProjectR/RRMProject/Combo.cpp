@@ -64,10 +64,10 @@ Combo::Draw()
 			_number.Draw(_comboNum, _pos);
 		}
 
-		RRMLib::DrawExtendGraph(_pos.x, _pos.y + GAUGE_OFFSET, _pos.x + _comboTime, _pos.y + GAUGE_H + GAUGE_OFFSET, _timeHandle);
+		RRMLib::DrawExtendGraph(_pos.x, _pos.y + GAUGE_OFFSET, _pos.x + _comboTime, _pos.y + GAUGE_H + GAUGE_OFFSET, _timeHandle, true, false);
 		
 		Position _comboPos = Position(_pos.x + COMBO_OFFSET, _pos.y);
-		RRMLib::DrawExtendGraph(_comboPos.x - COMBO_W / 2, _comboPos.y - COMBO_H / 2, _comboPos.x + COMBO_W / 2, _comboPos.y + COMBO_H / 2, _comboHandle);
+		RRMLib::DrawExtendGraph(_comboPos.x - COMBO_W / 2, _comboPos.y - COMBO_H / 2, _comboPos.x + COMBO_W / 2, _comboPos.y + COMBO_H / 2, _comboHandle, true, false);
 	}
 }
 

@@ -78,7 +78,7 @@ bool OfficialScene::Update()
 		_speed = 3;
 	}
 	RRMLib::DrawExtendGraph(WINDOW_WIDTH / 2 - LOGO_W / 2, WINDOW_HEIGHT / 2 - LOGO_H / 2,
-		WINDOW_WIDTH / 2 + LOGO_W / 2, WINDOW_HEIGHT / 2 + LOGO_H, _logoHandle);
+		WINDOW_WIDTH / 2 + LOGO_W / 2, WINDOW_HEIGHT / 2 + LOGO_H, _logoHandle, true, false);
 
 	(this->*_update[_state])();
 

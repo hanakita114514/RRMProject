@@ -80,8 +80,8 @@ HPBar::Draw(const Position& pos, HitPoint& hp)
 
 	_offset = offsetX;
 
-	RRMLib::DrawExtendGraph(pos.x + INIT_BAR_POS, pos.y, pos.x + INIT_BAR_POS + HPBAR_MAX, pos.y + 6, _gaugeHandle[2]);
-	RRMLib::DrawExtendGraph(pos.x + INIT_BAR_POS, pos.y, pos.x + INIT_BAR_POS + _backOffset, pos.y + 6, _gaugeHandle[1]);
-	RRMLib::DrawExtendGraph(pos.x + INIT_BAR_POS, pos.y, pos.x + INIT_BAR_POS + offsetX, pos.y + 6, _gaugeHandle[0]);
-	RRMLib::DrawGraph(pos.x, pos.y, _barHandle);
+	RRMLib::DrawExtendGraph(pos.x + INIT_BAR_POS, pos.y, pos.x + INIT_BAR_POS + HPBAR_MAX, pos.y + 6, _gaugeHandle[2], true, false);
+	RRMLib::DrawExtendGraph(pos.x + INIT_BAR_POS, pos.y, pos.x + INIT_BAR_POS + _backOffset, pos.y + 6, _gaugeHandle[1], true, false);
+	RRMLib::DrawExtendGraph(pos.x + INIT_BAR_POS, pos.y, pos.x + INIT_BAR_POS + offsetX, pos.y + 6, _gaugeHandle[0], true, false);
+	RRMLib::DrawGraph(pos.x, pos.y, _barHandle, true);
 }

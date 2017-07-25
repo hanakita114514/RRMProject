@@ -87,13 +87,13 @@ Fade::Draw()
 	{
 	case (int)FadeImage::black:
 	{
-		RRMLib::DrawGraph(0, 0, _handle[_handleIdx]);
+		RRMLib::DrawGraph(0, 0, _handle[_handleIdx], true);
 	}
 	break;
 	case (int)FadeImage::white:
 	{
 		RRMLib::DrawExtendGraph(_extendPos[0].x - _extendX, _extendPos[0].y - _extendY,
-					_extendPos[1].x + _extendX, _extendPos[1].y + _extendY, _handle[_handleIdx]);
+					_extendPos[1].x + _extendX, _extendPos[1].y + _extendY, _handle[_handleIdx], true , false);
 	}
 	break;
 	}

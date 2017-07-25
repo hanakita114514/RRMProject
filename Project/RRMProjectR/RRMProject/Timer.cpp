@@ -115,11 +115,11 @@ Timer::Draw()
 
 	//Time•¶Žš•`‰æ
 	RRMLib::DrawExtendGraph((_pos.x - _size) + i * _offset - 5, _pos.y - _size / 2 - 3,
-		(_pos.x + _size) + i * _offset - 5, _pos.y + _size / 2 - 3, _timeHandle);
+		(_pos.x + _size) + i * _offset - 5, _pos.y + _size / 2 - 3, _timeHandle, true, false);
 
 	i+= 1.5f;
 	RRMLib::DrawExtendGraph((_pos.x - _size / 2) + i * _offset, _pos.y - _size / 2,
-		(_pos.x + _size / 2) + i * _offset, _pos.y + _size / 2, _koronHandle);
+		(_pos.x + _size / 2) + i * _offset, _pos.y + _size / 2, _koronHandle, true, false);
 
 	//•ª•`‰æ
 	i += 5;
@@ -136,7 +136,7 @@ Timer::Draw()
 
 	++i;
 	RRMLib::DrawExtendGraph((_pos.x - _size / 2) + i * _offset, _pos.y - _size / 2,
-		(_pos.x + _size / 2) + i * _offset, _pos.y + _size / 2, _koronHandle);
+		(_pos.x + _size / 2) + i * _offset, _pos.y + _size / 2, _koronHandle, true, false);
 
 	++i;
 	//•b•`‰æ
@@ -153,7 +153,7 @@ Timer::Draw()
 
 	++i;
 	RRMLib::DrawExtendGraph((_pos.x - _size / 2) + i * _offset, _pos.y - _size / 2,
-		(_pos.x + _size / 2) + i * _offset, _pos.y + _size / 2, _koronHandle);
+		(_pos.x + _size / 2) + i * _offset, _pos.y + _size / 2, _koronHandle, true, false);
 
 	//ƒ~ƒŠ•b•`‰æ
 	++i;
@@ -211,7 +211,7 @@ Timer::Draw(const Position& pos, float size)
 
 	++i;
 	RRMLib::DrawExtendGraph((pos.x - size / 2) + i * offset, pos.y - size / 2,
-		(pos.x + size / 2) + i * offset, pos.y + size / 2, _koronHandle);
+		(pos.x + size / 2) + i * offset, pos.y + size / 2, _koronHandle, true, false);
 
 	++i;
 	//•b•`‰æ
@@ -228,7 +228,7 @@ Timer::Draw(const Position& pos, float size)
 
 	++i;
 	RRMLib::DrawExtendGraph((pos.x - size / 2) + i * offset, pos.y - size / 2,
-		(pos.x + size / 2) + i * offset, pos.y + size / 2, _koronHandle);
+		(pos.x + size / 2) + i * offset, pos.y + size / 2, _koronHandle, true, false);
 
 	//ƒ~ƒŠ•b•`‰æ
 	++i;

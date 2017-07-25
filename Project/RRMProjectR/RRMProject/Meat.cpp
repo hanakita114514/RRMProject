@@ -192,4 +192,3 @@ void Meat::Draw(const Vector2& offset)
 	RRMLib::DrawRectGraph(drawPosX, drawPosY, _uv.x, _uv.y,
 							ENEMY_SIZE_X, ENEMY_SIZE_Y, _handle, true, false);
 	_hpbar.Draw(Position(drawPosX + _rc.w / 4, drawPosY - _rc.h / 4), _hp);
-}

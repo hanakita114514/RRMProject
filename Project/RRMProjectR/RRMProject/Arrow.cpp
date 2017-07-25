@@ -17,7 +17,7 @@ Arrow::~Arrow()
 
 void Arrow::Draw()
 {
-	RRMLib::DrawGraph((int)_pos.x, (int)_pos.y, _arrowHandle);
+	RRMLib::DrawGraph((int)_pos.x, (int)_pos.y, _arrowHandle, true);
 }
 
 void Arrow::Move(Vector2 velocity)

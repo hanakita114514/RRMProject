@@ -35,7 +35,7 @@ EndCall::StartUpdate()
 {
 	_height += SPEED;
 	RRMLib::SetBlendMode(RRM_BLENDMODE_ALPHA, 128);
-	RRMLib::DrawExtendGraph(0, WINDOW_HEIGHT / 2 - _height / 2, WINDOW_WIDTH, WINDOW_HEIGHT / 2 + _height / 2, _filterHandle);
+	RRMLib::DrawExtendGraph(0, WINDOW_HEIGHT / 2 - _height / 2, WINDOW_WIDTH, WINDOW_HEIGHT / 2 + _height / 2, _filterHandle, true, false);
 	RRMLib::SetBlendMode(RRM_BLENDMODE_NONE, 0);
 
 	_logo->Update();
@@ -53,7 +53,7 @@ void
 EndCall::StartWaitUpdate()
 {
 	RRMLib::SetBlendMode(RRM_BLENDMODE_ALPHA, 128);
-	RRMLib::DrawExtendGraph(0, WINDOW_HEIGHT / 2 - _height / 2, WINDOW_WIDTH, WINDOW_HEIGHT / 2 + _height / 2, _filterHandle);
+	RRMLib::DrawExtendGraph(0, WINDOW_HEIGHT / 2 - _height / 2, WINDOW_WIDTH, WINDOW_HEIGHT / 2 + _height / 2, _filterHandle, true, false);
 	RRMLib::SetBlendMode(RRM_BLENDMODE_NONE, 0);
 
 	_logo->Update();
@@ -70,7 +70,7 @@ EndCall::MiddleUpdate()
 	_height += SPEED * 4;
 
 	RRMLib::SetBlendMode(RRM_BLENDMODE_ALPHA, 128);
-	RRMLib::DrawExtendGraph(0, WINDOW_HEIGHT / 2 - _height / 2, WINDOW_WIDTH, WINDOW_HEIGHT / 2 + _height / 2, _filterHandle);
+	RRMLib::DrawExtendGraph(0, WINDOW_HEIGHT / 2 - _height / 2, WINDOW_WIDTH, WINDOW_HEIGHT / 2 + _height / 2, _filterHandle, true, false);
 	RRMLib::SetBlendMode(RRM_BLENDMODE_NONE, 0);
 	_logo->Update();
 
@@ -85,7 +85,7 @@ void
 EndCall::EndUpdate()
 {
 	RRMLib::SetBlendMode(RRM_BLENDMODE_ALPHA, 128);
-	RRMLib::DrawExtendGraph(0, WINDOW_HEIGHT / 2 - _height / 2, WINDOW_WIDTH, WINDOW_HEIGHT / 2 + _height / 2, _filterHandle);
+	RRMLib::DrawExtendGraph(0, WINDOW_HEIGHT / 2 - _height / 2, WINDOW_WIDTH, WINDOW_HEIGHT / 2 + _height / 2, _filterHandle, true, false);
 	RRMLib::SetBlendMode(RRM_BLENDMODE_NONE, 0);
 }
 

@@ -40,13 +40,13 @@ Score::Draw()
 		_heighScore = _score;
 	}
 
-	RRMLib::DrawExtendGraph(0, SCORE_Y - FONT_SIZE / 2, 100, SCORE_Y + FONT_SIZE / 2, _scoreHandle);
-	RRMLib::DrawExtendGraph(65, SCORE_Y - FONT_SIZE / 2 + 5, 120, SCORE_Y + FONT_SIZE / 2 + 5, _koronHandle);
+	RRMLib::DrawExtendGraph(0, SCORE_Y - FONT_SIZE / 2, 100, SCORE_Y + FONT_SIZE / 2, _scoreHandle, true, false);
+	RRMLib::DrawExtendGraph(65, SCORE_Y - FONT_SIZE / 2 + 5, 120, SCORE_Y + FONT_SIZE / 2 + 5, _koronHandle, true, false);
 
 	_scoreNum.Draw(_score, Position(0 + SCORE_X, SCORE_Y));
 
 	RRMLib::DrawExtendGraph(SCORE_X + OFFSET_X - FONT_SIZE / 2, SCORE_Y - FONT_SIZE / 2,
-		SCORE_X + OFFSET_X + FONT_SIZE / 2, SCORE_Y + FONT_SIZE / 2, _slashHandle);
+		SCORE_X + OFFSET_X + FONT_SIZE / 2, SCORE_Y + FONT_SIZE / 2, _slashHandle, true, false);
 
 	_heighNum.Draw(_heighScore, Position(SCORE_X + SCORE_X, SCORE_Y));
 }

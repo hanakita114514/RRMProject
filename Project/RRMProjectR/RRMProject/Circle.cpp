@@ -10,5 +10,5 @@ Circle::DrawCircle()
 void
 Circle::DrawGraph(int handle)
 {
-	RRMLib::DrawGraph((int)(pos.x - radius), (int)(pos.y - radius), handle);
+	RRMLib::DrawGraph((int)(pos.x - radius), (int)(pos.y - radius), handle, true);
 }

@@ -55,7 +55,7 @@ ScoreCalc::StartUpdate()
 	_pos.x += SPEED;
 
 	RRMLib::DrawExtendGraph(_pos.x - WIDTH / 2, _pos.y - HEIGHT / 2,
-		_pos.x + WIDTH / 2, _pos.y + HEIGHT / 2, _logoHandle);
+		_pos.x + WIDTH / 2, _pos.y + HEIGHT / 2, _logoHandle, true, false);
 	_number.Draw(0, Position(_pos.x + LOGO_OFFSET , _pos.y));
 
 	if (_destPos.x < _pos.x)
@@ -75,7 +75,7 @@ ScoreCalc::CalcUpdate()
 		_resultScore = _score;
 	}
 	RRMLib::DrawExtendGraph(_pos.x - WIDTH / 2, _pos.y - HEIGHT / 2,
-		_pos.x + WIDTH / 2, _pos.y + HEIGHT / 2, _logoHandle);
+		_pos.x + WIDTH / 2, _pos.y + HEIGHT / 2, _logoHandle, true, false);
 	_number.Draw(_resultScore, Position(_pos.x + LOGO_OFFSET, _pos.y));
 
 }
@@ -84,7 +84,7 @@ void
 ScoreCalc::EvaluationUpdate()
 {
 	RRMLib::DrawExtendGraph(_pos.x - WIDTH / 2, _pos.y - HEIGHT / 2,
-		_pos.x + WIDTH / 2, _pos.y + HEIGHT / 2, _logoHandle);
+		_pos.x + WIDTH / 2, _pos.y + HEIGHT / 2, _logoHandle, true, false);
 	_number.Draw(_resultScore, Position(_pos.x + LOGO_OFFSET, _pos.y));
 	_evaLogo.Draw(_evaluationMap[_evaluation], Position(_pos.x + EVA_OFFSET, _pos.y));
 
@@ -98,7 +98,7 @@ void
 ScoreCalc::EndUpdate()
 {
 	RRMLib::DrawExtendGraph(_pos.x - WIDTH / 2, _pos.y - HEIGHT / 2,
-		_pos.x + WIDTH / 2, _pos.y + HEIGHT / 2, _logoHandle);
+		_pos.x + WIDTH / 2, _pos.y + HEIGHT / 2, _logoHandle, true , false);
 	_number.Draw(_resultScore, Position(_pos.x + LOGO_OFFSET, _pos.y));
 	_evaLogo.Draw(_evaluationMap[_evaluation], Position(_pos.x + EVA_OFFSET, _pos.y));
 }

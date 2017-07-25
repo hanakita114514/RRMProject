@@ -51,4 +51,5 @@ struct Rect
 
 	void DrawBox();
 	void DrawGraph(int handle);
+	void DrawGraph(int handle, const Vector2& dir);
 };

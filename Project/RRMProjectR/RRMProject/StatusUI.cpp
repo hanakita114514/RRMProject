@@ -26,7 +26,7 @@ StatusUI::Draw()
 	RRMLib::SetBlendMode(RRM_BLENDMODE_ALPHA, 128);
 	for (int i = 0; i < 2; ++i)
 	{
-		RRMLib::DrawExtendGraph(posX * i, 0, posX * i + WINDOW_WIDTH / 2, 0 + FILTER_H, _filterHandle[i]);
+		RRMLib::DrawExtendGraph(posX * i, 0, posX * i + WINDOW_WIDTH / 2, 0 + FILTER_H, _filterHandle[i], true, false);
 	}
 	RRMLib::SetBlendMode(RRM_BLENDMODE_NONE, 0);
 

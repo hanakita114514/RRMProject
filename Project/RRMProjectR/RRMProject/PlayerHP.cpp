@@ -75,8 +75,8 @@ PlayerHP::Draw(HitPoint& hp)
 
 	_offset = offsetX;
 
-	RRMLib::DrawExtendGraph(_barPos.x + BAR_INIT_X, _barPos.y + BAR_INIT_Y, _barPos.x + BAR_INIT_X + HPBAR_MAX, _barPos.y + BAR_INIT_Y + HPBAR_HEIGHT, _gaugeHandle[2]);
-	RRMLib::DrawExtendGraph(_barPos.x + BAR_INIT_X, _barPos.y + BAR_INIT_Y, _barPos.x + BAR_INIT_X + _backOffset, _barPos.y + BAR_INIT_Y + HPBAR_HEIGHT, _gaugeHandle[1]);
-	RRMLib::DrawExtendGraph(_barPos.x + BAR_INIT_X, _barPos.y + BAR_INIT_Y, _barPos.x + BAR_INIT_X + offsetX, _barPos.y + BAR_INIT_Y + HPBAR_HEIGHT, _gaugeHandle[0]);
-	RRMLib::DrawGraph(_barPos.x, _barPos.y, _hpBarHandle);
+	RRMLib::DrawExtendGraph(_barPos.x + BAR_INIT_X, _barPos.y + BAR_INIT_Y, _barPos.x + BAR_INIT_X + HPBAR_MAX, _barPos.y + BAR_INIT_Y + HPBAR_HEIGHT, _gaugeHandle[2], true, false);
+	RRMLib::DrawExtendGraph(_barPos.x + BAR_INIT_X, _barPos.y + BAR_INIT_Y, _barPos.x + BAR_INIT_X + _backOffset, _barPos.y + BAR_INIT_Y + HPBAR_HEIGHT, _gaugeHandle[1], true, false);
+	RRMLib::DrawExtendGraph(_barPos.x + BAR_INIT_X, _barPos.y + BAR_INIT_Y, _barPos.x + BAR_INIT_X + offsetX, _barPos.y + BAR_INIT_Y + HPBAR_HEIGHT, _gaugeHandle[0], true, false);
+	RRMLib::DrawGraph(_barPos.x, _barPos.y, _hpBarHandle, true);
 }

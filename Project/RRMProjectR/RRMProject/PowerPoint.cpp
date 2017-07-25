@@ -95,6 +95,6 @@ PowerPoint::Draw()
 {
 	for (int i = 0; i < _pp; ++i)
 	{
-		RRMLib::DrawExtendGraph(_pos.x + i * OFFSET, _pos.y, _pos.x + IMG_W + i * OFFSET, _pos.y + IMG_H, _handle);
+		RRMLib::DrawExtendGraph(_pos.x + i * OFFSET, _pos.y, _pos.x + IMG_W + i * OFFSET, _pos.y + IMG_H, _handle, true, false);
 	}
 }

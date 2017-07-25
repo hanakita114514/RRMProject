@@ -32,7 +32,7 @@ ThroughBlock::Draw(const Vector2& offset)
 	drawPos.x = _rc.pos.x - offset.x;
 	drawPos.y = _rc.pos.y - offset.y;
 
-	RRMLib::DrawGraph((int)drawPos.x, (int)drawPos.y, _handle);
+	RRMLib::DrawGraph((int)drawPos.x, (int)drawPos.y, _handle, true);
 
 }
 

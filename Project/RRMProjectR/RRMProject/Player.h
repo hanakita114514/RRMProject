@@ -50,6 +50,11 @@ private:
 
 	static const int ToolMax = 3;
 
+	enum class Weapon : unsigned int
+	{
+		gladius,
+	};
+
 private:
 	HitPoint _hp;			//‘Ì—Í
 	PlayerHP _hpbar;		//‘Ì—Íƒo[
@@ -96,6 +101,9 @@ private:
 
 	void Jump();
 	void Move();
+
+	std::map<Weapon, int> _weaponHandle;
+	Weapon _weapon;
 
 	typedef void(Player::*_func)();
 

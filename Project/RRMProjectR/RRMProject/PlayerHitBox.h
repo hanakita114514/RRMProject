@@ -22,7 +22,7 @@ public:
 
 	void DamageBox(float frame, const Rect& rc, const Vector2& dir);
 	//当たり判定の描画(デバッグ用)
-	void Draw();
+	void Draw(int handle);
 
 	//攻撃判定を消す
 	void Clear();

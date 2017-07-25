@@ -21,7 +21,7 @@ InformationUI::Draw()
 {
 	_fps.Update();
 	RRMLib::SetBlendMode(RRM_BLENDMODE_ALPHA, 128);
-	RRMLib::DrawExtendGraph(0,WINDOW_HEIGHT - FILTER_H - OFFSET_Y, WINDOW_WIDTH, WINDOW_HEIGHT - OFFSET_Y, _filterHandle);
+	RRMLib::DrawExtendGraph(0,WINDOW_HEIGHT - FILTER_H - OFFSET_Y, WINDOW_WIDTH, WINDOW_HEIGHT - OFFSET_Y, _filterHandle, true, false);
 	RRMLib::SetBlendMode(RRM_BLENDMODE_NONE, 0);
 	_fps.Draw();
 }

@@ -2,6 +2,7 @@
 
 #include "Vector2.h"
 #include <map>
+#include "Rect.h"
 
 enum class PlayerState : unsigned int
 {
@@ -24,6 +25,7 @@ private:
 	typedef void (PlayerDraw::*_func)(const Vector2& pos);
 
 	std::map<PlayerState, int> _handleMap;
+	int _handle;
 
 	int _frame;
 
@@ -38,8 +40,13 @@ private:
 	void JumpDraw(const Vector2& pos);
 	void ShootDraw(const Vector2& pos);
 
+	const Rect& _playerRc;
+
+	Vector2 _uv;
+	const Vector2& _dir;
+
 public:
-	PlayerDraw();
+	PlayerDraw(const Rect& rc, const Vector2& dir);
 	~PlayerDraw();
 
 	void Draw(const Vector2& pos, const PlayerState& state);

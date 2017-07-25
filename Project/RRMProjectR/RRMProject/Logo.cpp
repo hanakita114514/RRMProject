@@ -32,7 +32,7 @@ Logo::StartUpdate()
 {
 	_width += SPEED;
 	RRMLib::DrawExtendGraph((_pos.x) - (_width / 2), (_pos.y) - (INIT_H / 2),
-		(_pos.x) + (_width / 2), (_pos.y) + (INIT_H / 2), _handle);
+		(_pos.x) + (_width / 2), (_pos.y) + (INIT_H / 2), _handle, true, false);
 
 	if (_width >= WINDOW_WIDTH)
 	{
@@ -48,7 +48,7 @@ Logo::MiddleUpdate()
 	_width -= SPEED;
 
 	RRMLib::DrawExtendGraph((_pos.x) - (_width / 2), (_pos.y) - (_height / 2),
-		(_pos.x) + (_width / 2), (_pos.y) + (_height / 2), _handle);
+		(_pos.x) + (_width / 2), (_pos.y) + (_height / 2), _handle, true, false);
 
 	if (_height >= LOGO_H)
 	{
@@ -71,7 +71,7 @@ void
 Logo::EndUpdate()
 {
 	RRMLib::DrawExtendGraph((_pos.x) - (_width / 2), (_pos.y) - (_height / 2),
-		(_pos.x) + (_width / 2), (_pos.y) + (_height / 2), _handle);
+		(_pos.x) + (_width / 2), (_pos.y) + (_height / 2), _handle, true, false);
 }
 
 void
