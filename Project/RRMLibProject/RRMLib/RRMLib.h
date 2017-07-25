@@ -236,7 +236,7 @@ namespace RRMLib
 	//------------------------------------------------------------------------------------
 	//‰æ‘œ‚Ì•`‰æ
 	//¶ã‚©‚ç•`‰æ‚·‚é
-	void DrawGraph(float x, float y, int graphHandle);
+	void DrawGraph(float x, float y, int graphHandle, bool transFlag);
 	//void DrawGraph(int x, int y, DrawingStructure drawData);
 
 	//‰æ‘œ‚Ì‹éŒ`•`‰æ
@@ -247,7 +247,7 @@ namespace RRMLib
 	// lx ly ¶ãÀ•W
 	// rx ry ‰E‰ºÀ•W
 	// handle ‰æ‘œƒnƒ“ƒhƒ‹
-	void DrawExtendGraph(float lx, float ly, float rx, float ry, int handle);
+	void DrawExtendGraph(float lx, float ly, float rx, float ry, int handle, bool transFlag, bool turnFlag);
 
 	//‰æ‘œ‚ÌŠgk‹éŒ`•`‰æ
 	void DrawRectExtendGraph(float destLX, float destLY, float destRX, float destRY,

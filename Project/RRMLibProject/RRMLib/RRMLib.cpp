@@ -215,10 +215,10 @@ namespace RRMLib
 	}
 
 	//‰æ‘œ‚ğ•`‰æ
-	void DrawGraph(float x, float y, int graphHandle)
+	void DrawGraph(float x, float y, int graphHandle, bool transFlag)
 	{
 		Renderer::Instance().SetZBuffer(false);
-		graphic.DrawGraph(x, y, graphHandle);
+		graphic.DrawGraph(x, y, graphHandle, transFlag);
 	}
 	
 	//‰æ‘œ‚Ì‹éŒ`•`‰æ
@@ -232,10 +232,10 @@ namespace RRMLib
 
 
 	//‰æ‘œ‚ÌŠgk•`‰æ
-	void DrawExtendGraph(float lx, float ly, float rx, float ry, int handle)
+	void DrawExtendGraph(float lx, float ly, float rx, float ry, int handle, bool transFlag, bool turnFlag)
 	{
 		Renderer::Instance().SetZBuffer(false);
-		graphic.DrawExtendGraph(lx, ly, rx, ry, handle);
+		graphic.DrawExtendGraph(lx, ly, rx, ry, handle, transFlag, turnFlag);
 	}
 
 	//‰æ‘œ‚ÌŠgk‹éŒ`•`‰æ
