@@ -66,13 +66,13 @@ public:
 	//Œ´“_¶ã‚©‚ç•`‰æ
 	//void DrawGraph(float x, float y, int handle);
 	//Šù‚É¶¬‚³‚ê‚½ƒ|ƒŠƒSƒ“‚ğg‚Á‚ÄÀ•W¶ã•`‰æ
-	void DrawGraph(float x, float y, int handle);
+	void DrawGraph(float x, float y, int handle, bool transFlag);
 
 	//‰æ‘œ‚ÌŠgk•`‰æ
 	// lx ly ¶ãÀ•W
 	// rx ry ‰E‰ºÀ•W
 	// handle ‰æ‘œƒnƒ“ƒhƒ‹
-	void DrawExtendGraph(float lx, float ly, float rx, float ry, int handle);
+	void DrawExtendGraph(float lx, float ly, float rx, float ry, int handle, bool transFlag, bool turnFlag);
 
 	// ‰æ‘œ‚Ì•ªŠ„•`‰æ
 	void DrawRectGraph(float destX, float destY,int srcX, int srcY,

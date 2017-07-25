@@ -656,7 +656,7 @@ Graphic::CreatePolygon()
 //}
 
 void
-Graphic::DrawGraph(float x, float y, int handle)
+Graphic::DrawGraph(float x, float y, int handle, bool transFlag)
 {
 	HRESULT result = S_OK;
 	DeviceDx11& dev = DeviceDx11::Instance();
@@ -928,7 +928,7 @@ Graphic::DrawRectGraph(float destX, float destY, int srcX, int srcY,
 //}
 
 void 
-Graphic::DrawExtendGraph(float lx, float ly, float rx, float ry, int handle)
+Graphic::DrawExtendGraph(float lx, float ly, float rx, float ry, int handle, bool transFlag, bool turnFlag)
 {
 	WindowControl& wc = WindowControl::Instance();
 	HRESULT result;
@@ -936,15 +936,68 @@ Graphic::DrawExtendGraph(float lx, float ly, float rx, float ry, int handle)
 
 	DrawingStructure* ds = (DrawingStructure*)handle;
 
-	float width = rx - lx;
-	float height = ry - ly;
+	Vertex2D vertices[4];
 
-	Vertex2D vertex[4];
-	CreateVertex2D(lx + width / 2, ly + height / 2, width, height, vertex, *ds);
+	//ウィンドウ座標系を-1～1にクランプ
+	float w = rx - lx;
+	float h = ry - ly;
+
+	float x = lx + w / 2;
+	float y = ly + h / 2;
+	float fx = (x - wc.WindowWidth() / 2) / (wc.WindowWidth() / 2);
+	float fy = ((y - wc.WindowHeight() / 2) / (wc.WindowHeight() / 2)) * -1;
+
+	float fw = ((float)w / 2) / ((float)wc.WindowWidth() / 2);
+	float fh = ((float)h / 2) / ((float)wc.WindowHeight() / 2);
+
+
+	//左上
+	vertices[0].pos.x = (fx - fw);
+	vertices[0].pos.y = fy + fh;
+	vertices[0].pos.z = 0;
+	vertices[0].uv.x = 0;
+	vertices[0].uv.y = 0;
+
+	//右上
+	vertices[1].pos.x = (fx + fw);
+	vertices[1].pos.y = fy + fh;
+	vertices[1].pos.z = 0;
+	vertices[1].uv.x = 1;
+	vertices[1].uv.y = 0;
+
+	//左下
+	vertices[2].pos.x = (fx - fw);
+	vertices[2].pos.y = fy - fh;
+	vertices[2].pos.z = 0;
+	vertices[2].uv.x = 0;
+	vertices[2].uv.y = 1;
+
+	//右下
+	vertices[3].pos.x = (fx + fw);
+	vertices[3].pos.y = fy - fh;
+	vertices[3].pos.z = 0;
+	vertices[3].uv.x = 1;
+	vertices[3].uv.y = 1;
+
+	if (turnFlag)
+	{
+		vertices[0].uv.x = 1;
+		vertices[0].uv.y = 0;
+
+		vertices[1].uv.x = 0;
+		vertices[1].uv.y = 0;
+
+		vertices[2].uv.x = 1;
+		vertices[2].uv.y = 1;
+
+		vertices[3].uv.x = 0;
+		vertices[3].uv.y = 1;
+	}
+
 
 	D3D11_MAPPED_SUBRESOURCE mappedsub = {};
 	result = dev.Context()->Map(_vb, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedsub);
-	memcpy(mappedsub.pData, vertex, sizeof(Vertex2D) * 4);
+	memcpy(mappedsub.pData, vertices, sizeof(Vertex2D) * 4);
 	dev.Context()->Unmap(_vb, 0);
 
 
@@ -1143,6 +1196,8 @@ Graphic::DrawRectExtendGraph(float destLX, float destLY, float destRX, float des
 		vertices[3].uv.x = srcX / ds->vertex.width;;
 		vertices[3].uv.y = (height + srcY) / ds->vertex.height;
 	}
+
+
 	D3D11_MAPPED_SUBRESOURCE mappedsub = {};
 	result = dev.Context()->Map(_vb, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedsub);
 	memcpy(mappedsub.pData, vertices, sizeof(Vertex2D) * 4);

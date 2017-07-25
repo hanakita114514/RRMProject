@@ -394,13 +394,13 @@ Renderer::Test()
 	blrtdesc.SrcBlend = D3D11_BLEND_SRC_ALPHA;
 	blrtdesc.DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
 	blrtdesc.BlendOp = D3D11_BLEND_OP_ADD;
-	blrtdesc.SrcBlendAlpha = D3D11_BLEND_ONE;
-	blrtdesc.DestBlendAlpha = D3D11_BLEND_INV_BLEND_FACTOR;
+	blrtdesc.SrcBlendAlpha = D3D11_BLEND_BLEND_FACTOR;
+	blrtdesc.DestBlendAlpha = D3D11_BLEND_ZERO;
 	blrtdesc.BlendOpAlpha = D3D11_BLEND_OP_ADD;
 	blrtdesc.RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
 
 	result = dev.Device()->CreateBlendState(&blenddesc, &_alphaBlend);
 
-	float blendFactor[] = { 1.0f, 1.0f, 1.0f, 0.1f };
+	float blendFactor[] = { 1.0f, 1.0f, 1.0f, 0.5f };
 	dev.Context()->OMSetBlendState(_alphaBlend, blendFactor, 0xffffffff);
 }

@@ -621,12 +621,12 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nC
 
 		//graphic.DrawRectExtendGraph(0, 0, 500, 500, 0, 0, 600, 600, handle, true, false);
 
-		//graphic.DrawExtendGraph(0, 0, 1500, 700, handle);
+		graphic.DrawExtendGraph(0, 0, 1500, 700, handle, true, true);
 
 		//GraphList::Instance().Draw();
 
-		Renderer::Instance().Test();
-		graphic.DrawGraph(0, 0, filterHandle);
+		//Renderer::Instance().Test();
+		//graphic.DrawGraph(0, 0, filterHandle, true);
 
 		result = key.GetKeyState(keyBuf);
 
