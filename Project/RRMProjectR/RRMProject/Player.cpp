@@ -467,6 +467,8 @@ Player::DamageUpdate()
 		_rc.pos.x += _vel.x;
 	}
 
+	_hitBox.DamageBox(0, _rc, _dir);
+
 
 	DistanceAttenuation();
 	if (_vel.x == 0)

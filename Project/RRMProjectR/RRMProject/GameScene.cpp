@@ -16,7 +16,7 @@
 #include "Result.h"
 
 
-GameScene::GameScene() : _player(0,_camera, InputMode::pad), _camera(_player.GetRect().pos), _time(Position(0, 0), 40.f)
+GameScene::GameScene() : _player(0,_camera, InputMode::keyboard), _camera(_player.GetRect().pos), _time(Position(0, 0), 40.f)
 {
 	_col = new Collision();
 	EnemyManager::Instance();
@@ -42,7 +42,7 @@ GameScene::GameScene() : _player(0,_camera, InputMode::pad), _camera(_player.Get
 
 }
 
-GameScene::GameScene(LogoIdx state, KeyData& keyData) : _player(0, _camera, InputMode::pad), _camera(_player.GetRect().pos),
+GameScene::GameScene(LogoIdx state, KeyData& keyData) : _player(0, _camera, InputMode::keyboard), _camera(_player.GetRect().pos),
 _time(Position(720, 40.0f), 40.f)
 {
 	_col = new Collision();
@@ -64,7 +64,7 @@ _time(Position(720, 40.0f), 40.f)
 
 	_camera.Init();
 
-	_input = InputFactory::Create(InputMode::pad, 0);
+	_input = InputFactory::Create(InputMode::keyboard, 0);
 
 	_result = new Result(_score, _player.GetHitPoint(), _time, _player.GetCombo());
 

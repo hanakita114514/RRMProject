@@ -21,6 +21,7 @@ enum class BulletType
 	deffusion,				//ŠgU
 	circleBullet,			//•úËó‚É”ò‚Ô
 	rainBullet,				//‰J‚Ì‚æ‚¤‚É—‚¿‚é
+	dropBullet,				//d—Í‚ğó‚¯‚é
 	//‚±‚±‚É’Ç‰Á
 
 	num,

@@ -7,5 +7,6 @@ public:
 	~MeatHitBox();
 
 	void Search(float frame, const Rect& rc, const Vector2& dir);
+	void Attack(float frame, const Rect& rc, const Vector2& dir);
 };
 

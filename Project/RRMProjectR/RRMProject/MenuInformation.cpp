@@ -53,7 +53,7 @@ MenuInformation::Init()
 	_extendPos[0] = Vector2(640, 350);
 	_extendPos[1] = Vector2(640, 370);
 	_state = MenuState::none;
-	_input = InputFactory::Create(InputMode::pad, 0);
+	_input = InputFactory::Create(InputMode::keyboard, 0);
 	
 	int idx = 0;
 
@@ -130,10 +130,6 @@ MenuInformation::Wait()
 	_isEnlargement = false;
 	_isReduction = false;
 	_isWait = true;
-
-	if (_state != MenuState::none)
-	{
-	}
 }
 
 void

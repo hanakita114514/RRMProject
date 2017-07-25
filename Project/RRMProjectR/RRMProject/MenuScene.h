@@ -46,7 +46,7 @@ private:
 	float _animCnt;
 	int _frame;
 
-
+	Rect _titleRect;
 	Vector2 _animUV[StarDust_Anim_Max];
 	MenuInformation _menuInfo;
 	LOGO _logo;

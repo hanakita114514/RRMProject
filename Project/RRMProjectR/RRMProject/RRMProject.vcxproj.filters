@@ -396,6 +396,18 @@
     <ClCompile Include="RainSpell.cpp">
       <Filter>ソース ファイル\Spell</Filter>
     </ClCompile>
+    <ClCompile Include="MeatHitBox.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Territory.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="DropShot.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="DropBullet.cpp">
+      <Filter>ソース ファイル\Object\Bullet</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common.h">
@@ -724,6 +736,18 @@
     </ClInclude>
     <ClInclude Include="RainSpell.h">
       <Filter>ソース ファイル\Spell</Filter>
+    </ClInclude>
+    <ClInclude Include="MeatHitBox.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Territory.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="DropShot.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="DropBullet.h">
+      <Filter>ソース ファイル\Object\Bullet</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -43,6 +43,8 @@
     <ClCompile Include="Digestion.cpp" />
     <ClCompile Include="DInput.cpp" />
     <ClCompile Include="DownEffect.cpp" />
+    <ClCompile Include="DropBullet.cpp" />
+    <ClCompile Include="DropShot.cpp" />
     <ClCompile Include="Effect.cpp" />
     <ClCompile Include="EffectFactory.cpp" />
     <ClCompile Include="EffectManager.cpp" />
@@ -154,6 +156,8 @@
     <ClInclude Include="Digestion.h" />
     <ClInclude Include="DInput.h" />
     <ClInclude Include="DownEffect.h" />
+    <ClInclude Include="DropBullet.h" />
+    <ClInclude Include="DropShot.h" />
     <ClInclude Include="Effect.h" />
     <ClInclude Include="EffectFactory.h" />
     <ClInclude Include="EffectManager.h" />

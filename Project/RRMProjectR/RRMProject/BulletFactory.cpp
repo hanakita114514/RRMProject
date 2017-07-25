@@ -8,6 +8,7 @@
 #include "DeffusionBullet.h"
 #include "CircleBullet.h"
 #include "RainBullet.h"
+#include "DropBullet.h"
 
 BulletFactory::BulletFactory()
 {
@@ -79,6 +80,13 @@ BulletFactory::Create(const BulletType& bulletID, const Position& pos, Vector2 v
 	case BulletType::rainBullet:
 	{
 		newBullet = new RainBullet(_handle);
+		newBullet->Initialize(pos, vec, type);
+		newBullet->SetPos(pos);
+		break;
+	}
+	case BulletType::dropBullet:
+	{
+		newBullet = new DropBullet(_handle);
 		newBullet->Initialize(pos, vec, type);
 		newBullet->SetPos(pos);
 		break;

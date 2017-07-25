@@ -91,8 +91,8 @@ public:
 	MultihitProtect& GetHitProtect() { return _mhp; }
 
 	void SetFootHit(bool flag);
-	void SearchHit(const Position& targetPos);
-	void SearchFailed();
+	virtual void SearchHit(const Position& targetPos);
+	virtual void SearchFailed();
 
 	void SearchClear();
 };

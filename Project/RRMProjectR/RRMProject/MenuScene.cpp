@@ -20,14 +20,25 @@ const char* Stage[(int)Stage::stageMax] =
 	{"Stage4"}
 };
 
+const int TITLE_IMAGE_WIDTH = 576;
+const int TITLE_IMAGE_HEIGHT = 116;
+const int LOGO_IMAGE_WIDTH = 394;
+const int LOGO_IMAGE_HEIGHT = 74;
+
+#define HALF(x)		(x / 2)
+#define QUARTER(x)	(x / 4)
+
 MenuScene::MenuScene()
 {
 	_update = &MenuScene::MenuUpdate;
-	_input = InputFactory::Create(InputMode::pad, 0);
+	_input = InputFactory::Create(InputMode::keyboard, 0);
 
 	_menuInfo.Init();
 	_logo.image = RRMLib::LoadGraph("Resource/img/UI/Logo/Press_Start.png");
-	_logo.rc.pos = Vector2(WINDOW_WIDTH / 2 - 197, WINDOW_HEIGHT / 2 - 37);
+	_logo.rc.pos = Vector2(WINDOW_WIDTH / 2 - HALF(LOGO_IMAGE_WIDTH), WINDOW_HEIGHT / 3 * 2 - HALF(LOGO_IMAGE_HEIGHT));
+	_logo.rc.w = LOGO_IMAGE_WIDTH;
+	_logo.rc.h = LOGO_IMAGE_HEIGHT;
+	_titleHandle = RRMLib::LoadGraph("Resource/img/UI/Logo/Title.png");
 
 	_bg = RRMLib::LoadGraph("Resource/img/BackGround/StarDust.png");
 
@@ -72,6 +83,8 @@ MenuScene::MenuUpdate()
 	if (_menuInfo.IsState() == MenuState::none)
 	{
 		RRMLib::DrawGraph(_logo.rc.pos.x, _logo.rc.pos.y, _logo.image, true);
+		RRMLib::DrawExtendGraph(_logo.rc.Left() - 200, _logo.rc.Top() - 240,
+								_logo.rc.Right() + 200, _logo.rc.Top() - 140, _titleHandle);
 		_isInput = true;
 	}
 }
