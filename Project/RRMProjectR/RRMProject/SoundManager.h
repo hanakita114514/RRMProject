@@ -5,12 +5,21 @@
 
 enum class SoundType
 {
-
+	title,
+	stage1,
+	stage2,
+	stage3,
+	bossBattle,
 };
 
 enum class SEType
 {
-
+	firstAttack,
+	secondAttack,
+	thirdAttack,
+	damage,
+	player_dead,
+	decision,
 };
 
 class SoundManager

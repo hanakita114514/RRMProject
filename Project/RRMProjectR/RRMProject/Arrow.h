@@ -11,6 +11,7 @@ class Arrow : public UI
 	float _height;
 public:
 	Arrow();
+	Arrow(const Vector2& pos);
 	~Arrow();
 
 	void Draw();

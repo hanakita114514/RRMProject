@@ -9,6 +9,7 @@
 #include "MapManager.h"
 #include "Logo.h"
 #include "Filter.h"
+#include "SoundManager.h"
 
 const float Y_ExtendLimit = 350;
 const float X_ExtendLimit = 300;
@@ -35,6 +36,7 @@ MenuInformation::MenuInformation()
 MenuInformation::~MenuInformation()
 {
 	RRMLib::DeleteGraph(_handle);
+	SoundManager::Instance().Stop();
 }
 
 void 
@@ -53,7 +55,7 @@ MenuInformation::Init()
 	_extendPos[0] = Vector2(640, 350);
 	_extendPos[1] = Vector2(640, 370);
 	_state = MenuState::none;
-	_input = InputFactory::Create(InputMode::keyboard, 0);
+	_input = InputFactory::Create(InputMode::pad, 0);
 	
 	int idx = 0;
 
@@ -76,8 +78,10 @@ MenuInformation::Init()
 
 	for (int i = 0; i < 10; i++)
 	{
-		_numberUV[i] = Vector2(64 * i, 0);
+		_numberUV[i] = Vector2(64.0f * i, 0);
 	}
+
+	SoundManager::Instance().Play(SoundType::title);
 }
 
 void
@@ -86,6 +90,16 @@ MenuInformation::Update()
 	_input->Update();
 	(this->*_update)();
 	(this->*_menuStatePtr[(int)_state])();
+	if (_input->IsTriger(KeyType::keyL))
+	{
+		SoundManager::Instance().Stop();
+	}
+}
+
+void
+MenuInformation::Finalize()
+{
+	MenuInformation::~MenuInformation();
 }
 
 void
@@ -147,6 +161,7 @@ MenuInformation::MainMenu()
 	int i = 0;
 	if (_input->Decision())
 	{
+	//	SoundManager::Instance().Play(SEType::decision);
 		switch (_logoIdx)
 		{
 		case 0:
@@ -201,6 +216,7 @@ MenuInformation::GameStart()
 
 		if (_input->Decision())
 		{
+		//	SoundManager::Instance().Play(SEType::decision);
 			switch (_logoIdx)
 			{
 			case 0:
@@ -238,6 +254,7 @@ MenuInformation::StageSelect()
 	{
 		Fade::Instance().FadeIn(10.0);
 		SceneManager::Instance().LogoState(LogoIdx::StageSelect);
+	//	SoundManager::Instance().Play(SEType::decision);
 	}
 
 	if (_input->Exit())
@@ -247,6 +264,7 @@ MenuInformation::StageSelect()
 		_stageId = 0;
 		_arrow.SetPos(_logo[_logoIdx].rc.pos);
 		HandleSet(_state);
+	//	SoundManager::Instance().Play(SEType::decision);
 	}
 
 
@@ -270,9 +288,11 @@ MenuInformation::Configuration()
 		HandleSet(_state);
 		_logoIdx = 0;
 		_arrow.SetPos(_logo[_logoIdx].rc.pos);
+	//	SoundManager::Instance().Play(SEType::decision);
 	}
 	if (_input->Decision())
 	{
+	//	SoundManager::Instance().Play(SEType::decision);
 	}
 
 	for (int i = 0; i < 2; i++)

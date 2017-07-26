@@ -4,7 +4,7 @@
 #include "MenuScene.h"
 #include "GameScene.h"
 #include "ResultScene.h"
-
+#include "GameoverScene.h"
 
 SceneManager::SceneManager()
 {
@@ -47,6 +47,10 @@ SceneManager::ChangeScene(SceneType type)
 	case SceneType::result:
 		delete _scene;
 		_scene = new ResultScene(_logoState);
+		break;
+	case SceneType::gameover:
+		delete _scene;
+		_scene = new GameoverScene();
 		break;
 	default:
 		break;

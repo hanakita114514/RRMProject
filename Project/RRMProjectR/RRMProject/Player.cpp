@@ -11,6 +11,7 @@
 #include "EffectManager.h"
 #include "InputFactory.h"
 #include "GraphicLoad.h"
+#include "SoundManager.h"
 
 static const float jump_power = 20;
 static const float GRAVITY = 0.75f;

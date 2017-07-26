@@ -9,6 +9,7 @@ enum class SceneType
 	menu,
 	game,
 	result,
+	gameover,
 };
 
 //シーンマネージャー

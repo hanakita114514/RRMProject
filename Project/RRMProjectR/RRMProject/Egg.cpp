@@ -163,7 +163,6 @@ void Egg::Draw(const Vector2& offset)
 		drawPos.y = _rc.pos.y - offset.y;
 
 		_hpbar.Draw(Position(drawPos.x + _rc.w / 4, drawPos.y - _rc.h / 4), _hp);
-		//RRMLib::DrawGraph((int)drawPos.x, (int)drawPos.y, _handle);
 		RRMLib::DrawRectGraph(drawPos.x, drawPos.y, _uv.x, _uv.y, ANIM_SIZE_X, ANIM_SIZE_Y, _handle, true, false);
 	}
 }

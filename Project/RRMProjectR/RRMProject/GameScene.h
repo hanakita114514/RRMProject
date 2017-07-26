@@ -8,7 +8,7 @@
 #include "Timer.h"
 #include "InformationUI.h"
 #include "Score.h"
-
+#include "SoundManager.h"
 #include <map>
 
 class Collision;
@@ -24,6 +24,7 @@ private:
 		game,
 		end,
 		result,
+		gameover,
 	};
 
 private:
@@ -32,6 +33,7 @@ private:
 	Player _player;
 	Collision* _col;
 	StatusUI _statusUI;
+	SoundType _soundType;
 
 	Input* _input;
 	
@@ -44,6 +46,7 @@ private:
 	void GameUpdate();
 	void EndUpdate();
 	void ResultUpdate();
+	void GameOverUpdate();
 	SceneState _state;
 
 	Result* _result;
@@ -66,6 +69,10 @@ private:
 	void ColProcess();
 
 	void StageClear();
+
+	void GameOver();
+
+	void BGMSelect();
 
 public:
 	GameScene();

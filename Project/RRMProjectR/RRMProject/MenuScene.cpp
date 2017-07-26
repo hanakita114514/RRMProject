@@ -31,7 +31,7 @@ const int LOGO_IMAGE_HEIGHT = 74;
 MenuScene::MenuScene()
 {
 	_update = &MenuScene::MenuUpdate;
-	_input = InputFactory::Create(InputMode::keyboard, 0);
+	_input = InputFactory::Create(InputMode::pad, 0);
 
 	_menuInfo.Init();
 	_logo.image = RRMLib::LoadGraph("Resource/img/UI/Logo/Press_Start.png");
@@ -76,15 +76,16 @@ MenuScene::MenuUpdate()
 {
 	if (_input->IsTriger(KeyType::keyStart) && _isInput)
 	{
+//		SoundManager::Instance().Play(SEType::decision);
 		_menuInfo.ChangeState();
 		_isInput = false;
 	}
 
 	if (_menuInfo.IsState() == MenuState::none)
 	{
-		RRMLib::DrawGraph(_logo.rc.pos.x, _logo.rc.pos.y, _logo.image, true);
+		RRMLib::DrawGraph(_logo.rc.pos.x, _logo.rc.pos.y, _logo.image,true);
 		RRMLib::DrawExtendGraph(_logo.rc.Left() - 200, _logo.rc.Top() - 240,
-								_logo.rc.Right() + 200, _logo.rc.Top() - 140, _titleHandle);
+								_logo.rc.Right() + 200, _logo.rc.Top() - 140, _titleHandle, true, false);
 		_isInput = true;
 	}
 }

@@ -10,15 +10,22 @@ Arrow::Arrow()
 	_height = ArrowHeight;
 }
 
+Arrow::Arrow(const Vector2& pos)
+{
+	_arrowHandle = GraphicLoad::Instance().LoadGraph("Resource/img/UI/RightArrow.png");
+	_width = ArrowWidth;
+	_height = ArrowHeight;
+
+	_pos.x = pos.x - _width;
+	_pos.y = pos.y;
+}
 
 Arrow::~Arrow()
 {
 }
 
 void Arrow::Draw()
-{
-	RRMLib::DrawGraph((int)_pos.x, (int)_pos.y, _arrowHandle, true);
-}
+{RRMLib::DrawGraph(_pos.x, _pos.y, _arrowHandle,true);}
 
 void Arrow::Move(Vector2 velocity)
 {
