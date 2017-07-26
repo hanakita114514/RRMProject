@@ -284,6 +284,20 @@ DInput::UpAttack()
 	return true;
 }
 
+bool
+DInput::DownAttack()
+{
+	if (!Down())
+	{
+		return false;
+	}
+	if (!Attack())
+	{
+		return false;
+	}
+	return true;
+}
+
 bool 
 DInput::Jump()
 {

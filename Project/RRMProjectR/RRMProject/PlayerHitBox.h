@@ -19,6 +19,8 @@ public:
 	void ThirdAttack(float frame, const Rect&rc, const Vector2& dir);
 
 	void UpAttack(float frame, const Rect& rc, const Vector2& dir);
+	void DownAttack(float frame, const Rect& rc, const Vector2& dir);
+	void AirAttack(float frame, const Rect& rc, const Vector2& dir);
 
 	void DamageBox(float frame, const Rect& rc, const Vector2& dir);
 	//当たり判定の描画(デバッグ用)

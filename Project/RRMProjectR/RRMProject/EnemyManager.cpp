@@ -18,6 +18,12 @@ void EnemyManager::Update()
 		e->Update();
 	}
 
+	for (auto& r : _reservation)
+	{
+		_enemyList.push_back(r);
+	}
+	_reservation.clear();
+
 }
 
 int 
@@ -71,6 +77,13 @@ EnemyManager::Create(const EnemyType& et, const Position& pos)
 }
 
 void
+EnemyManager::Create(const EnemyType& et, const Position& pos, const Position& playerPos, Camera& camera)
+{
+	Enemy* newEnemy = _fac.Create(et, pos, playerPos, camera);
+	_enemyList.push_back(newEnemy);
+}
+
+void
 EnemyManager::Delete()
 {
 	std::vector<Enemy*>::iterator itr;
@@ -92,4 +105,10 @@ EnemyManager::EnemyEradication()
 	}
 
 	return false;
+}
+
+void 
+EnemyManager::AddList(const EnemyType& et, const Position& pos)
+{
+	_reservation.push_back(_fac.Create(et,pos));
 }

@@ -68,7 +68,7 @@ _time(Position(720, 40.0f), 40.f)
 
 	_result = new Result(_score, _player.GetHitPoint(), _time, _player.GetCombo());
 
-	EnemyManager::Instance().Create(EnemyType::hamburger, Position(100, 300));
+	EnemyManager::Instance().Create(EnemyType::hamburger, Position(100, 300), _player.GetRect().pos, _camera);
 }
 
 GameScene::~GameScene()

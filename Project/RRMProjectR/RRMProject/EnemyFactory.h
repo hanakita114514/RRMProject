@@ -2,6 +2,7 @@
 
 #include "Enemy.h"
 #include <map>
+#include "Camera.h"
 
 class EnemyFactory
 {
@@ -13,5 +14,6 @@ public:
 	~EnemyFactory();
 
 	Enemy* Create(const EnemyType& et, const Position& pos);
+	Enemy* Create(const EnemyType& et, const Position& pos, const Position& playerPos, Camera& camera);
 };
 

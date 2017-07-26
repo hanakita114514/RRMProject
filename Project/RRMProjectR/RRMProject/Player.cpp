@@ -60,6 +60,7 @@ Player::Player(int padType, Camera& camera, InputMode mode)
 	_animFrame = 0;
 
 	_addAttackFlag = false;
+	_airAttackFlag = true;
 
 	_input = InputFactory::Create(mode, padType);
 
@@ -83,6 +84,8 @@ Player::LoadResources()
 	//_handleMap[PlayerState::avoidance] = RRMLib::LoadGraph("Resource/img/player/avoidance.png");
 
 	_weaponHandle[Weapon::gladius] = GraphicLoad::Instance().LoadGraph("Resource/img/player/weapon/gladius2.png");
+	_weaponHandle[Weapon::gladiusU] = GraphicLoad::Instance().LoadGraph("Resource/img/player/weapon/gladius2u.png");
+	_weaponHandle[Weapon::gladiusD] = GraphicLoad::Instance().LoadGraph("Resource/img/player/weapon/gladius2d.png");
 }
 
 void 
@@ -101,6 +104,8 @@ Player::MapInit()
 	_attack[AttackState::second] = &Player::SecondAttack;
 	_attack[AttackState::third] = &Player::ThirdAttack;
 	_attack[AttackState::up] = &Player::UpAttack;
+	_attack[AttackState::down] = &Player::DownAttack;
+	_attack[AttackState::air] = &Player::AirAttack;
 
 	_us = UpdateState::alive;
 	_as = AttackState::first;
@@ -342,16 +347,18 @@ Player::ThirdAttack()
 void 
 Player::UpAttack()
 {
+	static const int duration = 10;
+
 	_hitBox.UpAttack(_attackTime, _rc, _dir);
 
 	_rc.pos += _vel;
 
 	HitGround();
 
-	--_attackTime;
+	++_attackTime;
 
 
-	if (_attackTime <= 0)
+	if (_attackTime >= duration)
 	{
 		_us = UpdateState::alive;
 		_hitBox.Clear();
@@ -361,9 +368,40 @@ Player::UpAttack()
 }
 
 void 
-Player::DonwAttack()
+Player::DownAttack()
 {
+	static const int duration = 10;
 
+	_hitBox.DownAttack(_attackTime, _rc, _dir);
+
+	++_attackTime;
+	_rc.pos += _vel;
+
+	if (_attackTime >= duration)
+	{
+		_us = UpdateState::alive;
+		_hitBox.Clear();
+		_mhp.Clear();
+		_addAttackFlag = false;
+	}
+}
+
+void 
+Player::AirAttack()
+{
+	static const int duration = 10;
+
+	_hitBox.AirAttack(_attackTime, _rc, _dir);
+
+	++_attackTime;
+
+	if (_attackTime >= duration)
+	{
+		_us = UpdateState::alive;
+		_hitBox.Clear();
+		_mhp.Clear();
+		_addAttackFlag = false;
+	}
 }
 
 void
@@ -391,15 +429,39 @@ Player::AliveUpdate()
 	{
 		_us = UpdateState::attack;
 		_as = AttackState::up;
-		_attackTime = 10.f;
+		_weapon = Weapon::gladiusU;
+		_attackTime = 0.f;
+		return;
+	}
+
+	if (_input->DownAttack())
+	{
+		_us = UpdateState::attack;
+		_as = AttackState::down;
+		_weapon = Weapon::gladiusU;
+		_attackTime = 0.f;
 		return;
 	}
 	
 	if (_input->Attack())
 	{
+		if ((_vel.y > 1 || _vel.y < -1))
+		{
+			if (_airAttackFlag)
+			{
+				_us = UpdateState::attack;
+				_as = AttackState::air;
+				_attackTime = 0.f;
+				_weapon = Weapon::gladiusD;
+				_airAttackFlag = false;
+			}
+
+			return;
+		}
 		_us = UpdateState::attack;
 		_as = AttackState::first;
 		_attackTime = 10.f;
+		_weapon = Weapon::gladius;
 		return;
 	}
 
@@ -680,6 +742,7 @@ Player::HitGround()
 		_nosedive = 1;
 
 		_jump.HitGround();
+		_airAttackFlag = true;
 	}
 	else
 	{

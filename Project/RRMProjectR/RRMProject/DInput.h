@@ -78,6 +78,7 @@ public:
 
 	bool Attack();		//’ÊíUŒ‚
 	bool UpAttack();
+	bool DownAttack();
 
 	bool Jump();
 	bool Digestion();	//Á‰»

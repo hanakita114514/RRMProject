@@ -52,7 +52,7 @@ EnemyFactory::Create(const EnemyType& et, const Position& pos)
 	break;
 	case EnemyType::hamburger:
 	{
-		return new Hamburger(_imgMap[EnemyType::hamburger], pos);
+		return nullptr;
 	}
 	break;
 	default:
@@ -61,4 +61,10 @@ EnemyFactory::Create(const EnemyType& et, const Position& pos)
 	}
 
 	return nullptr;
+}
+
+Enemy* 
+EnemyFactory::Create(const EnemyType& et, const Position& pos, const Position& playerPos, Camera& camera)
+{
+	return new Hamburger(_imgMap[EnemyType::hamburger], pos, playerPos, camera);
 }

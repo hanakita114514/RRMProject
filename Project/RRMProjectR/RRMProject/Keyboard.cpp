@@ -228,6 +228,20 @@ Keyboard::UpAttack()
 }
 
 bool 
+Keyboard::DownAttack()
+{
+	if (!Down())
+	{
+		return false;
+	}
+	if (!Attack())
+	{
+		return false;
+	}
+	return true;
+}
+
+bool 
 Keyboard::Jump()
 {
 	if (IsTriger(KeyType::keyY))

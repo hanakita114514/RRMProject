@@ -57,6 +57,10 @@ if (_rc.pos.x < camera.GetCameraRect().lpos.x)
 		HitStop(5);
 		//camera.Quake(Vector2(5, 0));
 	}
+	if (_rc.Top() < camera.GetMapSize().pos.y - _rc.h)
+	{
+		_rc.pos.y = camera.GetMapSize().pos.y - _rc.h;
+	}
 	if (_rc.Top() > camera.GetMapSize().pos.y + camera.GetMapSize().h)
 	{
 		Destory();

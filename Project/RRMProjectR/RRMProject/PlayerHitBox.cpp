@@ -131,14 +131,68 @@ PlayerHitBox::ThirdAttack(float frame, const Rect&rc, const Vector2& dir)
 void 
 PlayerHitBox::UpAttack(float frame, const Rect& rc, const Vector2& dir)
 {
-	static const float WIDTH = 100.f;
-	static const float HEIGHT = 50.f;
+	static const float WIDTH = 50;
+	static const float HEIGHT = 100.f;
 	HitBox hb = HitBox(20, 4, Rect(Position(rc.pos.x, rc.pos.y - HEIGHT), HEIGHT, WIDTH), Vector2(2 * dir.x, -12), Vector2(dir.x, 0));
 
 	_attackboxes.clear();
 	_attackboxes.push_back(hb);
 }
 
+void 
+PlayerHitBox::DownAttack(float frame, const Rect& rc, const Vector2& dir)
+{
+	static const float HEIGHT = 100.0f;
+	static const float WIDTH = 50.f;
+	HitBox hitBox[] =
+	{
+		HitBox(25, 4, Rect(Position(rc.pos.x + ((dir.x == -1 ? WIDTH : rc.w) * dir.x + ((20) * dir.x)), rc.pos.y + rc.h / 2), HEIGHT , WIDTH),  Vector2(0, -20), Vector2(dir.x , 0)),
+		HitBox(25, 4, Rect(Position(rc.pos.x + ((dir.x == -1 ? WIDTH : rc.w) * dir.x + ((40) * dir.x)), rc.pos.y + rc.h / 2), HEIGHT , WIDTH),  Vector2(0, -20), Vector2(dir.x , 0)),
+		HitBox(25, 4, Rect(Position(rc.pos.x + ((dir.x == -1 ? WIDTH : rc.w) * dir.x + ((60) * dir.x)), rc.pos.y + rc.h / 2), HEIGHT , WIDTH),  Vector2(0, -20), Vector2(dir.x , 0)),
+		HitBox(25, 4, Rect(Position(rc.pos.x + ((dir.x == -1 ? WIDTH : rc.w) * dir.x + ((80) * dir.x)), rc.pos.y + rc.h / 2), HEIGHT , WIDTH),  Vector2(0, -20), Vector2(dir.x , 0)),
+		HitBox(25, 4, Rect(Position(rc.pos.x + ((dir.x == -1 ? WIDTH : rc.w) * dir.x + ((10) * dir.x)), rc.pos.y + rc.h / 2), HEIGHT , WIDTH),  Vector2(0, -20), Vector2(dir.x , 0)),
+		HitBox(25, 4, Rect(Position(rc.pos.x + ((dir.x == -1 ? WIDTH : rc.w) * dir.x + ((120) * dir.x)), rc.pos.y + rc.h / 2), HEIGHT , WIDTH),  Vector2(0, -20), Vector2(dir.x , 0)),
+		HitBox(25, 4, Rect(Position(rc.pos.x + ((dir.x == -1 ? WIDTH : rc.w) * dir.x + ((140) * dir.x)), rc.pos.y + rc.h / 2), HEIGHT , WIDTH),  Vector2(0, -20), Vector2(dir.x , 0)),
+		HitBox(25, 4, Rect(Position(rc.pos.x + ((dir.x == -1 ? WIDTH : rc.w) * dir.x + ((160) * dir.x)), rc.pos.y + rc.h / 2), HEIGHT , WIDTH),  Vector2(0, -20), Vector2(dir.x , 0)),
+		HitBox(25, 4, Rect(Position(rc.pos.x + ((dir.x == -1 ? WIDTH : rc.w) * dir.x + ((180) * dir.x)), rc.pos.y + rc.h / 2), HEIGHT , WIDTH),  Vector2(0, -20), Vector2(dir.x , 0)),
+		HitBox(25, 4, Rect(Position(rc.pos.x + ((dir.x == -1 ? WIDTH : rc.w) * dir.x + ((200) * dir.x)), rc.pos.y + rc.h / 2), HEIGHT , WIDTH),  Vector2(0, -20), Vector2(dir.x , 0)),
+		HitBox(25, 4, Rect(Position(rc.pos.x + ((dir.x == -1 ? WIDTH : rc.w) * dir.x + ((220) * dir.x)), rc.pos.y + rc.h / 2), HEIGHT , WIDTH),  Vector2(0, -20), Vector2(dir.x , 0)),
+		HitBox(25, 4, Rect(Position(rc.pos.x + ((dir.x == -1 ? WIDTH : rc.w) * dir.x + ((240) * dir.x)), rc.pos.y + rc.h / 2), HEIGHT , WIDTH),  Vector2(0, -20), Vector2(dir.x , 0)),
+		HitBox(25, 4, Rect(Position(rc.pos.x + ((dir.x == -1 ? WIDTH : rc.w) * dir.x + ((260) * dir.x)), rc.pos.y + rc.h / 2), HEIGHT , WIDTH),  Vector2(0, -20), Vector2(dir.x , 0)),
+	};
+
+	_attackboxes.clear();
+	_attackboxes.push_back(hitBox[(int)frame]);
+}
+
+void 
+PlayerHitBox::AirAttack(float frame, const Rect& rc, const Vector2& dir)
+{
+	static const float HEIGHT = 100.0f;
+	static const float WIDTH = 50.f;
+
+	HitBox hitBox[] =
+	{
+		HitBox(25, 4, Rect(Position(rc.pos.x + ((dir.x == -1 ? WIDTH : rc.w) * dir.x + ((20) * dir.x)), rc.pos.y + rc.h / 2 - 150), HEIGHT , WIDTH),  Vector2(0, 20), Vector2(dir.x , 0)),
+		HitBox(25, 4, Rect(Position(rc.pos.x + ((dir.x == -1 ? WIDTH : rc.w) * dir.x + ((20) * dir.x)), rc.pos.y + rc.h / 2 - 140), HEIGHT , WIDTH),  Vector2(0, 20), Vector2(dir.x , 0)),
+		HitBox(25, 4, Rect(Position(rc.pos.x + ((dir.x == -1 ? WIDTH : rc.w) * dir.x + ((20) * dir.x)), rc.pos.y + rc.h / 2 - 130), HEIGHT , WIDTH),  Vector2(0, 20), Vector2(dir.x , 0)),
+		HitBox(25, 4, Rect(Position(rc.pos.x + ((dir.x == -1 ? WIDTH : rc.w) * dir.x + ((20) * dir.x)), rc.pos.y + rc.h / 2 - 120), HEIGHT , WIDTH),  Vector2(0, 20), Vector2(dir.x , 0)),
+		HitBox(25, 4, Rect(Position(rc.pos.x + ((dir.x == -1 ? WIDTH : rc.w) * dir.x + ((20) * dir.x)), rc.pos.y + rc.h / 2 - 110), HEIGHT , WIDTH),  Vector2(0, 20), Vector2(dir.x , 0)),
+		HitBox(25, 4, Rect(Position(rc.pos.x + ((dir.x == -1 ? WIDTH : rc.w) * dir.x + ((20) * dir.x)), rc.pos.y + rc.h / 2 - 90), HEIGHT , WIDTH),  Vector2(0, 20), Vector2(dir.x , 0)),
+		HitBox(25, 4, Rect(Position(rc.pos.x + ((dir.x == -1 ? WIDTH : rc.w) * dir.x + ((20) * dir.x)), rc.pos.y + rc.h / 2 - 80), HEIGHT , WIDTH),  Vector2(0, 20), Vector2(dir.x , 0)),
+		HitBox(25, 4, Rect(Position(rc.pos.x + ((dir.x == -1 ? WIDTH : rc.w) * dir.x + ((20) * dir.x)), rc.pos.y + rc.h / 2 - 70), HEIGHT , WIDTH),  Vector2(0, 20), Vector2(dir.x , 0)),
+		HitBox(25, 4, Rect(Position(rc.pos.x + ((dir.x == -1 ? WIDTH : rc.w) * dir.x + ((20) * dir.x)), rc.pos.y + rc.h / 2 - 60), HEIGHT , WIDTH),  Vector2(0, 20), Vector2(dir.x , 0)),
+		HitBox(25, 4, Rect(Position(rc.pos.x + ((dir.x == -1 ? WIDTH : rc.w) * dir.x + ((20) * dir.x)), rc.pos.y + rc.h / 2 - 50), HEIGHT , WIDTH),  Vector2(0, 20), Vector2(dir.x , 0)),
+		HitBox(25, 4, Rect(Position(rc.pos.x + ((dir.x == -1 ? WIDTH : rc.w) * dir.x + ((20) * dir.x)), rc.pos.y + rc.h / 2 - 40), HEIGHT , WIDTH),  Vector2(0, 20), Vector2(dir.x , 0)),
+		HitBox(25, 4, Rect(Position(rc.pos.x + ((dir.x == -1 ? WIDTH : rc.w) * dir.x + ((20) * dir.x)), rc.pos.y + rc.h / 2 - 30), HEIGHT , WIDTH),  Vector2(0, 20), Vector2(dir.x , 0)),
+		HitBox(25, 4, Rect(Position(rc.pos.x + ((dir.x == -1 ? WIDTH : rc.w) * dir.x + ((20) * dir.x)), rc.pos.y + rc.h / 2 - 20), HEIGHT , WIDTH),  Vector2(0, 20), Vector2(dir.x , 0)),
+	};
+
+	_attackboxes.clear();
+	_attackboxes.push_back(hitBox[(int)frame]);
+}
+
+void
 PlayerHitBox::DamageBox(float frame, const Rect& rc, const Vector2& dir)
 {
 	HitBox hb = HitBox(0, 0, Rect(Position(rc.pos.x + 8, rc.pos.y + 8),48,48));
@@ -149,7 +203,8 @@ PlayerHitBox::DamageBox(float frame, const Rect& rc, const Vector2& dir)
 
 
 void
-PlayerHitBox::Draw(){
+PlayerHitBox::Draw(int handle)
+{
 	for (auto& a : _attackboxes)
 	{
 		a.rc.DrawGraph(handle, a.dir);

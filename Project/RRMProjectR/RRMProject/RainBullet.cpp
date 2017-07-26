@@ -45,7 +45,7 @@ RainBullet::FallUpdate()
 {
 	_vel.y += GRAVITY;
 
-	_circle.pos += _vel;
+	_circle.pos += _vel * GameTime::Instance().GetTimeScale(_owner);
 }
 
 void

@@ -396,6 +396,18 @@
     <ClCompile Include="RainSpell.cpp">
       <Filter>ソース ファイル\Spell</Filter>
     </ClCompile>
+<<<<<<< .mine
+    <ClCompile Include="MeatHitBox.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Territory.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="BurgerHitBox.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+||||||| .r156
+=======
     <ClCompile Include="MeatHitBox.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -408,6 +420,7 @@
     <ClCompile Include="DropBullet.cpp">
       <Filter>ソース ファイル\Object\Bullet</Filter>
     </ClCompile>
+>>>>>>> .r161
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common.h">
@@ -737,6 +750,18 @@
     <ClInclude Include="RainSpell.h">
       <Filter>ソース ファイル\Spell</Filter>
     </ClInclude>
+<<<<<<< .mine
+    <ClInclude Include="MeatHitBox.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Territory.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="BurgerHitBox.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+||||||| .r156
+=======
     <ClInclude Include="MeatHitBox.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -749,5 +774,6 @@
     <ClInclude Include="DropBullet.h">
       <Filter>ソース ファイル\Object\Bullet</Filter>
     </ClInclude>
+>>>>>>> .r161
   </ItemGroup>
 </Project>

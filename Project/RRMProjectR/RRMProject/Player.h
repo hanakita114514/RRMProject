@@ -40,6 +40,8 @@ private:
 		second,
 		third,
 		up,
+		down,
+		air,
 	};
 
 	enum class Dir : unsigned int
@@ -53,6 +55,8 @@ private:
 	enum class Weapon : unsigned int
 	{
 		gladius,
+		gladiusU,
+		gladiusD,
 	};
 
 private:
@@ -96,6 +100,7 @@ private:
 	bool _hitGround;
 
 	bool _addAttackFlag;	//í«â¡çUåÇÉtÉâÉO
+	bool _airAttackFlag;
 
 	float _speed;
 
@@ -112,7 +117,8 @@ private:
 	void SecondAttack();
 	void ThirdAttack();
 	void UpAttack();
-	void DonwAttack();
+	void DownAttack();
+	void AirAttack();
 
 	std::map<UpdateState, _func> _update;
 	void AttackUpdate();

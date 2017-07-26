@@ -69,6 +69,7 @@ public:
 
 	virtual bool Attack() = 0;
 	virtual bool UpAttack() = 0; 		//í èÌçUåÇ
+	virtual bool DownAttack() = 0;
 
 	virtual bool Jump() = 0;
 	virtual bool Digestion() = 0;	//è¡âª

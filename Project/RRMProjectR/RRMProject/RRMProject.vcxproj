@@ -29,6 +29,7 @@
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="BulletFactory.cpp" />
     <ClCompile Include="BulletManager.cpp" />
+    <ClCompile Include="BurgerHitBox.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Circle.cpp" />
     <ClCompile Include="CircleBullet.cpp" />
@@ -141,6 +142,7 @@
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="BulletFactory.h" />
     <ClInclude Include="BulletManager.h" />
+    <ClInclude Include="BurgerHitBox.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Circle.h" />
     <ClInclude Include="CircleBullet.h" />

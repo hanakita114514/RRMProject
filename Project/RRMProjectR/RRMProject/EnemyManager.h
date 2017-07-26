@@ -2,6 +2,7 @@
 #include "Enemy.h"
 #include <vector>
 #include "EnemyFactory.h"
+#include "Camera.h"
 
 class EnemyManager
 {
@@ -13,6 +14,7 @@ private:
 	EnemyFactory _fac;
 	std::vector<Enemy*> _enemyList;
 
+	std::vector<Enemy*> _reservation;	//—\–ñƒŠƒXƒg
 public:
 	~EnemyManager();
 
@@ -32,6 +34,9 @@ public:
 	void ScreenLimit(Camera& camera);
 
 	void Create(const EnemyType& et, const Position& pos);
+	void Create(const EnemyType& et, const Position& pos, const Position& playerPos, Camera& camera);
+
+	void AddList(const EnemyType& et, const Position& pos);
 	void Delete();
 
 	std::vector<Enemy*>& GetEnemyList() { return _enemyList; }
