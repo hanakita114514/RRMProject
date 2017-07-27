@@ -16,6 +16,11 @@ SoundManager::SoundManager()
 	_seMap[SEType::player_dead] = RRMLib::LoadSound(L"Resource/sound/SE/Explosion.mp3");
 	_seMap[SEType::damage] = RRMLib::LoadSound(L"Resource/sound/SE/Damage.mp3");
 	_seMap[SEType::decision] = RRMLib::LoadSound(L"Resource/sound/SE/DecisionSE.mp3");
+	_seMap[SEType::explosion] = RRMLib::LoadSound(L"Resource/sound/SE/Explosion.mp3");
+	_seMap[SEType::jump] = RRMLib::LoadSound(L"Resource/sound/SE/jump.mp3");
+	_seMap[SEType::select] = RRMLib::LoadSound(L"Resource/sound/SE/select.mp3");
+	_seMap[SEType::avoid] = RRMLib::LoadSound(L"Resource/sound/SE/avoid.mp3");
+	_seMap[SEType::shot] = RRMLib::LoadSound(L"Resource/sound/SE/shot.wav");
 }
 
 
@@ -33,6 +38,18 @@ void
 SoundManager::Play(SEType se)
 {
 	RRMLib::PlaySoundMem(_seMap[se]);
+}
+
+void
+SoundManager::PlayFromStart(SoundType st)
+{
+	RRMLib::PlayFromStart(_soundMap[st]);
+}
+
+void
+SoundManager::PlayFromStart(SEType se)
+{
+	RRMLib::PlayFromStart(_seMap[se]);
 }
 
 void

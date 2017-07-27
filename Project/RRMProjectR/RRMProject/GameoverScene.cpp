@@ -7,7 +7,7 @@
 #include "MenuScene.h"
 #include "GameScene.h"
 #include "SceneManager.h"
-
+#include "SoundManager.h"
 
 #include <thread>
 
@@ -82,6 +82,7 @@ GameoverScene::NormalUpdate()
 
 	if (_input->Decision())
 	{
+		SoundManager::Instance().PlayFromStart(SEType::decision);
 		switch (_arrowState)
 		{
 		case (int)GameOverUI::yes:
@@ -140,6 +141,7 @@ GameoverScene::RightMove()
 {
 	if (_input->RightStickTriger())
 	{
+		SoundManager::Instance().PlayFromStart(SEType::select);
 		_arrowState++;
 		if (_arrowState > (int)GameOverUI::no)
 		{
@@ -153,6 +155,7 @@ GameoverScene::LeftMove()
 {
 	if (_input->LeftStickTriger())
 	{
+		SoundManager::Instance().PlayFromStart(SEType::select);
 		_arrowState--;
 		if (_arrowState > (int)GameOverUI::yes)
 		{

@@ -53,10 +53,6 @@ MapManager::~MapManager()
 
 bool MapManager::Initialize()
 {
-	/*EnemyManager::Instance().Create(EnemyType::egg, Position(1214, 0));
-	EnemyManager::Instance().Create(EnemyType::egg, Position(300, 0));	
-	EnemyManager::Instance().Create(EnemyType::sushi, Position(640, 0));*/
-
 	BlockManager::Instance().BlockInit(_m[_stageId], _header[_stageId].dwHeight, _header[_stageId].dwWidth);
 	_list[_stageId] = BlockManager::Instance().GetBlockList();
 	EnemyCreate(_stageId);

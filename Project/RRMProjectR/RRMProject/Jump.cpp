@@ -1,5 +1,6 @@
 #include "Jump.h"
 #include "GameTime.h"
+#include "SoundManager.h"
 
 static const float jump_power = 20;
 static const float fall_coefficient = 0.45f;
@@ -31,6 +32,7 @@ Jump::GroundJump()
 
 	if (_input->Jump() && _hitGround && _groundJump)
 	{
+		SoundManager::Instance().PlayFromStart(SEType::jump);
 		_vel.y = -jump_power * GameTime::Instance().GetTimeScale(_owner);
 		_isJump = true;
 		_hitGround = false;
@@ -45,6 +47,7 @@ Jump::AirJump()
 {
 	if (_secondJump && _input->Jump() && _isAirJump)
 	{
+		SoundManager::Instance().PlayFromStart(SEType::jump);
 		_vel.y = -jump_power * GameTime::Instance().GetTimeScale(_owner);
 		_isJump = true;
 		_secondJump = false;

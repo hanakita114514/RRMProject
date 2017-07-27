@@ -480,6 +480,7 @@ Player::AliveUpdate()
 	//ƒVƒ‡ƒbƒg
 	if (_input->Shoot(30))
 	{
+		SoundManager::Instance().PlayFromStart(SEType::shot);
 		Shoot();
 	}
 
@@ -849,6 +850,7 @@ Player::Avoidance()
 
 			_jump.RevivalAirJump();
 
+			SoundManager::Instance().PlayFromStart(SEType::avoid);
 			EffectManager::Instance().Create(EffectType::erasure, _rc.Center(), Vector2(1.0f, 1.0f), 0.7f, false);
 			return true;
 		}

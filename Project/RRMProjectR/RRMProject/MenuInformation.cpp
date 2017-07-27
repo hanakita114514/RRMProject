@@ -23,10 +23,12 @@ const char* filePath[] =
 	"Resource/img/UI/Logo/Start3.png",
 	"Resource/img/UI/Logo/StageSelect.png",
 	"Resource/img/UI/Logo/stage.png",
-	"Resource/img/UI/Logo/Number/stageNumber.png",
+	"Resource/img/UI/Number/stageNumber.png",
 	"Resource/img/UI/Logo/A.png",
 	"Resource/img/UI/Logo/B.png",
 };
+
+void PlaySE(SEType se);
 
 MenuInformation::MenuInformation()
 {
@@ -161,7 +163,7 @@ MenuInformation::MainMenu()
 	int i = 0;
 	if (_input->Decision())
 	{
-	//	SoundManager::Instance().Play(SEType::decision);
+		PlaySE(SEType::decision);
 		switch (_logoIdx)
 		{
 		case 0:
@@ -216,7 +218,7 @@ MenuInformation::GameStart()
 
 		if (_input->Decision())
 		{
-		//	SoundManager::Instance().Play(SEType::decision);
+			SoundManager::Instance().PlayFromStart(SEType::decision);
 			switch (_logoIdx)
 			{
 			case 0:
@@ -254,7 +256,7 @@ MenuInformation::StageSelect()
 	{
 		Fade::Instance().FadeIn(10.0);
 		SceneManager::Instance().LogoState(LogoIdx::StageSelect);
-	//	SoundManager::Instance().Play(SEType::decision);
+		PlaySE(SEType::decision);
 	}
 
 	if (_input->Exit())
@@ -264,7 +266,7 @@ MenuInformation::StageSelect()
 		_stageId = 0;
 		_arrow.SetPos(_logo[_logoIdx].rc.pos);
 		HandleSet(_state);
-	//	SoundManager::Instance().Play(SEType::decision);
+		PlaySE(SEType::decision);
 	}
 
 
@@ -288,11 +290,11 @@ MenuInformation::Configuration()
 		HandleSet(_state);
 		_logoIdx = 0;
 		_arrow.SetPos(_logo[_logoIdx].rc.pos);
-	//	SoundManager::Instance().Play(SEType::decision);
+		SoundManager::Instance().PlayFromStart(SEType::decision);
 	}
 	if (_input->Decision())
 	{
-	//	SoundManager::Instance().Play(SEType::decision);
+		PlaySE(SEType::decision);
 	}
 
 	for (int i = 0; i < 2; i++)
@@ -325,7 +327,8 @@ MenuInformation::RightMove()
 {
 	if (_input->RightStickTriger())
 	{
-		_stageId = (_stageId + 1) % 4;
+		PlaySE(SEType::select);
+		_stageId = (_stageId + 1) % 3;
 	}
 }
 
@@ -334,7 +337,8 @@ MenuInformation::LeftMove()
 {
 	if (_input->LeftStickTriger())
 	{
-		_stageId = (_stageId + 4 - 1) % 4;
+		PlaySE(SEType::select);
+		_stageId = (_stageId + 3 - 1) % 3;
 	}
 }
 
@@ -345,6 +349,7 @@ MenuInformation::UpMove()
 
 	if (_input->UpStickTriger())
 	{
+		PlaySE(SEType::select);
 		_logoIdx = (_logoIdx + 1) % 2;
 	}
 
@@ -360,6 +365,7 @@ MenuInformation::DownMove()
 
 	if (_input->DownStickTriger())
 	{
+		PlaySE(SEType::select);
 		_logoIdx = (_logoIdx + 2 - 1) % 2;
 	}
 
@@ -388,4 +394,9 @@ MenuInformation::HandleSet(MenuState state)
 	{
 		_logo[i].image = _logoHandle[(int)state][i];
 	}
+}
+
+void PlaySE(SEType se)
+{
+	SoundManager::Instance().PlayFromStart(se);
 }

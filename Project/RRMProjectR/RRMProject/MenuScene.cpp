@@ -75,7 +75,7 @@ MenuScene::MenuUpdate()
 {
 	if (_input->IsTriger(KeyType::keyStart) && _isInput)
 	{
-//		SoundManager::Instance().Play(SEType::decision);
+		SoundManager::Instance().PlayFromStart(SEType::decision);
 		_menuInfo.ChangeState();
 		_isInput = false;
 	}
@@ -92,8 +92,8 @@ MenuScene::MenuUpdate()
 
 void MenuScene::Draw()
 {
-	//RRMLib::DrawRectGraph(0, 0, _animUV[(int)_animCnt].x, _animUV[(int)_animCnt].y,
-							//StarDust_Image_X, StarDust_Image_Y, _bg, true, true); ;
+	RRMLib::DrawRectGraph(0, 0, _animUV[(int)_animCnt].x, _animUV[(int)_animCnt].y,
+							StarDust_Image_X, StarDust_Image_Y, _bg, true, true); ;
 }
 
 
