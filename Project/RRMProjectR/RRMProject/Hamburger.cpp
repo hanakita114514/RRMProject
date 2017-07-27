@@ -428,6 +428,6 @@ Hamburger::Draw(const Position& offset)
 
 	_hpbar.Draw(Position(drawPos.x + _rc.w / 2, drawPos.y), _hp);
 
-	ColDraw();
+	//ColDraw();
 }
 

@@ -29,4 +29,17 @@ GraphicLoad::Delete()
 	{
 		RRMLib::DeleteGraph(g.second);
 	}
+	_graphMap.clear();
+}
+
+bool 
+GraphicLoad::GameLoad()
+{
+
+}
+
+void 
+GraphicLoad::GameEnd()
+{
+	Delete();
 }

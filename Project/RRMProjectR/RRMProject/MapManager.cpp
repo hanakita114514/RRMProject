@@ -14,7 +14,6 @@ MapData _fileName[(int)Stage::stageMax] =
 	{ "Resource/data/map/map1.fmf","Resource/img/BackGround/Bg_Grassland.jpg" },
 	{ "Resource/data/map/map2.fmf","Resource/img/BackGround/Bg_Grassland.jpg" },
 	{ "Resource/data/map/map3.fmf","Resource/img/BackGround/Bg_Grassland.jpg" },
-	{ "Resource/data/map/map4.fmf","Resource/img/BackGround/Bg_Grassland.jpg" }
 };
 
 MapManager::MapManager()
@@ -180,9 +179,10 @@ MapManager::EnemyCreate(int idx)
 			continue;
 		}
 		}
+
 		EnemyManager::Instance().Create(type, Vector2(i % _header[idx].dwWidth  / 2 * enemySize.x,
 							i / _header[idx].dwWidth / 2 * enemySize.y));
 	}
 
-	EnemyManager::Instance().Create(EnemyType::meat, Vector2(500, 400));
+	//EnemyManager::Instance().Create(EnemyType::meat, Vector2(500, 400));
 }

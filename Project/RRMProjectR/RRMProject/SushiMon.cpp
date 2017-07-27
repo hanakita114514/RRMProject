@@ -4,7 +4,7 @@
 #include "EffectManager.h"
 #include "SushiHitBox.h"
 
-static const int MAX_HP = 200;
+static const int MAX_HP = 100;
 
 static const int IMG_MAX = 2;
 

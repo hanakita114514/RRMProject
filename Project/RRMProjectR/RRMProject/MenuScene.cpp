@@ -17,7 +17,6 @@ const char* Stage[(int)Stage::stageMax] =
 	{"Stage1"},
 	{"Stage2"},
 	{"Stage3"},
-	{"Stage4"}
 };
 
 const int TITLE_IMAGE_WIDTH = 576;

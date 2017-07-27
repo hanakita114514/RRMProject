@@ -22,5 +22,8 @@ public:
 	int LoadGraph(const std::string& filePath);
 
 	void Delete();
+
+	bool GameLoad();
+	void GameEnd();
 };
 

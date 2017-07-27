@@ -211,7 +211,8 @@ PlayerHitBox::Draw(int handle)
 	}
 	for (auto& d : _damageBox)
 	{
-		d.rc.DrawBox();	}
+		//d.rc.DrawBox();	
+	}
 }
 
 void

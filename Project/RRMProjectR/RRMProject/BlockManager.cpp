@@ -7,7 +7,6 @@
 BlockManager::BlockManager()
 {
 	RRMLib::LoadDivGraph("Resource/img/MapChip1.png", MAP_IMAGE_ALL_NUM, MAP_IMAGE_X_NUM, MAP_IMAGE_Y_NUM, 32, 32, _mapImage);
-
 }
 
 

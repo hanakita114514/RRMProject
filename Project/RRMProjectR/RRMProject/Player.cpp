@@ -153,7 +153,6 @@ Player::Move()
 void
 Player::Jump()
 {
-
 	if (_jump.GroundJump())
 	{
 		_nosedive = 1;
@@ -246,7 +245,6 @@ void Player::Shoot()
 	}
 
 	Vector2 end = Vector2(1280, 720);
-	//_ps = PlayerState::shoot;
 	BulletManager::Instance().Create(_tool[_toolIdx], _shootPos, _dir, ObjectType::player, _shootPos, this);
 
 }
@@ -766,7 +764,6 @@ Player::WeaponSwitch()
 {
 	if (_input->WeaponSwitch())
 	{
-		_rc.pos = Vector2(0, 0);
 	}
 }
 
@@ -814,6 +811,7 @@ Player::Damage(float power)
 		_vel.x = _dir.x * 10.0f * -1.0f;
 		_vel.y = -8.0f;
 		_us = UpdateState::damage;
+		_hitBox.Clear();
 	}
 }
 
@@ -826,6 +824,7 @@ Player::Damage(float power, HitBox hitBox)
 
 	_vel = hitBox.vec;
 	_us = UpdateState::damage;
+	_hitBox.Clear();
 }
 
 bool

@@ -42,7 +42,7 @@ GameScene::GameScene() : _player(0,_camera, InputMode::keyboard), _camera(_playe
 
 }
 
-GameScene::GameScene(LogoIdx state, KeyData& keyData) : _player(0, _camera, InputMode::keyboard), _camera(_player.GetRect().pos),
+GameScene::GameScene(LogoIdx state, KeyData& keyData) : _player(0, _camera, InputMode::pad), _camera(_player.GetRect().pos),
 _time(Position(720, 40.0f), 40.f)
 {
 	_col = new Collision();
@@ -64,11 +64,15 @@ _time(Position(720, 40.0f), 40.f)
 
 	_camera.Init();
 
-	_input = InputFactory::Create(InputMode::keyboard, 0);
+	_input = InputFactory::Create(InputMode::pad, 0);
 
 	_result = new Result(_score, _player.GetHitPoint(), _time, _player.GetCombo());
 
-	EnemyManager::Instance().Create(EnemyType::hamburger, Position(100, 300), _player.GetRect().pos, _camera);
+
+	if (MapManager::Instance().GetStageId() == 2)
+	{
+		EnemyManager::Instance().Create(EnemyType::hamburger, Position(100, 300), _player.GetRect().pos, _camera);
+	}
 }
 
 GameScene::~GameScene()
