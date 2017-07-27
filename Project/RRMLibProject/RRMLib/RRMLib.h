@@ -306,6 +306,9 @@ namespace RRMLib
 	// handle LodaSoundで読み込んだハンドルを指定
 	void PlaySoundMem(int handle);
 
+	//音楽を最初から再生する
+	void PlayFromStart(int handle);
+
 	// 音楽を一時停止させる
 	void PauseSound(int handle);
 
@@ -318,4 +321,7 @@ namespace RRMLib
 
 	//音楽のボリュームを取得する
 	long GetSoundVolume(int handle);
+
+	//取得した音楽ハンドルを削除する
+	void DeleteSound(int handle);
 }

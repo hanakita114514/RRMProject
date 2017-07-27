@@ -369,6 +369,12 @@ namespace RRMLib
 		MediaControl::Instance().Pause(handle);
 	}
 
+	//音楽を最初から再生する
+	void PlayFromStart(int handle)
+	{
+		MediaControl::Instance().PlayFromStart(handle);
+	}
+
 	//音楽を止める
 	void StopSound(int handle)
 	{
@@ -387,5 +393,13 @@ namespace RRMLib
 	{
 		long vol = MediaControl::Instance().GetVolume(handle);
 		return vol;
+	}
+
+	//取得した音楽ハンドルを削除する
+	void DeleteSound(int handle)
+	{
+		MediaPlayer* mp = (MediaPlayer*)handle;
+		mp->Terminate();
+		delete(mp);
 	}
 }
