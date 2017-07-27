@@ -5,6 +5,7 @@
 #include <map>
 #include "RRMCommon.h"
 
+
 //画像の読み込み、描画を行う
 class Graphic
 {
@@ -21,8 +22,10 @@ private:
 	ID3D11InputLayout* _layout;		//レイアウト
 	ID3D11Buffer* _vb;				//頂点バッファ
 
-	std::map<int, TexData> _texData;
+	std::map<ID3D11ShaderResourceView*, TexData> _texData;
 
+	//スレッド用
+	ID3DX11ThreadPump* _threadPump;
 
 	//頂点バッファの生成
 	ID3D11Buffer* CreateBuffer2D(float x, float y, float width, float height);
@@ -41,6 +44,12 @@ private:
 	//シェーダ用に座標をクランプ
 	void CrampForShader(float& x, float& y);
 
+	//画像を読み込む
+	//戻り値 失敗　-1 成功 それ以外の数値
+	ID3D11ShaderResourceView* LoadTexture(std::string filePath);
+
+
+
 public:
 	Graphic();
 	~Graphic();
@@ -49,14 +58,17 @@ public:
 	bool Init();
 	void Terminate();
 
-	//画像を読み込む
-	//戻り値 失敗　-1 成功 それ以外の数値
-	int LoadTexture(std::string filePath);
-
 	//ポリゴンを生成
 	DrawingStructure CreatePolygon();
+
+	//画像を読み込む(スレッド)
+	int LoadTexThread(std::string filePath, HRESULT* pResult);
+
 	//テクスチャ付きポリゴンの生成
 	int LoadGraph(std::string filePath);
+
+	//テクスチャ付きポリゴンの生成(スレッド)
+	int LoadGraphThread(std::string filePath);
 
 	//画像の分割読み込み
 	HRESULT LoadDivGraph(std::string filePath, int allNum,

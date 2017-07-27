@@ -495,7 +495,6 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nC
 
 	int mhandle = MediaControl::Instance().Load(L"Sound/tukimadetodoke.mp3");
 	int m1handle = MediaControl::Instance().Load(L"Sound/y“Œ•û’n—ì“az­—‚³‚Æ‚è@3rd_eyeyŒ´‹Èz.mp3");
-	MediaControl::Instance().Play(m1handle);
 
 
 
@@ -507,6 +506,16 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nC
 
 	int dsBuf[25];
 	graphic.LoadDivGraph("rei.jpg", 25, 5, 5, 384, 216, dsBuf);
+
+	int h = 0;
+
+	HRESULT phr;
+	h = graphic.LoadTexThread("rei.jpg", &phr);
+
+	while (FAILED(phr))
+	{
+
+	}
 
 	int x = 0;
 
@@ -555,6 +564,12 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nC
 			strcat(titlebar, "false");
 		}
 
+		if (js.lY > 200)
+		{
+			MediaControl::Instance().Play(m1handle);
+		}
+
+
 		HWND hwnd = WindowControl::Instance().WindowHandle();
 
 		SetWindowText(hwnd, titlebar);
@@ -574,18 +589,21 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nC
 		Renderer::Instance().SetZBuffer(false);
 		DeviceDx11::Instance().SetCullingFlg(false);
 
+		//graphic.DrawGraph(x, 0, handle, true);
+
 		for (int i = 0; i < 200; i++)
 		{
-			//graphic.DrawGraph(x, 0, handle);
-			//graphic.DrawExtendGraph(x, 0, 1000, 700, handle);
+			//graphic.DrawGraph(x, 0, handle, true);
+			//graphic.DrawExtendGraph(x, 0, 1000, 700, handle, true, false);
 			//graphic.DrawRectGraph(x, 0, 100, 100, 300, 300, handle, true, true);
-			//graphic.DrawRectExtendGraph(0, 0, 100, 100, 100, 200, 400, 400, ds, true, true);
 			//graphic.DrawRectGraph(0, 0, 100, 100, 500, 500, handle, true, true);
-			//graphic.DrawRectExtendGraph(0, 0, 1000, 500, 100,300, 500,500, dsBuf[0],true,false);
 		}
+
+		//graphic.DrawRectExtendGraph(0, 0, 1000, 500, 100, 300, 500, 500, dsBuf[0], true, false);
+
 		//graphic.DrawExtendGraph(0, 0, 1000, 700, ds);
 
-		//graphic.DrawGraph(0 * 384, 0 * 216, dsBuf[0]);
+		graphic.DrawGraph(0 * 384, 0 * 216, dsBuf[0], true);
 		//graphic.DrawGraph(1 * 384, 0 * 216, dsBuf[1]);
 
 		angle += 0.01f;
@@ -621,7 +639,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nC
 
 		//graphic.DrawRectExtendGraph(0, 0, 500, 500, 0, 0, 600, 600, handle, true, false);
 
-		graphic.DrawExtendGraph(0, 0, 1500, 700, handle, true, true);
+		//graphic.DrawExtendGraph(0, 0, 1500, 700, handle, true, true);
 
 		//GraphList::Instance().Draw();
 

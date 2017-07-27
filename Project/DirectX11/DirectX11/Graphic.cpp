@@ -7,6 +7,7 @@
 #include "GraphList.h"
 #include "Renderer.h"
 #include <math.h>
+#include "RRMHandle.h"
 
 Graphic::Graphic()
 {
@@ -31,6 +32,9 @@ Graphic::Init()
 
 	DrawingStructure ds;
 	_vb = CreateBuffer2DWrite(0, 0, 0, 0, ds);
+
+	hr = D3DX11CreateThreadPump(0, 0, &_threadPump);
+
 
 	return true;
 }
@@ -475,14 +479,11 @@ Graphic::CreateShader(ID3D11VertexShader*& vs2d, ID3D11VertexShader*& vs3d, ID3D
 	return result;
 }
 
-int 
+ID3D11ShaderResourceView*
 Graphic::LoadTexture(std::string filePath)
 {
-	
 	HRESULT result;
 	DeviceDx11& dev = DeviceDx11::Instance();
-
-	int handle;
 
 	//テクスチャの読み込み
 	ID3D11ShaderResourceView* tex = nullptr;
@@ -494,11 +495,9 @@ Graphic::LoadTexture(std::string filePath)
 		&tex,
 		nullptr);
 
-	handle = (int)tex;
-
 	if (FAILED(result))
 	{
-		handle = -1;
+		return nullptr;
 	}
 
 	TexData data;
@@ -507,13 +506,81 @@ Graphic::LoadTexture(std::string filePath)
 	D3DXGetImageInfoFromFile(filePath.c_str(), &imageData);
 	data.height = (float)imageData.Height;
 	data.width = (float)imageData.Width;
-	_texData[handle] = data;
+	_texData[tex] = data;
 
-	return handle;
+	return tex;
+}
+
+//画像を読み込む(スレッド)
+int 
+Graphic::LoadTexThread(std::string filePath, HRESULT* pResult)
+{
+	HRESULT result;
+	DeviceDx11& dev = DeviceDx11::Instance();
+
+	//テクスチャの読み込み
+	ID3D11ShaderResourceView* tex = nullptr;
+	result = D3DX11CreateShaderResourceViewFromFile(
+		dev.Device(),
+		filePath.c_str(),
+		nullptr,
+		_threadPump,
+		&tex,
+		pResult);
+
+
+	if (FAILED(pResult))
+	{
+		return -1;
+	}
+
+	TexData data;
+	D3DXIMAGE_INFO imageData;
+
+	D3DXGetImageInfoFromFile(filePath.c_str(), &imageData);
+	data.height = (float)imageData.Height;
+	data.width = (float)imageData.Width;
+	_texData[tex] = data;
+
+	return 0;
 }
 
 int
 Graphic::LoadGraph(std::string filePath)
+{
+	HRESULT result = S_OK;
+	DeviceDx11& dev = DeviceDx11::Instance();
+
+	HandleInfo* handleInfo = new HandleInfo();
+
+	DrawingStructure* ds = new DrawingStructure();
+	ds->drawNum = 4;
+	ds->vs = _vs2d;
+	ds->ps = _ps;
+	ds->topology = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP;
+	ds->layout = _layout;
+	ds->stride = sizeof(Vertex2D);
+	ds->offset = 0;
+
+	ID3D11ShaderResourceView* texture = LoadTexture(filePath);
+
+	ds->texSlot = 1;
+	ds->texture = texture;
+
+	TexData t = _texData[texture];
+	ds->vertex.width = t.width;
+	ds->vertex.height = t.height;
+	ds->vertex.luv = XMFLOAT2(0, 0);
+	ds->vertex.ruv = XMFLOAT2(1, 1);
+
+
+	handleInfo->handle = (int)ds;
+
+	return (int)handleInfo;
+}
+
+int 
+Graphic::LoadGraphThread(std::string filePath)
 {
 	HRESULT result = S_OK;
 	DeviceDx11& dev = DeviceDx11::Instance();
@@ -527,18 +594,20 @@ Graphic::LoadGraph(std::string filePath)
 	ds->stride = sizeof(Vertex2D);
 	ds->offset = 0;
 
-	int handle = LoadTexture(filePath);
-	ID3D11ShaderResourceView* texture = (ID3D11ShaderResourceView*)handle;
+	ID3D11ShaderResourceView* texture = LoadTexture(filePath);
 	ds->texSlot = 1;
 	ds->texture = texture;
 
-	TexData t = _texData[handle];
+	TexData t = _texData[texture];
 	ds->vertex.width = t.width;
 	ds->vertex.height = t.height;
 	ds->vertex.luv = XMFLOAT2(0, 0);
 	ds->vertex.ruv = XMFLOAT2(1, 1);
 
-	return (int)ds;
+	HandleInfo* handleInfo = new HandleInfo();
+	handleInfo->handle = (int)ds;
+
+	return (int)handleInfo;
 }
 
 HRESULT 
@@ -549,10 +618,7 @@ Graphic::LoadDivGraph(std::string filePath, int allNum,
 
 	DeviceDx11& dev = DeviceDx11::Instance();
 
-	int handle = LoadTexture(filePath);
-
-	//テクスチャの読み込み
-	ID3D11ShaderResourceView* tex = (ID3D11ShaderResourceView*)handle;
+	ID3D11ShaderResourceView* tex = LoadTexture(filePath);
 
 	DrawingStructure initDS = {};
 
@@ -566,6 +632,7 @@ Graphic::LoadDivGraph(std::string filePath, int allNum,
 		ruv.y = (float)(((i / xNum) + 1) / (float)yNum);
 
 		DrawingStructure* ds = new DrawingStructure();
+		HandleInfo* handleInfo = new HandleInfo();
 
 		//初期化
 		//handleBuf[i] = initDS;
@@ -585,7 +652,10 @@ Graphic::LoadDivGraph(std::string filePath, int allNum,
 		ds->vertex.ruv = ruv;
 		ds->vertex.height = height;
 		ds->vertex.width = width;
-		handleBuf[i] = (int)ds;
+
+		handleInfo->handle = (int)ds;
+
+		handleBuf[i] = (int)handleInfo;
 	}
 
 	TexData data;
@@ -594,7 +664,7 @@ Graphic::LoadDivGraph(std::string filePath, int allNum,
 	D3DXGetImageInfoFromFile(filePath.c_str(), &imageData);
 	data.height = (float)imageData.Height;
 	data.width = (float)imageData.Width;
-	_texData[handle] = data;
+	_texData[tex] = data;
 
 	return result;
 }
@@ -661,7 +731,8 @@ Graphic::DrawGraph(float x, float y, int handle, bool transFlag)
 	HRESULT result = S_OK;
 	DeviceDx11& dev = DeviceDx11::Instance();
 
-	DrawingStructure* ds = (DrawingStructure*)handle;
+	HandleInfo* handleInfo = (HandleInfo*)handle;
+	DrawingStructure* ds = (DrawingStructure*)handleInfo->handle;
 
 	Vertex2D vertex[4];
 	CreateVertex2D(x + ds->vertex.width / 2, y + ds->vertex.height / 2, ds->vertex.width, ds->vertex.height, vertex, *ds);
@@ -805,9 +876,9 @@ Graphic::DrawRectGraph(float destX, float destY, int srcX, int srcY,
 {
 	HRESULT result;
 	DeviceDx11& dev = DeviceDx11::Instance();
-	DrawingStructure* ds = (DrawingStructure*)graphHandle;
-	int texHandle = (int)ds->texture;
-	TexData t = _texData[texHandle];
+	HandleInfo* handleInfo = (HandleInfo*)graphHandle;
+	DrawingStructure* ds = (DrawingStructure*)handleInfo->handle;
+	TexData t = _texData[ds->texture];
 
 	Vertex2D vertices[4];
 
@@ -934,7 +1005,8 @@ Graphic::DrawExtendGraph(float lx, float ly, float rx, float ry, int handle, boo
 	HRESULT result;
 	DeviceDx11& dev = DeviceDx11::Instance();
 
-	DrawingStructure* ds = (DrawingStructure*)handle;
+	HandleInfo* handleInfo = (HandleInfo*)handle;
+	DrawingStructure* ds = (DrawingStructure*)handleInfo->handle;
 
 	Vertex2D vertices[4];
 
@@ -1139,7 +1211,8 @@ Graphic::DrawRectExtendGraph(float destLX, float destLY, float destRX, float des
 
 	WindowControl& wc = WindowControl::Instance();
 
-	DrawingStructure* ds = (DrawingStructure*)graphHandle;
+	HandleInfo* handleInfo = (HandleInfo*)graphHandle;
+	DrawingStructure* ds = (DrawingStructure*)handleInfo->handle;
 
 	//ウィンドウ座標系を-1～1にクランプ
 	float w = destRX - destLX;
@@ -1216,7 +1289,8 @@ Graphic::DrawRectExtendGraph(float destLX, float destLY, float destRX, float des
 void 
 Graphic::DeleteGraph(int handle)
 {
-	DrawingStructure* ds = (DrawingStructure*)handle;
+	HandleInfo* handleInfo = (HandleInfo*)handle;
+	DrawingStructure* ds = (DrawingStructure*)handleInfo->handle;
 	ds->texture->Release();
 	delete(ds);
 	ds = nullptr;
@@ -1228,7 +1302,8 @@ Graphic::DrawRotaGraphProt(float x, float y, double angle, int graphHandle, bool
 	HRESULT result = S_OK;
 	DeviceDx11& dev = DeviceDx11::Instance();
 
-	DrawingStructure* ds = (DrawingStructure*)graphHandle;
+	HandleInfo* handleInfo = (HandleInfo*)graphHandle;
+	DrawingStructure* ds = (DrawingStructure*)handleInfo->handle;
 
 	Vertex2D vertex[4];
 
@@ -1313,7 +1388,8 @@ Graphic::DrawRotaGraph(float x, float y, double angle, int graphHandle, bool tra
 	HRESULT result = S_OK;
 	DeviceDx11& dev = DeviceDx11::Instance();
 
-	DrawingStructure* ds = (DrawingStructure*)graphHandle;
+	HandleInfo* handleInfo = (HandleInfo*)graphHandle;
+	DrawingStructure* ds = (DrawingStructure*)handleInfo->handle;
 
 	Vertex2D vertex[4];
 
