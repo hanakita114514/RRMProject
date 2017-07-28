@@ -46,16 +46,15 @@ bool
 Collision::IsHit(Rect &r, Circle &c)
 {
 	//Œã‚Å’¼‚·
-	bool hitFlag = false;
 
 	Rect horizonRect, verticalRect; //c’·‚Ì’·•ûŒ`‚Æ‰¡’·‚Ì’·•ûŒ`
 	horizonRect = r;
 	horizonRect.pos.x -= c.radius;
-	horizonRect.w = r.w + c.radius * 2;		//•‚ğİ’è
+	horizonRect.w = r.w + c.radius;		//•‚ğİ’è
 
 	verticalRect = r;
 	verticalRect.pos.y -= c.radius;
-	verticalRect.h = r.h + c.radius * 2;	//‚‚³‚ğİ’è
+	verticalRect.h = r.h + c.radius;	//‚‚³‚ğİ’è
 
 	Vector2 leftUp, rightUp, leftDown, rightDown;
 
@@ -69,17 +68,11 @@ Collision::IsHit(Rect &r, Circle &c)
 	//Õ“Ë”»’è-------------------------------------------------------------------
 	if (CircleColToRect(horizonRect, c) || CircleColToRect(verticalRect, c))
 	{
-		if ((DistanceCalcuration(leftUp, c.pos) < (c.radius * c.radius)) &&
-			(DistanceCalcuration(rightUp, c.pos) < (c.radius * c.radius)) &&
-			(DistanceCalcuration(leftDown, c.pos) < (c.radius * c.radius)) &&
-			(DistanceCalcuration(rightDown, c.pos) < (c.radius * c.radius)))
-		{
-			hitFlag = true;
-		}
+		return true;
 	}
+	return false;
 	//---------------------------------------------------------------------------
 
-	return hitFlag;
 }
 
 bool
