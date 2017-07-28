@@ -33,9 +33,6 @@ Graphic::Init()
 	DrawingStructure ds;
 	_vb = CreateBuffer2DWrite(0, 0, 0, 0, ds);
 
-	hr = D3DX11CreateThreadPump(0, 0, &_threadPump);
-
-
 	return true;
 }
 
@@ -513,7 +510,7 @@ Graphic::LoadTexture(std::string filePath)
 
 //âÊëúÇì«Ç›çûÇﬁ(ÉXÉåÉbÉh)
 int 
-Graphic::LoadTexThread(std::string filePath, HRESULT* pResult)
+Graphic::LoadTexThread(std::string filePath, HRESULT* pResult, ID3DX11ThreadPump*& threadPump)
 {
 	HRESULT result;
 	DeviceDx11& dev = DeviceDx11::Instance();
@@ -524,12 +521,12 @@ Graphic::LoadTexThread(std::string filePath, HRESULT* pResult)
 		dev.Device(),
 		filePath.c_str(),
 		nullptr,
-		_threadPump,
+		threadPump,
 		&tex,
 		pResult);
 
 
-	if (FAILED(pResult))
+	if (FAILED(*pResult))
 	{
 		return -1;
 	}

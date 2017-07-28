@@ -387,7 +387,7 @@ Renderer::Test()
 	//アルファブレンディングの設定
 	D3D11_BLEND_DESC blenddesc = {};
 	blenddesc.AlphaToCoverageEnable = false;
-	blenddesc.IndependentBlendEnable = false;
+	blenddesc.IndependentBlendEnable = true;
 
 	D3D11_RENDER_TARGET_BLEND_DESC& blrtdesc = blenddesc.RenderTarget[0];
 	blrtdesc.BlendEnable = true;
@@ -401,6 +401,6 @@ Renderer::Test()
 
 	result = dev.Device()->CreateBlendState(&blenddesc, &_alphaBlend);
 
-	float blendFactor[] = { 1.0f, 1.0f, 1.0f, 0.5f };
+	float blendFactor[] = { 0.5f, 0.5f, 0.5f, 0.3f };
 	dev.Context()->OMSetBlendState(_alphaBlend, blendFactor, 0xffffffff);
 }

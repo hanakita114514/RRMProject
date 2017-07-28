@@ -25,7 +25,6 @@ private:
 	std::map<ID3D11ShaderResourceView*, TexData> _texData;
 
 	//スレッド用
-	ID3DX11ThreadPump* _threadPump;
 
 	//頂点バッファの生成
 	ID3D11Buffer* CreateBuffer2D(float x, float y, float width, float height);
@@ -62,7 +61,7 @@ public:
 	DrawingStructure CreatePolygon();
 
 	//画像を読み込む(スレッド)
-	int LoadTexThread(std::string filePath, HRESULT* pResult);
+	int LoadTexThread(std::string filePath, HRESULT* pResult, ID3DX11ThreadPump*& threadPump);
 
 	//テクスチャ付きポリゴンの生成
 	int LoadGraph(std::string filePath);

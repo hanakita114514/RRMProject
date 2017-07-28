@@ -25,6 +25,8 @@
 #include "PMDLoader.h"
 #include "PMDMesh.h"
 
+#include <thread>
+
 struct MatrixForShader
 {
 	XMMATRIX world;
@@ -509,13 +511,11 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nC
 
 	int h = 0;
 
+	ID3DX11ThreadPump* threadPump;
+	result = D3DX11CreateThreadPump(0, 0, &threadPump);
+
 	HRESULT phr;
-	h = graphic.LoadTexThread("rei.jpg", &phr);
-
-	while (FAILED(phr))
-	{
-
-	}
+	h = graphic.LoadTexThread("rei.jpg", &phr, threadPump);
 
 	int x = 0;
 
@@ -603,7 +603,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nC
 
 		//graphic.DrawExtendGraph(0, 0, 1000, 700, ds);
 
-		graphic.DrawGraph(0 * 384, 0 * 216, dsBuf[0], true);
+		//graphic.DrawGraph(0 * 384, 0 * 216, dsBuf[0], true);
 		//graphic.DrawGraph(1 * 384, 0 * 216, dsBuf[1]);
 
 		angle += 0.01f;
@@ -633,7 +633,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nC
 
 		//graphic.DrawGraph(0, 0, effectHandle);
 
-		//Renderer::Instance().AlphaBlend(20);
+		//Renderer::Instance().AlphaBlend(180);
 		//graphic.DrawGraph(0, 0, handle);
 		//Renderer::Instance().DefaultBlend();
 
@@ -643,8 +643,8 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nC
 
 		//GraphList::Instance().Draw();
 
-		//Renderer::Instance().Test();
-		//graphic.DrawGraph(0, 0, filterHandle, true);
+		Renderer::Instance().Test();
+		graphic.DrawGraph(0, 0, filterHandle, true);
 
 		result = key.GetKeyState(keyBuf);
 
