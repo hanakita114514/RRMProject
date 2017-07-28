@@ -23,6 +23,8 @@ private:
 	};
 private:
 	int _handle;
+	int _alpha;
+	int _characterImage;
 
 	typedef void (Result::*_func)();
 	std::map<State, _func> _update;
@@ -31,6 +33,7 @@ private:
 	void StartUpdate();
 	void MiddleUpdate();
 	void LifeUpdate();
+	void ImageUpdate();
 	void EndUpdate();
 
 	State _state;

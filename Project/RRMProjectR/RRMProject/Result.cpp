@@ -24,6 +24,7 @@ _playerHP(playerHP), _time(time), _combo(combo)
 
 	int lifeHandle = GraphicLoad::Instance().LoadGraph("Resource/img/UI/Life.png");
 	int comboHandle = GraphicLoad::Instance().LoadGraph("Resource/img/UI/Logo/combo.png");
+	_characterImage = RRMLib::LoadGraph("Resource/img/Player/lanstar/Character1.png");
 
 	int i = playerHP.GetHitPoint();
 	_lifeScore = new ScoreCalc(Position(300, 200), lifeHandle);
@@ -37,6 +38,8 @@ _playerHP(playerHP), _time(time), _combo(combo)
 	_timeScore = new ScoreCalc(Position(100, 200),lifeHandle);
 
 	_bonus = playerHP.GetHitPoint() + combo.GetMaxCombo() + tScore;
+
+	_alpha = 0;
 }
 
 
@@ -92,9 +95,29 @@ Result::LifeUpdate()
 	}
 }
 
+void
+Result::ImageUpdate()
+{
+	//RRMLib::SetBlendMode(RRM_BLENDMODE_ALPHA, _alpha);
+	RRMLib::DrawGraph(WINDOW_WIDTH - 554, 0, _characterImage, true);
+	///RRMLib::SetBlendMode(RRM_BLENDMODE_NONE,0);
+
+	_alpha += 5;
+
+	if (_alpha > 255)
+	{
+		_alpha = 255;
+	}
+}
+
 void 
 Result::EndUpdate()
 {
+	if (_comboScore->IsEnd())
+	{
+		ImageUpdate();
+	}
+
 	_endCall.Update();
 	_logo->Update();
 	_lifeScore->Update();

@@ -115,7 +115,8 @@ Player::MapInit()
 void
 Player::Init()
 {
-
+	_hp.FullRecovery();
+	_rc.pos = Vector2(0, 0);
 }
 
 void

@@ -20,6 +20,7 @@ enum class SEType
 	damage,					//ダメージ
 	player_dead,			//プレイヤー死亡
 	decision,				//決定ボタン
+	decision2,				//決定ボタン（その2） 某艦これのような音
 	explosion,				//爆発
 	jump,					//ジャンプ
 	select,					//選択
@@ -52,6 +53,10 @@ public:
 
 	void PlayFromStart(SoundType st);
 	void PlayFromStart(SEType se);
+
+	void BGMVolumeChange(int vol,SoundType type);
+	void SEVolumeChange(int vol, SEType type);
+
 
 	//全部の曲を止める
 	void Stop();

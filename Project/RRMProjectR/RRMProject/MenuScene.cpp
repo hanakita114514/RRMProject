@@ -83,7 +83,7 @@ MenuScene::MenuUpdate()
 	if (_menuInfo.IsState() == MenuState::none)
 	{
 		RRMLib::DrawGraph(_logo.rc.pos.x, _logo.rc.pos.y, _logo.image,true);
-		RRMLib::DrawExtendGraph(_logo.rc.Left() - 200, _logo.rc.Top() - 240,
+		RRMLib::DrawExtendGraph(_logo.rc.Left() - 200, _logo.rc.Top() - 340,
 								_logo.rc.Right() + 200, _logo.rc.Top() - 140, _titleHandle, true, false);
 		_isInput = true;
 	}

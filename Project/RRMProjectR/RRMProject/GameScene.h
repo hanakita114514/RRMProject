@@ -74,6 +74,8 @@ private:
 
 	void BGMSelect();
 
+	void Initialize();
+
 public:
 	GameScene();
 	GameScene(LogoIdx state, KeyData& keyData);
