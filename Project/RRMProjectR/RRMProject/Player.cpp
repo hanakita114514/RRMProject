@@ -45,8 +45,8 @@ Player::Player(int padType, Camera& camera, InputMode mode)
 	_ps = PlayerState::neutral;
 
 	_tool[0] = BulletType::normal;
-	_tool[1] = BulletType::deffusion;
-	_tool[2] = BulletType::homing;
+	_tool[1] = BulletType::homing;
+	_tool[2] = BulletType::dropBullet;
 	_toolIdx = 0;
 
 	_avoidTime = 15.0f;
@@ -243,6 +243,16 @@ void Player::Shoot()
 	else
 	{
 		DirLeft();
+	}
+
+
+	if (_toolIdx == 2)
+	{
+		_dir.y = -1;
+	}
+	else
+	{
+		_dir.y = 0;
 	}
 
 	Vector2 end = Vector2(1280, 720);

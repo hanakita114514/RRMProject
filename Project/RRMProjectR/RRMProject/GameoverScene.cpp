@@ -59,6 +59,38 @@ GameoverScene::GameoverScene()
 	_state = UpdateState::normal;
 }
 
+GameoverScene::GameoverScene(int score) : _totalScore( score)
+{
+	_input = InputFactory::Create(InputMode::pad, 0);
+
+	Rect r = {};
+	r.pos = Vector2(WINDOW_WIDTH / 2 - Continue_Logo_X / 2, WINDOW_HEIGHT / 3 - Continue_Logo_Y / 2);
+	r.h = Continue_Logo_Y;
+	r.w = Continue_Logo_X;
+	_logoRect[(int)GameOverUI::conti] = r;
+
+	r.pos = Vector2(_logoRect[(int)GameOverUI::conti].Left() - Yes_Logo_X / 2, WINDOW_HEIGHT / 3 * 2 - Yes_Logo_Y / 2);
+	r.h = Yes_Logo_Y;
+	r.w = Yes_Logo_X;
+	_logoRect[(int)GameOverUI::yes] = r;
+
+	r.pos = Vector2(_logoRect[(int)GameOverUI::conti].Right() - No_Logo_X / 2, WINDOW_HEIGHT / 3 * 2 - No_Logo_Y / 2);
+	r.h = Yes_Logo_Y;
+	r.w = Yes_Logo_X;
+	_logoRect[(int)GameOverUI::no] = r;
+
+	_arrow = new Arrow(_logoRect[(int)GameOverUI::yes].pos);
+
+	_gameoverLogo = RRMLib::LoadGraph("Resource/img/UI/Logo/GameOver.png");
+	_gameoverPos = Vector2(WINDOW_WIDTH / 2 - GameOver_Logo_X / 2, WINDOW_HEIGHT / 2 - GameOver_Logo_Y / 2);
+
+	ImageLoad();
+	Fade::Instance().FadeOut(10.0f);
+	_arrowState = 1;
+
+	_state = UpdateState::normal;
+}
+
 
 GameoverScene::~GameoverScene()
 {
@@ -109,10 +141,22 @@ GameoverScene::NormalUpdate()
 void
 GameoverScene::EndUpdate()
 {
-	if (_arrowState == (int)GameOverUI::no)
+	switch (_arrowState)
+	{
+	case (int)GameOverUI::yes:
+	{
+
+	}
+	break;
+	case (int)GameOverUI::no:
 	{
 		RRMLib::DrawGraph(_gameoverPos.x, _gameoverPos.y, _gameoverLogo, true);
 	}
+	break;
+	default:
+		break;
+	}
+
 	ChangeScene();
 }
 

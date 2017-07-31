@@ -1,7 +1,7 @@
 #include "DropBullet.h"
 
 const float BulletSpeed = 5.0f;
-const float GravityScale = 0.75f;
+const float GravityScale = 0.5f;
 
 DropBullet::DropBullet()
 {
@@ -30,7 +30,7 @@ DropBullet::Initialize(const Position& pos, Vector2 vec, ObjectType type)
 void
 DropBullet::Update()
 {
-	_vel.y = GravityScale;
+	_vel.y += GravityScale;
 	_circle.pos += _vel;
 }
 

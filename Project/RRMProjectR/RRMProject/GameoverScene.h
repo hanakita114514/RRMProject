@@ -37,6 +37,8 @@ private:
 	int _stageId;
 	NEXT_SCENE _nextScene;
 	UpdateState _state;
+	int _totalScore;
+	int _continueStock;
 
 	int _gameoverLogo;
 	Vector2 _gameoverPos;
@@ -62,6 +64,7 @@ private:
 	void ChangeScene();
 public:
 	GameoverScene();
+	GameoverScene(int score);
 	~GameoverScene();
 
 	bool Update();
