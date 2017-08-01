@@ -20,6 +20,7 @@
 
 #include <map>
 
+class Food;
 
 class Player : public RectObj
 {
@@ -173,6 +174,7 @@ public:
 	void Hit(Enemy* other);
 	void Hit(Block* other);
 	void Hit(Bullet* other);
+	void Hit(Food* other);
 
 	void Damage(float power);
 	void Damage(float power, HitBox hitBox);

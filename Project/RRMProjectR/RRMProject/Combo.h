@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Number.h"
+#include "FoodManager.h"
 
 class Combo
 {
@@ -19,6 +20,8 @@ private:
 
 	int _count;
 
+	bool _failure;
+
 public:
 	Combo();
 	~Combo();
@@ -32,5 +35,7 @@ public:
 
 	int GetComboNum() { return _comboNum; }
 	int GetMaxCombo() { return _maxCombo; }
+
+	void CollectON(FoodManager& foodManager, const Position& pos);
 };
 

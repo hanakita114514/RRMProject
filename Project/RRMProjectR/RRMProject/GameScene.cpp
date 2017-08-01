@@ -106,6 +106,8 @@ GameScene::GameUpdate()
 	EnemyManager::Instance().Update();
 	BulletManager::Instance().Update();
 	EffectManager::Instance().Update();
+	_foodManager.Update();
+	_player.GetCombo().CollectON(_foodManager, _player.GetRect().pos);
 
 	int deadEnemy = EnemyManager::Instance().DeleteUpdate();
 	_score.Add(deadEnemy * _player.GetCombo().GetComboNum() * 100);
@@ -123,6 +125,7 @@ GameScene::GameUpdate()
 	BulletManager::Instance().Draw(_camera.GetOffset());
 	_player.Draw();
 	EffectManager::Instance().Draw(_camera.GetOffset());
+	_foodManager.Draw(_camera.GetOffset());
 	_statusUI.Draw();
 	_time.Draw();
 	_player.UIDraw();
@@ -317,6 +320,11 @@ void GameScene::PlayerColEnemy()
 				_player.HitStop(a.hitstop);
 				_camera.Quake(Vector2(10, 5));
 				EffectManager::Instance().Create(EffectType::slash2,e->GetRect().Center(), Vector2(0.5f, 0.5f), 0.2f);
+
+				for(int i = 0; i < _player.GetCombo().GetComboNum(); ++i)
+				{
+					_foodManager.RandomCreate(e->GetRect().Center());
+				}
 			}
 		}
 
@@ -459,6 +467,56 @@ GameScene::BulletColEnemy()
 }
 
 void 
+GameScene::PlayerColFood()
+{
+	for (auto& food : _foodManager.GetFoodList())
+	{
+		if (!food->IsCollect())
+		{
+			continue;
+		}
+
+		if (_col->IsHit(_player.GetRect(), food->GetRect()))
+		{
+			food->Hit(&_player);
+			_score.Add(food->GetScore());
+		}
+	}
+}
+
+void 
+GameScene::FoodColBlock()
+{
+	bool hitFlag = false;
+	for (auto& food : _foodManager.GetFoodList())
+	{
+		if (food->IsDelete())
+		{
+			continue;
+		}
+		if (food->IsCollect())
+		{
+			continue;
+		}
+		//if (bullet->GetObjType() == ObjectType::enemy)
+		//{
+		//	continue;
+		//}
+		for (auto& block : BlockManager::Instance().GetBlockList())
+		{
+			hitFlag = _col->IsHit(block->GetRect(), food->GetRect());
+
+			if (hitFlag)
+			{
+				food->Hit(block);
+				break;
+			}
+		}
+	}
+}
+
+
+void 
 GameScene::ColProcess()
 {
 	PlayerColBlock();
@@ -467,6 +525,8 @@ GameScene::ColProcess()
 	BulletColBlock();
 	BulletColPlayer();
 	BulletColEnemy();
+	PlayerColFood();
+	FoodColBlock();
 }
 
 void GameScene::StageClear()

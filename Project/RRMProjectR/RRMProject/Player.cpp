@@ -12,6 +12,7 @@
 #include "InputFactory.h"
 #include "GraphicLoad.h"
 #include "SoundManager.h"
+#include "Food.h"
 
 static const float jump_power = 20;
 static const float GRAVITY = 0.75f;
@@ -730,6 +731,11 @@ void Player::Hit(Bullet* other)
 			return;
 		}
 	}
+}
+
+void
+Player::Hit(Food* other)
+{
 }
 
 void 

@@ -11,6 +11,8 @@
 #include "SoundManager.h"
 #include <map>
 
+#include "FoodManager.h"
+
 class Collision;
 class Input;
 class Result;
@@ -34,6 +36,8 @@ private:
 	Collision* _col;
 	StatusUI _statusUI;
 	SoundType _soundType;
+
+	FoodManager _foodManager;
 
 	Input* _input;
 	
@@ -65,6 +69,8 @@ private:
 	void BulletColPlayer();
 	void BulletColBlock();
 	void BulletColEnemy();
+	void PlayerColFood();
+	void FoodColBlock();
 
 	void ColProcess();
 

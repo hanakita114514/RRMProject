@@ -35,7 +35,7 @@ GraphicLoad::Delete()
 bool 
 GraphicLoad::GameLoad()
 {
-
+	return false;
 }
 
 void 

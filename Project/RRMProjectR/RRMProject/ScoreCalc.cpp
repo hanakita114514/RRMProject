@@ -29,6 +29,7 @@ ScoreCalc::ScoreCalc(const Position& pos, int handle) : _number(64.0f)
 	_evaluationMap[ScoreEvaluation::B] = GraphicLoad::Instance().LoadGraph("Resource/img/UI/B.png");
 	_evaluationMap[ScoreEvaluation::C] = GraphicLoad::Instance().LoadGraph("Resource/img/UI/C.png");
 
+	_resultScore = 0;
 }
 
 ScoreCalc::~ScoreCalc()

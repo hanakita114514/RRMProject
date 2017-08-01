@@ -53,11 +53,29 @@ float4 PicturePS(Output output) : SV_Target
 
 	if (color.a == 0)
 	{
-		//discard;
+		discard;
 	}
 
-	return float4(color.r, color.g, color.b, color.a);
+	float4 c;
+	c.a = (float)(col & 0x000000ff) / 255.f;
+
+	float alpha = 1.0f - c.a;
+
+	return float4(color.r, color.g, color.b, color.a - alpha);
 }
+
+////ピクセルシェーダ
+//float4 PicturePS(Output output) : SV_Target
+//{
+//	float4 color = tex.Sample(sample, output.uv);
+//
+//	if (color.a == 0)
+//	{
+//		discard;
+//	}
+//
+//	return float4(color.r, color.g, color.b, color.a);
+//}
 
 //図形用
 float4 GeometryPS(Output output) : SV_Target

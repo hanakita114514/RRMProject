@@ -11,14 +11,14 @@ enum class AlterationType
 class Digestion
 {
 private:
-	std::queue<Food> _foodList;
+	std::queue<Food*> _foodList;
 
 public:
 	Digestion();
 	~Digestion();
 
 	//H‚×•¨‚ğ’Ç‰Á
-	void Add(const Food& food);
+	void Add(Food* food);
 
 	//Á‰»
 	void Digest();

@@ -41,7 +41,7 @@ Enemy::GetObjType()
 void 
 Enemy::ScreenLimit(Camera& camera)
 {
-if (_rc.pos.x < camera.GetCameraRect().lpos.x)
+	if (_rc.pos.x < camera.GetCameraRect().lpos.x)
 	{
 		_rc.pos.x = camera.GetCameraRect().lpos.x;
 		_vel.x *= -1;

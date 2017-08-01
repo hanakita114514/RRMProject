@@ -19,7 +19,7 @@ Digestion::~Digestion()
 }
 
 void 
-Digestion::Add(const Food& food)
+Digestion::Add(Food* food)
 {
 	if (_foodList.size() >= FOOD_LIMIT)
 	{
@@ -34,10 +34,11 @@ Digestion::Digest()
 	Food::FoodStatus ret;
 	while (!_foodList.empty())
 	{
-		ret.pow += _foodList.front().GetFoodStatus().pow;
-		ret.defense += _foodList.front().GetFoodStatus().defense;
-		ret.speed += _foodList.front().GetFoodStatus().speed;
+		ret.pow += _foodList.front()->GetFoodStatus().pow;
+		ret.defense += _foodList.front()->GetFoodStatus().defense;
+		ret.speed += _foodList.front()->GetFoodStatus().speed;
 
+		delete (_foodList.front());
 		_foodList.pop();
 	}
 

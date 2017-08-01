@@ -25,6 +25,7 @@ Combo::Combo() :  _number(NUM_FONT_SIZE, RRMLib::LoadGraph("Resource/img/UI/Numb
 	_count = 0;
 
 	_maxCombo = 0;
+	_failure = false;
 }
 
 
@@ -36,6 +37,7 @@ void
 Combo::Update()
 {
 	--_comboTime;
+	_failure = false;
 
 	if (_comboTime <= 0)
 	{
@@ -83,4 +85,14 @@ Combo::Failure()
 {
 	_comboNum = 0;
 	_comboTime = 0;
+	_failure = true;
+}
+
+void 
+Combo::CollectON(FoodManager& foodManager, const Position& pos)
+{
+	if (_failure)
+	{
+		foodManager.Collect(pos);
+	}
 }
