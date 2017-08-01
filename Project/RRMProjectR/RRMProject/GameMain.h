@@ -17,7 +17,6 @@ private:
 
 	Player* p1;
 
-	DataManager _dataManager;
 
 	SaveData _data;
 	KeyConfig _keyConfig;

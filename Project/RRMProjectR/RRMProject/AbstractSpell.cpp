@@ -6,6 +6,7 @@ AbstractSpell::AbstractSpell()
 	_circleShot = new CircleShot();
 	_testSpell = new TestSpell();
 	_rainSpell = new RainSpell();
+	_drop = new DropShot();
 }
 
 
@@ -15,6 +16,7 @@ AbstractSpell::~AbstractSpell()
 	delete _circleShot;
 	delete _testSpell;
 	delete _rainSpell;
+	delete _drop;
 }
 
 Spell*
@@ -41,6 +43,11 @@ AbstractSpell::GetSpell(SpellType type)
 		return _rainSpell;
 	}
 		break;
+	case SpellType::Drop:
+	{
+		return _drop;
+	}
+	break;
 	default:
 		break;
 	}

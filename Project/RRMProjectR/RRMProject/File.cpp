@@ -70,7 +70,6 @@ File::FileRead(void* buffer, int size, int num,int seek,void* buf2)
 	_err = fopen_s(&_filePointer, _fileName, "rb");
 	if (_err != 0)			//オープンに失敗したか？
 	{
-		fclose(_filePointer);
 		return false;
 	}
 
@@ -97,7 +96,12 @@ File::FileRead(void* buffer, int size, int num,int seek,void* buf2)
 bool
 File::FileWrite(void* buffer, int size, int num)
 {
+
 	_err = fopen_s(&_filePointer, _fileName, "wb");
+	if (_err != 0)			//オープンに失敗したか？
+	{
+		return false;
+	}
 
 	fseek(_filePointer, 0, SEEK_SET);
 

@@ -6,6 +6,8 @@ public:
 	DropShot();
 	~DropShot();
 
+	int _bulletNum;
+
 	void Create(Vector2 vec, Vector2 pos, Object* owner);
 };
 

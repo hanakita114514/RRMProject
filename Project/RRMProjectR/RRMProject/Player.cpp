@@ -56,7 +56,6 @@ Player::Player(int padType, Camera& camera, InputMode mode)
 
 	_attackTime = 0;
 
-
 	_turnFlag = false;
 
 	_animFrame = 0;

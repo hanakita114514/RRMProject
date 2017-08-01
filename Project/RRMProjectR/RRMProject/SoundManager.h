@@ -54,9 +54,8 @@ public:
 	void PlayFromStart(SoundType st);
 	void PlayFromStart(SEType se);
 
-	void BGMVolumeChange(int vol,SoundType type);
-	void SEVolumeChange(int vol, SEType type);
-
+	void BGMVolumeChange(int vol);
+	void SEVolumeChange(int vol);
 
 	//‘S•”‚Ì‹È‚ðŽ~‚ß‚é
 	void Stop();

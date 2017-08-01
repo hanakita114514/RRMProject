@@ -76,7 +76,7 @@ MenuScene::MenuUpdate()
 	if (_input->IsTriger(KeyType::keyStart) && _isInput)
 	{
 		SoundManager::Instance().PlayFromStart(SEType::decision);
-		_menuInfo.ChangeState();
+		_menuInfo.ChangeState(MenuState::mainMenu);
 		_isInput = false;
 	}
 

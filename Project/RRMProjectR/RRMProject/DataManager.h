@@ -19,6 +19,11 @@ typedef struct SAVE_DATA
 	EquipmentInfometion equipData;
 }SaveData;
 
+typedef struct SYSTEM_DATA
+{
+	int _bgmVolume;
+	int _seVolume;
+}SysData;
 
 enum class FileType
 {
@@ -32,15 +37,23 @@ class DataManager
 {
 private:
 	bool _err;
-public:
 	DataManager();
+public:
+
+	static DataManager Instance()
+	{
+		static DataManager instance;
+		return instance;
+	}
+
 	~DataManager();
 
 	//すべてのデータを書き込む(基本的にはこっちを使う)
 	void Save(SaveData& data);
+	void Save(SysData& data);
 
 	//すべてのデータを読み込む(基本的にはこっちを使う)
 	void Load(SaveData& data);
-
+	void Load(SysData& data);
 };
 

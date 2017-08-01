@@ -1,7 +1,6 @@
 #include "Number.h"
 #include <RRMLib.h>
 
-
 Number::Number(float size) :
 	NUMBER_W(84.4f), NUMBER_H(88.5f)
 {

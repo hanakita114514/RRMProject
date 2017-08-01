@@ -10,6 +10,7 @@
 #include "Logo.h"
 #include "Filter.h"
 #include "SoundManager.h"
+#include "Number.h"
 
 const float Y_ExtendLimit = 350;
 const float X_ExtendLimit = 300;
@@ -24,14 +25,18 @@ const char* filePath[] =
 	"Resource/img/UI/Logo/StageSelect.png",
 	"Resource/img/UI/Logo/stage.png",
 	"Resource/img/UI/Number/stageNumber.png",
-	"Resource/img/UI/Logo/A.png",
-	"Resource/img/UI/Logo/B.png",
+	"Resource/img/UI/Logo/BGM.png",
+	"Resource/img/UI/Logo/SE.png",
 };
 
 void PlaySE(SEType se);
 
 MenuInformation::MenuInformation()
 {
+	_seVolume = new Number(64.0f);
+	_bgmVolume = new Number(64.0f);
+
+	DataManager::Instance().Load(_configData);
 }
 
 
@@ -39,6 +44,8 @@ MenuInformation::~MenuInformation()
 {
 	RRMLib::DeleteGraph(_handle);
 	SoundManager::Instance().Stop();
+	delete _bgmVolume;
+	delete _seVolume;
 }
 
 void 
@@ -74,6 +81,11 @@ MenuInformation::Init()
 	_logo[1].rc.pos = Vector2(420, WINDOW_HEIGHT / 3 * 2);
 	HandleSet(MenuState::mainMenu);
 
+	drawPos[0] = _logo[(int)ArrowState::up].rc.pos;
+	drawPos[0].x += 400;
+	drawPos[1] = _logo[(int)ArrowState::down].rc.pos;
+	drawPos[1].x += 400;
+
 	_arrow.SetPos(_logo[0].rc.pos);
 	_logoIdx = 0;
 	_stageId = 0;
@@ -82,6 +94,8 @@ MenuInformation::Init()
 	{
 		_numberUV[i] = Vector2(64.0f * i, 0);
 	}
+	SoundManager::Instance().SEVolumeChange(_configData._seVolume);
+	SoundManager::Instance().BGMVolumeChange(_configData._bgmVolume);
 
 	SoundManager::Instance().Play(SoundType::title);
 }
@@ -92,10 +106,6 @@ MenuInformation::Update()
 	_input->Update();
 	(this->*_update)();
 	(this->*_menuStatePtr[(int)_state])();
-	if (_input->IsTriger(KeyType::keyL))
-	{
-		SoundManager::Instance().Stop();
-	}
 }
 
 void
@@ -166,7 +176,7 @@ MenuInformation::MainMenu()
 		PlaySE(SEType::decision);
 		switch (_logoIdx)
 		{
-		case 0:
+		case (int)ArrowState::up :
 		{
 			_state = MenuState::gameStart;
 			_logoIdx = 0;
@@ -174,7 +184,7 @@ MenuInformation::MainMenu()
 			HandleSet(_state);
 		}
 		break;
-		case 1:
+		case (int)ArrowState::down:
 		{
 			_state = MenuState::configuration;
 			_logoIdx = 0;
@@ -221,13 +231,13 @@ MenuInformation::GameStart()
 			SoundManager::Instance().PlayFromStart(SEType::decision);
 			switch (_logoIdx)
 			{
-			case 0:
+			case (int)ArrowState::up:
 			{
 				Fade::Instance().FadeIn(10.0);
 				SceneManager::Instance().LogoState(LogoIdx::GameStart);
 			}
 			break;
-			case 1:
+			case (int)ArrowState::down:
 			{
 				_state = MenuState::stageSelect;
 				_arrow.SetPos(_logo[_logoIdx].rc.pos);
@@ -294,17 +304,61 @@ MenuInformation::Configuration()
 	}
 	if (_input->Decision())
 	{
-		PlaySE(SEType::decision);
+		_arrow.SetPos(drawPos[_logoIdx] - Vector2(100,0));
+		_state = MenuState::volChange;
 	}
 
 	for (int i = 0; i < 2; i++)
 	{
 		RRMLib::DrawGraph(_logo[i].rc.pos.x, _logo[i].rc.pos.y - Y_Draw_Offset, _logo[i].image, true);
 	}
+
+
+	_bgmVolume->Draw(_configData._bgmVolume, drawPos[(int)ArrowState::up]);
+	_seVolume->Draw(_configData._seVolume, drawPos[(int)ArrowState::down]);
 	_arrow.Draw();
 
 	RRMLib::DrawGraph(400, 100, _logoHandle[(int)MenuState::mainMenu][1],true);
 
+}
+
+void MenuInformation::VolChange()
+{
+	switch (_logoIdx)
+	{
+	case (int)ArrowState::up:
+	{
+		VolumeChange(_configData._bgmVolume);
+		SoundManager::Instance().BGMVolumeChange(_configData._bgmVolume);
+	}
+	break;
+	case (int)ArrowState::down:
+	{
+		VolumeChange(_configData._seVolume);
+		SoundManager::Instance().SEVolumeChange(_configData._seVolume);
+	}
+	break;
+	default:
+		break;
+	}
+
+	if (_input->Exit())
+	{
+		_state = MenuState::configuration;
+		_arrow.SetPos(_logo[_logoIdx].rc.pos);
+		DataManager::Instance().Save(_configData);
+	}
+
+	for (int i = 0; i < 2; i++)
+	{
+		RRMLib::DrawGraph(_logo[i].rc.pos.x, _logo[i].rc.pos.y - Y_Draw_Offset, _logo[i].image, true);
+	}
+
+	_bgmVolume->Draw(_configData._bgmVolume, drawPos[(int)ArrowState::up]);
+	_seVolume->Draw(_configData._seVolume, drawPos[(int)ArrowState::down]);
+	_arrow.Draw();
+
+	RRMLib::DrawGraph(400, 100, _logoHandle[(int)MenuState::mainMenu][1], true);
 }
 
 void
@@ -399,4 +453,25 @@ MenuInformation::HandleSet(MenuState state)
 void PlaySE(SEType se)
 {
 	SoundManager::Instance().PlayFromStart(se);
+}
+
+void MenuInformation::VolumeChange(int& volume)
+{
+	if (_input->Right())
+	{
+		volume++;
+		if (volume > 100)
+		{
+			volume = 100;
+		}
+	}
+
+	if (_input->Left())
+	{
+		volume--;
+		if (volume < 0)
+		{
+			volume = 0;
+		}
+	}
 }

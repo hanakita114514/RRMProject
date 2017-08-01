@@ -1,5 +1,6 @@
 #include "SoundManager.h"
 #include <RRMLib.h>
+#include "DataManager.h"
 
 
 SoundManager::SoundManager()
@@ -71,17 +72,23 @@ SoundManager::Stop()
 //SE‚Ì‰¹—Ê’²®
 //1`100‚Åw’è‚µ‚½‰¹—Ê‚ğ“n‚·
 void
-SoundManager::BGMVolumeChange(int vol, SoundType type)
+SoundManager::BGMVolumeChange(int vol)
 { 
 	long volume = vol * 100;
-	RRMLib::SetSoundVolume(volume, _soundMap[type]);
+	for (auto s : _soundMap)
+	{
+		RRMLib::SetSoundVolume(volume, s.second);
+	}
 }
 
 //BGM‚Ì‰¹—Ê’²®
 //1`100‚Åw’è‚µ‚½‰¹—Ê‚ğ“n‚·
 void
-SoundManager::SEVolumeChange(int vol, SEType type)
+SoundManager::SEVolumeChange(int vol)
 {
 	long volume = vol * 100;
-	RRMLib::SetSoundVolume(volume, _seMap[type]);
+	for (auto s : _seMap)
+	{
+		RRMLib::SetSoundVolume(volume, s.second);
+	}
 }

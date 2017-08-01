@@ -201,12 +201,12 @@ void Egg::Shot()
 {
 	if (_hp.GetHitPoint() < _hp.GetMaxHP() / 2)
 	{
-		Spell* spell = _absSpell->GetSpell(SpellType::CircleShot);
+		Spell* spell = _absSpell->GetSpell(SpellType::TestSpell);
 		spell->Create(_dir, _rc.pos, this);
 	}
 	else
 	{
-		Spell* spell = _absSpell->GetSpell(SpellType::TestSpell);
+		Spell* spell = _absSpell->GetSpell(SpellType::Drop);
 		spell->Create(_dir, _rc.pos, this);
 	}
 

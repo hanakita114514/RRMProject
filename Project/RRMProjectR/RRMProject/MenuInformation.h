@@ -2,6 +2,7 @@
 #include "Rect.h"
 #include "Arrow.h"
 #include <map>
+#include "DataManager.h"
 
 enum class MenuState : unsigned int
 {
@@ -9,6 +10,7 @@ enum class MenuState : unsigned int
 	gameStart,
 	stageSelect,
 	configuration,
+	volChange,
 
 	none,
 	max
@@ -20,7 +22,14 @@ struct LOGO
 	Rect rc;
 };
 
+enum class ArrowState
+{
+	up,
+	down,
+};
+
 class Input;
+class Number;
 const int StageMax = 4;
 
 class MenuInformation
@@ -38,9 +47,14 @@ private:
 
 	Vector2 _extendPos[2];
 	Vector2 _numberUV[10];
+	Vector2 drawPos[2];
+
 	Input* _input;
 	Arrow _arrow;
 	LOGO _logo[2];
+	Number* _bgmVolume;
+	Number* _seVolume;
+	SysData _configData;
 
 	bool _isEnlargement;				//ägëÂíÜ
 	bool _isReduction;					//èkè¨íÜ
@@ -56,6 +70,7 @@ private:
 	void GameStart();
 	void StageSelect();
 	void Configuration();
+	void VolChange();
 	void None();
 
 
@@ -67,6 +82,7 @@ private:
 		&MenuInformation::GameStart,
 		&MenuInformation::StageSelect,
 		&MenuInformation::Configuration,
+		&MenuInformation::VolChange,
 		&MenuInformation::None
 	};
 
@@ -74,6 +90,8 @@ private:
 	void DownMove();
 	void RightMove();
 	void LeftMove();
+
+	void VolumeChange(int& volume);
 
 	void HandleSet(MenuState state);
 

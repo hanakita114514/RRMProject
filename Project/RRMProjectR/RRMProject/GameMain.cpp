@@ -20,6 +20,7 @@
 
 GameMain::GameMain()
 {
+
 }
 
 
@@ -38,12 +39,12 @@ bool GameMain::Init()
 	RRMLib::ChangeFullScreenMode(false);
 	RRMLib::SetWindowSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 
-	_dataManager.Load(_data);
-
 	Fade::Instance().Init();
 
 	KeyData kd;
 	_keyConfig.Load(kd);
+
+	DataManager::Instance().Load(_data);
 
 	return true;
 }
@@ -51,7 +52,6 @@ bool GameMain::Init()
 void
 InputTest(DInput& input)
 {
-
 	if (input.Attack())
 	{
 		DxLib::DrawFormatString(0, 0, 0xffffffff, "çUåÇ");
@@ -139,7 +139,7 @@ GameMain::EqiupDataUpdata(const EquipmentInfometion& data)
 {
 	memcpy(_data.equipData.tool, data.tool, sizeof(data.tool));
 	memcpy(_data.equipData.weapon, data.weapon, sizeof(data.weapon));
-	_dataManager.Save(_data);
+	DataManager::Instance().Save(_data);
 }
 
 void
