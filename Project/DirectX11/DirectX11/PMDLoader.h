@@ -18,7 +18,6 @@ private:
 	ID3D11ShaderResourceView* _nulltex;
 	ID3D11ShaderResourceView* _nulltexb;
 
-
 public:
 	PMDLoader();
 	~PMDLoader();

@@ -548,6 +548,13 @@ Graphic::LoadGraph(std::string filePath)
 	HRESULT result = S_OK;
 	DeviceDx11& dev = DeviceDx11::Instance();
 
+	ID3D11ShaderResourceView* texture = LoadTexture(filePath);
+
+	if (texture == nullptr)
+	{
+		return -1;
+	}
+
 	HandleInfo* handleInfo = new HandleInfo();
 
 	DrawingStructure* ds = new DrawingStructure();
@@ -559,7 +566,6 @@ Graphic::LoadGraph(std::string filePath)
 	ds->stride = sizeof(Vertex2D);
 	ds->offset = 0;
 
-	ID3D11ShaderResourceView* texture = LoadTexture(filePath);
 
 	ds->texSlot = 1;
 	ds->texture = texture;

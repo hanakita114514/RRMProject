@@ -22,6 +22,9 @@ private:
 	ID3D11BlendState* _subtractBlend;
 	ID3D11BlendState* _multipleBlend;
 
+
+	ID3D11Buffer* _colorBuf;		//カラー用コンスタントバッファ
+
 	void CreateDefaultBlend();
 	void CreateAlignmentBlend();
 	void CreateAddBlend();

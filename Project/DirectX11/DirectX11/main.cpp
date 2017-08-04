@@ -473,7 +473,6 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nC
 
 	//int handle = Graphic::LoadGraph("rei.jpg");
 
-
 	float angle = 0;
 
 	DInput input;
@@ -530,6 +529,9 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nC
 
 	int filterHandle = graphic.LoadGraph("filter1.png");
 	Renderer::Instance().BackGroundColor(255, 255, 255);
+
+
+	int pal = 255;
 
 	while (true)
 	{
@@ -643,8 +645,21 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nC
 
 		//GraphList::Instance().Draw();
 
+		//Renderer::Instance().Test();
+
+		if (keyBuf[DIK_UP])
+		{
+			pal++;
+		}
+		if (keyBuf[DIK_DOWN])
+		{
+			pal--;
+		}
+		
+		//Renderer::Instance().AlphaBlend(pal);
 		Renderer::Instance().Test();
 		graphic.DrawGraph(0, 0, filterHandle, true);
+		Renderer::Instance().DefaultBlend();
 
 		result = key.GetKeyState(keyBuf);
 

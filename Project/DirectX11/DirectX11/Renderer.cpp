@@ -110,6 +110,22 @@ Renderer::Init()
 	dev.Context()->OMSetRenderTargets(1, &_rtv, _dsv);
 	//dev.Context()->OMSetRenderTargets(1, &_rtv, nullptr);
 
+
+
+
+	unsigned int color = 0xffffffff;
+	//カラー用コンスタントバッファの生成
+	D3D11_BUFFER_DESC colorBufferDesc = {};
+	colorBufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+	colorBufferDesc.ByteWidth = sizeof(unsigned int) + (16 - sizeof(unsigned int) % 16) % 16;
+	colorBufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+	colorBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
+
+	D3D11_SUBRESOURCE_DATA mbufsub = {};
+	mbufsub.pSysMem = &color;
+
+	result = dev.Device()->CreateBuffer(&colorBufferDesc, &mbufsub, &_colorBuf);
+
 	return true;
 }
 
@@ -313,6 +329,14 @@ Renderer::DefaultBlend()
 	HRESULT result = S_OK;
 	DeviceDx11& dev = DeviceDx11::Instance();
 
+	//アルファ値1.0;
+	unsigned int color = 255;
+	D3D11_MAPPED_SUBRESOURCE mappedsub = {};
+	result = dev.Context()->Map(_colorBuf, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedsub);
+	memcpy(mappedsub.pData, &color, sizeof(unsigned int));
+	dev.Context()->Unmap(_colorBuf, 0);
+	dev.Context()->PSSetConstantBuffers(1, 1, &_colorBuf);
+
 	float blendFactor[] = { 0.0f, 0.0f, 0.0f, 0.0f };
 	dev.Context()->OMSetBlendState(_defaultBlend, blendFactor, 0xffffffff);
 }
@@ -361,21 +385,40 @@ void
 Renderer::AlphaBlend(int pal)
 {
 	DeviceDx11& dev = DeviceDx11::Instance();
+	HRESULT result;
 
 	float alpha;
 	alpha = (float)pal / 255.0f;
 
+	unsigned int color = pal;
+
 	if (pal > 255)
 	{
 		alpha = 1.0f;
+		color = 255;
 	}
 	else if (pal < 0)
 	{
 		alpha = 0.0f;
+		color = 0;
 	}
 
-	float blendFactor[] = { alpha, alpha, alpha, alpha };
-	dev.Context()->OMSetBlendState(_alphaBlend, blendFactor, 0xffffffff);
+	float al;
+	al = (float)(color & 0x000000ff) / 255.f;
+
+
+	//アルファ値のコンスタントバッファを渡す
+	D3D11_MAPPED_SUBRESOURCE mappedsub = {};
+	result = dev.Context()->Map(_colorBuf, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedsub);
+	memcpy(mappedsub.pData, &color, sizeof(unsigned int));
+	dev.Context()->Unmap(_colorBuf, 0);
+
+	//float blendFactor[] = { alpha, alpha, alpha, alpha };
+	//dev.Context()->OMSetBlendState(_alphaBlend, blendFactor, 0xffffffff);
+	dev.Context()->PSSetConstantBuffers(1, 1, &_colorBuf);
+
+	float blendFactor[] = { 0.0f, 0.0f, 0.0f, 0.0f };
+	dev.Context()->OMSetBlendState(_defaultBlend, blendFactor, 0xffffffff);
 }
 
 void 
@@ -387,7 +430,7 @@ Renderer::Test()
 	//アルファブレンディングの設定
 	D3D11_BLEND_DESC blenddesc = {};
 	blenddesc.AlphaToCoverageEnable = false;
-	blenddesc.IndependentBlendEnable = true;
+	blenddesc.IndependentBlendEnable = false;
 
 	D3D11_RENDER_TARGET_BLEND_DESC& blrtdesc = blenddesc.RenderTarget[0];
 	blrtdesc.BlendEnable = true;
@@ -396,11 +439,11 @@ Renderer::Test()
 	blrtdesc.BlendOp = D3D11_BLEND_OP_ADD;
 	blrtdesc.SrcBlendAlpha = D3D11_BLEND_BLEND_FACTOR;
 	blrtdesc.DestBlendAlpha = D3D11_BLEND_ZERO;
-	blrtdesc.BlendOpAlpha = D3D11_BLEND_OP_ADD;
+	blrtdesc.BlendOpAlpha = D3D11_BLEND_OP_SUBTRACT;
 	blrtdesc.RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
 
 	result = dev.Device()->CreateBlendState(&blenddesc, &_alphaBlend);
 
-	float blendFactor[] = { 0.5f, 0.5f, 0.5f, 0.3f };
+	float blendFactor[] = { 0.1f, 0.1f, 0.1f, 0.1f };
 	dev.Context()->OMSetBlendState(_alphaBlend, blendFactor, 0xffffffff);
 }

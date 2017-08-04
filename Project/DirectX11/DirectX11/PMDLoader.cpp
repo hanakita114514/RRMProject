@@ -75,6 +75,38 @@ PMDLoader::LoadPMDFile(const std::string& filePath)
 
 	file.FileRead(&header, sizeof(PMDHeader), 1);
 
+	const int vert_size = 38;	//頂点データ(38バイト)
+
+	std::vector<char> vertices(vert_size * header.vertexCont);
+	file.FileRead(&vertices[0], vertices.size(), 1);
+
+	//インデックスのロード
+	//インデックス数
+	unsigned int index_num;
+	file.FileRead(&index_num, sizeof(index_num), 1);
+
+	std::vector<unsigned short> indices(index_num);
+	file.FileRead(&indices[0], indices.size() * sizeof(indices[0]), 1);
+
+	//マテリアルのロード
+	unsigned int material_num = 0;
+	file.FileRead(&material_num, sizeof(unsigned int), 1);
+
+	struct PMDMaterial
+	{
+		RGBColor diffuese_color;	//dr, dg, db 減衰色
+		float alpha;				//減衰色の不透明度
+		float specularity;			
+		RGBColor specular_color;	//sr, sg, sb 光沢色
+		RGBColor ambient;			//mr, mg, mb 環境色
+		BYTE toon_index;			//toon?? bmp 0.bmp: 0xFF, 1(01)bmp:0x00 _ 10.mp:0x09
+		BYTE edge_flag;				//輪郭、影
+		DWORD face_vert_count;		//面頂点数
+		char texture_file_name[20];	//テクスチャファイル名またはスフィアファイル名
+	};
+
+
+
 	return nullptr;
 }
 
@@ -85,5 +117,6 @@ PMDLoader::Load(const std::string& filePath)
 	{
 		_pmdMap[filePath] = LoadPMDFile(filePath);
 	}
+
 	return _pmdMap[filePath];
 }
